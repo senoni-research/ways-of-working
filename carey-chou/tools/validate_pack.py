@@ -2,14 +2,39 @@
 """Static checks for the guide package; no network or coding-agent execution.
 
 Usage: python tools/validate_pack.py [path-to-package-root]
+
+Inventory for this version: 10 modules, 14 recipes (M01–M14), 16 source
+articles (C01–C16), 34 behavioral scenarios (B01–B34), 9 templates
+(T01–T09), 9 invocation prompts (P01–P09).
+
+`tools/test_validate_pack.py` runs regression checks against deliberately
+corrupted temporary copies and must fail on each corruption.
 """
 from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 import re
 import sys
+from pathlib import Path
+
+MODULES = [
+    "00-operating-contract.md",
+    "10-project-workflow.md",
+    "20-method-selection.md",
+    "30-method-recipes.md",
+    "40-memory-protocol.md",
+    "50-evaluation-and-promotion.md",
+    "60-architecture-and-coding.md",
+    "70-worked-examples.md",
+    "80-templates-and-prompts.md",
+    "90-sources.md",
+]
+SOURCES = 16
+BEHAVIORAL = 34
+TEMPLATES = 7
+PROMPTS = 9
+RECIPES = 14
 
 
 def fail(message: str) -> None:
@@ -22,11 +47,15 @@ def check(root: Path) -> list[str]:
         if not path.is_file():
             fail(f'Missing deliverable: {path}')
     manifest = json.loads((root/'MANIFEST.json').read_text())
+    if manifest.get('version') != (root/'VERSION').read_text().strip():
+        fail('MANIFEST version does not match VERSION')
     for name, data in manifest['standalone_files'].items():
         payload = (root/name).read_bytes()
         if hashlib.sha256(payload).hexdigest() != data['sha256']:
             fail(f'Checksum mismatch: {name}')
-    results.append('Standalone guides exist and match their SHA-256 manifest.')
+        if len(payload) != data['bytes']:
+            fail(f'Byte count mismatch: {name}')
+    results.append('Standalone guides exist and match their SHA-256 manifest, byte counts, and version.')
 
     c = root/'cursor-project'
     p = root/'portable-project'
@@ -36,26 +65,54 @@ def check(root: Path) -> list[str]:
             fail(f'Missing reference module: {name}')
         if left.read_bytes() != right.read_bytes():
             fail(f'Platform drift in shared module: {name}')
-    results.append('All 10 substantive modules are identical across the two platform packs.')
+    results.append(f'All {len(MODULES)} substantive modules are identical across the two platform packs.')
 
     for project in (c,p):
         recipes = sorted((project/'.carey'/'recipes').glob('M[0-9][0-9]-*.md'))
         ids = [x.name[:3] for x in recipes]
-        if ids != [f'M{i:02}' for i in range(1,15)]:
+        if ids != [f'M{i:02}' for i in range(1, RECIPES+1)]:
             fail(f'Recipe inventory error: {project}')
-    results.append('Both project packs contain all 14 individually loadable recipes.')
+    for i in range(1, RECIPES+1):
+        left = next((c/'.carey'/'recipes').glob(f'M{i:02}-*.md'))
+        right = p/'.carey'/'recipes'/left.name
+        if left.read_bytes() != right.read_bytes():
+            fail(f'Platform drift in shared recipe: {left.name}')
+    results.append(f'Both project packs contain all {RECIPES} individually loadable recipes, identical across packs.')
+
+    # Recipe extracts must match their corresponding section in the full reference.
+    ref = (p/'.carey'/'30-method-recipes.md').read_text()
+    for i in range(1, RECIPES+1):
+        mid = f'M{i:02}'
+        rfile = p/'.carey'/'recipes'/f'{mid}-{[x.name[4:-3] for x in (p/".carey"/"recipes").glob(mid+"-*.md")][0]}.md'
+        rtext = rfile.read_text()
+        start = ref.index(f'## {mid} — ')
+        nxt = ref.find('\n## M', start+1)
+        end = nxt if nxt != -1 else len(ref)
+        section = ref[start:end]
+        # The recipe file is the canonical text; the section must contain its
+        # distinctive content (normalized: H1->H2, link rewrites).
+        canon = rtext.replace(f'# {mid}', f'## {mid}', 1)
+        canon = canon.replace('(../90-sources.md#', '(90-sources.md#')
+        canon = re.sub(r'\[M(\d\d)\]\(M\d\d-[a-z-]*\.md\)', lambda m: 'M' + m.group(1), canon)
+        if canon.rstrip('\n') + '\n' != section.rstrip('\n') + '\n' and canon.rstrip() not in section:
+            fail(f'Recipe {mid} extract does not match its section in 30-method-recipes.md')
+    results.append('Every recipe extract matches its corresponding section in the full reference.')
 
     for name in ('cursor.md','memory.md'):
         text = (root/name).read_text()
-        for i in range(1,17):
+        for i in range(1, SOURCES+1):
             if f'id="c{i:02}"' not in text:
                 fail(f'Missing article source C{i:02} in {name}')
+        for i in range(1, BEHAVIORAL+1):
             if f'| B{i:02} |' not in text:
                 fail(f'Missing behavioral check B{i:02} in {name}')
-        for i in range(1,8):
-            if f'T{i:02} —' not in text or f'P{i:02} —' not in text:
-                fail(f'Missing template/prompt {i} in {name}')
-    results.append('Each guide includes 16 source articles, 16 behavioral scenarios, 7 templates, and 7 prompts.')
+        for i in range(1, TEMPLATES+1):
+            if f'T{i:02} —' not in text:
+                fail(f'Missing template T{i:02} in {name}')
+        for i in range(1, PROMPTS+1):
+            if f'P{i:02} —' not in text:
+                fail(f'Missing prompt P{i:02} in {name}')
+    results.append(f'Each guide includes {SOURCES} source articles, {BEHAVIORAL} behavioral scenarios, {TEMPLATES} templates, and {PROMPTS} prompts.')
 
     suffix_c = (root/'cursor.md').read_text().split('<a id="s00"></a>',1)[1]
     suffix_p = (root/'memory.md').read_text().split('<a id="s00"></a>',1)[1]
@@ -101,7 +158,26 @@ def check(root: Path) -> list[str]:
         for filename in manifest['modules']:
             if f'.carey/{filename}' not in path.read_text():
                 fail(f'Loader does not route to {filename}: {path}')
-    results.append('Both native loaders explicitly route to every substantive module.')
+        if 'M01-fast-personalization.md' not in path.read_text():
+            fail(f'Loader does not route to the personalization recipe: {path}')
+    results.append('Both native loaders explicitly route to every substantive module and the adaptation recipe.')
+
+    # Handbook bodies must be the compiled form of the canonical modules.
+    pre_c = (root/'tools'/'prefaces'/'cursor-preface.md').read_text()
+    pre_p = (root/'tools'/'prefaces'/'memory-preface.md').read_text()
+    if not (root/'cursor.md').read_text().startswith(pre_c):
+        fail('cursor.md preface diverges from tools/prefaces/cursor-preface.md')
+    if not (root/'memory.md').read_text().startswith(pre_p):
+        fail('memory.md preface diverges from tools/prefaces/memory-preface.md')
+    results.append('Standalone handbooks carry the stored integration prefaces.')
+
+    for name in ('cursor.md','memory.md'):
+        text = (root/name).read_text()
+        for i in range(1, RECIPES+1):
+            if f'id="m{i:02}"' not in text:
+                fail(f'Missing recipe anchor m{i:02} in {name}')
+    results.append('Compiled handbooks expose an explicit anchor for every recipe.')
+
     return results
 
 

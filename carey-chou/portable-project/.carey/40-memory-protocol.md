@@ -1,6 +1,16 @@
 # 40 — Persistent project memory
 
-## Two different meanings of “memory”
+## Three different meanings of “memory”
+
+Do not conflate three things that all get called memory. They have different purposes, different owners, and different change rules:
+
+| Kind | Purpose | What changes it |
+|---|---|---|
+| **Methodology guidance** (this handbook, its modules) | How the team and assistant approach work | Reviewed changes to the reusable guide, versioned and released |
+| **Project / episodic evidence** (the evidence ledger below) | What happened, what was decided, and what remains unresolved | Authorized, sourced records and scoped supersession |
+| **Adaptive personal or task state** (per-person runtime state) | What matters for this person or context now | Permitted observations, explicit feedback, context transitions, and controlled consolidation ([M01](recipes/M01-fast-personalization.md), [M11](recipes/M11-learning-timescales.md)) |
+
+Installing `memory.md`, `AGENTS.md`, or a Cursor rule does not create a functioning online personal model, memory service, covariance estimator, or automatic retraining loop. The guide teaches the method; the project builds (or declines to build) the machinery.
 
 This handbook is **behavioral guidance**. It tells the agent how to work. The project's evidence ledger is **project memory**. It records what actually happened and what the project has decided. Do not append project history to this handbook or silently rewrite its principles after a successful experiment.
 
@@ -101,12 +111,32 @@ supersedes: []
 contradicts: []
 reopen_when: null
 sensitivity: unclassified
+intended_lifetime: null        # temporary | recurring-context | durable | policy
+active_contexts: []            # which contexts this record applies in, if scoped
+origin_kind: observed           # observed | inferred | approved
+expiry_or_reeval: null         # when a temporary or provisional record is re-examined
+promotion_authority: null      # who may promote it to durable or policy
 revision: 1
 ```
 
 A source reference should identify the actual origin: approved document section, repository commit and path, test artifact, issue, or explicit user statement. Include a minimal excerpt only when permitted and useful. A generated summary is a derivative artifact; keep its parent references rather than treating it as another witness.
 
 Classify sensitivity before saving. `null` and `UNKNOWN` are preferable to fabricated metadata. A write can be rejected because required fields are unresolved.
+
+## Temporary state is not a license to persist
+
+A temporary or context-scoped record can still be sensitive personal data. “Temporary” is not permission to persist it anywhere: the same destination authorization, sensitivity classification, retention, deletion, and provenance rules apply to short-lived state as to durable records. If the approved destination is a session-scoped or in-memory store, do not copy the same facts into the repository “for convenience.”
+
+## Exploration, proposal, accepted design, and policy
+
+In the coding workflow, keep four states distinct:
+
+```text
+exploration  →  proposal  →  accepted design  →  policy
+(temporary)      (scoped)     (owner-approved)    (governing)
+```
+
+Multiple assistant messages advocating the same change must not promote it. A repeated suggestion is one evidence origin, not corroboration (see [M03](recipes/M03-episodic-memory.md)). An authorized user decision can move an item to accepted design or policy; a temporary experiment cannot silently do so. A one-off communication preference (“answer briefly today”) stays scoped to its context and does not rewrite all future interactions.
 
 ## Source authority is scoped, not one universal ranking
 

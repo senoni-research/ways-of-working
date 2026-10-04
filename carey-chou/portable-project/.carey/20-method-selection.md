@@ -15,6 +15,7 @@ Choose the question class before choosing a library. This routing discipline is 
 | How should a process run? | A deterministic workflow or state machine. | Genuine branching uncertainty before an agent loop. |
 | What changed about a person or situation? | Explicit session state or a simple recency model. | A measured benefit from richer adaptive memory. |
 | What should future sessions remember? | An indexed, versioned evidence ledger. | Retrieval failures before embeddings or a graph database. |
+| Does the shared model miss this person's present context? | A small adaptation layer around its output ([M01](recipes/M01-fast-personalization.md)). | A measured benefit over the baseline reranker, and a context the baseline demonstrably does not carry. |
 
 Several routes may coexist, but load one primary method first. A system can predict a distribution, optimize an action, and produce a human explanation without forcing all three functions into an LLM.
 
@@ -48,6 +49,18 @@ Separate at least four sources:
 **Specification or representation error:** the system is answering the wrong question or comparing cases that are not comparable. Repair the framing or data contract.
 
 Do not equate every human disagreement with irreducible randomness. Conversely, do not assume more labels will resolve a value conflict. The cognitive quadrant [C08](90-sources.md#c08) motivates attention to different work types; the four-way diagnostic above is this guide's operational extension.
+
+## Separate relevance, reliability, and persistence
+
+When a question is about a person's current context, do not collapse three different judgments into one:
+
+| Question | What it decides |
+|---|---|
+| Is it relevant now? | Whether the observation should change today's output at all. |
+| How reliable is the evidence? | How strongly the observation supports that interpretation — correlated clicks are not independent sensors; a mixed basket may be several real goals. |
+| How long should it persist? | For which context and duration the interpretation stays active — a clear temporary intent may justify strong immediate adaptation with no durable update. |
+
+Many correlated events in one session do not establish persistence across independent occasions. One explicit, authorized "remember this" does not need to wait for a click count. Do not treat every mixed or unexpected signal as noise; remain uncertain when the evidence cannot distinguish explanations (see [M01](recipes/M01-fast-personalization.md)).
 
 ## Runtime decision routing
 

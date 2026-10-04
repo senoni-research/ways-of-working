@@ -1,6 +1,6 @@
 # Portable project pack — Cline, OpenCode, and other agents
 
-Version 1.0.0 · 4 October 2026
+Version 1.1.0 · 4 October 2026
 
 ## Install one entry point
 
@@ -30,7 +30,7 @@ The pack defines a memory protocol, not a memory service. Store project evidence
 
 ## Verify and maintain
 
-Test in a fresh session without production credentials. Ask which files were actually loaded, then run the relevant B01–B16 scenarios in `.carey/70-worked-examples.md`. Static checks passed; live host loading and model behavior were not tested here. See `VALIDATION.md`; the rerunnable checker is in the complete bundle.
+Test in a fresh session without production credentials. Ask which files were actually loaded, then run the relevant B01–B34 scenarios in `.carey/70-worked-examples.md`. Static checks passed; live host loading and model behavior were not tested here. See `VALIDATION.md`; the rerunnable checker is in the complete bundle.
 
 Use `.carey/` as the canonical editable instruction set and `memory.md` as the compiled release snapshot. Project facts go in project memory, not in the reusable guide. The source register `.carey/90-sources.md` includes current official host documentation and all 16 article references.
 

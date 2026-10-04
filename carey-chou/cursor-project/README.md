@@ -1,6 +1,6 @@
 # Cursor project pack
 
-Version 1.0.0 · 4 October 2026
+Version 1.1.0 · 4 October 2026
 
 ## Install
 

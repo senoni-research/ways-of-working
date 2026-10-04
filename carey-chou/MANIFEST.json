@@ -1,16 +1,16 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "prepared": "2026-10-04",
   "standalone_files": {
     "cursor.md": {
-      "bytes": 93767,
-      "words": 13073,
-      "sha256": "423ce25a1c1d07ce2fef5d576eff5488a7da8c37f7409a9c813c10003af23ea1"
+      "bytes": 134784,
+      "words": 19103,
+      "sha256": "7d0104f496e84f1e31c99ef9f1acec472a820d6c8327effc3a0e186021e9dd1f"
     },
     "memory.md": {
-      "bytes": 93949,
-      "words": 13097,
-      "sha256": "fc37544337f9669fdcf86b8d4f70b8a0b82b3ba5175fbc761d352efbcdefce6e"
+      "bytes": 134966,
+      "words": 19127,
+      "sha256": "bee3037a842d4877dd1ea492bc7008440584a1e7a58205ec2655323c495282f8"
     }
   },
   "modules": [

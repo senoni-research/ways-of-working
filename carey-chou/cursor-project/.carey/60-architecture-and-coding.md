@@ -17,6 +17,19 @@ Do not build every box as a service. In a small application they can be ordinary
 
 Keep the domain model independent of the LLM provider. Define typed inputs and outputs, schema versions, timeouts, and error behavior. Centralize provider-specific adapters only when a provider is actually needed. Avoid invented APIs: inspect the installed package and current official documentation for the version in use.
 
+## The adaptation layer over an external output
+
+When the system adapts around a model or service it does not own, design for the boundary rather than pretending at access it does not have ([M01](recipes/M01-fast-personalization.md)):
+
+- **Do not assume** upstream embeddings, confidence covariance, model weights, raw scores, training pipelines, or a complete catalog. State what is observed (typically the visible ranked output) and what is estimated.
+- **Reranking cannot create candidates.** If the visible candidate pool is too narrow for the person's actual request, acknowledge the limit or use an authorized broader source. Never manufacture recommendations or bypass access controls.
+- **Keep the baseline as a live fallback.** If the adaptation layer fails, degrades, or is switched off, the baseline output must still serve.
+- **Make the state inspectable.** A reviewer should see the baseline, the adaptation, and the resulting output side by side, with an explanation of what moved and why.
+- **Keep user controls at the boundary.** Temporary-use mode, explicit remember, undo, context end, and variety adjustment are interface decisions, not model internals.
+- **Version the representation.** A saved state from an old embedding space is not silently reusable; on version mismatch, re-initialize or re-map deliberately.
+
+This pattern prescribes no infrastructure stack. In a small application it is three functions and a versioned record.
+
 ## Specify the data contract
 
 Before an integration or learning loop, define the unit of a record, identity keys, units, nullable fields, timestamps, timezone, version, and allowed values. Define which fields are observed, inferred, human-approved, or calculated.
