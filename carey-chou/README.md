@@ -4,7 +4,7 @@
 
 Two complete handbooks and two ready-to-merge project packs. The working method is the same; the entry point changes with the tool. The package is an independent synthesis, not Carey Chou's own prompt or an endorsed product. It contains no private client information and redistributes no upstream implementation files.
 
-The package is primarily an operational interpretation of Carey's public writing — context-sensitive adaptation around a useful shared model ([C01](.carey/90-sources.md#c01)), knowing which decisions are settled ([C03](.carey/90-sources.md#c03)), preserving human judgment in episodic form ([C04](.carey/90-sources.md#c04)), recovering implicit decision criteria ([C06](.carey/90-sources.md#c06)), acting on answers only with external evidence ([C07](.carey/90-sources.md#c07)), and separating learning timescales ([C13](.carey/90-sources.md#c13)). His public repository material is retained as supplementary implementation context where genuinely relevant, not as the defining framework.
+The package is primarily an operational interpretation of Carey's public writing — context-sensitive adaptation around a useful shared model ([C01](portable-project/.carey/90-sources.md#c01)), knowing which decisions are settled ([C03](portable-project/.carey/90-sources.md#c03)), preserving human judgment in episodic form ([C04](portable-project/.carey/90-sources.md#c04)), recovering implicit decision criteria ([C06](portable-project/.carey/90-sources.md#c06)), acting on answers only with external evidence ([C07](portable-project/.carey/90-sources.md#c07)), and separating learning timescales ([C13](portable-project/.carey/90-sources.md#c13)). His public repository material is retained as supplementary implementation context where genuinely relevant, not as the defining framework.
 
 **Three meanings of memory.** This package separates methodology guidance (these modules), project/episodic evidence (your approved evidence ledger), and adaptive personal or task state (runtime state with its own lifetime rules). Installing `memory.md`, `AGENTS.md`, or a Cursor rule creates none of the machinery automatically; see section 40 in either handbook.
 
@@ -49,7 +49,7 @@ No installation script enables telemetry, installs an LLM provider, downloads th
 
 ## Contents and loading
 
-The 10 reference modules cover the operating contract; project workflow; method selection; 14 technical/operating recipes; persistent memory; evaluation and promotion; architecture and coding; eleven worked examples with a demonstrator blueprint and 34 behavioral checks; nine templates and nine invocation prompts; and a source register mapping all 16 articles with retrieval provenance and a review procedure for future revisions.
+The 10 reference modules cover the operating contract; project workflow; method selection; 14 technical/operating recipes; persistent memory; evaluation and promotion; architecture and coding; eleven worked examples with a demonstrator blueprint and 34 behavioral checks; seven templates and nine invocation prompts; and a source register mapping all 16 articles with retrieval provenance and a review procedure for future revisions.
 
 Each recipe is also available as a short file in `.carey/recipes/` for selective loading. `cursor.md` and `memory.md` compile all the same substantive modules into self-contained references. Do not put the whole handbook into an always-loaded context field.
 

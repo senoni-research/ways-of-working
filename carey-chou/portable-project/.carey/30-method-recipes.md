@@ -287,10 +287,12 @@ Say what is fast, what is slow, and what is context-specific — and how each mo
 |---|---|---|
 | A confidence or uncertainty update | Per event | Covariance shrinks after an observation |
 | A change in state | Per task or session | A temporary intent activates and expires |
-| A change in learned parameters | Consolidation epochs | A fast state graduates into a slow state |
+| A change in learned parameters | Fitted updates (batch or authorized online) | Model weights or coefficients updated through an explicit training objective |
 | A policy revision | Controlled review | An approved rule changes with an owner's signature |
 
-Promotion and expiry are the load-bearing parts: specify which evidence permits a fast→slow promotion, what scope the promotion covers, and what expires or reverts. In an organization-owned system, accepted evidence may feed an authorized training or consolidation process; in a user-controlled overlay on an external service, durable learning stays in the user's permitted state (see M01).
+Promotion and expiry are the load-bearing parts: specify which evidence permits a fast→slow promotion, what scope the promotion covers, and what expires or reverts.
+
+Parameter learning means fitting parameters (weights, coefficients) to an explicit objective — it can happen offline or online. Copying a temporary estimate into durable user state is **state consolidation**, not parameter learning: nothing was fitted. The distinction matters because C01's personalized memory adapts an inference-time state without training anything, while C13's illustrative code involves actual weight updates. A row of the table above is about what changes, not how often it changes. In an organization-owned system, accepted evidence may feed an authorized training or consolidation process; in a user-controlled overlay on an external service, durable learning stays in the user's permitted state (see M01).
 
 For an actual adaptive recommender, specify what is user-local, what is global, how updates are synchronized, what is consolidated, and which evidence permits promotion. Test one user's events for effects on another user. Add expiry, bounds, reset behavior, and replayable state transitions.
 

@@ -2,6 +2,15 @@
 
 ## 1.1.0 — 4 October 2026
 
+### Review fixes (addressed in PR review)
+
+- Validator R1: compiled handbooks are now validated by rendering the expected body from the canonical modules and comparing byte-for-byte; pack-local copies checked against root artifacts.
+- Validator R2: strict recipe/section equivalence; empty or heading-only extracts rejected.
+- Tests R3: positive control, exact-target mutators, intended-diagnostic assertions, package-root argument honored.
+- Links R4: README source links corrected to the canonical source register; all root Markdown included in link checks.
+- Inventory R5: manifest enforces 34 scenarios, 14 recipes, 16 sources, and declared word counts; README/VALIDATION state seven templates and nine prompts.
+- Content C1: M11 distinguishes parameter learning from state consolidation. C2: B17/B21/B32 scope corrections.
+
 Substantive additive revision. The package now leads with the distinctive method from Carey's recent public writing rather than generic engineering advice, while preserving every existing safeguard.
 
 **Philosophy and structure**

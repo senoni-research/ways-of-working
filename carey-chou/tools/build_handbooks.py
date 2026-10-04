@@ -220,6 +220,14 @@ def main() -> int:
             "sha256": sha256_of(payload),
         }
     manifest["modules"] = list(MODULES)
+    # Inventory counts are recomputed from actual content, never guessed.
+    manifest["recipes"] = len(list((portable_carey / "recipes").glob("M[0-9][0-9]-*.md")))
+    manifest["behavioral_scenarios"] = sum(
+        1 for i in range(1, 200) if f"| B{i:02} |" in body
+    )
+    manifest["source_articles"] = sum(
+        1 for i in range(1, 100) if f'id="c{i:02}"' in body
+    )
     (carey / "MANIFEST.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
     print(f"manifest updated for version {version}")
     return 0

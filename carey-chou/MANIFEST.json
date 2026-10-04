@@ -3,14 +3,14 @@
   "prepared": "2026-10-04",
   "standalone_files": {
     "cursor.md": {
-      "bytes": 134784,
-      "words": 19103,
-      "sha256": "7d0104f496e84f1e31c99ef9f1acec472a820d6c8327effc3a0e186021e9dd1f"
+      "bytes": 135765,
+      "words": 19249,
+      "sha256": "d1b0162a6710b3efbb9a8f16d81934782e6d3819dc3d3d0e752e9f535c60e380"
     },
     "memory.md": {
-      "bytes": 134966,
-      "words": 19127,
-      "sha256": "bee3037a842d4877dd1ea492bc7008440584a1e7a58205ec2655323c495282f8"
+      "bytes": 135947,
+      "words": 19273,
+      "sha256": "35143b7b665dbdbe540cfd1ec8e5fe844c9bba3d2b3ca7922d2fbba4dca8514c"
     }
   },
   "modules": [
@@ -26,6 +26,6 @@
     "90-sources.md"
   ],
   "recipes": 14,
-  "behavioral_scenarios": 16,
+  "behavioral_scenarios": 34,
   "source_articles": 16
 }
