@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "prepared": "2026-10-04",
+  "standalone_files": {
+    "cursor.md": {
+      "bytes": 93767,
+      "words": 13073,
+      "sha256": "423ce25a1c1d07ce2fef5d576eff5488a7da8c37f7409a9c813c10003af23ea1"
+    },
+    "memory.md": {
+      "bytes": 93949,
+      "words": 13097,
+      "sha256": "fc37544337f9669fdcf86b8d4f70b8a0b82b3ba5175fbc761d352efbcdefce6e"
+    }
+  },
+  "modules": [
+    "00-operating-contract.md",
+    "10-project-workflow.md",
+    "20-method-selection.md",
+    "30-method-recipes.md",
+    "40-memory-protocol.md",
+    "50-evaluation-and-promotion.md",
+    "60-architecture-and-coding.md",
+    "70-worked-examples.md",
+    "80-templates-and-prompts.md",
+    "90-sources.md"
+  ],
+  "recipes": 14,
+  "behavioral_scenarios": 16,
+  "source_articles": 16
+}
