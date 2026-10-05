@@ -13,13 +13,13 @@ python tools/test_validate_pack.py
 python tools/build_handbooks.py   # idempotence: two consecutive builds produce identical artifacts
 ```
 
-The static checker verifies, for the new inventory: deliverables and manifest consistency (SHA-256, byte counts, version match); identical shared modules across the two platform packs; all 14 recipes present in both packs, with every recipe extract matching its section in the full reference; 16 source articles, 34 behavioral scenarios (B01–B34), 9 templates, and 9 prompts in both compiled guides; identical substantive handbook bodies across editions; balanced Markdown fences, unique explicit anchors, and resolvable local links; Cursor rule front matter, compact loader size, and portable/optional instruction targets; loader routing to every module and the adaptation recipe; stored prefaces; and explicit recipe anchors in the compiled handbooks.
+The static checker verifies, for the current inventory: deliverables and manifest consistency (SHA-256 hashes, byte counts, word counts, version match, and declared inventory counts); identical shared modules across the two platform packs; all 14 recipes present in both packs, identical across packs, with every recipe extract matching its full-reference section under strict equivalence; both standalone handbooks matching the canonical modules as rendered by the builder’s own functions, and pack-local copies byte-identical to the root artifacts; 16 source articles, 34 behavioral scenarios (B01–B34), 7 templates, 9 prompts, and 14 recipe anchors in both compiled guides; balanced Markdown fences, unique explicit anchors, and resolvable local links across all shipped Markdown including the package-root files; Cursor rule front matter, compact loader size, and portable/optional instruction targets; and loader routing to every module and the adaptation recipe.
 
-The regression suite (`tools/test_validate_pack.py`) corrupts temporary copies seven ways — a manifest hash, a removed source anchor, an altered mirrored recipe, a broken loader target, a removed behavioral scenario, cross-pack module drift, and recipe-extract drift — and verifies the checker FAILS on each. A validator's success on one valid tree does not prove it detects drift; these tests are the evidence that it does.
+The regression suite (`tools/test_validate_pack.py`) runs a positive control first, then corrupts temporary copies in twelve ways — stale canonical modules, consistently edited books with refreshed hashes, an emptied pack-local book, an emptied recipe, a heading-only recipe, recipe/reference divergence, wrong manifest inventory counts, a wrong declared word count, a removed behavioral scenario (with hashes refreshed so the intended check is reached), a broken root-README link, a removed source anchor, and an edited preface — and asserts the checker fails **for the intended diagnostic** in each case. A validator’s success on one valid tree does not prove it detects drift; these tests are the evidence that it does.
 
 The build was run twice consecutively; the second run reported no changes (idempotence).
 
-## Checks executed at package creation (1.0.0)
+## Checks executed at package creation (historical, 1.0.0)
 
 The same static checker (at its 1.0.0 inventory) passed on the original tree. Its output is preserved in the 1.0.0 release notes.
 
