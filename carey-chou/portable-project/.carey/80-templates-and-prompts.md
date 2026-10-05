@@ -47,6 +47,10 @@ Scope:
 Owner / approval reference:
 Effective date:
 Source and evidence references:
+Intended lifetime: temporary | recurring-context | durable | policy
+Active contexts (if scoped):
+Expiry / re-evaluation condition:
+Promotion authority (who may make it durable or policy):
 
 ## Situation
 What decision was necessary?
@@ -173,6 +177,8 @@ Plan approval reference:
 Expected current revision:
 Approved destination:
 Source evidence and sensitivity:
+Intended lifetime of each addition (temporary | recurring-context | durable | policy):
+Expiry / re-evaluation condition, if temporary or provisional:
 
 Add:
 Amend derived view:
@@ -210,5 +216,13 @@ Requested authorization, if outside current delegation:
 ## Prompt P07 — Establish bounded memory authorization
 
 > Proposed memory destination: `<approved path or service>`. Approved persistence and sensitivity policy: `<reference>`. Proposed write mode: `<propose_only / approved_append / approved_curate>`. Allowed record locations: `<explicit allowlist>`. Curated policy and decision changes remain owner-approved. Verify that the destination is accessible and consistent with the policy before writing; otherwise stay in propose-only mode. Do not copy records into an unapproved local fallback.
+
+## Prompt P08 — Design an adaptation-layer experiment
+
+> Use the installed Carey-inspired guide as the working method. The shared model or service is: `<baseline, and what it exposes>`. The context it may be missing is: `<person, task, or situation>`. State what is observed versus estimated before designing anything. Propose the smallest experiment that distinguishes "the baseline already handles this" from "a small adaptive layer helps": name the baseline arm, the adaptation arm, the synthetic or approved data, the time-safe evaluation, the metrics with their units (current-task relevance, response speed, unwanted durable drift, recovery, correction handling, user burden), and the failure condition that removes the layer. Keep a baseline-only fallback. Do not assume access to upstream embeddings, scores, or training pipelines.
+
+## Prompt P09 — Scope a coding exploration without migration
+
+> Use patch/build discipline for this exploration. The approved stack is: `<current design>`. The question is whether `<alternative>` helps `<endpoint or task>`. Run the bounded comparison with a stated scope and comparator, record the result and its conditions, and keep the approved architecture in force. Leave any migration as a proposal with evidence attached, pending an explicit authorization. A later authorized migration must not be blocked by stale memory, and the experiment must not be silently promoted into the project's design.
 
 These are ordinary prompts, not built-in slash commands. A host-specific command must be explicitly configured before you claim it exists.

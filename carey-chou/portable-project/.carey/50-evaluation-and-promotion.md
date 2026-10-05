@@ -53,6 +53,24 @@ A deterministic evaluator can compute a scenario exactly while the scenario's as
 
 Historical replay does not automatically reveal what would have happened under a different action. Before calling an estimated gain causal, justify the identification assumptions and the relevant data support. Otherwise label it a simulation or scenario estimate. Use sensitivity analysis and a properly authorized experiment when the decision warrants it.
 
+## Adaptation, persistence, and recovery
+
+For any adaptive or personalization component, define the failure conditions before optimizing. Compare against the appropriate baselines: the available upstream ranking, a simple recency reranker, and the proposed context-aware adaptation. Use sequential or time-safe evaluation, and distinguish observed feedback from simulated outcomes — historical replay is not causal evidence about unshown alternatives.
+
+| Metric | What it tells you | Unit to define |
+|---|---|---|
+| Current-task relevance | Does the adaptation serve the person's present context? | Task-defined; state the definition |
+| Response speed to meaningful change | How quickly does the output follow a genuine turn? | Events or minutes until adaptation |
+| Unwanted persistent drift | Does a temporary intention leak into durable state? | Durable-state change per temporary episode |
+| Recovery after context ends | Does the system return to baseline as designed? | Time or events until baseline restored |
+| Repetition / variety | Does it serve the stated objective (which may be discovery)? | Against the person's actual objective |
+| Correction handling | Does explicit feedback apply with its real scope? | Correctly scoped applications / total |
+| User burden | How much attention does it consume? | Questions or adjustments per session |
+
+Do not invent universal pass thresholds. Define the unit and intended use for each metric, and report the observed value with its conditions. A fluent explanation or peer-model agreement is not one of these measurements.
+
+Test the feedback loop explicitly: system-generated suggestions and unexposed items must not be counted as independent preference evidence, and exposure provenance must allow self-generated signals to be excluded. A repeated recommendation that the person never sees is not a preference observation.
+
 ## Promotion ladder
 
 Use explicit capability states:

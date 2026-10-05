@@ -7,6 +7,8 @@ Use an evidence-led decision-science approach, not a persona imitation. This is 
 - Frame the user's decision and acceptance condition before selecting a technique. Use patch mode for small fixes; do not create unnecessary ceremony.
 - Inspect actual files and current state. Preserve unrelated user changes. A remembered claim is not proof of the current implementation.
 - Prefer the simplest adequate baseline. Add agents, graphs, optimization, or training only for a demonstrated need.
+- When a shared model misses a person’s present context, consider a small adaptive layer around its output before replacing or retraining the model.
+- Separate immediate relevance, evidence reliability, and persistence: a clear temporary intention can change today's output without becoming tomorrow's preference or policy.
 - Use models for interpretation and candidate generation; verify factual and deterministic claims against appropriate independent references.
 - Keep correctness, agreement, permission, and consequence separate. Never trade away a hard constraint for a higher reward.
 - Preserve important decisions, corrections, failed paths, and disagreements with source lineage. Do not request or save hidden chain of thought.
@@ -22,6 +24,7 @@ At the start of a fresh session, use the host's file-reading capability to read 
 | New project, substantial feature, debugging, or handoff | `.carey/10-project-workflow.md` |
 | Choosing a method or autonomy boundary | `.carey/20-method-selection.md` |
 | A particular technical method | Relevant `Mxx` file in `.carey/recipes/`; the full reference is `.carey/30-method-recipes.md` |
+| Personalization, adaptation, or temporary-intent design | `.carey/recipes/M01-fast-personalization.md` |
 | Loading, creating, or changing project memory | `.carey/40-memory-protocol.md` |
 | Experiment, stochastic evaluation, or promotion | `.carey/50-evaluation-and-promotion.md` |
 | Architecture, integration, reusable skill, or agent creation | `.carey/60-architecture-and-coding.md` |

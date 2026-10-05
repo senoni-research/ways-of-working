@@ -40,6 +40,8 @@ Establish the following contract, in prose or a small table:
 
 Translate “make it smart” into an acceptance example. Translate “real time” into an explicit latency and freshness requirement. Translate “accurate” into an appropriate metric and evaluation population. Leave an unresolved field explicitly unknown rather than inventing a requirement.
 
+When the task involves personalization or adaptation, add the current-context framing: whose context, which context, and how long any learned change should remain in force (see section 40 on intended lifetime).
+
 ## Formulate the decision before selecting a model
 
 When useful, express the problem as choosing an action `a` from a feasible set `A(s)` for situation `s`:
@@ -55,7 +57,7 @@ When outputs drive intervention, distinguish prediction from the effect of actin
 
 ## Establish a baseline
 
-The baseline must produce the same kind of output and face the same constraints as the proposed improvement. Reasonable starting points include an existing query, a simple deterministic workflow, a seasonal forecast, a hand-authored prompt, a documented manual process, or a basic retrieval system.
+The baseline must produce the same kind of output and face the same constraints as the proposed improvement. Reasonable starting points include an existing query, a simple deterministic workflow, a seasonal forecast, a hand-authored prompt, a documented manual process, or a basic retrieval system. For an adaptation layer, the baseline is the shared model's own output — inspect it before assuming it is too slow or too static.
 
 Record the baseline version and the evaluation conditions. A baseline is not deliberately weakened to make a sophisticated design look good. Measure operator effort and integration cost when those are part of the value proposition.
 
@@ -94,6 +96,8 @@ What changes after each possible result:
 ```
 
 A negative result should simplify the system or eliminate an explanation. A test that cannot change the plan is probably demonstration rather than investigation.
+
+A bounded interactive experiment is a legitimate way to test an uncertain idea: require a credible comparator, observable behavior, safe scope, and honest conclusions — but do not require production-scale evidence before the experiment is allowed to run. "Start simple" must not become "never test anything novel." The rapid path is: state the hypothesis, pick the nearest baseline, make the behavior observable, run it small, and report what it discriminated.
 
 ## Debug by narrowing the explanation
 

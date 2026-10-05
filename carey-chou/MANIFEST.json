@@ -1,16 +1,16 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "prepared": "2026-10-04",
   "standalone_files": {
     "cursor.md": {
-      "bytes": 93767,
-      "words": 13073,
-      "sha256": "423ce25a1c1d07ce2fef5d576eff5488a7da8c37f7409a9c813c10003af23ea1"
+      "bytes": 135765,
+      "words": 19249,
+      "sha256": "d1b0162a6710b3efbb9a8f16d81934782e6d3819dc3d3d0e752e9f535c60e380"
     },
     "memory.md": {
-      "bytes": 93949,
-      "words": 13097,
-      "sha256": "fc37544337f9669fdcf86b8d4f70b8a0b82b3ba5175fbc761d352efbcdefce6e"
+      "bytes": 135947,
+      "words": 19273,
+      "sha256": "35143b7b665dbdbe540cfd1ec8e5fe844c9bba3d2b3ca7922d2fbba4dca8514c"
     }
   },
   "modules": [
@@ -26,6 +26,6 @@
     "90-sources.md"
   ],
   "recipes": 14,
-  "behavioral_scenarios": 16,
+  "behavioral_scenarios": 34,
   "source_articles": 16
 }
