@@ -201,11 +201,17 @@ def fva(predecessor_error: float, candidate_error: float) -> tuple[float, float 
 def weighted_blend(components: Sequence[Sequence[float]], weights: Sequence[float]) -> tuple[float, ...]:
     """Blend aligned prediction vectors; never average component scores.
 
-    Every component must cover the same complete key set: equal lengths, no
-    missing cells, no duplicates, and weights are validated against a declared
-    constraint. The blended predictions must be scored afresh under the exact
-    task metric by the caller. Identical component errors do not guarantee an
-    improved blend score; no such improvement is asserted here.
+    This helper receives positional vectors only. It validates lengths,
+    finiteness, nonnegative weights and a positive normalized total, but it
+    CANNOT verify series/origin/target-date key identity: a same-length
+    permutation of rows would pass here while representing different cells.
+    Callers must establish full-key alignment first (align_complete on each
+    component against one canonical key order) and keep each component's
+    model_version metadata separate — different models need not share a
+    version string to align. With anonymous vectors, alignment is unchecked
+    by definition. The blended predictions must be scored afresh under the
+    exact task metric by the caller. Identical component errors do not
+    guarantee an improved blend score; no such improvement is asserted here.
     """
     if not components or not weights:
         raise ValueError('components and weights must be nonempty')

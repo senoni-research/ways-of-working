@@ -21,7 +21,7 @@ Participant alternatives—CatBoost, statistical blends, foundation models, prob
 - @@MODULE_COUNT@@ selectively loaded modules, including the original thirteen-practice structure and @@RECIPE_COUNT@@ technical recipes.
 - @@EXAMPLE_COUNT@@ worked examples, @@SCENARIO_COUNT@@ behavioral specifications, @@TEMPLATE_COUNT@@ record templates, and @@PROMPT_COUNT@@ invocation prompts. Two compact operational examples and eight behavioral checks draw on the supplemental V05 co-winner interview; its reported scores stay attributed in the source note, never presented as reproduced results.
 - Source mapping for all @@PRIMARY_COUNT@@ primary entries (@@DISTINCT_PRIMARY_URLS@@ distinct primary URLs): the original catalogue's 53 entries with 52 URLs plus one supplemental recording (V05) supplied after the original archive was assembled. Actual downloaded format, inspected scope, limits, and file hashes are recorded per entry. Four supplied caption transcripts are now usable (V01–V03 and V05); V04's spoken transcript and P02's full publication remain absent.
-- An original standard-library arithmetic reference with **40 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
+- An original standard-library arithmetic reference with **42 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
 - A deterministic canonical build, strict validator, and adversarial validator regressions. See [VALIDATION.md](VALIDATION.md) for what was actually run.
 
 The standalone Cursor edition has **@@CURSOR_WORDS@@ whitespace-separated words** and the portable edition **@@MEMORY_WORDS@@**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
@@ -49,6 +49,6 @@ A read-only `python3 tools/build_pack.py . --check` reports drift without fixing
 
 ## Repository integration
 
-Place this complete directory beside `carey-chou/` as `nicolas-vandeput/` in `ways-of-working`, after reviewing local changes. No remote repository, branch, PR, merge or deployment was changed in creating these artifacts. Installation into a working forecasting project is a separate merge of the relevant platform pack, not activation of every rule in the methods repository.
+Place this complete directory beside `carey-chou/` as `nicolas-vandeput/` in `ways-of-working`, after reviewing local changes. During artifact creation, no remote repository, branch, PR, merge or deployment was changed; repository integration (branch and PR review) happened afterwards and is separate from these artifact statements. Installation into a working forecasting project is a separate merge of the relevant platform pack, not activation of every rule in the methods repository.
 
 This is an independent Senoni synthesis, not an endorsed product. Conventional algorithms retain their own scientific provenance. Source review notes are bounded inspection observations, not blanket claims that upstream projects fail or that every source artifact has been exhaustively audited.

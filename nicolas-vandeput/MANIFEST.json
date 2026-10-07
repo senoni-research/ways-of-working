@@ -61,11 +61,11 @@
     "canonical/modules/80-worked-examples-and-checks.md": "f857fcfa714a7459edf4537a734b511b5e4223ea758ff3bd630d2f4c2e1d032d",
     "canonical/modules/85-templates-and-prompts.md": "0e984b225da5a9690dbb9a96767a71eb944be80df8bb345598c266efc32506b0",
     "canonical/modules/90-source-interpretation.md": "6a89ae5335ad6d2a148a53a348d1f9c9c7bb8f06a914bc6afe4010fb5667e11a",
-    "canonical/modules/95-source-observations.md": "11ac921caaadef4b946f1d49b0e5609704e9469c998637f1f58d58e2c8c938fb",
-    "canonical/pages/CHANGELOG.md": "de360bf1f849e73b0861e59a9529f1b0b220d8acaec38aaf335d1b3d2e163163",
+    "canonical/modules/95-source-observations.md": "a8da179c5524ec0d7b18a0a88b8d02e536eb234af61d7ca79165a4c9845acbfa",
+    "canonical/pages/CHANGELOG.md": "1e30fbdfb8bac8deede86eac235d9364acd21217031bde6c322448131c808cfe",
     "canonical/pages/QUICKSTART.md": "b2eb3cb5fa093cee55b0259c2ce49842b3ed8a5bff6a8def2bfad949e6808655",
-    "canonical/pages/README.md": "3a910bc1f3d30d019dbab3ebbe3bdd5ccb0d564308a6a196812b90bf27e4b811",
-    "canonical/pages/VALIDATION.md": "0a1727a7306207291a2bb9fca63d8cc157a7cc49021fe8409aaa013fe6878ff0",
+    "canonical/pages/README.md": "6726d6f2147875172a1ef9ecb88a15e49e5648ec1332c6d88455cb2841ab8f37",
+    "canonical/pages/VALIDATION.md": "08e5b6fb153e9a4fe1a8dcf4d94dee5cc173fe79c134b56eae72a8d9fc11fa6b",
     "canonical/prefaces/cursor.md": "832c541e0962da4aadfb084cbfc0a08300e771ecb06b4fa14cfeb331bfd29d80",
     "canonical/prefaces/memory.md": "841b131892012900d3f82b5d1b570cdb208186b3d0258ae85f9f4970b3ccc12c",
     "canonical/recipes/M01-decision-and-risk-horizon.md": "6daf9431846d1f294e7bc06d791fca0e6a4b495eff91c17a36ee9fd2c92daecc",
@@ -76,7 +76,7 @@
     "canonical/recipes/M06-global-ml-features.md": "2467759c78f1c496b1852da7c66eb919ce09a8b63efd9b041f5145b0fd3aea8b",
     "canonical/recipes/M07-horizon-representations.md": "314f5a17835704d79d18e92d188b39f5a58d66c5ab4b215fda969364c7aa9ebb",
     "canonical/recipes/M08-winner-catboost-pattern.md": "1138591e62d0f2e7bb906cd5084a8a60f8a2b053e93147de37872a39498a2c66",
-    "canonical/recipes/M09-ensembles.md": "c851c84b4606670bc7998b056644ee762fa0eb802d23b43ec868d117e60ed75f",
+    "canonical/recipes/M09-ensembles.md": "a0ebd6a0560c0030eafb162850d1fd79f52c35c6c3bd32f52bf4430a1655c2a8",
     "canonical/recipes/M10-statistical-and-hierarchical-alternatives.md": "6c19bf3a0927b779bbda652b007cb98514ddbea1d21f527c19536ff426f29d3b",
     "canonical/recipes/M11-foundation-model-experiments.md": "d9f1e027bcc040f6d4ad7c7639890f005c604b3e4bb2c508f210fb1992521aaf",
     "canonical/recipes/M12-lost-sales-simulation.md": "18c4fc229bd6cecef5b1e5f1753d2c71ffc8ccabd1b433af61bf3f1f69c97ef8",
@@ -88,7 +88,7 @@
     "canonical/recipes/M18-forecast-vintage-variability.md": "bad10d76677913ee72ad7c84c0a2e5f6a7e9af872b1ee9cc43638b169067fc2b",
     "canonical/recipes/M19-ai-assisted-experimentation.md": "826ae7bd11c3dc3b60518d5a75df0f82cd49f486cab8b33fc7e0105f1340743e",
     "canonical/recipes/M20-submissions-and-inventory-views.md": "6b69192211b23c37e630d239702de6afb4a4753c947d55e867f337e8f4031e11",
-    "canonical/sources.json": "91bbec5b3757ad4ebac227fe78c1db977dafe268c8bb166045022178ba4d337f",
+    "canonical/sources.json": "d9406839dc47b0a3ef2e0e6a8439a0e5b75308b0877f5aff0d1abcd85ce38bf9",
     "VERSION": "7fbd210ebec11f65a97190ef900795c4b8da3805af3f5a1b8d1d272556b292ca"
   },
   "support_sha256": {
@@ -96,15 +96,15 @@
     "tools/build_pack.py": "3781cee7f73b9454534701023426fc030058e7accd7ff7719ccde6a6c49cbcbb",
     "tools/test_validate_pack.py": "0add317b80e36746021d9fcda30b416b678ebee134e1dd529dfcf352adffe8b5",
     "tools/validate_pack.py": "6e6e31b6afbc0701517fc1abc2e6a59b876680aef326be41046537e71d66b7b5",
-    "reference/README.md": "3d3e1178311391ef9599d6f736009e7b42eebf2e5ffa4d6c3cf70d1955db40aa",
-    "reference/core.py": "327e50d9cf49139687c775564b86ac3c7b598d78828a10821e3a2aa9fda34bf0",
-    "reference/test_core.py": "eff6ef03f9f23e8bc47bfacebb5d4109cb6b34ddcf956c6746b9a5c4a276a71d"
+    "reference/README.md": "4adb41b8d26135b41fa467fc35141b1996f5c17f85f8f7afcdeef3ab76392032",
+    "reference/core.py": "d5deed62599d1388e21a59783e0094d5afe1b3d29be19e252e790aae5ec184be",
+    "reference/test_core.py": "e6aebdb2de9263428708e1bc9313099ec40a1f20df367bca4192dc0729a2f4a3"
   },
   "generated": {
     "CHANGELOG.md": {
-      "bytes": 2906,
-      "sha256": "31c375a667275ff4027719712abdbbec3e291dbe5678c22b9957fdbd990f0a84",
-      "words": 363
+      "bytes": 4068,
+      "sha256": "e46f8f8e21a25112074c8be613b05d68a0f5ee1a0f65ba43da9bb446c347d0d5",
+      "words": 516
     },
     "QUICKSTART.md": {
       "bytes": 2651,
@@ -112,28 +112,28 @@
       "words": 355
     },
     "README.md": {
-      "bytes": 5966,
-      "sha256": "7d8d58129d57486f6587bfd28c8dee147a573abf2075e0b572968c269998e13b",
-      "words": 773
+      "bytes": 6078,
+      "sha256": "ca35ea95a846d8ce36646d709f04dd050e3ec44f576f49412aa070a2790e5e47",
+      "words": 787
     },
     "SOURCE_COVERAGE.md": {
-      "bytes": 45195,
-      "sha256": "c76957a69d469b9b650c809afa83202ec37432e42f8cd2752fdae6da03746c56",
-      "words": 4016
+      "bytes": 45607,
+      "sha256": "8947aeacc8462e3299750937e23738a861ebe6f0a5fbac1da71f5117676d6b2e",
+      "words": 4065
     },
     "SOURCE_REGISTER.json": {
-      "bytes": 61864,
-      "sha256": "91bbec5b3757ad4ebac227fe78c1db977dafe268c8bb166045022178ba4d337f"
+      "bytes": 62432,
+      "sha256": "d9406839dc47b0a3ef2e0e6a8439a0e5b75308b0877f5aff0d1abcd85ce38bf9"
     },
     "SOURCE_REVIEW.md": {
-      "bytes": 12636,
-      "sha256": "7b838a1d2a679e851e2cc38ef89e05937142db691422f2fb16991309a1721088",
-      "words": 1825
+      "bytes": 13385,
+      "sha256": "f1f537f1c4af83154dfd52cb019ae4e8ce83e564fbf49d42c4f2d4c2bfbb2087",
+      "words": 1931
     },
     "VALIDATION.md": {
-      "bytes": 6631,
-      "sha256": "38e2e602159f421400bb640ebadec57d02435a3589f9d1d330e350408e83a834",
-      "words": 891
+      "bytes": 7756,
+      "sha256": "3f4a335beb7bbf8b35c573330421891ceed9db0e984593d4ac71b952b68dcc44",
+      "words": 1048
     },
     "cursor-project/.cursor/rules/10-vandeput-method.mdc": {
       "bytes": 4079,
@@ -176,9 +176,9 @@
       "words": 979
     },
     "cursor-project/.vandeput/70-method-recipes.md": {
-      "bytes": 49851,
-      "sha256": "4f0d8657e8fa914d1bfd9c681a582f182410883397c085f31d8c9f3c873c8dce",
-      "words": 6684
+      "bytes": 50346,
+      "sha256": "3f74789c5ceffe912ba3c01ca715f23780751cc85130014026cfe67b048feec4",
+      "words": 6749
     },
     "cursor-project/.vandeput/80-worked-examples-and-checks.md": {
       "bytes": 17242,
@@ -191,14 +191,14 @@
       "words": 1307
     },
     "cursor-project/.vandeput/90-sources.md": {
-      "bytes": 32946,
-      "sha256": "7586c9de76aa7a2b471e66dd605314e4007b85890ea4a10be1565669837eb87e",
-      "words": 3249
+      "bytes": 33208,
+      "sha256": "76e5d74e2c8cf5c664ef1db0cd2984eb0dbba9c74912858153d445c844b9b68f",
+      "words": 3284
     },
     "cursor-project/.vandeput/95-source-observations.md": {
-      "bytes": 12528,
-      "sha256": "56d906f01ad670403c2ad022315727fc41ee6c1debac6bb5b4163ac4d0b0746c",
-      "words": 1825
+      "bytes": 13250,
+      "sha256": "17a9432cb1c279f0da3f7810ee7aa42f51820c4d9fd51aca5d9e23ac5989c0cf",
+      "words": 1931
     },
     "cursor-project/.vandeput/loader.md": {
       "bytes": 3974,
@@ -246,9 +246,9 @@
       "words": 298
     },
     "cursor-project/.vandeput/recipes/M09-ensembles.md": {
-      "bytes": 3275,
-      "sha256": "93002b301c00f695d80e4ce1ecde82d6957f49014854bf2bcc83ff50d5c7b474",
-      "words": 447
+      "bytes": 3770,
+      "sha256": "12d22fee8027a81bb08fd3ac39c939befa76ff0b43039e6ba2498773f40f2ddf",
+      "words": 512
     },
     "cursor-project/.vandeput/recipes/M10-statistical-and-hierarchical-alternatives.md": {
       "bytes": 2789,
@@ -311,17 +311,17 @@
       "words": 205
     },
     "cursor-project/.vandeput/reference/README.md": {
-      "bytes": 1594,
-      "sha256": "d39586d9d57561186b0db76ccc6b9eb4281d095210508d7e41fa149742abb12a",
-      "words": 214
+      "bytes": 2440,
+      "sha256": "268c685c8a85800c37a4ea54b353f5821f272561d01d8ead1d1834596f05140e",
+      "words": 330
     },
     "cursor-project/.vandeput/reference/core.py": {
-      "bytes": 9705,
-      "sha256": "327e50d9cf49139687c775564b86ac3c7b598d78828a10821e3a2aa9fda34bf0"
+      "bytes": 10148,
+      "sha256": "d5deed62599d1388e21a59783e0094d5afe1b3d29be19e252e790aae5ec184be"
     },
     "cursor-project/.vandeput/reference/test_core.py": {
-      "bytes": 6832,
-      "sha256": "eff6ef03f9f23e8bc47bfacebb5d4109cb6b34ddcf956c6746b9a5c4a276a71d"
+      "bytes": 8370,
+      "sha256": "e6aebdb2de9263428708e1bc9313099ec40a1f20df367bca4192dc0729a2f4a3"
     },
     "cursor-project/README.md": {
       "bytes": 1329,
@@ -329,33 +329,33 @@
       "words": 170
     },
     "cursor-project/SOURCE_COVERAGE.md": {
-      "bytes": 45195,
-      "sha256": "c76957a69d469b9b650c809afa83202ec37432e42f8cd2752fdae6da03746c56",
-      "words": 4016
+      "bytes": 45607,
+      "sha256": "8947aeacc8462e3299750937e23738a861ebe6f0a5fbac1da71f5117676d6b2e",
+      "words": 4065
     },
     "cursor-project/SOURCE_REGISTER.json": {
-      "bytes": 61864,
-      "sha256": "91bbec5b3757ad4ebac227fe78c1db977dafe268c8bb166045022178ba4d337f"
+      "bytes": 62432,
+      "sha256": "d9406839dc47b0a3ef2e0e6a8439a0e5b75308b0877f5aff0d1abcd85ce38bf9"
     },
     "cursor-project/VALIDATION.md": {
-      "bytes": 6631,
-      "sha256": "38e2e602159f421400bb640ebadec57d02435a3589f9d1d330e350408e83a834",
-      "words": 891
+      "bytes": 7756,
+      "sha256": "3f4a335beb7bbf8b35c573330421891ceed9db0e984593d4ac71b952b68dcc44",
+      "words": 1048
     },
     "cursor-project/cursor.md": {
-      "bytes": 178070,
-      "sha256": "388b130ff4f4c8da41476171062f9606cc349130107f0b1f04180b0d38ae38cb",
-      "words": 23656
+      "bytes": 179536,
+      "sha256": "fbb91889c80719832371ddb0cdeae075ab4f0cbf7ed3d2554e31ac695bcb7eb5",
+      "words": 23862
     },
     "cursor.md": {
-      "bytes": 178070,
-      "sha256": "388b130ff4f4c8da41476171062f9606cc349130107f0b1f04180b0d38ae38cb",
-      "words": 23656
+      "bytes": 179536,
+      "sha256": "fbb91889c80719832371ddb0cdeae075ab4f0cbf7ed3d2554e31ac695bcb7eb5",
+      "words": 23862
     },
     "memory.md": {
-      "bytes": 178321,
-      "sha256": "2b8820d1019cf92d60f2dd9ba23a392a0555c7ee8f434bff97dc5ae3e15022af",
-      "words": 23697
+      "bytes": 179787,
+      "sha256": "87dd9f07d1e067016a5bcc8b09012802719284cba8cbc4d8ec99030072d91f37",
+      "words": 23903
     },
     "portable-project/.vandeput/00-operating-contract.md": {
       "bytes": 6721,
@@ -393,9 +393,9 @@
       "words": 979
     },
     "portable-project/.vandeput/70-method-recipes.md": {
-      "bytes": 49851,
-      "sha256": "4f0d8657e8fa914d1bfd9c681a582f182410883397c085f31d8c9f3c873c8dce",
-      "words": 6684
+      "bytes": 50346,
+      "sha256": "3f74789c5ceffe912ba3c01ca715f23780751cc85130014026cfe67b048feec4",
+      "words": 6749
     },
     "portable-project/.vandeput/80-worked-examples-and-checks.md": {
       "bytes": 17242,
@@ -408,14 +408,14 @@
       "words": 1307
     },
     "portable-project/.vandeput/90-sources.md": {
-      "bytes": 32946,
-      "sha256": "7586c9de76aa7a2b471e66dd605314e4007b85890ea4a10be1565669837eb87e",
-      "words": 3249
+      "bytes": 33208,
+      "sha256": "76e5d74e2c8cf5c664ef1db0cd2984eb0dbba9c74912858153d445c844b9b68f",
+      "words": 3284
     },
     "portable-project/.vandeput/95-source-observations.md": {
-      "bytes": 12528,
-      "sha256": "56d906f01ad670403c2ad022315727fc41ee6c1debac6bb5b4163ac4d0b0746c",
-      "words": 1825
+      "bytes": 13250,
+      "sha256": "17a9432cb1c279f0da3f7810ee7aa42f51820c4d9fd51aca5d9e23ac5989c0cf",
+      "words": 1931
     },
     "portable-project/.vandeput/loader.md": {
       "bytes": 3974,
@@ -463,9 +463,9 @@
       "words": 298
     },
     "portable-project/.vandeput/recipes/M09-ensembles.md": {
-      "bytes": 3275,
-      "sha256": "93002b301c00f695d80e4ce1ecde82d6957f49014854bf2bcc83ff50d5c7b474",
-      "words": 447
+      "bytes": 3770,
+      "sha256": "12d22fee8027a81bb08fd3ac39c939befa76ff0b43039e6ba2498773f40f2ddf",
+      "words": 512
     },
     "portable-project/.vandeput/recipes/M10-statistical-and-hierarchical-alternatives.md": {
       "bytes": 2789,
@@ -528,17 +528,17 @@
       "words": 205
     },
     "portable-project/.vandeput/reference/README.md": {
-      "bytes": 1594,
-      "sha256": "d39586d9d57561186b0db76ccc6b9eb4281d095210508d7e41fa149742abb12a",
-      "words": 214
+      "bytes": 2440,
+      "sha256": "268c685c8a85800c37a4ea54b353f5821f272561d01d8ead1d1834596f05140e",
+      "words": 330
     },
     "portable-project/.vandeput/reference/core.py": {
-      "bytes": 9705,
-      "sha256": "327e50d9cf49139687c775564b86ac3c7b598d78828a10821e3a2aa9fda34bf0"
+      "bytes": 10148,
+      "sha256": "d5deed62599d1388e21a59783e0094d5afe1b3d29be19e252e790aae5ec184be"
     },
     "portable-project/.vandeput/reference/test_core.py": {
-      "bytes": 6832,
-      "sha256": "eff6ef03f9f23e8bc47bfacebb5d4109cb6b34ddcf956c6746b9a5c4a276a71d"
+      "bytes": 8370,
+      "sha256": "e6aebdb2de9263428708e1bc9313099ec40a1f20df367bca4192dc0729a2f4a3"
     },
     "portable-project/AGENTS.md": {
       "bytes": 3974,
@@ -551,23 +551,23 @@
       "words": 171
     },
     "portable-project/SOURCE_COVERAGE.md": {
-      "bytes": 45195,
-      "sha256": "c76957a69d469b9b650c809afa83202ec37432e42f8cd2752fdae6da03746c56",
-      "words": 4016
+      "bytes": 45607,
+      "sha256": "8947aeacc8462e3299750937e23738a861ebe6f0a5fbac1da71f5117676d6b2e",
+      "words": 4065
     },
     "portable-project/SOURCE_REGISTER.json": {
-      "bytes": 61864,
-      "sha256": "91bbec5b3757ad4ebac227fe78c1db977dafe268c8bb166045022178ba4d337f"
+      "bytes": 62432,
+      "sha256": "d9406839dc47b0a3ef2e0e6a8439a0e5b75308b0877f5aff0d1abcd85ce38bf9"
     },
     "portable-project/VALIDATION.md": {
-      "bytes": 6631,
-      "sha256": "38e2e602159f421400bb640ebadec57d02435a3589f9d1d330e350408e83a834",
-      "words": 891
+      "bytes": 7756,
+      "sha256": "3f4a335beb7bbf8b35c573330421891ceed9db0e984593d4ac71b952b68dcc44",
+      "words": 1048
     },
     "portable-project/memory.md": {
-      "bytes": 178321,
-      "sha256": "2b8820d1019cf92d60f2dd9ba23a392a0555c7ee8f434bff97dc5ae3e15022af",
-      "words": 23697
+      "bytes": 179787,
+      "sha256": "87dd9f07d1e067016a5bcc8b09012802719284cba8cbc4d8ec99030072d91f37",
+      "words": 23903
     },
     "portable-project/optional-adapters/cline/10-vandeput-method.md": {
       "bytes": 3974,

@@ -105,5 +105,26 @@ class BlendTests(unittest.TestCase):
         # worse; the helper performs arithmetic only, never a performance claim.
         worse=weighted_blend([[10],[20]],[.9,.1])
         self.assertGreater(vn1_score([15],[*worse]).absolute_error,0)
+    def test_keyed_reordering_detected_by_alignment_boundary(self):
+        # weighted_blend itself receives only vectors and CANNOT detect a
+        # same-length permutation of series/origin/date keys. The keyed
+        # boundary is align_complete: reorder one component's rows, align
+        # both to a canonical key order, and only then blend.
+        keys_expected=[('series-a',1),('series-b',1)]
+        model_a={('series-a',1):15.0,('series-b',1):5.0}   # actual 10/10
+        model_b={('series-b',1):15.0,('series-a',1):5.0}   # same cells, reversed storage order
+        # A naive vector blend of storage order 0/1 would pair 15 with 15
+        # and 5 with 5 — the wrong cells against each other's semantics.
+        vec_a=align_complete(keys_expected,list(model_a),list(model_a.values()))
+        vec_b=align_complete(keys_expected,list(model_b),list(model_b.values()))
+        blend=weighted_blend([vec_a,vec_b],[.5,.5])
+        self.assertEqual(blend,(10.0,10.0))
+        self.assertEqual(vn1_score([10,10],blend).score,0)
+    def test_keyed_boundary_rejects_missing_and_duplicate_keys(self):
+        # Missing, duplicate, or unexpected keys fail at align_complete,
+        # before any blending; the vector-only helper would have accepted them.
+        with self.assertRaises(ValueError):align_complete([('a',1),('b',1)],[('a',1)],[1.0])
+        with self.assertRaises(ValueError):align_complete([('a',1)],[('a',1),('a',1)],[1.0,2.0])
+        with self.assertRaises(ValueError):align_complete([('a',1)],[('x',9)],[1.0])
 
 if __name__=='__main__':unittest.main(verbosity=2)

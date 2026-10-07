@@ -1,6 +1,6 @@
 # M11 — Multiple learning timescales
 
-**Source idea [C13](../90-sources.md#c13).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
+**Source idea [C13](../90-sources.md#c13); primary research Behrouz et al., "Nested Learning: The Illusion of Deep Learning Architectures" ([R02](../90-sources.md#r02)).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
 
 Apply the general lesson first to system state: session observations can be temporary, validated project lessons can last longer, and approved policies should change through controlled review. This is an analogy, not an implementation of the Nested Learning research.
 

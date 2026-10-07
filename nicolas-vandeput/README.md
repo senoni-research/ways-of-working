@@ -21,10 +21,10 @@ Participant alternatives—CatBoost, statistical blends, foundation models, prob
 - 12 selectively loaded modules, including the original thirteen-practice structure and 20 technical recipes.
 - 10 worked examples, 48 behavioral specifications, 9 record templates, and 9 invocation prompts. Two compact operational examples and eight behavioral checks draw on the supplemental V05 co-winner interview; its reported scores stay attributed in the source note, never presented as reproduced results.
 - Source mapping for all 54 primary entries (53 distinct primary URLs): the original catalogue's 53 entries with 52 URLs plus one supplemental recording (V05) supplied after the original archive was assembled. Actual downloaded format, inspected scope, limits, and file hashes are recorded per entry. Four supplied caption transcripts are now usable (V01–V03 and V05); V04's spoken transcript and P02's full publication remain absent.
-- An original standard-library arithmetic reference with **40 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
+- An original standard-library arithmetic reference with **42 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
 - A deterministic canonical build, strict validator, and adversarial validator regressions. See [VALIDATION.md](VALIDATION.md) for what was actually run.
 
-The standalone Cursor edition has **23656 whitespace-separated words** and the portable edition **23697**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
+The standalone Cursor edition has **23862 whitespace-separated words** and the portable edition **23903**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
 
 ## Sources and access
 
@@ -49,6 +49,6 @@ A read-only `python3 tools/build_pack.py . --check` reports drift without fixing
 
 ## Repository integration
 
-Place this complete directory beside `carey-chou/` as `nicolas-vandeput/` in `ways-of-working`, after reviewing local changes. No remote repository, branch, PR, merge or deployment was changed in creating these artifacts. Installation into a working forecasting project is a separate merge of the relevant platform pack, not activation of every rule in the methods repository.
+Place this complete directory beside `carey-chou/` as `nicolas-vandeput/` in `ways-of-working`, after reviewing local changes. During artifact creation, no remote repository, branch, PR, merge or deployment was changed; repository integration (branch and PR review) happened afterwards and is separate from these artifact statements. Installation into a working forecasting project is a separate merge of the relevant platform pack, not activation of every rule in the methods repository.
 
 This is an independent Senoni synthesis, not an endorsed product. Conventional algorithms retain their own scientific provenance. Source review notes are bounded inspection observations, not blanket claims that upstream projects fail or that every source artifact has been exhaustively audited.

@@ -719,7 +719,7 @@ Store out-of-fold predictions under `(series, origin, target_date, output_semant
 
 Start with a simple fixed blend, then tune constrained weights only where the data supports it. Measure whether each component contributes a held-out gain. A model can be individually weaker but complement another model's errors; different algorithm names alone do not establish useful diversity.
 
-The VN1 co-winner's V05 account makes this concrete: two statistical components each reported around 0.55, their equal blend was reported around 0.53, and adding a collaborator's LightGBM blend was reported below 0.50 — a spoken progression, not our reproduced experiment. Its practical translation: preserve comparable prediction vectors, test a simple blend first, inspect whether component errors complement one another, and retain a component only when the combined forecast shows a supported benefit. Fit blend weights on development predictions only; never average model error scores to derive a blend score, because the error of blended predictions must be recomputed under the exact task metric. [V05](#v05)
+The VN1 co-winner's V05 account makes this concrete: two statistical components each reported around 0.55, their equal blend was reported around 0.53, and adding the LightGBM component built by his joint-solution teammate Jakub Figura (named in the official O02 announcement; Figura is not the interview speaker) was reported below 0.50 — a spoken progression, not our reproduced experiment. Its practical translation: preserve comparable prediction vectors, test a simple blend first, inspect whether component errors complement one another, and retain a component only when the combined forecast shows a supported benefit. Fit blend weights on development predictions only; never average model error scores to derive a blend score, because the error of blended predictions must be recomputed under the exact task metric. [V05](#v05)
 
 A speaker-reported competition phase-two mixture (45% LightGBM, 30% seasonal statistical, 25% seasonal index) is an attributed historical example from one phase, not a production default or an ordering-policy recipe. Phase-one feedback informed it; a repeatedly consulted public score is not an untouched final test. See module 95's V05 note for the reported numbers and their limits.
 
@@ -727,7 +727,7 @@ Preserve the distinction between reported competition blends and retrospective e
 
 The supplied VN2 AutoMFLES/LightGBM notebook relies on an omitted preprocessing module, and its visible loop and join logic deserve repair before reuse. Record exactly which source behavior is reproduced and which adapter is corrected. Do not use a duplicate fold as independent evidence or merge only on target date when origin matters.
 
-**Tests:** weights obey their declared constraints; missing components use an explicit fallback; predictions align by full keys; weights are fitted on development predictions only; the same period is not counted twice; small perturbations do not reveal uncontrolled weight instability.
+**Tests:** weights obey their declared constraints (relative weights normalized against their positive sum); missing components use an explicit fallback; predictions align by full keys — establish alignment with `align_complete` against one canonical key order before blending, because the positional `weighted_blend` helper cannot detect a same-length permutation of series/origin/date keys; weights are fitted on development predictions only; the same period is not counted twice; small perturbations do not reveal uncontrolled weight instability. Component `model_version` metadata stays separate: different models need not share a version string to align.
 
 For inventory use, compare the blend under both forecast metrics and a fixed policy, then test policy retuning separately. Do not choose a blend solely on a forecast metric and call it the minimum-cost ordering solution.
 
@@ -1347,11 +1347,11 @@ Spoken transcript is still absent. DDMRP/optimization mentioned in the outline d
 
 #### V05 — A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition
 
-**Origin:** Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston. **Role:** `participant_or_provider`. **This review:** `transcript`.
+**Origin:** Philip Stubbs (VN1 co-winner, joint solution with Jakub Figura per O02); interviewed on the weWFM podcast hosted by Doug Casterton. **Role:** `participant_or_provider`. **This review:** `transcript`.
 
 [Original reference](https://www.youtube.com/watch?v=0c9d6cxol0o).
 
-Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. "ARA" for ARIMA, "liked GBM" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
+Speaker-reported retrospective, not an executed experiment or official result. Caption noise ("ARA" for ARIMA, "liked GBM" for LightGBM, "Jacob/yacob" for Jakub Figura) is preserved in raw evidence; host-name spelling in captions differs from the publisher's public material (weWFM/LinkedIn identify Doug Casterton), recorded here as a metadata verification, not a caption edit. Names normalized in synthesis only where an inspected source supports the normalization. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
 
 <a id="p01"></a>
 
@@ -1893,17 +1893,17 @@ This is an inspection register, not a blanket judgment of the authors or a recor
 
 ### V05 — Interview evidence note (supplemental recording)
 
-V05 is a podcast interview with Philip Stubbs, a VN1 co-winner, not an article authored by Nicolas. Scores below are the speaker's reported competition error scores in a spoken retrospective; they are not generic accuracy percentages, were not rerun, and phase-two tuning details beyond the stated mixture were not published. Approximate SRT cue ranges, not second-level precision: the progression runs ~14:28–18:41; benchmark discussion ~19:00–22:00; feature engineering and collaboration ~22:00–24:00; data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00. [V05](#v05) [V01](#v01) [D03](#d03)
+V05 is a podcast interview with Philip Stubbs — hosted by Doug Casterton on weWFM — not an article authored by Nicolas. The winning VN1 solution he recounts was joint work with Jakub Figura (named in the official O02 announcement); Figura is a named co-author of the solution, not an interview participant. Scores below are Stubbs's reported competition error scores in a spoken retrospective; they are not generic accuracy percentages, were not rerun, and phase-two tuning details beyond the stated mixture were not published. Cue ranges were verified against the supplied SRT captions (cue timestamps, not independently verified audio): the progression runs ~14:28–18:51, with the 45/30/25 mixture cued at 18:41.72–18:51.44; collaborator-code and feature-engineering discussion ~17:48–18:14, reiterated ~18:57–19:04; benchmark discussion ~19:00–22:00; data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00. [V05](#v05) [V01](#v01) [D03](#d03) [O02](#o02)
 
 | Stage in the speaker's account | Reported score | Required interpretation |
 |---|---:|---|
-| Four-week moving/weighted-average baseline | about 0.63 | Reference point; the caption garbles the exact weights (audible fragments suggest recent weeks weigh more), so no invented coefficients. |
-| Seasonal statistical model | about 0.55 | Caption reads "seasonal ARA"; normalized to ARIMA only because ARIMA is the standard family and A01/V01 use statistical seasonal models in the same ensemble. No order/configuration invented. |
+| Four-week moving/weighted-average baseline | about 0.63 | Reference point; the caption garbles the exact weights (the spoken fragments are incomplete and inconsistent), so the coefficients remain unresolved; no invented values. |
+| Seasonal statistical model | about 0.55 | Caption reads "seasonal ARA". Normalized to ARIMA on inspected evidence, not inference: A01 states "the winning team used ARIMA in an ensemble of models where ARIMA only accounted for 30%" — matching the speaker's own 30% ensemble share — and O02 names this team. The V05 caption itself is garbled; no order/configuration invented. |
 | Seasonal-index model | about 0.55 | Separate model, described through an October anchor and week-over-year indices. |
 | Equal blend of the two statistical forecasts | about 0.53 | Blend of prediction vectors, not an average of their scalar scores. |
-| Collaborator's LightGBM | about 0.52 | Component result reported by the speaker for his teammate. |
+| Jakub Figura's LightGBM (described by Stubbs) | about 0.52 | Component result the speaker reports for his joint-solution teammate; Figura is not an interview participant. |
 | Equal blend of the statistical ensemble and LightGBM | below 0.50 | Reported before the final phase; no more precise value invented. |
-| Phase-two submission | 45% LightGBM / 30% seasonal statistical / 25% seasonal index | Historical final mixture for one phase; this passage does not state a final score. D03/A05 document the separately reported TimeGPT/Zero Theorem experiment scores. |
+| Phase-two submission | 45% LightGBM / 30% seasonal statistical / 25% seasonal index | Historical final mixture for one phase; this passage does not state a final score. O02 records the official joint result (Jakub Figura & Philip Stubbs, 46.4% error rate). D03/A05 document the separately reported TimeGPT/Zero Theorem experiment scores. |
 
 Phase-one feedback informed the blend; phase two offered one submission. A repeatedly consulted public score is not an untouched test. The 45/30/25 mix is an attributed historical example, not a production default or a VN2 ordering policy. Caption noise ("ARA", "liked GBM") is preserved in the raw evidence; the two V05 representations are one recording, not two studies. The interview's TimeGPT "second place" remark restates the D03/A05 retrospective comparison — not an official entry or award, and the speaker adds that other experiments were less impressive.
 

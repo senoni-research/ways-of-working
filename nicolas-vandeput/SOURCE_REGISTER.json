@@ -100,14 +100,14 @@
       "id": "V05",
       "challenge": "VN1",
       "title": "A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition",
-      "creator": "Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston",
-      "source_date": "Recording/upload date not verified; \"2024\" in the title is the competition year, not a publication date",
+      "creator": "Philip Stubbs (VN1 co-winner, joint solution with Jakub Figura per O02); interviewed on the weWFM podcast hosted by Doug Casterton",
+      "source_date": "Recording/upload date not established; the publisher's page indicates approximately one year before an 2026-10-07 check (\"1y ago\"), and \"2024\" in the title is the competition year, not a publication date",
       "url": "https://www.youtube.com/watch?v=0c9d6cxol0o",
       "prior_access": "Supplied after the original archive",
       "status": "transcript",
       "reviewed": "Supplied English caption transcript read in full: score progression, ensembling account, feature-engineering and collaboration lessons, benchmark guidance, process-timing and operational-diagnosis themes, and a scoped TimeGPT remark.",
-      "limits": "Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. \"ARA\" for ARIMA, \"liked GBM\" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.",
-      "locator": "Supplemental workspace asset (added after the original archive). Approximate cue ranges: 14:28–18:41 score progression; 19:00–22:00 benchmark discussion; 22:00–24:00 feature-engineering/collaboration; 25:00–30:00 data and process timing; 30:00–37:00 diagnosis, people and charts.",
+      "limits": "Speaker-reported retrospective, not an executed experiment or official result. Caption noise (\"ARA\" for ARIMA, \"liked GBM\" for LightGBM, \"Jacob/yacob\" for Jakub Figura) is preserved in raw evidence; host-name spelling in captions differs from the publisher's public material (weWFM/LinkedIn identify Doug Casterton), recorded here as a metadata verification, not a caption edit. Names normalized in synthesis only where an inspected source supports the normalization. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.",
+      "locator": "Supplemental workspace asset (added after the original archive). Cue ranges verified against the supplied SRT: score progression ~14:28–18:51 (the 45/30/25 mixture is cued at 18:41.72–18:51.44); benchmark discussion ~19:00–22:00; collaborator-code/feature-engineering discussion ~17:48–18:14, reiterated ~18:57–19:04 (the 22:00–24:00 range is the separate Python-learning/resources discussion); data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00.",
       "supplemental": true,
       "assets": [
         {

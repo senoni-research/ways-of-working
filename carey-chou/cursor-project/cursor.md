@@ -687,13 +687,13 @@ Before training, verify the reward against known good and bad examples. Inspect 
 
 Audit token boundaries, padding masks, sequence scoring, truncation, and parameter selection in any implementation. Reset task-local adapters when required; do not leak one customer's adaptation into another's session. Repeated prompting or external memory updates are not weight training.
 
-**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation.
+**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation. The primary research is Yuksekgonul et al., "Learning to Discover at Test Time" ([R01](#r01)); Carey's article [C11](#c11) is this package's interpretation source.
 
 <a id="m11"></a>
 
 ### M11 — Multiple learning timescales
 
-**Source idea [C13](#c13).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
+**Source idea [C13](#c13); primary research Behrouz et al., "Nested Learning: The Illusion of Deep Learning Architectures" ([R02](#r02)).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
 
 Apply the general lesson first to system state: session observations can be temporary, validated project lessons can last longer, and approved policies should change through controlled review. This is an analogy, not an implementation of the Nested Learning research.
 
@@ -1668,6 +1668,16 @@ The guide does not depend on installing the public repository. Its principles, t
 - <a id="c14"></a>**C14:** https://careychou.tech/writing/llm-driven-probabilistic-sampling-for-human-guided-optimization
 - <a id="c15"></a>**C15:** https://careychou.tech/writing/evolving-llm-prompts-to-generate-customer-shopping-narratives-ai-guided-evolution-with-cohesive
 - <a id="c16"></a>**C16:** https://careychou.tech/writing/sprt-and-mixture-sprt
+
+### Primary research behind named methods
+
+The articles above are Carey Chou's explanations and applications. The underlying research methods he discusses are the work of their own authors; this package teaches the operational adaptation, not the original research. Full primary papers were **not** read for this package; bibliographic metadata below was verified against the primary records (arXiv/OpenReview/publisher pages) in an October 2026 verification pass, separate from the original 16-article review. Follow the primary publications for the methods themselves.
+
+- <a id="r01"></a>**R01 — Test-Time Training to Discover (TTT-Discover):** "Learning to Discover at Test Time", Mert Yuksekgonul, Daniel Koceja, Xinhao Li, Federico Bianchi, Jed McCaleb, Xiaolong Wang, Jan Kautz, Yejin Choi, James Zou, Carlos Guestrin, Yu Sun (arXiv:2601.16175; project page https://test-time-training.github.io/discover/). Discussed by Carey in C11/M10.
+- <a id="r02"></a>**R02 — Nested Learning:** "Nested Learning: The Illusion of Deep Learning Architectures", Ali Behrouz, Meisam Razaviyayn, Peilin Zhong, Vahab Mirrokni (NeurIPS 2025; OpenReview https://openreview.net/forum?id=nbMeRvNb7A; Google Research explanation https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/). Discussed by Carey in C13/M11.
+- <a id="r03"></a>**R03 — Sequential Probability Ratio Test (SPRT):** the classical sequential-analysis method of Abraham Wald and the later mixture-SPRT extensions Carey discusses in C16/M12 remain conventional statistics; the recipes operationalize the procedure, not a novel result.
+
+Where a recipe attributes a specific mechanism to these papers, that attribution flows through Carey's article first; the articles remain the package's interpretation source, and this section prevents the research credit chain from stopping at the explanation layer.
 
 ### Inspected repository references
 

@@ -3,14 +3,14 @@
   "prepared": "2026-10-04",
   "standalone_files": {
     "cursor.md": {
-      "bytes": 135765,
-      "words": 19249,
-      "sha256": "d1b0162a6710b3efbb9a8f16d81934782e6d3819dc3d3d0e752e9f535c60e380"
+      "bytes": 137945,
+      "words": 19519,
+      "sha256": "23976d5f6682ba7339a6714cd0fb99529a6ea6e87b7d5fb9ca8bfabe10a36db0"
     },
     "memory.md": {
-      "bytes": 135947,
-      "words": 19273,
-      "sha256": "35143b7b665dbdbe540cfd1ec8e5fe844c9bba3d2b3ca7922d2fbba4dca8514c"
+      "bytes": 138127,
+      "words": 19543,
+      "sha256": "232643ea6c3810d36a9d3b902c652b4e680ab46e162812f0fdd9bd129a1b1f1e"
     }
   },
   "modules": [

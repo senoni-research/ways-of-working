@@ -90,11 +90,11 @@ Spoken transcript is still absent. DDMRP/optimization mentioned in the outline d
 
 ### V05 — A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition
 
-**Origin:** Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston. **Role:** `participant_or_provider`. **This review:** `transcript`.
+**Origin:** Philip Stubbs (VN1 co-winner, joint solution with Jakub Figura per O02); interviewed on the weWFM podcast hosted by Doug Casterton. **Role:** `participant_or_provider`. **This review:** `transcript`.
 
 [Original reference](https://www.youtube.com/watch?v=0c9d6cxol0o).
 
-Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. "ARA" for ARIMA, "liked GBM" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
+Speaker-reported retrospective, not an executed experiment or official result. Caption noise ("ARA" for ARIMA, "liked GBM" for LightGBM, "Jacob/yacob" for Jakub Figura) is preserved in raw evidence; host-name spelling in captions differs from the publisher's public material (weWFM/LinkedIn identify Doug Casterton), recorded here as a metadata verification, not a caption edit. Names normalized in synthesis only where an inspected source supports the normalization. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
 
 <a id="p01"></a>
 
