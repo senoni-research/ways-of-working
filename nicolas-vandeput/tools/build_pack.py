@@ -61,7 +61,13 @@ def canonical_inputs(root: Path):
     ids=[r['id'] for r in records]
     if len(ids)!=len(set(ids)):raise PackError('SOURCE_INVENTORY','duplicate source IDs')
     prim=[r for r in records if re.fullmatch(r'(?:V|P|A|R|D|O)\d{2}|N[12]-\d{2}',r['id'])]
-    if len(prim)!=53 or len(set(r['url'] for r in prim))!=52:raise PackError('SOURCE_INVENTORY','expected 53 entries and 52 primary URLs')
+    # Reviewed expectations: 54 primary entries, 53 distinct primary URLs.
+    # The original catalogue had 53/52; V05 was added as a reviewed supplemental recording.
+    if len(prim)!=54 or len(set(r['url'] for r in prim))!=53:raise PackError('SOURCE_INVENTORY',f'expected 54 entries and 53 primary URLs; found {len(prim)} and {len(set(r["url"] for r in prim))}')
+    supplemental={r['id'] for r in records if r.get('supplemental')}
+    if supplemental!={'V05'}:raise PackError('SOURCE_INVENTORY',f'expected supplemental set {{"V05"}}; found {sorted(supplemental)}')
+    origin_ids={r['id']:r.get('origin_id') for r in records}
+    if any(oid and oid not in ids for oid in origin_ids.values()):raise PackError('SOURCE_INVENTORY','unknown origin_id reference')
     expected=set(MODULE_INPUTS);actual=set(p.name for p in (root/'canonical/modules').glob('*.md'))
     if actual!=expected:raise PackError('MODULE_INVENTORY',str(sorted(actual^expected)))
     modules={name:read(root/'canonical/modules'/name) for name in MODULE_INPUTS}
@@ -76,15 +82,15 @@ def canonical_inputs(root: Path):
         content=[l for l in lines[1:] if l.strip() and not re.match(r'^#{1,6} ',l)]
         if not content or words('\n'.join(content))<30:raise PackError('RECIPE_EMPTY',name)
     scenarios=re.findall(r'^\| (B\d{2}) \|',modules['80-worked-examples-and-checks.md'],re.M)
-    require_ids(scenarios,[f'B{i:02}' for i in range(1,41)],'SCENARIO_INVENTORY')
+    require_ids(scenarios,[f'B{i:02}' for i in range(1,49)],'SCENARIO_INVENTORY')
     templates=re.findall(r'^## (T\d{2}) — ',modules['85-templates-and-prompts.md'],re.M)
     prompts=re.findall(r'^## (P\d{2}) — ',modules['85-templates-and-prompts.md'],re.M)
     require_ids(templates,[f'T{i:02}' for i in range(1,10)],'TEMPLATE_INVENTORY')
-    require_ids(prompts,[f'P{i:02}' for i in range(1,9)],'PROMPT_INVENTORY')
+    require_ids(prompts,[f'P{i:02}' for i in range(1,10)],'PROMPT_INVENTORY')
     examples=re.findall(r'^## Example ([A-Z]) — ',modules['80-worked-examples-and-checks.md'],re.M)
     require_ids(examples,list('ABCDEFGHIJ'),'EXAMPLE_INVENTORY')
-    counts=dict(module_count=12,recipe_count=20,scenario_count=40,template_count=9,prompt_count=8,example_count=10,primary_count=53,distinct_primary_urls=52)
-    for key,val in [('primary_entries',53),('distinct_urls',52),('recipes',20),('scenarios',40),('templates',9),('prompts',8)]:
+    counts=dict(module_count=12,recipe_count=20,scenario_count=48,template_count=9,prompt_count=9,example_count=10,primary_count=len(prim),distinct_primary_urls=len(set(r['url'] for r in prim)),supplemental_count=len(supplemental))
+    for key,val in [('primary_entries',54),('distinct_urls',53),('recipes',20),('scenarios',48),('templates',9),('prompts',9)]:
         if meta.get('expected_'+key)!=val:raise PackError('METADATA_COUNT',key)
     return version,meta,registry,modules,recipes,counts
 
@@ -100,16 +106,22 @@ def source_register_section(records):
     return '\n'.join(result)
 
 def coverage(registry):
-    lines=['# Download coverage and inspection record\n','Prepared 7 October 2026. This report replaces prior access assumptions with inspection of the supplied archive, without claiming new public availability.\n',
-           '**53 catalogue entries / 52 distinct primary URLs.** R04 and N2-07 are one source. Alternate access IDs are aliases, not extra corroboration. No source models, APIs, notebooks or checkpoints were executed.\n',
-           'The original catalogue dates and access labels are retained as historical metadata, not independent verification of every source date. Source locators below refer to paths inside the supplied archive; original files are not shipped.\n',
-           '**Newly useful access:** three English caption transcripts; sixteen raw notebook files, two Python fragments/scripts, two printed-code PDFs, two snapshot documents; selected contents of two downloaded repositories.\n',
+    recs=registry['records']
+    prim=[r for r in recs if re.fullmatch(r'(?:V|P|A|R|D|O)\d{2}|N[12]-\d{2}',r['id'])]
+    supplemental=[r for r in recs if r.get('supplemental')]
+    lines=['# Download coverage and inspection record\n','Prepared 7 October 2026; revised 7 October 2026 to record one reviewed supplemental recording added after the original archive was assembled. This report replaces prior access assumptions with inspection of the supplied evidence, without claiming new public availability.\n',
+           f'**Current pack: {len(prim)} primary entries / {len(set(r["url"] for r in prim))} distinct primary URLs.** The original catalogue records 53 category entries with 52 distinct primary URLs; V05 is a supplemental recording reviewed into the pack afterwards, so it was not part of the original archive or its ZIP hash. R04 and N2-07 are one source. Alternate access IDs are aliases, not extra corroboration. No source models, APIs, notebooks or checkpoints were executed.\n',
+           'The original catalogue dates and access labels are retained as historical metadata, not independent verification of every source date. Source locators below refer to paths inside the supplied evidence root; original files are not shipped. Entries marked supplemental were supplied after the original archive was assembled.\n',
+           '**Newly useful access:** four English caption transcripts (V01–V03 and the supplemental V05); sixteen raw notebook files, two Python fragments/scripts, two printed-code PDFs, two snapshot documents; selected contents of two downloaded repositories. V05 contributes a caption text and its raw SRT companion, two representations of one recording, not two studies.\n',
            '**Still limited:** V04 spoken transcript; P02 full Foresight paper; R03 dataset; full discussion threads; A06 external result-table image; one N2-13 EMF visual; uninspected repository internals and complete official simulator environment.\n']
-    for r in registry['records']:
-        lines += [f'## {r["id"]} — {r["title"]}\n',f'**Role:** `{r["role"]}` · **Inspection:** `{r["status"]}` · **Origin ID:** `{r["origin_id"]}`\n',
+    for r in recs:
+        sup=' · **Supplemental asset:** supplied after the original archive; not an original ZIP member' if r.get('supplemental') else ''
+        lines += [f'## {r["id"]} — {r["title"]}\n',f'**Role:** `{r["role"]}` · **Inspection:** `{r["status"]}` · **Origin ID:** `{r["origin_id"]}`{sup}\n',
                   r['reviewed']+'\n','**Limits:** '+r['limits']+'\n','**Locator:** '+r['locator']+'\n']
         if r.get('url'):lines.append(f'[Canonical reference]({r["url"]})\n')
-        for a in r['assets']:lines.append(f'- Archive path: `{a["path"]}`; bytes: {a["bytes"]}; SHA-256: `{a["sha256"]}`.\n')
+        for a in r['assets']:
+            rep=f' · **Representation:** `{a.get("representation","original_archive_member")}`' if len(r['assets'])>1 or r.get('supplemental') else ''
+            lines.append(f'- Evidence path: `{a["path"]}`; bytes: {a["bytes"]}; SHA-256: `{a["sha256"]}`{rep}.\n')
     lines += ['\n## Alternate-access aliases\n','\n'.join(f'- {k} → {v}' for k,v in registry['alternate_access'].items()),'\n']
     return '\n'.join(lines)
 
@@ -163,7 +175,7 @@ def render(root: Path) -> dict[str, bytes]:
                 if p.suffix=='.md':payload=payload.replace('../SOURCE_COVERAGE.md','../90-sources.md')
                 add(f'{pack}/.vandeput/reference/{p.name}',payload)
         install=('Merge `.vandeput/` and `.cursor/rules/10-vandeput-method.mdc` into your project. Check the rule is active. A plain `cursor.md` is not auto-loaded.' if stem=='cursor' else 'Merge `.vandeput/` and the content of `AGENTS.md` into your project. Optional Cline/OpenCode adapters are alternatives, not duplicate loading routes.')
-        add(f'{pack}/README.md',f'# {"Cursor" if stem=="cursor" else "Portable"} Vandeput project pack\n\nVersion {version} · {meta["prepared"]}\n\n{install}\n\nPreserve existing rules and user changes. Keep an existing Carey pack under `.carey/`; this pack uses `.vandeput/`. Use the small entry point and selective reads rather than putting the entire handbook into context.\n\nRead [{stem}.md]({stem}.md) for the complete method, [source coverage](SOURCE_COVERAGE.md) for limits, and [validation](VALIDATION.md) for tests actually run. Source originals and checkpoints are not included.\n\nStart a fresh credential-free session and ask which paths were read, what the thirteen practices imply for the current problem, and how the agent would verify scoring and lost-sales timing. Run relevant B01–B40 scenarios in [.vandeput/80-worked-examples-and-checks.md](.vandeput/80-worked-examples-and-checks.md). No live host behavior is certified.\n\nThe complete methods bundle contains canonical sources and build/validation tools. In a project, review local changes before upgrading; do not overwrite project evidence with a new method release. The arithmetic examples under `.vandeput/reference/` are optional synthetic demonstrations, not trained models or a full challenge simulator.\n')
+        add(f'{pack}/README.md',f'# {"Cursor" if stem=="cursor" else "Portable"} Vandeput project pack\n\nVersion {version} · {meta["prepared"]}\n\n{install}\n\nPreserve existing rules and user changes. Keep an existing Carey pack under `.carey/`; this pack uses `.vandeput/`. Use the small entry point and selective reads rather than putting the entire handbook into context.\n\nRead [{stem}.md]({stem}.md) for the complete method, [source coverage](SOURCE_COVERAGE.md) for limits, and [validation](VALIDATION.md) for tests actually run. Source originals and checkpoints are not included.\n\nStart a fresh credential-free session and ask which paths were read, what the thirteen practices imply for the current problem, and how the agent would verify scoring and lost-sales timing. Run relevant B01–B48 scenarios in [.vandeput/80-worked-examples-and-checks.md](.vandeput/80-worked-examples-and-checks.md). No live host behavior is certified.\n\nThe complete methods bundle contains canonical sources and build/validation tools. In a project, review local changes before upgrading; do not overwrite project evidence with a new method release. The arithmetic examples under `.vandeput/reference/` are optional synthetic demonstrations, not trained models or a full challenge simulator.\n')
     add('cursor-project/.cursor/rules/10-vandeput-method.mdc','---\ndescription: Source-grounded demand forecasting and inventory planning method\nalwaysApply: true\n---\n\n'+loader)
     add('portable-project/AGENTS.md',loader)
     add('portable-project/optional-adapters/cline/10-vandeput-method.md',loader)

@@ -13,7 +13,7 @@ The complete newly created package—not a reconstruction of missing artifacts�
 | Strict package validator | PASS: canonical outputs, manifest bytes/words/hashes and inventories, exact platform contents, Markdown/rule links and anchors, loader targets, and source-origin contracts. |
 | Corruption regression suite | **18/18** invalid fixtures rejected for the expected diagnostic and target; unchanged release passes first. |
 | Invalid starting package control | Regression suite stops at its positive control rather than treating a broken starting state as successful detections. |
-| Original numerical reference | **32/32** synthetic unit tests pass, including a small exhaustive inventory conservation grid. |
+| Original numerical reference | **40/40** synthetic unit tests pass, including a small exhaustive inventory conservation grid and the aligned-prediction blend checks added in this revision. |
 
 Commands from the package root:
 
@@ -33,17 +33,19 @@ One test-harness defect was found during preparation: the extra-file mutator ini
 
 ## What numerical tests establish
 
-The new `reference/core.py` arithmetic handles the declared synthetic contracts: pooled VN1 score and bias, explicit undefined denominators, cumulative per-window absolute error, strict complete key alignment, receipt-before-demand timing, week-three arrival, lost sales without backlog, holding/shortage cost decomposition, trailing receipt periods, explicit cost windows, stepwise point stock projection, a bounded normal-buffer heuristic, projected per-item fulfillment and a declared FVA sign convention.
+The new `reference/core.py` arithmetic handles the declared synthetic contracts: pooled VN1 score and bias, explicit undefined denominators, cumulative per-window absolute error, strict complete key alignment, receipt-before-demand timing, week-three arrival, lost sales without backlog, holding/shortage cost decomposition, trailing receipt periods, explicit cost windows, stepwise point stock projection, a bounded normal-buffer heuristic, projected per-item fulfillment, a declared FVA sign convention, and — added in this revision — an aligned-prediction `weighted_blend` that validates component alignment and weight constraints explicitly, requires blended predictions to be rescored under the exact task metric, and asserts no performance improvement (identical component errors do not improve by averaging).
 
 These are **our original small reference functions**, not execution of the downloaded notebooks or a new winning method. The helper that replays fixed orders is not a trained adaptive policy. A point-stock projection is not the exact expectation of a nonlinear stochastic trajectory. The normal buffer is not a general multiperiod optimum.
 
 ## What has not been tested or established
 
-No live Cursor, Cline, OpenCode or other coding-agent session was launched. B01–B40 are supplied behavioral specifications, not observed model passes. Installation file correctness does not establish that an assistant follows the guidance.
+No live Cursor, Cline, OpenCode or other coding-agent session was launched. B01–B48 are supplied behavioral specifications, not observed model passes. Installation file correctness does not establish that an assistant follows the guidance.
 
 No upstream model training, foundation-model inference, forecasting provider API, learned inventory policy, original competition submission, full official simulator, or real-data leaderboard reproduction was executed. Downloaded checkpoints and model binaries were not deserialized. Reported competition and retrospective performance remains attributed to the source authors.
 
 No organization-specific privacy, retention, network, permission or operational deployment configuration was inspected. A Markdown instruction cannot enforce those settings. Missing source components remain missing: V04 spoken transcript, P02 full paper, R03 dataset, full comment threads, A06 external numerical image, one N2-13 EMF visual, complete official simulation dependencies, and unreviewed repository internals.
+
+The V05 interview was reviewed as supplied caption text with SRT cue verification of the score-progression passage; the audio was not listened to, slides were not inspected, and no interview figure was independently reproduced. Its reported scores, the garbled four-week weighting coefficients, the seasonal statistical model's exact configuration, and the phase-two final score remain speaker-reported with unresolved caption details; where a more precise source exists (D03/A05 for the TimeGPT experiment), that source supplies the precision, not V05. No source-audio review, official score reproduction, production performance, or live host validation is claimed from these local tests.
 
 ## Reproduction and release
 

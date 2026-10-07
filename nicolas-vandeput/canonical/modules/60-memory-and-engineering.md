@@ -45,6 +45,8 @@ Do not manufacture a timestamp, author, approval, or benchmark score. An absent 
 
 Retain exact metric aggregation and signs; origin/horizon/calendar conventions; why targets were masked; whether a future feature was genuinely known; which notebook quirks were corrected; data/model/policy versions; development versus untouched periods; blend weights and their training scope; inventory event order; lost-sales versus backlog convention; cost window; and source-reported versus rerun results.
 
+Operational event explanations are worth preserving before they are lost. Keep a lightweight diary entry for spikes and dips whose cause took effort to establish: event date, when the explanation became known, affected series/periods, source and owner, observed facts versus explanatory hypothesis, recurrence, affected forecast vintages, and follow-up. A cause discovered after a forecast origin can inform diagnosis and later models; it cannot become an ex-ante feature of that earlier forecast, and a plausible explanation is not a verified cause or an approved permanent adjustment. [[V05]]
+
 A failed model matters when it reveals a reusable boundary, such as a feature leaking after the cutoff, an ensemble aligned without origin, or an inventory projection carrying negative stock. Save the reproducer and re-open condition. Do not merely write “model X does not work.”
 
 ## Session protocol

@@ -2,7 +2,7 @@
 
 ## What this edition is based on
 
-Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue. The catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [CAT](#cat)
+Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue; revised the same day to add one supplemental recording (V05) supplied after the original archive was assembled. The original catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The current pack registers **54 primary entries with 53 distinct primary URLs**, including the supplemental V05. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [CAT](#cat) [V05](#v05)
 
 The primary methodological backbone is the supplied September 2026 **SupChains Way**, including its thirteen practices and dated underlying discussions. A01/A02 are Nicolas's retrospective lessons; V01/V02 include multiple participant voices; P01 is Bartosz's winner report; notebooks and repositories have their own authors and purposes. Do not attribute every technique, model, or source-code defect to Nicolas.
 
@@ -14,7 +14,7 @@ Where sources disagree, retain both with scope. Examples include official versus
 
 ## Access improved, but is not complete
 
-The archive contains three English caption transcripts; their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript.
+The evidence set contains four English caption transcripts (V01–V03 from the original archive, plus the supplemental V05 recording reviewed in later); their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript. The V05 clean text and raw SRT are two representations of one recording; their agreement is not independent corroboration, and the co-winner's account there repeats his V01/D03 material rather than creating a second experiment. [V05](#v05)
 
 All twenty-two catalogue notebook entries now have more than just their landing pages available: sixteen raw notebooks, two Python files, two printed-code PDFs, and two snapshot documents. Those forms are not equally complete. Printed lines can be clipped, a simulation file can omit helpers, and snapshot prose is not raw executable code. Stored notebook outputs do not become our execution evidence.
 
@@ -85,6 +85,16 @@ Tutorial descriptions, not evidence of final competition implementations; no liv
 [Original reference](https://fedem84.substack.com/p/supply-chain-datathon-vn2-a-deep).
 
 Spoken transcript is still absent. DDMRP/optimization mentioned in the outline do not establish a full evaluated method.
+
+<a id="v05"></a>
+
+### V05 — A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition
+
+**Origin:** Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston. **Role:** `participant_or_provider`. **This review:** `transcript`.
+
+[Original reference](https://www.youtube.com/watch?v=0c9d6cxol0o).
+
+Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. "ARA" for ARIMA, "liked GBM" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
 
 <a id="p01"></a>
 

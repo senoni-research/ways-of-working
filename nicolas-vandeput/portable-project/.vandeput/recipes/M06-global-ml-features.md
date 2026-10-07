@@ -1,10 +1,10 @@
 # M06 — Build a global feature-based forecasting engine
 
-**Basis:** SupChains default direction, VN1 lessons, and the VN2 winner. [A03](../90-sources.md#a03) [A01](../90-sources.md#a01) [P01](../90-sources.md#p01)
+**Basis:** SupChains default direction, VN1 lessons, and the VN2 winner. [A03](../90-sources.md#a03) [A01](../90-sources.md#a01) [P01](../90-sources.md#p01) [V05](../90-sources.md#v05)
 
 Pool admissible training examples across the series. Retain typed static identifiers and legitimate calendar features, and add target-derived lags and summaries computed strictly as of the origin. Use historical availability to prevent shortage-constrained sales from becoming a misleading signal. Future-known promotions, prices, and orders require their own availability contract.
 
-Begin with a small global gradient-boosting baseline and a fixed evaluation. The guide favors LightGBM as a practical engine, while the VN2 winner uses CatBoost. This is evidence of alternatives in different settings, not proof that one library wins universally or that Nicolas's preference changed to every participant's choice.
+Begin with a small global gradient-boosting baseline and a fixed evaluation. The guide favors LightGBM as a practical engine, while the VN2 winner uses CatBoost. This is evidence of alternatives in different settings, not proof that one library wins universally or that Nicolas's preference changed to every participant's choice. The VN1 co-winner attributes the difference between his own and his teammate's ML attempts to feature engineering and to learning from the teammate's code — his account, not a controlled ablation identifying which feature caused the improvement, and V05 supplies no feature list. Before concluding that one algorithm family won, compare actual feature pipelines, temporal availability, and validation configuration. [V05](../90-sources.md#v05)
 
 Potential features from the winner include recent and annual lags, rolling means/medians, exponentially weighted summaries, dispersion, momentum, seasonal descriptors, and intermittency measures. Add groups through ablation driven by inspected errors. A feature importance chart is not an independent test of usefulness or a causal explanation.
 

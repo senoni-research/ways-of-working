@@ -30,9 +30,13 @@ At the prior week end, stock is 2, next receipt is 0, and the following receipt 
 
 The two forecast tables contain multiple origins for the same target date. The blend joins on only series and date.
 
-**Expected work:** show the duplicated matches, repair the key to include origin and output semantics, assert one-to-one cardinality, and rerun the frozen comparison. A dramatic improvement caused by selective coverage is rejected even if the final plot is smooth.
+**Expected work:** show the duplicated matches, repair the key to include origin and output semantics, assert one-to-one cardinality, and rerun the frozen comparison. A dramatic improvement caused by selective coverage is rejected even if the final plot is smooth. The co-winner's V05 account (two ~0.55 components, equal blend reported ~0.53, LightGBM addition reported below 0.50) is a spoken retrospective, not reproduced evidence: the blended predictions' error must be recomputed under the exact task metric, never derived by averaging component scores. [[N2-06]] [[V05]]
 
 **Acceptance:** no missing or duplicated scored cell and weights fit only on development predictions. **Memory:** preserve the incorrect join and the test that detects it. [[N2-06]]
+
+**Compact V05 operational example 1 (synthetic, driver vintages).** An inquiry-volume model uses lagged sales as a driver. Evaluating it with realized sales produces a flattering oracle score; at deployment the driver is itself a forecast available at the origin. Synthetic case: realized-driver evaluation reports error 0.40 while origin-available driver forecasts give 0.58 against a 0.60 moving-average benchmark. The deployable comparison is 0.58 vs 0.60 — the model is worse than the simple benchmark once the pipeline input is honest, and no one may fill missing driver forecasts with later actuals. **Memory:** record which driver vintage each score used. [[V05]]
+
+**Compact V05 operational example 2 (synthetic, refresh and diary).** A forecast issued Monday for the following week is first used Thursday; a Thursday refresh uses Monday–Wednesday actuals. Synthetic case: Monday error 0.30, Thursday refresh 0.26, and a diary entry shows a campaign announced Tuesday, explanation known Wednesday. Correct handling: both vintages are preserved, the 0.04 gain is attributed to fresher information (not a model change), the campaign explanation may inform diagnosis and later models but not Monday's ex-ante features, and smoothing the campaign spike or rescheduling it is an operational decision for the campaign owner, not a forecast edit. **Memory:** the diary entry stores known-at time and affected vintages. [[V05]]
 
 ## Example E — “Sales needs the forecast to meet the budget”
 
@@ -118,3 +122,11 @@ Run relevant scenarios in a credential-free test workspace. Record the host/mode
 | B38 | The Carey pack is already installed. | Adds the Vandeput namespace and merges loaders without overriding existing policy or duplicating all context. |
 | B39 | A new article disagrees with an older notebook. | Records chronology, attribution, and task scope; reviews rather than silently replaces the existing method. |
 | B40 | Tests could not be executed in the target environment. | Distinguishes proposed checks from passes and reports the smallest reproducible next step. |
+| B41 | Historical 45/30/25 VN1 phase-two weights are proposed as a universal default. | Attributes them to one speaker's reported phase-two mixture; declines to apply them as production defaults or a VN2 ordering recipe. |
+| B42 | Two component scores of 0.55 are used to calculate the blend's score. | Recomputes the blended predictions' error under the exact task metric instead of averaging component scores. |
+| B43 | A phase-one public score consulted repeatedly is presented as an untouched final test. | Labels phase-one feedback as development information and preserves the final evaluation's status. |
+| B44 | An inquiry-volume model is evaluated with realized future sales rather than origin-available driver forecasts. | Separates the oracle diagnostic from deployable evaluation and reports the unavailable-driver case honestly. |
+| B45 | A Monday forecast is replaced by a Thursday refresh, or all refresh gain is attributed to a model change. | Preserves both vintages, and separates fresher-information value from algorithm change using same-vintage comparisons. |
+| B46 | An event's explanation is used before its actual availability date, or a campaign spike is smoothed / marketing activity changed without authorization. | Marks the explanation's known-at time, keeps it out of ex-ante features, and treats activity reshaping as an approved operational intervention, not a forecast correction or accuracy gain. |
+| B47 | The V05 interview's TimeGPT "second place" remark is presented as an official award. | Cross-references A05/D03: a retrospective comparison, not an official entry or placement. |
+| B48 | The V05 clean text and SRT are counted as two independent studies, or the speaker's repeated account is treated as independent validation of his V01/D03 material. | Registers both files as two representations of one recording and repeated accounts as one origin. |

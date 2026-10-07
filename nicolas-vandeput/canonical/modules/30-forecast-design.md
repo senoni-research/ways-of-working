@@ -22,6 +22,8 @@ Construct pooled training rows over all admissible series. Static identifiers, l
 
 For a direct horizon model issued at time `t`, features must be known by `t`; the label for horizon `h` is associated with `t+h`. At training cutoff `T`, only examples whose labels are available by `T` are eligible. Multi-horizon training requires this check for each label, not just each feature row. For recursive prediction, a future lag must come from an earlier prediction, never the withheld actual. These are implementation controls added here.
 
+Driver forecasts are pipeline inputs with their own vintages. When one model consumes another model's forecast — the V05 interview's inquiry-volume model driven by sales forecasts — the evaluation must use the driver forecast available at each origin, and a realized-driver evaluation is an oracle diagnostic that must be labeled as such. Missing driver forecasts are recorded honestly, never filled with later actuals and reported as operational accuracy. [[V05]]
+
 Use a simple pooled model before large searches. Evaluate objectives with their exact roles: training loss, hyperparameter-selection loss, operational forecast score, and inventory-policy cost can differ. The winner's scaled RMSE training and unscaled validation MAE illustrate that distinction; neither is automatically the official inventory objective. [[P01]]
 
 ## Four forecasting quantities that should not be conflated

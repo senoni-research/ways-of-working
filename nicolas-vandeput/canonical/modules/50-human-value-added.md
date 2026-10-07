@@ -2,7 +2,9 @@
 
 ## Put people where information changes the answer
 
-Nicolas's guide asks planners and sales teams for information the engine cannot see, rather than a stream of edited forecasts. Wins and losses of customers, launches, discontinuations, product transitions, exceptional commitments, and credible market intelligence can matter. A high-ranked SKU or an emotionally surprising forecast is not alone a reason to intervene. [[A03]]
+Nicolas's guide asks planners and sales teams for information the engine cannot see, rather than a stream of edited forecasts. Wins and losses of customers, launches, discontinuations, product transitions, exceptional commitments, and credible market intelligence can matter. A high-ranked SKU or an emotionally surprising forecast is not alone a reason to intervene. [[A03]] The VN1 co-winner's interview gives the same advice operational form: engage marketing and other operational teams to understand what actually causes volume changes, challenge input forecasts that look unreliable, and learn from recurring errors. [[V05]]
+
+When the cause of a difficult spike could be reshaped — his example is campaign communications spread across days so the workload spike becomes manageable without harming the campaign — keep three actions distinct: improving the forecast of the existing activity; improving the input information supplied to that forecast; and changing the activity itself. The third is an operational intervention owned by the activity's owner, not a forecast correction, and must never be executed by an agent automatically or counted as forecasting-accuracy improvement. V05 supplies no causal estimate or FVA experiment for the suggestion. [[V05]]
 
 Use an insight record: what changed; who knows it; evidence and available-at time; affected products/locations/periods; expected mechanism; what is unknown; and expiry or review conditions. Identify whether it is a fact, assumption, desired target, or scenario. A person may own a business decision without being able to make an empirical outcome true by approval.
 

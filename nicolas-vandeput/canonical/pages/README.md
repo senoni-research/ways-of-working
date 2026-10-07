@@ -19,16 +19,16 @@ Participant alternatives—CatBoost, statistical blends, foundation models, prob
 ## Contents
 
 - @@MODULE_COUNT@@ selectively loaded modules, including the original thirteen-practice structure and @@RECIPE_COUNT@@ technical recipes.
-- @@EXAMPLE_COUNT@@ synthetic worked examples, @@SCENARIO_COUNT@@ behavioral specifications, @@TEMPLATE_COUNT@@ record templates, and @@PROMPT_COUNT@@ invocation prompts.
-- Source mapping for all @@PRIMARY_COUNT@@ catalogue entries (52 distinct primary URLs), with actual downloaded format, inspected scope, limits, and file hashes. Three supplied caption transcripts are now usable; V04's spoken transcript and P02's full publication remain absent.
-- An original standard-library arithmetic reference with **32 synthetic tests** for scoring, stock transitions, cost windows, key alignment and related invariants. This is not a full competition reproduction.
+- @@EXAMPLE_COUNT@@ worked examples, @@SCENARIO_COUNT@@ behavioral specifications, @@TEMPLATE_COUNT@@ record templates, and @@PROMPT_COUNT@@ invocation prompts. Two compact operational examples and eight behavioral checks draw on the supplemental V05 co-winner interview; its reported scores stay attributed in the source note, never presented as reproduced results.
+- Source mapping for all @@PRIMARY_COUNT@@ primary entries (@@DISTINCT_PRIMARY_URLS@@ distinct primary URLs): the original catalogue's 53 entries with 52 URLs plus one supplemental recording (V05) supplied after the original archive was assembled. Actual downloaded format, inspected scope, limits, and file hashes are recorded per entry. Four supplied caption transcripts are now usable (V01–V03 and V05); V04's spoken transcript and P02's full publication remain absent.
+- An original standard-library arithmetic reference with **40 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
 - A deterministic canonical build, strict validator, and adversarial validator regressions. See [VALIDATION.md](VALIDATION.md) for what was actually run.
 
 The standalone Cursor edition has **@@CURSOR_WORDS@@ whitespace-separated words** and the portable edition **@@MEMORY_WORDS@@**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
 
 ## Sources and access
 
-[Source-specific review notes](SOURCE_REVIEW.md) identify concrete code and comparison caveats. [Source coverage](SOURCE_COVERAGE.md) distinguishes prose, transcripts, executable-source inspection, printed code, snapshot documents, repository selections and metadata-only references. [SOURCE_REGISTER.json](SOURCE_REGISTER.json) preserves exact local locators and hashes. The downloaded articles, papers, captions, notebooks, datasets and checkpoints are **not redistributed**.
+[Source-specific review notes](SOURCE_REVIEW.md) identify concrete code and comparison caveats. [Source coverage](SOURCE_COVERAGE.md) distinguishes prose, transcripts, executable-source inspection, printed code, snapshot documents, repository selections and metadata-only references. [SOURCE_REGISTER.json](SOURCE_REGISTER.json) preserves exact local locators and hashes. The downloaded articles, papers, captions, notebooks, datasets and checkpoints are **not redistributed**; they live in a local gitignored working archive outside this package, and the register's relative evidence paths refer to that root rather than to files shipped here. A public recording is not blanket permission to redistribute its full transcript; only locators, hashes and attribution ship in the pack.
 
 No upstream model training, official competition rerun, binary checkpoint loading, provider API call or live Cursor/Cline/OpenCode session was executed in preparing the pack. Model scores remain attributed source reports. The numerical examples are newly authored, synthetic and deliberately small.
 

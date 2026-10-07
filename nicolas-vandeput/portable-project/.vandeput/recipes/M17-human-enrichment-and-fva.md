@@ -1,8 +1,10 @@
 # M17 — Turn human insight into measurable forecast value
 
-**Basis:** SupChains human-role, finance, and FVA practices. [A03](../90-sources.md#a03)
+**Basis:** SupChains human-role, finance, and FVA practices. [A03](../90-sources.md#a03) [V05](../90-sources.md#v05)
 
-Ask for new information, not a replacement number by default. Capture customer changes, launches, discontinuations, transitions, credible exceptional commitments, and other drivers the engine does not observe. Record source, known-at time, affected scope, horizon, expected mechanism, owner, and what would invalidate the insight.
+Ask for new information, not a replacement number by default. Capture customer changes, launches, discontinuations, transitions, credible exceptional commitments, and other drivers the engine does not observe. Record source, known-at time, affected scope, horizon, expected mechanism, owner, and what would invalidate the insight. The VN1 co-winner's interview advice is to engage marketing and operational teams to understand what actually causes volume changes, challenge unreliable inputs, and learn from recurring errors — information work, not routine number edits. [V05](../90-sources.md#v05)
+
+When the cause of a workload spike can be reshaped — the interview's example is campaign communications spread across days so a spike becomes manageable without harming the campaign — three different actions must stay distinct: (1) improving the forecast of the existing activity, (2) improving the input information supplied to that forecast, and (3) changing the activity itself. The third is an operational intervention subject to its owner's approval and wider business objectives, never an agent action or a forecast correction. It must not be counted as forecasting-accuracy improvement, and V05 supplies no causal estimate or FVA experiment for the suggestion.
 
 Preserve the moving-average and unmodified engine forecast at the same vintage. Apply the insight as a feature, explicit scenario, or separately logged adjustment. Do not overwrite prior predictions retrospectively. An approved budget target remains distinct from the forecast information used to decide how to meet it.
 

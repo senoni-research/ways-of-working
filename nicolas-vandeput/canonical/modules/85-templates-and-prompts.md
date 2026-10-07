@@ -42,6 +42,8 @@ Hypothesis and failure it addresses:
 Source mechanism / interpretation / proposed correction:
 Baseline configuration:
 Candidate feature/model groups:
+Driver vintages: which driver forecasts are available at each origin, and which are realized (oracle) values:
+Forecast issue time vs data availability vs decision-use time (record the actual timing used):
 Training loss / selection loss / reported score:
 Split manifest and resource budget:
 Commands, seeds, environment, versions actually run:
@@ -79,6 +81,7 @@ Original benchmark and engine vintage:
 Adjustment / feature / scenario applied:
 Paired before-after metric and sign convention:
 Bias, coverage, effort, and observed result:
+Event-diary lineage for explained spikes/dips (event date, explanation known-at, affected forecast vintages, observed facts vs hypothesis, recurrence, follow-up):
 Decision to retain, revise, encode systematically, or stop:
 ```
 
@@ -167,3 +170,7 @@ Review decision / owner / release version:
 ## P08 — Resume in another tool
 
 > Read the installed method, current project contracts, and approved handoff. Check their load-bearing claims against this checkout. Recover exact metric, split, target and policy timing before changing code. Continue the next authorized test rather than repeating failed work. Preserve existing Carey or other rules, keep method namespaces separate, and state what memory was saved, proposed, or inaccessible.
+
+## P09 — Apply the V05 operational lessons
+
+> Read the V05 source note in module 95 and the M05/M09/M17/M18 entries it strengthens. For the current project: benchmark the whole pipeline by scoring candidates with origin-available driver forecasts rather than realized values; test one aligned simple blend before tuning weights and recompute blended-prediction error under the exact metric; separate forecast-refresh timing (issue, use, freeze) and preserve vintages; capture event explanations with known-at times in the diary; and distinguish forecasting better, informing the forecast, and reshaping an activity. Report which lessons were actually applied and what remains reported-only. [[V05]]

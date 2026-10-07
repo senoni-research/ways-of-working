@@ -196,3 +196,32 @@ def fva(predecessor_error: float, candidate_error: float) -> tuple[float, float 
     base, cand = nonnegative(predecessor_error, 'predecessor_error'), nonnegative(candidate_error, 'candidate_error')
     gain = base - cand
     return gain, None if base == 0 else gain / base
+
+
+def weighted_blend(components: Sequence[Sequence[float]], weights: Sequence[float]) -> tuple[float, ...]:
+    """Blend aligned prediction vectors; never average component scores.
+
+    Every component must cover the same complete key set: equal lengths, no
+    missing cells, no duplicates, and weights are validated against a declared
+    constraint. The blended predictions must be scored afresh under the exact
+    task metric by the caller. Identical component errors do not guarantee an
+    improved blend score; no such improvement is asserted here.
+    """
+    if not components or not weights:
+        raise ValueError('components and weights must be nonempty')
+    if len(components) != len(weights):
+        raise ValueError('component/weight count mismatch')
+    n = len(components[0])
+    if n == 0:
+        raise ValueError('prediction vectors must not be empty')
+    w = tuple(nonnegative(x, 'weight') for x in weights)
+    if fsum(w) <= 0:
+        raise ValueError('weights must sum to a positive total')
+    cols = []
+    for comp in components:
+        col = tuple(nonnegative(v, 'prediction') for v in comp)
+        if len(col) != n:
+            raise ValueError('component length mismatch: aligned keys required')
+        cols.append(col)
+    total = fsum(w)
+    return tuple(fsum(wi * col[i] for wi, col in zip(w, cols)) / total for i in range(n))

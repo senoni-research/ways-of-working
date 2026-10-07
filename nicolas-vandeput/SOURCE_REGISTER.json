@@ -97,6 +97,37 @@
       "executed": false
     },
     {
+      "id": "V05",
+      "challenge": "VN1",
+      "title": "A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition",
+      "creator": "Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston",
+      "source_date": "Recording/upload date not verified; \"2024\" in the title is the competition year, not a publication date",
+      "url": "https://www.youtube.com/watch?v=0c9d6cxol0o",
+      "prior_access": "Supplied after the original archive",
+      "status": "transcript",
+      "reviewed": "Supplied English caption transcript read in full: score progression, ensembling account, feature-engineering and collaboration lessons, benchmark guidance, process-timing and operational-diagnosis themes, and a scoped TimeGPT remark.",
+      "limits": "Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. \"ARA\" for ARIMA, \"liked GBM\" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.",
+      "locator": "Supplemental workspace asset (added after the original archive). Approximate cue ranges: 14:28–18:41 score progression; 19:00–22:00 benchmark discussion; 22:00–24:00 feature-engineering/collaboration; 25:00–30:00 data and process timing; 30:00–37:00 diagnosis, people and charts.",
+      "supplemental": true,
+      "assets": [
+        {
+          "path": "10_videos/V05_Forecasting-Masterclass-co-winner-VN1_transcript.txt",
+          "sha256": "d0123da94d2b18d9414d83aeac61df60d5449520921c7ebd7f105e7fc779aa68",
+          "bytes": 32201,
+          "representation": "companion_clean_text"
+        },
+        {
+          "path": "10_videos/A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition [0c9d6cxol0o].en-orig.srt",
+          "sha256": "87ad5ad89e5ac72bd518489cf32cbccf88798f0d3c5061023e859ab4b567cc0d",
+          "bytes": 62582,
+          "representation": "raw_captions_srt"
+        }
+      ],
+      "origin_id": "V05",
+      "role": "participant_or_provider",
+      "executed": false
+    },
+    {
       "id": "P01",
       "challenge": "VN2",
       "title": "One Global Model, Many Behaviors: Stockout-Aware Feature Engineering and Dynamic Scaling for Multi-Horizon Retail Demand Forecasting with a Cost-Aware Ordering Policy (VN2 Winner Report)",

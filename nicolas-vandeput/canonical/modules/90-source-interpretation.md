@@ -2,7 +2,7 @@
 
 ## What this edition is based on
 
-Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue. The catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [[CAT]]
+Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue; revised the same day to add one supplemental recording (V05) supplied after the original archive was assembled. The original catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The current pack registers **54 primary entries with 53 distinct primary URLs**, including the supplemental V05. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [[CAT]] [[V05]]
 
 The primary methodological backbone is the supplied September 2026 **SupChains Way**, including its thirteen practices and dated underlying discussions. A01/A02 are Nicolas's retrospective lessons; V01/V02 include multiple participant voices; P01 is Bartosz's winner report; notebooks and repositories have their own authors and purposes. Do not attribute every technique, model, or source-code defect to Nicolas.
 
@@ -14,7 +14,7 @@ Where sources disagree, retain both with scope. Examples include official versus
 
 ## Access improved, but is not complete
 
-The archive contains three English caption transcripts; their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript.
+The evidence set contains four English caption transcripts (V01–V03 from the original archive, plus the supplemental V05 recording reviewed in later); their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript. The V05 clean text and raw SRT are two representations of one recording; their agreement is not independent corroboration, and the co-winner's account there repeats his V01/D03 material rather than creating a second experiment. [[V05]]
 
 All twenty-two catalogue notebook entries now have more than just their landing pages available: sixteen raw notebooks, two Python files, two printed-code PDFs, and two snapshot documents. Those forms are not equally complete. Printed lines can be clipped, a simulation file can omit helpers, and snapshot prose is not raw executable code. Stored notebook outputs do not become our execution evidence.
 

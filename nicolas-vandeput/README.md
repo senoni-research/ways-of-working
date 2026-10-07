@@ -1,6 +1,6 @@
 # Nicolas Vandeput / VN1–VN2 project guides
 
-**Version 1.0.0 · 2026-10-07**
+**Version 1.1.0 · 2026-10-07**
 
 Two self-contained handbooks and two ready-to-merge project packs. The same substantive method serves Cursor, Cline, OpenCode and other capable coding assistants. It translates the **thirteen SupChains practices** into project decisions, workflows, technical recipes, examples and tests—not a personality imitation or a generic coding guide with an author's name attached.
 
@@ -19,16 +19,16 @@ Participant alternatives—CatBoost, statistical blends, foundation models, prob
 ## Contents
 
 - 12 selectively loaded modules, including the original thirteen-practice structure and 20 technical recipes.
-- 10 synthetic worked examples, 40 behavioral specifications, 9 record templates, and 8 invocation prompts.
-- Source mapping for all 53 catalogue entries (52 distinct primary URLs), with actual downloaded format, inspected scope, limits, and file hashes. Three supplied caption transcripts are now usable; V04's spoken transcript and P02's full publication remain absent.
-- An original standard-library arithmetic reference with **32 synthetic tests** for scoring, stock transitions, cost windows, key alignment and related invariants. This is not a full competition reproduction.
+- 10 worked examples, 48 behavioral specifications, 9 record templates, and 9 invocation prompts. Two compact operational examples and eight behavioral checks draw on the supplemental V05 co-winner interview; its reported scores stay attributed in the source note, never presented as reproduced results.
+- Source mapping for all 54 primary entries (53 distinct primary URLs): the original catalogue's 53 entries with 52 URLs plus one supplemental recording (V05) supplied after the original archive was assembled. Actual downloaded format, inspected scope, limits, and file hashes are recorded per entry. Four supplied caption transcripts are now usable (V01–V03 and V05); V04's spoken transcript and P02's full publication remain absent.
+- An original standard-library arithmetic reference with **40 synthetic tests** for scoring, stock transitions, cost windows, key alignment, aligned-prediction blending and related invariants. This is not a full competition reproduction.
 - A deterministic canonical build, strict validator, and adversarial validator regressions. See [VALIDATION.md](VALIDATION.md) for what was actually run.
 
-The standalone Cursor edition has **20852 whitespace-separated words** and the portable edition **20893**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
+The standalone Cursor edition has **23656 whitespace-separated words** and the portable edition **23697**; their substantive body is the same. Navigation and progressive loading matter more than reading them end to end in every session.
 
 ## Sources and access
 
-[Source-specific review notes](SOURCE_REVIEW.md) identify concrete code and comparison caveats. [Source coverage](SOURCE_COVERAGE.md) distinguishes prose, transcripts, executable-source inspection, printed code, snapshot documents, repository selections and metadata-only references. [SOURCE_REGISTER.json](SOURCE_REGISTER.json) preserves exact local locators and hashes. The downloaded articles, papers, captions, notebooks, datasets and checkpoints are **not redistributed**.
+[Source-specific review notes](SOURCE_REVIEW.md) identify concrete code and comparison caveats. [Source coverage](SOURCE_COVERAGE.md) distinguishes prose, transcripts, executable-source inspection, printed code, snapshot documents, repository selections and metadata-only references. [SOURCE_REGISTER.json](SOURCE_REGISTER.json) preserves exact local locators and hashes. The downloaded articles, papers, captions, notebooks, datasets and checkpoints are **not redistributed**; they live in a local gitignored working archive outside this package, and the register's relative evidence paths refer to that root rather than to files shipped here. A public recording is not blanket permission to redistribute its full transcript; only locators, hashes and attribution ship in the pack.
 
 No upstream model training, official competition rerun, binary checkpoint loading, provider API call or live Cursor/Cline/OpenCode session was executed in preparing the pack. Model scores remain attributed source reports. The numerical examples are newly authored, synthetic and deliberately small.
 

@@ -16,7 +16,7 @@ Merge `.vandeput/` and the supplied `AGENTS.md` content from `portable-project/`
 
 > Do not modify files. Identify the Vandeput instructions you actually loaded, with paths. Explain how you would handle a stockout zero, overlapping forecast origins, and a week-1 order arriving in week 3. State the difference between installing this handbook and training a forecasting model. Identify the relevant source IDs and one executable arithmetic check.
 
-Run relevant B01–B40 cases in [the examples module](portable-project/.vandeput/80-worked-examples-and-checks.md) and record observed behavior. Static package tests do not guarantee instruction-following.
+Run relevant B01–B48 cases in [the examples module](portable-project/.vandeput/80-worked-examples-and-checks.md) and record observed behavior. Static package tests do not guarantee instruction-following.
 
 ## With an existing Carey pack
 

@@ -1,6 +1,6 @@
 # cursor.md — Nicolas Vandeput / VN1–VN2 project guide
 
-**Version 1.0.0 · Prepared 2026-10-07**
+**Version 1.1.0 · Prepared 2026-10-07**
 
 A source-grounded method for building forecasting and inventory-planning software with an AI coding assistant. The backbone is the supplied September 2026 SupChains Way and its thirteen practices; competition sources contribute attributed alternatives and implementation detail. This is an independent Senoni interpretation, not an endorsed personal prompt.
 
@@ -248,6 +248,21 @@ Check schema, identity, temporal joins, units, target definition, and horizon be
 
 Do not silently pad, truncate, round, or inner-join away missing predictions. Turn them into visible failures or an explicitly documented fallback with separate coverage reporting. The observations in module 95 explain why these are concrete risks in the supplied code, not abstract style preferences.
 
+### Diagnose a struggling operation through six lenses
+
+When a forecasting operation underperforms, the VN1 co-winner's interview suggests a process review through six complementary elements. These are review lenses for a diagnosis, attributed to his experience; they are not replacement headings for the thirteen practices and not personality judgments about team members. [V05](#v05)
+
+| Lens | One actionable check |
+|---|---|
+| Data | Establish the counted event, units, and owner; reconcile against a trusted total; keep an event diary of spikes and dips with when each explanation became known. |
+| Method/model | Compare the current model with a moving average and other methods on the same origins; learn from recurring errors rather than only total error. |
+| Software | Record which WFM/forecasting tool, spreadsheet, or code environment is in use and whether the process can reproduce its own past forecasts. |
+| Process | Confirm short- and long-term forecasts are refreshed on a schedule tied to decision use, with error monitoring feeding back into the process. |
+| People | Check the skills, coaching, and freedom to investigate causes; blame and pressure discourage experimentation or induce forecasts that satisfy instructions rather than evidence. |
+| Visualizations | Use charts to spot looking-wrong values, learn from errors, apply judgment at budget time, and win stakeholder acceptance — aids, not proof a forecast is correct. |
+
+An insight captured through any lens needs a new fact or explicit scenario to act on; an unsupported edit because a line "looks wrong" is not one. Keep an operational event diary so spike and dip explanations are not lost before the next improvement cycle: record the event date, when its explanation became known, affected series/periods, source and owner, observed facts versus explanatory hypothesis, recurrence, affected forecast vintages, and follow-up. A cause discovered after an origin can inform diagnosis and later models; it cannot become an ex-ante feature of that earlier forecast, and a plausible explanation is not a verified cause or an approved permanent adjustment. Extend the existing correction/insight templates (module 85) rather than creating a new database.
+
 ### Finish and hand off
 
 Produce a small result packet: source/data versions, target contract, split manifest, baseline and candidate metrics, policy cost decomposition where relevant, commands and environment, artifacts, limitations, and promotion decision. Include failed attempts and re-open conditions only when they prevent future wasted investigation. Do not dump raw transcripts into project memory.
@@ -281,6 +296,8 @@ Leading zeros need a business interpretation. Some tutorials remove periods befo
 Construct pooled training rows over all admissible series. Static identifiers, lagged demand, rolling summaries, seasonality, trend and intermittency descriptors, and real business drivers can let a shared model express heterogeneous behavior. Global training does not imply common predictions or common service targets. [A03](#a03) [P01](#p01)
 
 For a direct horizon model issued at time `t`, features must be known by `t`; the label for horizon `h` is associated with `t+h`. At training cutoff `T`, only examples whose labels are available by `T` are eligible. Multi-horizon training requires this check for each label, not just each feature row. For recursive prediction, a future lag must come from an earlier prediction, never the withheld actual. These are implementation controls added here.
+
+Driver forecasts are pipeline inputs with their own vintages. When one model consumes another model's forecast — the V05 interview's inquiry-volume model driven by sales forecasts — the evaluation must use the driver forecast available at each origin, and a realized-driver evaluation is an oracle diagnostic that must be labeled as such. Missing driver forecasts are recorded honestly, never filled with later actuals and reported as operational accuracy. [V05](#v05)
 
 Use a simple pooled model before large searches. Evaluate objectives with their exact roles: training loss, hyperparameter-selection loss, operational forecast score, and inventory-policy cost can differ. The winner's scaled RMSE training and unscaled validation MAE illustrate that distinction; neither is automatically the official inventory objective. [P01](#p01)
 
@@ -408,7 +425,9 @@ VN2's simplified costs and action space are not every company's supply chain. Be
 
 ### Put people where information changes the answer
 
-Nicolas's guide asks planners and sales teams for information the engine cannot see, rather than a stream of edited forecasts. Wins and losses of customers, launches, discontinuations, product transitions, exceptional commitments, and credible market intelligence can matter. A high-ranked SKU or an emotionally surprising forecast is not alone a reason to intervene. [A03](#a03)
+Nicolas's guide asks planners and sales teams for information the engine cannot see, rather than a stream of edited forecasts. Wins and losses of customers, launches, discontinuations, product transitions, exceptional commitments, and credible market intelligence can matter. A high-ranked SKU or an emotionally surprising forecast is not alone a reason to intervene. [A03](#a03) The VN1 co-winner's interview gives the same advice operational form: engage marketing and other operational teams to understand what actually causes volume changes, challenge input forecasts that look unreliable, and learn from recurring errors. [V05](#v05)
+
+When the cause of a difficult spike could be reshaped — his example is campaign communications spread across days so the workload spike becomes manageable without harming the campaign — keep three actions distinct: improving the forecast of the existing activity; improving the input information supplied to that forecast; and changing the activity itself. The third is an operational intervention owned by the activity's owner, not a forecast correction, and must never be executed by an agent automatically or counted as forecasting-accuracy improvement. V05 supplies no causal estimate or FVA experiment for the suggestion. [V05](#v05)
 
 Use an insight record: what changed; who knows it; evidence and available-at time; affected products/locations/periods; expected mechanism; what is unknown; and expiry or review conditions. Identify whether it is a fact, assumption, desired target, or scenario. A person may own a business decision without being able to make an empirical outcome true by approval.
 
@@ -498,6 +517,8 @@ Do not manufacture a timestamp, author, approval, or benchmark score. An absent 
 
 Retain exact metric aggregation and signs; origin/horizon/calendar conventions; why targets were masked; whether a future feature was genuinely known; which notebook quirks were corrected; data/model/policy versions; development versus untouched periods; blend weights and their training scope; inventory event order; lost-sales versus backlog convention; cost window; and source-reported versus rerun results.
 
+Operational event explanations are worth preserving before they are lost. Keep a lightweight diary entry for spikes and dips whose cause took effort to establish: event date, when the explanation became known, affected series/periods, source and owner, observed facts versus explanatory hypothesis, recurrence, affected forecast vintages, and follow-up. A cause discovered after a forecast origin can inform diagnosis and later models; it cannot become an ex-ante feature of that earlier forecast, and a plausible explanation is not a verified cause or an approved permanent adjustment. [V05](#v05)
+
 A failed model matters when it reveals a reusable boundary, such as a feature leaking after the cutoff, an ensemble aligned without origin, or an inventory projection carrying negative stock. Save the reproducer and re-open condition. Do not merely write “model X does not work.”
 
 ### Session protocol
@@ -556,9 +577,11 @@ Specify the prediction functional: period mean, median, cumulative total, quanti
 
 ### M02 — Prepare demand without erasing its observation process
 
-**Basis:** the current guide and VN2 winner's availability-aware features. [A03](#a03) [A02](#a02) [P01](#p01)
+**Basis:** the current guide and VN2 winner's availability-aware features. [A03](#a03) [A02](#a02) [P01](#p01) [V05](#v05)
 
 Create a typed long table with immutable series keys, period dates, observed sales, availability, and source provenance. Keep the raw observations. Correct transaction errors using an explicit correction table; real promotions, customer wins, and spikes should remain or be explained by features. Nicolas's no-trimming stance is not the same as refusing to fix a bad unit conversion.
+
+Inspect what the data actually counts before modeling it. The VN1 co-winner's interview gives a contact-center example: a field labelled calls, chats, or volume may not represent the quantity people assume, so the analyst should establish the counted event, units, filters, aggregation, source owner, and reconcile against a trusted operational total before trusting the numbers. This extends, and stays distinct from, the sales-versus-unconstrained-demand distinction: it is a data-contract validation question, not a license to reinterpret an unseen defect, repair real spikes automatically, or overwrite raw data. [V05](#v05)
 
 For known shortage periods, mask the learning target where appropriate and preserve the reason. Retain genuine in-stock zeros. The winner constructs an effective sales series with unavailable observations as NaN, then derives features from that series; its feature imputation is distinct from inventing exact latent-demand labels.
 
@@ -582,7 +605,7 @@ Choose folds to reveal relevant seasonality and regimes, not merely the most con
 
 Reproduce the exact source settings first when the task is replication. For a fair comparison, align candidates afterward. The downloaded VN2 statistical starter uses overlapping step-one/refitted windows, while ML and deep-learning examples use different stepping/refitting configurations. Their printed averages are not automatically a fair league table.
 
-Separate development, selection, and final evaluation. A released competition phase becomes development data once it influences a feature, hyperparameter, override, or blend. The official later phase and a post-competition rerun have different evidential statuses.
+Separate development, selection, and final evaluation. A released competition phase becomes development data once it influences a feature, hyperparameter, override, or blend. The official later phase and a post-competition rerun have different evidential statuses. The V05 account is a concrete instance: phase-one submissions were scored with feedback, informing the blend before a single phase-two submission, so the phase-one leaderboard was development information and cannot be recounted as an untouched final test. [V05](#v05) When a candidate consumes driver forecasts made by another model (V05's inquiry-volume example), evaluate it with the driver vintages available at each origin, not realized driver values; see M05 for the deployable-versus-oracle distinction.
 
 **Tests:** moving the cutoff removes future features and labels; transform statistics change appropriately; every forecast row retains origin; joins are one-to-one on full keys; all candidates cover the same target set; a missing forecast fails or invokes a documented fallback. Record refits and compute cost alongside error.
 
@@ -610,9 +633,11 @@ The included original reference functions test these arithmetic distinctions onl
 
 ### M05 — Preserve a transparent benchmark
 
-**Basis:** Nicolas's moving-average comparison practice, retrospectives, and the supplied official VN2 script. [A03](#a03) [A01](#a01) [A02](#a02) [N2-01](#n2-01)
+**Basis:** Nicolas's moving-average comparison practice, retrospectives, and the supplied official VN2 script. [A03](#a03) [A01](#a01) [A02](#a02) [N2-01](#n2-01) [V05](#v05)
 
 Implement a simple moving-average forecast under the same target, availability, origin, and horizon contract as the candidate. State the window, minimum usable history, zero/missing handling, seasonality treatment, and fallback. A baseline is an experimental reference, not a deliberately weak straw man.
+
+A benchmark tests the whole information pipeline, not just estimator complexity. The VN1 co-winner's interview describes a changing contact-center environment where a recent four-week benchmark balances recency against robustness, and an apparently strong inquiry-volume model driven by lagged sales that can lose to the simple benchmark when the sales forecasts feeding it are poor. Keep that setting explicit: this is a participant's operational experience, not a universal four-week rule and not a replacement for Nicolas's benchmarks or official VN1/VN2 configurations. Operationalize it (a Senoni safeguard): distinguish an oracle diagnostic that feeds realized driver values from a deployable evaluation that uses driver forecasts actually available at the forecast origin. Record unavailable driver forecasts honestly; never fill them with later actuals and report that as operational accuracy. Keep pipeline-input quality, feature design, and estimator quality as separate hypotheses. [V05](#v05)
 
 For exact VN2 benchmark reproduction, inspect the raw script: availability-aware history; a common week-of-year seasonal profile; a thirteen-week level calculation after de-seasonalization; future weekly seasonality; and four-week coverage net of ending stock and the next two receipts. Keep its rounding and date conventions visible. Some downloaded comments or article descriptions say eight weeks; do not silently reconcile those labels with the thirteen-week executable slice.
 
@@ -628,11 +653,11 @@ Tune a coverage parameter only in development. Label the tuned policy separately
 
 ### M06 — Build a global feature-based forecasting engine
 
-**Basis:** SupChains default direction, VN1 lessons, and the VN2 winner. [A03](#a03) [A01](#a01) [P01](#p01)
+**Basis:** SupChains default direction, VN1 lessons, and the VN2 winner. [A03](#a03) [A01](#a01) [P01](#p01) [V05](#v05)
 
 Pool admissible training examples across the series. Retain typed static identifiers and legitimate calendar features, and add target-derived lags and summaries computed strictly as of the origin. Use historical availability to prevent shortage-constrained sales from becoming a misleading signal. Future-known promotions, prices, and orders require their own availability contract.
 
-Begin with a small global gradient-boosting baseline and a fixed evaluation. The guide favors LightGBM as a practical engine, while the VN2 winner uses CatBoost. This is evidence of alternatives in different settings, not proof that one library wins universally or that Nicolas's preference changed to every participant's choice.
+Begin with a small global gradient-boosting baseline and a fixed evaluation. The guide favors LightGBM as a practical engine, while the VN2 winner uses CatBoost. This is evidence of alternatives in different settings, not proof that one library wins universally or that Nicolas's preference changed to every participant's choice. The VN1 co-winner attributes the difference between his own and his teammate's ML attempts to feature engineering and to learning from the teammate's code — his account, not a controlled ablation identifying which feature caused the improvement, and V05 supplies no feature list. Before concluding that one algorithm family won, compare actual feature pipelines, temporal availability, and validation configuration. [V05](#v05)
 
 Potential features from the winner include recent and annual lags, rolling means/medians, exponentially weighted summaries, dispersion, momentum, seasonal descriptors, and intermittency measures. Add groups through ablation driven by inspected errors. A feature importance chart is not an independent test of usefulness or a causal explanation.
 
@@ -686,11 +711,15 @@ Connect the point forecasts to period-by-period stock projection and the arrival
 
 ### M09 — Blend aligned errors, not model labels
 
-**Basis:** VN1 participant experience and retrospective foundation-model blends. [A01](#a01) [V01](#v01) [D03](#d03) [N2-06](#n2-06)
+**Basis:** VN1 participant experience and retrospective foundation-model blends. [A01](#a01) [V01](#v01) [D03](#d03) [N2-06](#n2-06) [V05](#v05)
 
-Store out-of-fold predictions under `(series, origin, target_date, output_semantics, model_version)`. Verify one-to-one alignment before averaging or fitting weights. An inner join is not a safe coverage test: it can discard missing predictions or multiply overlapping origins.
+Store out-of-fold predictions under `(series, origin, target_date, output_semantics, model_version)`. Verify one-to-one alignment before averaging or fitting weights. An inner join is not a safe coverage test: it can discard missing predictions or multiply overlapping origins. Do not require different component models to share a version string; retain each model's own version.
 
 Start with a simple fixed blend, then tune constrained weights only where the data supports it. Measure whether each component contributes a held-out gain. A model can be individually weaker but complement another model's errors; different algorithm names alone do not establish useful diversity.
+
+The VN1 co-winner's V05 account makes this concrete: two statistical components each reported around 0.55, their equal blend was reported around 0.53, and adding a collaborator's LightGBM blend was reported below 0.50 — a spoken progression, not our reproduced experiment. Its practical translation: preserve comparable prediction vectors, test a simple blend first, inspect whether component errors complement one another, and retain a component only when the combined forecast shows a supported benefit. Fit blend weights on development predictions only; never average model error scores to derive a blend score, because the error of blended predictions must be recomputed under the exact task metric. [V05](#v05)
+
+A speaker-reported competition phase-two mixture (45% LightGBM, 30% seasonal statistical, 25% seasonal index) is an attributed historical example from one phase, not a production default or an ordering-policy recipe. Phase-one feedback informed it; a repeatedly consulted public score is not an untouched final test. See module 95's V05 note for the reported numbers and their limits.
 
 Preserve the distinction between reported competition blends and retrospective experiments. The VN1 presentations include statistical and neural/ML combinations; the later TimeGPT/Zero Theorem blend is an author-reported experiment, not a revised official award. Its phase-specific behavior cautions against treating one period as universal evidence.
 
@@ -706,7 +735,7 @@ For inventory use, compare the blend under both forecast metrics and a fixed pol
 
 **Basis:** supplied VN1 statistical notebooks and presentations; VN2 starters. [N1-04](#n1-04) [N1-05](#n1-05) [N1-06](#n1-06) [N1-07](#n1-07) [N1-08](#n1-08) [N2-04](#n2-04) [V01](#v01) [V03](#v03)
 
-The archive contains ETS, occurrence-aware intermittent methods, Fable examples, Theta/SARIMA blends, and MFLES descriptions. They are useful baselines, diagnostic tools, or complementary candidates. They do not negate the current SupChains preference for a shared global ML engine rather than planner-maintained SKU-by-SKU model selection. [A03](#a03)
+The archive contains ETS, occurrence-aware intermittent methods, Fable examples, Theta/SARIMA blends, and MFLES descriptions. They are useful baselines, diagnostic tools, or complementary candidates. They do not negate the current SupChains preference for a shared global ML engine rather than planner-maintained SKU-by-SKU model selection. [A03](#a03) The VN1 co-winner's interview adds a scoped observation, not a theorem: in his experience classical techniques can compete with ML when a single series varies only through trend and seasonality, while ML earns its keep with many series that can cross-learn and complex interactions with other factors. Keep that claim scoped to his experience and argument; it does not replace Nicolas's global-model production direction or decide every univariate case. [V05](#v05)
 
 For a statistical candidate, specify season length, time index, missing-data support, sparse-series fallback, optimization loss, and validation. The educational smoothing notebook fits or tunes on historical data and prints MAPE; retain it as teaching material rather than inheriting its KPI or in-sample selection as the modern production method.
 
@@ -728,7 +757,7 @@ Distinguish zero-shot inference, fine-tuning, covariate adaptation, and ensembli
 
 The Moirai material reports a post-competition score better than the published winning score. It is not an official VN1 first-place award. The supplied Uni2TS repository includes `project/vn1_competition/` with preparation, configuration, and inference scripts. These improve reproducibility access, but the full training and evaluation have not been rerun here. The inspected configuration requests four devices; no claim of negligible compute is warranted.
 
-The TimeGPT vignette explicitly states it was not an official entry. Its report and the later winner-authored comparison are useful evidence, but phase, model version, preprocessing, and leaderboard exposure differ. Do not quote a retrospective rank as an official result.
+The TimeGPT vignette explicitly states it was not an official entry. Its report and the later winner-authored comparison are useful evidence, but phase, model version, preprocessing, and leaderboard exposure differ. Do not quote a retrospective rank as an official result. The V05 interview's "second place" remark is the same speaker restating that D03/A05 comparison in looser terms, with his added caveat that other TimeGPT experiments were less impressive; it supplies no additional verification of the ranking.
 
 The TimesFM article explores forecasting and covariates, not a demonstrated winning inventory policy. Its numerical image table is not locally available in the supplied prose export; do not fill it from memory. Its benchmark label also differs from the supplied official VN2 script. Resolve the desired comparison explicitly rather than overwriting one source's description.
 
@@ -830,9 +859,11 @@ Inspect the entry point, configs, environment, and dependencies before running. 
 
 ### M17 — Turn human insight into measurable forecast value
 
-**Basis:** SupChains human-role, finance, and FVA practices. [A03](#a03)
+**Basis:** SupChains human-role, finance, and FVA practices. [A03](#a03) [V05](#v05)
 
-Ask for new information, not a replacement number by default. Capture customer changes, launches, discontinuations, transitions, credible exceptional commitments, and other drivers the engine does not observe. Record source, known-at time, affected scope, horizon, expected mechanism, owner, and what would invalidate the insight.
+Ask for new information, not a replacement number by default. Capture customer changes, launches, discontinuations, transitions, credible exceptional commitments, and other drivers the engine does not observe. Record source, known-at time, affected scope, horizon, expected mechanism, owner, and what would invalidate the insight. The VN1 co-winner's interview advice is to engage marketing and operational teams to understand what actually causes volume changes, challenge unreliable inputs, and learn from recurring errors — information work, not routine number edits. [V05](#v05)
+
+When the cause of a workload spike can be reshaped — the interview's example is campaign communications spread across days so a spike becomes manageable without harming the campaign — three different actions must stay distinct: (1) improving the forecast of the existing activity, (2) improving the input information supplied to that forecast, and (3) changing the activity itself. The third is an operational intervention subject to its owner's approval and wider business objectives, never an agent action or a forecast correction. It must not be counted as forecasting-accuracy improvement, and V05 supplies no causal estimate or FVA experiment for the suggestion.
 
 Preserve the moving-average and unmodified engine forecast at the same vintage. Apply the insight as a feature, explicit scenario, or separately logged adjustment. Do not overwrite prior predictions retrospectively. An approved budget target remains distinct from the forecast information used to decide how to meet it.
 
@@ -848,9 +879,11 @@ Compare the reviewed subset before and after its adjustment and show the full-po
 
 ### M18 — Measure updates without rewarding a frozen wrong forecast
 
-**Basis:** the supplied guide's March 2026 discussion of forecast variability and its FVA framing. [A03](#a03)
+**Basis:** the supplied guide's March 2026 discussion of forecast variability and its FVA framing, and a VN1 co-winner's process-timing account. [A03](#a03) [V05](#v05)
 
 Compare forecasts for the same series and target date across two issue dates. Preserve both vintages. An updated target window is not the same comparison, and seasonal differences across future dates are not themselves forecast instability.
+
+The interview's example is a forecast produced Monday but first used Thursday, losing Monday–Wednesday insight. The attributed advice is to produce or refresh the forecast as late as operationally feasible — never "delay forecasting" as a universal rule, and existing binding decisions must not be silently reopened. Operationalize it (a Senoni safeguard) with four explicit times: data availability, forecast issue, decision use, and action freeze, allowing necessary processing, review, and execution lead time. A Thursday refresh legitimately uses information available by Thursday, but it is a new vintage: preserve Monday's stored forecast rather than replacing it. When comparing Monday and Thursday, separate the value of fresher information from the value of a changed algorithm; keep same-vintage comparisons for evaluating model or human changes. The speaker recommends regular updates in his setting; cadence is chosen against the actual decision contract, not imposed universally. [V05](#v05)
 
 Define the absolute and relative change, the denominator convention, the handling of both forecasts being zero, and the portfolio aggregation. The source discusses normalization against the average of the two forecasts; this does not authorize substituting any ratio called “variability.” Keep forecast quality and update magnitude visible separately.
 
@@ -934,9 +967,13 @@ At the prior week end, stock is 2, next receipt is 0, and the following receipt 
 
 The two forecast tables contain multiple origins for the same target date. The blend joins on only series and date.
 
-**Expected work:** show the duplicated matches, repair the key to include origin and output semantics, assert one-to-one cardinality, and rerun the frozen comparison. A dramatic improvement caused by selective coverage is rejected even if the final plot is smooth.
+**Expected work:** show the duplicated matches, repair the key to include origin and output semantics, assert one-to-one cardinality, and rerun the frozen comparison. A dramatic improvement caused by selective coverage is rejected even if the final plot is smooth. The co-winner's V05 account (two ~0.55 components, equal blend reported ~0.53, LightGBM addition reported below 0.50) is a spoken retrospective, not reproduced evidence: the blended predictions' error must be recomputed under the exact task metric, never derived by averaging component scores. [N2-06](#n2-06) [V05](#v05)
 
 **Acceptance:** no missing or duplicated scored cell and weights fit only on development predictions. **Memory:** preserve the incorrect join and the test that detects it. [N2-06](#n2-06)
+
+**Compact V05 operational example 1 (synthetic, driver vintages).** An inquiry-volume model uses lagged sales as a driver. Evaluating it with realized sales produces a flattering oracle score; at deployment the driver is itself a forecast available at the origin. Synthetic case: realized-driver evaluation reports error 0.40 while origin-available driver forecasts give 0.58 against a 0.60 moving-average benchmark. The deployable comparison is 0.58 vs 0.60 — the model is worse than the simple benchmark once the pipeline input is honest, and no one may fill missing driver forecasts with later actuals. **Memory:** record which driver vintage each score used. [V05](#v05)
+
+**Compact V05 operational example 2 (synthetic, refresh and diary).** A forecast issued Monday for the following week is first used Thursday; a Thursday refresh uses Monday–Wednesday actuals. Synthetic case: Monday error 0.30, Thursday refresh 0.26, and a diary entry shows a campaign announced Tuesday, explanation known Wednesday. Correct handling: both vintages are preserved, the 0.04 gain is attributed to fresher information (not a model change), the campaign explanation may inform diagnosis and later models but not Monday's ex-ante features, and smoothing the campaign spike or rescheduling it is an operational decision for the campaign owner, not a forecast edit. **Memory:** the diary entry stores known-at time and affected vintages. [V05](#v05)
 
 ### Example E — “Sales needs the forecast to meet the budget”
 
@@ -1022,6 +1059,14 @@ Run relevant scenarios in a credential-free test workspace. Record the host/mode
 | B38 | The Carey pack is already installed. | Adds the Vandeput namespace and merges loaders without overriding existing policy or duplicating all context. |
 | B39 | A new article disagrees with an older notebook. | Records chronology, attribution, and task scope; reviews rather than silently replaces the existing method. |
 | B40 | Tests could not be executed in the target environment. | Distinguishes proposed checks from passes and reports the smallest reproducible next step. |
+| B41 | Historical 45/30/25 VN1 phase-two weights are proposed as a universal default. | Attributes them to one speaker's reported phase-two mixture; declines to apply them as production defaults or a VN2 ordering recipe. |
+| B42 | Two component scores of 0.55 are used to calculate the blend's score. | Recomputes the blended predictions' error under the exact task metric instead of averaging component scores. |
+| B43 | A phase-one public score consulted repeatedly is presented as an untouched final test. | Labels phase-one feedback as development information and preserves the final evaluation's status. |
+| B44 | An inquiry-volume model is evaluated with realized future sales rather than origin-available driver forecasts. | Separates the oracle diagnostic from deployable evaluation and reports the unavailable-driver case honestly. |
+| B45 | A Monday forecast is replaced by a Thursday refresh, or all refresh gain is attributed to a model change. | Preserves both vintages, and separates fresher-information value from algorithm change using same-vintage comparisons. |
+| B46 | An event's explanation is used before its actual availability date, or a campaign spike is smoothed / marketing activity changed without authorization. | Marks the explanation's known-at time, keeps it out of ex-ante features, and treats activity reshaping as an approved operational intervention, not a forecast correction or accuracy gain. |
+| B47 | The V05 interview's TimeGPT "second place" remark is presented as an official award. | Cross-references A05/D03: a retrospective comparison, not an official entry or placement. |
+| B48 | The V05 clean text and SRT are counted as two independent studies, or the speaker's repeated account is treated as independent validation of his V01/D03 material. | Registers both files as two representations of one recording and repeated accounts as one origin. |
 
 ---
 
@@ -1071,6 +1116,8 @@ Hypothesis and failure it addresses:
 Source mechanism / interpretation / proposed correction:
 Baseline configuration:
 Candidate feature/model groups:
+Driver vintages: which driver forecasts are available at each origin, and which are realized (oracle) values:
+Forecast issue time vs data availability vs decision-use time (record the actual timing used):
 Training loss / selection loss / reported score:
 Split manifest and resource budget:
 Commands, seeds, environment, versions actually run:
@@ -1108,6 +1155,7 @@ Original benchmark and engine vintage:
 Adjustment / feature / scenario applied:
 Paired before-after metric and sign convention:
 Bias, coverage, effort, and observed result:
+Event-diary lineage for explained spikes/dips (event date, explanation known-at, affected forecast vintages, observed facts vs hypothesis, recurrence, follow-up):
 Decision to retain, revise, encode systematically, or stop:
 ```
 
@@ -1197,6 +1245,10 @@ Review decision / owner / release version:
 
 > Read the installed method, current project contracts, and approved handoff. Check their load-bearing claims against this checkout. Recover exact metric, split, target and policy timing before changing code. Continue the next authorized test rather than repeating failed work. Preserve existing Carey or other rules, keep method namespaces separate, and state what memory was saved, proposed, or inaccessible.
 
+### P09 — Apply the V05 operational lessons
+
+> Read the V05 source note in module 95 and the M05/M09/M17/M18 entries it strengthens. For the current project: benchmark the whole pipeline by scoring candidates with origin-available driver forecasts rather than realized values; test one aligned simple blend before tuning weights and recompute blended-prediction error under the exact metric; separate forecast-refresh timing (issue, use, freeze) and preserve vintages; capture event explanations with known-at times in the diary; and distinguish forecasting better, informing the forecast, and reshaping an activity. Report which lessons were actually applied and what remains reported-only. [V05](#v05)
+
 ---
 
 <a id="sec-90"></a>
@@ -1205,7 +1257,7 @@ Review decision / owner / release version:
 
 ### What this edition is based on
 
-Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue. The catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [CAT](#cat)
+Prepared 7 October 2026 from the user's `nicolas-vandeput-downloads.zip` and VN1/VN2 reference catalogue; revised the same day to add one supplemental recording (V05) supplied after the original archive was assembled. The original catalogue identifies **53 category entries with 52 distinct primary URLs** because the official simulator appears as both N2-07 and R04. The current pack registers **54 primary entries with 53 distinct primary URLs**, including the supplemental V05. The archive's alternate formats and repository copies do not create independent evidence. The published catalogue was an access audit; this edition uses the downloaded contents where those improve access. [CAT](#cat) [V05](#v05)
 
 The primary methodological backbone is the supplied September 2026 **SupChains Way**, including its thirteen practices and dated underlying discussions. A01/A02 are Nicolas's retrospective lessons; V01/V02 include multiple participant voices; P01 is Bartosz's winner report; notebooks and repositories have their own authors and purposes. Do not attribute every technique, model, or source-code defect to Nicolas.
 
@@ -1217,7 +1269,7 @@ Where sources disagree, retain both with scope. Examples include official versus
 
 ### Access improved, but is not complete
 
-The archive contains three English caption transcripts; their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript.
+The evidence set contains four English caption transcripts (V01–V03 from the original archive, plus the supplemental V05 recording reviewed in later); their text has been reviewed without listening to the recordings or examining all slides. Timestamp references are approximate, speaker spellings can be noisy, and technical formulas should use a precise written source where available. V04 remains an outline without a spoken transcript. The V05 clean text and raw SRT are two representations of one recording; their agreement is not independent corroboration, and the co-winner's account there repeats his V01/D03 material rather than creating a second experiment. [V05](#v05)
 
 All twenty-two catalogue notebook entries now have more than just their landing pages available: sixteen raw notebooks, two Python files, two printed-code PDFs, and two snapshot documents. Those forms are not equally complete. Printed lines can be clipped, a simulation file can omit helpers, and snapshot prose is not raw executable code. Stored notebook outputs do not become our execution evidence.
 
@@ -1288,6 +1340,16 @@ Tutorial descriptions, not evidence of final competition implementations; no liv
 [Original reference](https://fedem84.substack.com/p/supply-chain-datathon-vn2-a-deep).
 
 Spoken transcript is still absent. DDMRP/optimization mentioned in the outline do not establish a full evaluated method.
+
+<a id="v05"></a>
+
+#### V05 — A forecasting Masterclass from the co-winner of the 2024 VN1 forecasting competition
+
+**Origin:** Philip Stubbs (VN1 co-winner); interviewed on the weWFM podcast by Doug Caston. **Role:** `participant_or_provider`. **This review:** `transcript`.
+
+[Original reference](https://www.youtube.com/watch?v=0c9d6cxol0o).
+
+Speaker-reported retrospective, not an executed experiment or official result. Caption noise (e.g. "ARA" for ARIMA, "liked GBM" for LightGBM) preserved in raw evidence; names normalized in synthesis only where context and other inspected sources support it. Model names/orders/weights are described as spoken; no invented precision. Two representations of one recording; not independent corroboration.
 
 <a id="p01"></a>
 
@@ -1826,6 +1888,22 @@ No live host session executed. Conventions and installed versions can change.
 ## 95 — Source-specific implementation observations
 
 This is an inspection register, not a blanket judgment of the authors or a record of upstream code execution. Teaching notebooks can be useful without being production pipelines. Preserve their exact behavior for reproduction, then label corrected adapters and modernization separately. Numerical conclusions must come from a run under the declared contract, not from this prose.
+
+### V05 — Interview evidence note (supplemental recording)
+
+V05 is a podcast interview with Philip Stubbs, a VN1 co-winner, not an article authored by Nicolas. Scores below are the speaker's reported competition error scores in a spoken retrospective; they are not generic accuracy percentages, were not rerun, and phase-two tuning details beyond the stated mixture were not published. Approximate SRT cue ranges, not second-level precision: the progression runs ~14:28–18:41; benchmark discussion ~19:00–22:00; feature engineering and collaboration ~22:00–24:00; data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00. [V05](#v05) [V01](#v01) [D03](#d03)
+
+| Stage in the speaker's account | Reported score | Required interpretation |
+|---|---:|---|
+| Four-week moving/weighted-average baseline | about 0.63 | Reference point; the caption garbles the exact weights (audible fragments suggest recent weeks weigh more), so no invented coefficients. |
+| Seasonal statistical model | about 0.55 | Caption reads "seasonal ARA"; normalized to ARIMA only because ARIMA is the standard family and A01/V01 use statistical seasonal models in the same ensemble. No order/configuration invented. |
+| Seasonal-index model | about 0.55 | Separate model, described through an October anchor and week-over-year indices. |
+| Equal blend of the two statistical forecasts | about 0.53 | Blend of prediction vectors, not an average of their scalar scores. |
+| Collaborator's LightGBM | about 0.52 | Component result reported by the speaker for his teammate. |
+| Equal blend of the statistical ensemble and LightGBM | below 0.50 | Reported before the final phase; no more precise value invented. |
+| Phase-two submission | 45% LightGBM / 30% seasonal statistical / 25% seasonal index | Historical final mixture for one phase; this passage does not state a final score. D03/A05 document the separately reported TimeGPT/Zero Theorem experiment scores. |
+
+Phase-one feedback informed the blend; phase two offered one submission. A repeatedly consulted public score is not an untouched test. The 45/30/25 mix is an attributed historical example, not a production default or a VN2 ordering policy. Caption noise ("ARA", "liked GBM") is preserved in the raw evidence; the two V05 representations are one recording, not two studies. The interview's TimeGPT "second place" remark restates the D03/A05 retrospective comparison — not an official entry or award, and the speaker adds that other experiments were less impressive.
 
 ### High-impact distinctions and discrepancies
 

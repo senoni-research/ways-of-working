@@ -2,6 +2,22 @@
 
 This is an inspection register, not a blanket judgment of the authors or a record of upstream code execution. Teaching notebooks can be useful without being production pipelines. Preserve their exact behavior for reproduction, then label corrected adapters and modernization separately. Numerical conclusions must come from a run under the declared contract, not from this prose.
 
+## V05 — Interview evidence note (supplemental recording)
+
+V05 is a podcast interview with Philip Stubbs, a VN1 co-winner, not an article authored by Nicolas. Scores below are the speaker's reported competition error scores in a spoken retrospective; they are not generic accuracy percentages, were not rerun, and phase-two tuning details beyond the stated mixture were not published. Approximate SRT cue ranges, not second-level precision: the progression runs ~14:28–18:41; benchmark discussion ~19:00–22:00; feature engineering and collaboration ~22:00–24:00; data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00. [V05](90-sources.md#v05) [V01](90-sources.md#v01) [D03](90-sources.md#d03)
+
+| Stage in the speaker's account | Reported score | Required interpretation |
+|---|---:|---|
+| Four-week moving/weighted-average baseline | about 0.63 | Reference point; the caption garbles the exact weights (audible fragments suggest recent weeks weigh more), so no invented coefficients. |
+| Seasonal statistical model | about 0.55 | Caption reads "seasonal ARA"; normalized to ARIMA only because ARIMA is the standard family and A01/V01 use statistical seasonal models in the same ensemble. No order/configuration invented. |
+| Seasonal-index model | about 0.55 | Separate model, described through an October anchor and week-over-year indices. |
+| Equal blend of the two statistical forecasts | about 0.53 | Blend of prediction vectors, not an average of their scalar scores. |
+| Collaborator's LightGBM | about 0.52 | Component result reported by the speaker for his teammate. |
+| Equal blend of the statistical ensemble and LightGBM | below 0.50 | Reported before the final phase; no more precise value invented. |
+| Phase-two submission | 45% LightGBM / 30% seasonal statistical / 25% seasonal index | Historical final mixture for one phase; this passage does not state a final score. D03/A05 document the separately reported TimeGPT/Zero Theorem experiment scores. |
+
+Phase-one feedback informed the blend; phase two offered one submission. A repeatedly consulted public score is not an untouched test. The 45/30/25 mix is an attributed historical example, not a production default or a VN2 ordering policy. Caption noise ("ARA", "liked GBM") is preserved in the raw evidence; the two V05 representations are one recording, not two studies. The interview's TimeGPT "second place" remark restates the D03/A05 retrospective comparison — not an official entry or award, and the speaker adds that other experiments were less impressive.
+
 ## High-impact distinctions and discrepancies
 
 | Source and locator | What the supplied material shows | Consequence for reuse |

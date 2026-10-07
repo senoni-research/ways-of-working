@@ -49,6 +49,21 @@ Check schema, identity, temporal joins, units, target definition, and horizon be
 
 Do not silently pad, truncate, round, or inner-join away missing predictions. Turn them into visible failures or an explicitly documented fallback with separate coverage reporting. The observations in module 95 explain why these are concrete risks in the supplied code, not abstract style preferences.
 
+## Diagnose a struggling operation through six lenses
+
+When a forecasting operation underperforms, the VN1 co-winner's interview suggests a process review through six complementary elements. These are review lenses for a diagnosis, attributed to his experience; they are not replacement headings for the thirteen practices and not personality judgments about team members. [V05](90-sources.md#v05)
+
+| Lens | One actionable check |
+|---|---|
+| Data | Establish the counted event, units, and owner; reconcile against a trusted total; keep an event diary of spikes and dips with when each explanation became known. |
+| Method/model | Compare the current model with a moving average and other methods on the same origins; learn from recurring errors rather than only total error. |
+| Software | Record which WFM/forecasting tool, spreadsheet, or code environment is in use and whether the process can reproduce its own past forecasts. |
+| Process | Confirm short- and long-term forecasts are refreshed on a schedule tied to decision use, with error monitoring feeding back into the process. |
+| People | Check the skills, coaching, and freedom to investigate causes; blame and pressure discourage experimentation or induce forecasts that satisfy instructions rather than evidence. |
+| Visualizations | Use charts to spot looking-wrong values, learn from errors, apply judgment at budget time, and win stakeholder acceptance — aids, not proof a forecast is correct. |
+
+An insight captured through any lens needs a new fact or explicit scenario to act on; an unsupported edit because a line "looks wrong" is not one. Keep an operational event diary so spike and dip explanations are not lost before the next improvement cycle: record the event date, when its explanation became known, affected series/periods, source and owner, observed facts versus explanatory hypothesis, recurrence, affected forecast vintages, and follow-up. A cause discovered after an origin can inform diagnosis and later models; it cannot become an ex-ante feature of that earlier forecast, and a plausible explanation is not a verified cause or an approved permanent adjustment. Extend the existing correction/insight templates (module 85) rather than creating a new database.
+
 ## Finish and hand off
 
 Produce a small result packet: source/data versions, target contract, split manifest, baseline and candidate metrics, policy cost decomposition where relevant, commands and environment, artifacts, limitations, and promotion decision. Include failed attempts and re-open conditions only when they prevent future wasted investigation. Do not dump raw transcripts into project memory.

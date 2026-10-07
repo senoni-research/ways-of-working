@@ -2,7 +2,7 @@
 import unittest
 from core import (InventoryState, inventory_step, simulate, trace_cost,
     vn1_score, cumulative_absolute_error, align_complete,
-    projected_arrival_stock, level_buffer_target, projected_fill, fva)
+    projected_arrival_stock, level_buffer_target, projected_fill, fva, weighted_blend)
 
 class ForecastTests(unittest.TestCase):
     def test_vn1_pooled_bias_cancels(self):
@@ -73,5 +73,37 @@ class InventoryTests(unittest.TestCase):
     def test_fractional_forecast_not_forced_integer(self):self.assertEqual(projected_arrival_stock(InventoryState(2),.2,.3),1.5)
     def test_fva_sign_and_undefined_relative(self):
         self.assertEqual(fva(10,8),(2,.2));self.assertEqual(fva(0,1),(-1,None))
+
+class BlendTests(unittest.TestCase):
+    def test_blend_rescored_not_score_averaged(self):
+        # Two components with score 0.5 each; the equal blend is rescored fresh
+        # under the exact metric and improves only through complementary errors.
+        blend=weighted_blend([[15,5],[5,15]],[.5,.5])
+        self.assertEqual(blend,(10.0,10.0))
+        self.assertEqual(vn1_score([10,10],blend).score,0)
+    def test_identical_errors_do_not_improve_by_averaging(self):
+        # Same errors -> blend reproduces them; averaging scores would claim
+        # nothing here. The caller must rescore; no improvement is asserted.
+        comp=[15,5]
+        blend=weighted_blend([comp,comp],[.5,.5])
+        self.assertEqual(vn1_score([10,10],blend).score,vn1_score([10,10],comp).score)
+    def test_component_misalignment_rejected(self):
+        with self.assertRaises(ValueError):weighted_blend([[1,2],[1]],[.5,.5])
+    def test_empty_components_rejected(self):
+        with self.assertRaises(ValueError):weighted_blend([],[ ])
+    def test_zero_total_weight_rejected(self):
+        with self.assertRaises(ValueError):weighted_blend([[1],[1]],[0,0])
+    def test_negative_weight_rejected(self):
+        with self.assertRaises(ValueError):weighted_blend([[1],[1]],[.5,-.5])
+    def test_normalized_weight_proportionality(self):
+        # .4/.3/.2/.1 and 4/3/2/1 give the same normalized blend.
+        a=weighted_blend([[10],[20],[30],[40]],[.4,.3,.2,.1])
+        b=weighted_blend([[10],[20],[30],[40]],[4,3,2,1])
+        self.assertEqual(a,b)
+    def test_blend_never_asserts_improvement(self):
+        # Correlated (identical) errors can leave the blend score unchanged or
+        # worse; the helper performs arithmetic only, never a performance claim.
+        worse=weighted_blend([[10],[20]],[.9,.1])
+        self.assertGreater(vn1_score([15],[*worse]).absolute_error,0)
 
 if __name__=='__main__':unittest.main(verbosity=2)

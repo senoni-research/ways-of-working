@@ -50,6 +50,13 @@ def extra_file(root):(root/'portable-project/.vandeput/recipes/M99-unwanted.md')
 def missing_recipe(root):(root/'canonical/recipes/M01-decision-and-risk-horizon.md').unlink()
 def missing_module(root):(root/'canonical/modules/20-project-workflow.md').unlink()
 def bad_template(root):replace(root,'canonical/modules/85-templates-and-prompts.md','## T01 —','## T00 —')
+def drop_v05(root):
+    p=root/'canonical/sources.json';j=json.loads(p.read_text());j['records']=[r for r in j['records'] if r['id']!='V05'];p.write_text(json.dumps(j,ensure_ascii=False,indent=2)+'\n')
+def false_supplemental(root):
+    p=root/'canonical/sources.json';j=json.loads(p.read_text());next(r for r in j['records'] if r['id']=='A01')['supplemental']=True;p.write_text(json.dumps(j,ensure_ascii=False,indent=2)+'\n')
+def stale_supplemental_coverage(root):replace(root,'SOURCE_COVERAGE.md',' · **Supplemental asset:**',' · **Supplemental:**')
+def wrong_metadata(root):
+    p=root/'canonical/metadata.json';j=json.loads(p.read_text());j['expected_primary_entries']=53;p.write_text(json.dumps(j,indent=2,ensure_ascii=False)+'\n')
 
 CASES=[
 ('canonical content changed; outputs stale',lambda r:append(r,'canonical/modules/20-project-workflow.md','\nNew actual instruction.\n'),'GENERATED_DRIFT','cursor.md'),
@@ -70,6 +77,10 @@ CASES=[
 ('preface changed without regeneration',corrupted_preface,'GENERATED_DRIFT','cursor.md'),
 ('extra stale recipe ships',extra_file,'UNEXPECTED_PACK_FILE','M99'),
 ('template inventory changed',bad_template,'TEMPLATE_INVENTORY',''),
+('V05 removed from register; reviewed inventory enforced',drop_v05,'SOURCE_INVENTORY','54'),
+('false supplemental flag on an original-archive source',false_supplemental,'SOURCE_INVENTORY','V05'),
+('stale supplemental marker in generated coverage',stale_supplemental_coverage,'GENERATED_DRIFT','SOURCE_COVERAGE.md'),
+('metadata expected inventory regressed to original counts',wrong_metadata,'METADATA_COUNT','primary_entries'),
 ]
 
 def main():
