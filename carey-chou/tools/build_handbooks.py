@@ -104,7 +104,7 @@ def transform_module_for_handbook(text: str) -> str:
     if not text.endswith("\n"):
         text += "\n"
     # Relative links to the source register become in-handbook anchors.
-    text = text.replace("(90-sources.md#c", "(#c").replace("(90-sources.md#g", "(#g")
+    text = text.replace("(90-sources.md#c", "(#c").replace("(90-sources.md#g", "(#g").replace("(90-sources.md#r", "(#r")
     # Recipe links become in-handbook recipe anchors; the anchors are
     # inserted by the build when compiling module 30.
     text = re.sub(
@@ -141,7 +141,7 @@ def recipe_extract(recipe_text: str, mid: str) -> str:
 
 def transform_recipe_for_handbook(chunk: str) -> str:
     """Recipe extracts keep their H2 in the handbook; links are rewritten."""
-    chunk = chunk.replace("(90-sources.md#c", "(#c").replace("(90-sources.md#g", "(#g")
+    chunk = chunk.replace("(90-sources.md#c", "(#c").replace("(90-sources.md#g", "(#g").replace("(90-sources.md#r", "(#r")
     chunk = chunk.replace("(../90-sources.md#c", "(#c").replace("(../90-sources.md#g", "(#g")
     return chunk
 

@@ -1,0 +1,11 @@
+{
+  "prepared": "2026-10-07",
+  "name": "Nicolas Vandeput / VN1–VN2 project guides",
+  "namespace": ".vandeput",
+  "expected_primary_entries": 54,
+  "expected_distinct_urls": 53,
+  "expected_recipes": 20,
+  "expected_scenarios": 48,
+  "expected_templates": 9,
+  "expected_prompts": 9
+}

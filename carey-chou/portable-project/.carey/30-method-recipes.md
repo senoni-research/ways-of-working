@@ -273,11 +273,11 @@ Before training, verify the reward against known good and bad examples. Inspect 
 
 Audit token boundaries, padding masks, sequence scoring, truncation, and parameter selection in any implementation. Reset task-local adapters when required; do not leak one customer's adaptation into another's session. Repeated prompting or external memory updates are not weight training.
 
-**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation.
+**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation. The primary research is Yuksekgonul et al., "Learning to Discover at Test Time" ([R01](90-sources.md#r01)); Carey's article [C11](90-sources.md#c11) is this package's interpretation source.
 
 ## M11 — Multiple learning timescales
 
-**Source idea [C13](90-sources.md#c13).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
+**Source idea [C13](90-sources.md#c13); primary research Behrouz et al., "Nested Learning: The Illusion of Deep Learning Architectures" ([R02](90-sources.md#r02)).** Separate rapidly changing information from slower consolidation. The article's recommender code is explicitly illustrative — a conceptual mirror of the Nested Learning architecture, not a production implementation.
 
 Apply the general lesson first to system state: session observations can be temporary, validated project lessons can last longer, and approved policies should change through controlled review. This is an analogy, not an implementation of the Nested Learning research.
 

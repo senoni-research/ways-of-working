@@ -1,0 +1,70 @@
+# 95 — Source-specific implementation observations
+
+This is an inspection register, not a blanket judgment of the authors or a record of upstream code execution. Teaching notebooks can be useful without being production pipelines. Preserve their exact behavior for reproduction, then label corrected adapters and modernization separately. Numerical conclusions must come from a run under the declared contract, not from this prose.
+
+## V05 — Interview evidence note (supplemental recording)
+
+V05 is a podcast interview with Philip Stubbs — hosted by Doug Casterton on weWFM — not an article authored by Nicolas. The winning VN1 solution he recounts was joint work with Jakub Figura (named in the official O02 announcement); Figura is a named co-author of the solution, not an interview participant. Scores below are Stubbs's reported competition error scores in a spoken retrospective; they are not generic accuracy percentages, were not rerun, and phase-two tuning details beyond the stated mixture were not published. Cue ranges were verified against the supplied SRT captions (cue timestamps, not independently verified audio): the progression runs ~14:28–18:51, with the 45/30/25 mixture cued at 18:41.72–18:51.44; collaborator-code and feature-engineering discussion ~17:48–18:14, reiterated ~18:57–19:04; benchmark discussion ~19:00–22:00; data and process timing ~25:00–30:00; diagnosis, people and charts ~30:00–37:00. [V05](portable-project/.vandeput/90-sources.md#v05) [V01](portable-project/.vandeput/90-sources.md#v01) [D03](portable-project/.vandeput/90-sources.md#d03) [O02](portable-project/.vandeput/90-sources.md#o02)
+
+| Stage in the speaker's account | Reported score | Required interpretation |
+|---|---:|---|
+| Four-week moving/weighted-average baseline | about 0.63 | Reference point; the caption garbles the exact weights (the spoken fragments are incomplete and inconsistent), so the coefficients remain unresolved; no invented values. |
+| Seasonal statistical model | about 0.55 | Caption reads "seasonal ARA". Normalized to ARIMA on inspected evidence, not inference: A01 states "the winning team used ARIMA in an ensemble of models where ARIMA only accounted for 30%" — matching the speaker's own 30% ensemble share — and O02 names this team. The V05 caption itself is garbled; no order/configuration invented. |
+| Seasonal-index model | about 0.55 | Separate model, described through an October anchor and week-over-year indices. |
+| Equal blend of the two statistical forecasts | about 0.53 | Blend of prediction vectors, not an average of their scalar scores. |
+| Jakub Figura's LightGBM (described by Stubbs) | about 0.52 | Component result the speaker reports for his joint-solution teammate; Figura is not an interview participant. |
+| Equal blend of the statistical ensemble and LightGBM | below 0.50 | Reported before the final phase; no more precise value invented. |
+| Phase-two submission | 45% LightGBM / 30% seasonal statistical / 25% seasonal index | Historical final mixture for one phase; this passage does not state a final score. O02 records the official joint result (Jakub Figura & Philip Stubbs, 46.4% error rate). D03/A05 document the separately reported TimeGPT/Zero Theorem experiment scores. |
+
+Phase-one feedback informed the blend; phase two offered one submission. A repeatedly consulted public score is not an untouched test. The 45/30/25 mix is an attributed historical example, not a production default or a VN2 ordering policy. Caption noise ("ARA", "liked GBM") is preserved in the raw evidence; the two V05 representations are one recording, not two studies. The interview's TimeGPT "second place" remark restates the D03/A05 retrospective comparison — not an official entry or award, and the speaker adds that other experiments were less impressive.
+
+## High-impact distinctions and discrepancies
+
+| Source and locator | What the supplied material shows | Consequence for reuse |
+|---|---|---|
+| A03 thirteen-practice table vs older N1-05 KPI/optimization functions | Current guidance rejects MAPE as the default; older educational code prints it and selects smoothing parameters on fitted history. | Preserve chronology. Use the current operational metric and out-of-sample selection; do not claim the teaching code already does that. |
+| A06 benchmark description vs N2-01 executable level slice | The field report describes an eight-week benchmark, while the supplied official script uses the last thirteen de-seasonalized weeks. | Choose exact reproduction target; report the discrepancy without inventing a reconciled result. |
+| A04/R02 headline vs O02 placements | A later Moirai experiment reports a score better than the historical winner. | Keep retrospective score and official award distinct. Access to the specific experiment code is now better, but no training was rerun here. |
+| A05/X02 and D03 | TimeGPT was not an official entry; the winner's later blend and phase comparison are reported experiments. | Do not update official placement or compare phases without accounting for information and model settings. |
+| A07 source line | The cited webinar date is later than the catalogue's access-check date. | Treat the date as unresolved; do not repair it by guessing. |
+| A07 versus V02 Matias segment | Commentary suggests avoiding forecasting, while the finalist speaker describes forecast-derived quantile features in a direct ordering policy. | Distinguish direct policy output from absence of forecast inputs. Use primary details for the finalist method. |
+| V02 Bartosz discussion versus P01 §7.3 | A spoken exchange is ambiguous about local versus global calibration; the paper specifies a global multiplier with possible extensions. | Use the written specification for the reconstruction and retain the transcript limitation. |
+| P01 §6.2 Scaling | Both early “backfill” wording and an expanding-mean warm-start explanation appear. | Specify an as-of-safe implementation and label it as our resolution; do not silently assert exact early-history behavior. |
+| V01 participant overrides versus A03 | Some successful entrants describe manual/filtered adjustments although Nicolas's default opposes systematic trimming. | Preserve participant attribution; do not erase the disagreement or turn a competition trick into the guide's default. |
+| D01 versus full transition logs | Organiser reporting separates common initial rounds from controllable scoring; the simulator accumulates all weekly costs. | Keep score-window metadata and reconcile denominators before comparing claimed improvements. |
+
+## Notebook and code inspection register
+
+Cell locators refer to zero-based JSON cell indices where noted. A printed PDF and a readable notebook export can use different numbering; use the raw file and function text when locating the behavior.
+
+| Source | Inspection observation | Test before reuse |
+|---|---|---|
+| N1-01 MLForecast starter | Historical price features and forecast-time assumptions must be checked against actual availability; two CV origins are spaced far apart. | Deny unavailable price values at historical origins; compare identical folds. |
+| N1-02 DeepNPTS | Static, historical and future features are declared separately; the architecture and training settings are illustrative. | Confirm data roles and complete series coverage; do not assume learned parameters are already trained locally. |
+| N1-03 AutoMFLES | Tuning settings appear in the notebook; actual step/default behavior depends on the pinned library. | Inspect the installed signature and missing-value policy before accepting comments about disjoint validation windows. |
+| N1-04 AutoETS | The active constructor and single-fold test do not establish a broad seasonal/model search. | State effective model defaults and add a comparable outer evaluation. |
+| N1-05 smoothing code | Educational objectives and KPI output differ from the current operational guide. | Separate in-sample fit from held-out forecasting; preserve the error-sign convention. |
+| N1-06 one-page R print | Shortage detection is inferred from series patterns and the fragment depends on pre-existing objects. | Do not replace measured availability with an inferred flag without labeling it; require missing preprocessing. |
+| N1-07 Fable print | Several models are commented out; active SNAIVE, a percentage-based temporal split, and undelimited ID construction are visible. | Count only active models; test key collisions and task-specific horizon; reconstruct clipped lines before execution. |
+| N1-08 Polars/StatsForecast | Forecast values are integer-cast in the export path. | Distinguish truncation from rounding and from the mean forecast's intended precision. |
+| N1-09 melt fragment | Only a preparation step is supplied. | Add explicit date/key validation and a separate evaluation rather than calling it an end-to-end model. |
+| N2-01 official benchmark | A last-thirteen-week level slice coexists with comments using other horizon language. | Pin formula, calendar, week-of-year handling and four-week coverage; benchmark modernization is a new version. |
+| N2-02 cells 6–7 | Calendar features use the latest available time in a path that also accepts a historical period index; outputs are trimmed/padded to the expected item count. | Use the simulated origin for retrospective features; require exact keyed outputs instead of size repair. |
+| N2-03 ML starter | `Differences([4])`, weekly weekday features, step-three/non-refit choices and a named cumulative error objective appear. | Do not call lag-four differencing a fourth derivative; inspect signed versus absolute loss and constant features. |
+| N2-04 reconciliation cell 20 | The per-cutoff reconciliation call receives the full historical Y table. | Restrict estimation of proportions to the cutoff; a future-data exclusion test should fail before correction. |
+| N2-05 cells 5 and 9 | A function cell has problematic indentation; data loading depends on glob order; a horizontal sum over Float64 columns can include an in-stock percentage in cost. | Separate source syntax from runtime; identify files by schema/name; sum named currency components; align initial state with the historical fold. |
+| N2-06 cell 6 and blend merge | A visible loop concatenates the current temporary fold with itself; subsequent joining omits origin; preprocessing comes from a module not supplied in the notebook. | Assert distinct origin counts and one-to-one full keys; recover the missing preprocessing before claiming a run. |
+| N2-07 main function | The official fragment reads a private demand file and calls helpers/constants outside the supplied function. | Do not claim it runs standalone. Test a newly authored pure transition, then separately integrate verified official inputs. |
+| N2-08 evaluator/agent tools | The custom simple-MASE scale is not the usual training-naive-difference scale; inner joins and broad execution access weaken coverage/holdout claims. | Write the metric exactly, validate the denominator and required keys, and isolate evaluator/test data from generated scripts. |
+| N2-09 neural setup | Weekly observations coexist with a later AutoNHITS fit configured at daily frequency. | Verify the generated future dates and comparison horizons before interpreting scores. |
+| N2-10 classification/order cells | All-zero demand is labeled obsolete; an ordering projection can carry negative intermediate stock forward. | Require lifecycle evidence for obsolescence; clip physical lost-sales stock period by period; compare against the official transition. |
+| N2-11 plotting | Aggregation by series/date can discard cutoff and add overlapping forecast vintages. | Require explicit vintage selection or side-by-side comparison, not summation across origins. |
+| N2-12/13 snapshot documents | Forecast-based fill/utilization snapshots and descriptive groupings are presented. | Keep projected and achieved service separate; apply itemwise fulfillment; note missing EMF visual evidence. |
+| R01 entry point/starter | Training and testing have separate entry branches; oracle policies and binary assets exist elsewhere in the research package. | Inspect internal trainer behavior before claiming train automatically reproduces final tests; do not execute or deserialize unreviewed artifacts. |
+| R02 VN1 subproject | Specific preparation/filtering, four-device configuration, a hard-coded checkpoint and median-of-samples inference appear. | Match data keys before concatenation, isolate final labels, provide actual checkpoint/environment, and report compute; not an official competition award. |
+
+## Limits of these observations
+
+Some entries are visible code defects; others are risks requiring a project-specific test, configuration choice, or missing dependency. They are not interchangeable. The original notebooks were not executed here. A model's runtime behavior, numerical result, or library default must not be inferred solely from a source comment.
+
+Do not let this register dominate the methodology. Its function is to make reuse safer and comparisons meaningful. The constructive route remains: target and information contract, reliable baseline, global cross-learning, useful human insight, cumulative evaluation, and simulation-calibrated inventory decisions. [A03](portable-project/.vandeput/90-sources.md#a03)

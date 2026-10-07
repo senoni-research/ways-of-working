@@ -8,5 +8,5 @@ Before training, verify the reward against known good and bad examples. Inspect 
 
 Audit token boundaries, padding masks, sequence scoring, truncation, and parameter selection in any implementation. Reset task-local adapters when required; do not leak one customer's adaptation into another's session. Repeated prompting or external memory updates are not weight training.
 
-**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation.
+**Acceptance:** a reproducible gain over compute-matched baselines, no evaluation contamination, documented reset/rollback, and correctly reported resource use. Do not claim reproduction of TTT-Discover without checking its original method and implementation. The primary research is Yuksekgonul et al., "Learning to Discover at Test Time" ([R01](../90-sources.md#r01)); Carey's article [C11](../90-sources.md#c11) is this package's interpretation source.
 
