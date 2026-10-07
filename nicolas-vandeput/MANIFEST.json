@@ -1,0 +1,581 @@
+{
+  "version": "1.0.0",
+  "prepared": "2026-10-07",
+  "counts": {
+    "module_count": 12,
+    "recipe_count": 20,
+    "scenario_count": 40,
+    "template_count": 9,
+    "prompt_count": 8,
+    "example_count": 10,
+    "primary_count": 53,
+    "distinct_primary_urls": 52
+  },
+  "modules": [
+    "00-operating-contract.md",
+    "10-thirteen-practices.md",
+    "20-project-workflow.md",
+    "30-forecast-design.md",
+    "40-inventory-decisions.md",
+    "50-human-value-added.md",
+    "60-memory-and-engineering.md",
+    "70-method-recipes.md",
+    "80-worked-examples-and-checks.md",
+    "85-templates-and-prompts.md",
+    "90-sources.md",
+    "95-source-observations.md"
+  ],
+  "recipes": [
+    "M01-decision-and-risk-horizon.md",
+    "M02-data-and-stockouts.md",
+    "M03-temporal-validation.md",
+    "M04-metrics-and-cumulative-errors.md",
+    "M05-moving-average-benchmarks.md",
+    "M06-global-ml-features.md",
+    "M07-horizon-representations.md",
+    "M08-winner-catboost-pattern.md",
+    "M09-ensembles.md",
+    "M10-statistical-and-hierarchical-alternatives.md",
+    "M11-foundation-model-experiments.md",
+    "M12-lost-sales-simulation.md",
+    "M13-arrival-stock-and-cost-buffer.md",
+    "M14-simulation-tuned-targets.md",
+    "M15-probabilistic-ordering.md",
+    "M16-differentiable-policy-learning.md",
+    "M17-human-enrichment-and-fva.md",
+    "M18-forecast-vintage-variability.md",
+    "M19-ai-assisted-experimentation.md",
+    "M20-submissions-and-inventory-views.md"
+  ],
+  "canonical_sha256": {
+    "canonical/loader.md": "1ccbcc7f347c631dab5a07d72ff75b3cf30731c350062e9e452337bcd0f3ed0f",
+    "canonical/metadata.json": "972e03b5fb1f7d3646782f47f9ee306406d505a6d33a8465749c877f1ae954da",
+    "canonical/modules/00-operating-contract.md": "3bdd01a0ce173fcee3a9e14c1676fffa832e750c9f87269a24dffc60aad0822f",
+    "canonical/modules/10-thirteen-practices.md": "5f9378a82cb07f85968df774964861fdd38c14e47893bff03d51b8648f1ad1d7",
+    "canonical/modules/20-project-workflow.md": "75ee04e2ccffa6243be94c73b2e6d3a6020f5d8a59baf89b3eb61ac532500038",
+    "canonical/modules/30-forecast-design.md": "fbe912e718f8c8c303f7005646228d3019e4646b5da63377d8cc127a07ba1ee5",
+    "canonical/modules/40-inventory-decisions.md": "d4f8eb2bcc7bfbe2518c559df478e07dd3129ab60faa68681ce074ccc45ee820",
+    "canonical/modules/50-human-value-added.md": "8abd10fed10e552f69b3134137b54abe14aa5bdabd4b4cd3261e81ba0947f190",
+    "canonical/modules/60-memory-and-engineering.md": "87ced5e68a3616d2c955459a31dc4165fb2aab2ffad2ee16ef3decb4a47390b8",
+    "canonical/modules/80-worked-examples-and-checks.md": "ce68864965a95e6aa60f6090d29e5169c728c34187a96d2f7933818ae3f0a792",
+    "canonical/modules/85-templates-and-prompts.md": "78b542db6429e74b2f66346049c77fa880ae6a14e7ac6acf3f164153e91f19a1",
+    "canonical/modules/90-source-interpretation.md": "8c2a72086a56eaab6b2e92383a7c5e99510c087512285f510f593033bdd4a183",
+    "canonical/modules/95-source-observations.md": "dfd3abd69a619265b35ac5689a3d8172dc9d751ee8a1f56d23834401a9be8040",
+    "canonical/pages/CHANGELOG.md": "4bbbf92e5006479fbca761c59668a0ef795d05f7bb29168414d46de5f442cc39",
+    "canonical/pages/QUICKSTART.md": "4ed0e7881729ce78da64da5450c5d50bea87deccb1a8080126bb2db71e78ea56",
+    "canonical/pages/README.md": "8a5c85512d012a7854de73ecb698bcfbb09ba267f099845c3cc27ec82dcafe31",
+    "canonical/pages/VALIDATION.md": "30564a18d5dbbe167007ea8ff82f9580e8c49bdf943f98b52a11540801a5b562",
+    "canonical/prefaces/cursor.md": "832c541e0962da4aadfb084cbfc0a08300e771ecb06b4fa14cfeb331bfd29d80",
+    "canonical/prefaces/memory.md": "841b131892012900d3f82b5d1b570cdb208186b3d0258ae85f9f4970b3ccc12c",
+    "canonical/recipes/M01-decision-and-risk-horizon.md": "6daf9431846d1f294e7bc06d791fca0e6a4b495eff91c17a36ee9fd2c92daecc",
+    "canonical/recipes/M02-data-and-stockouts.md": "ba68436b56e56bc5b4a5c7f9eb0ec229170707093522e9922d53e8edfeb5700e",
+    "canonical/recipes/M03-temporal-validation.md": "b6c240b50be3b1bea45550b3fdff1f028919f0a77b2f73d23bca164de7d3d0d5",
+    "canonical/recipes/M04-metrics-and-cumulative-errors.md": "86ba3b9aca332fefcaa487ed3671d97dc1c39317061890c47c8e4de2b56972e1",
+    "canonical/recipes/M05-moving-average-benchmarks.md": "3d39bb5cc939b3849d937ec09a2e90c084b8282afb0751faeb1553d23ee7f7dc",
+    "canonical/recipes/M06-global-ml-features.md": "80db08a2be0f627bd3c5c4af964d6f890f6ed6fb63d8fb9aeaf91ad7816f51a2",
+    "canonical/recipes/M07-horizon-representations.md": "314f5a17835704d79d18e92d188b39f5a58d66c5ab4b215fda969364c7aa9ebb",
+    "canonical/recipes/M08-winner-catboost-pattern.md": "1138591e62d0f2e7bb906cd5084a8a60f8a2b053e93147de37872a39498a2c66",
+    "canonical/recipes/M09-ensembles.md": "d0383b4f5f598403fefeb3a994ad0a319a22dfe8de43be0afa0f1ce34e0648a0",
+    "canonical/recipes/M10-statistical-and-hierarchical-alternatives.md": "7389910b9632aa7a45118182f5578df28a2b01d64d1fde8cdf945cc51e3e0054",
+    "canonical/recipes/M11-foundation-model-experiments.md": "0a3f15ffca3d1e7c063306c51eff3ae870ea7577cb75eb6bb4620cfac99fb954",
+    "canonical/recipes/M12-lost-sales-simulation.md": "18c4fc229bd6cecef5b1e5f1753d2c71ffc8ccabd1b433af61bf3f1f69c97ef8",
+    "canonical/recipes/M13-arrival-stock-and-cost-buffer.md": "764bf4ed997e5f0f2184265808e32e5c199f795c66a80b3fc9bdf720dddfbae0",
+    "canonical/recipes/M14-simulation-tuned-targets.md": "b42d25976a46d4f882b6545b17f20aaaf72416cffc35bc81f3004186e2299b63",
+    "canonical/recipes/M15-probabilistic-ordering.md": "aad905bbef82fc220f680bf59d2f167dc7f73d2c32f20fb44a598f2801802ae1",
+    "canonical/recipes/M16-differentiable-policy-learning.md": "83c6894aa6588519f2eed035a6914093e2aff4ec5c269710dc4a903b41a5f9ca",
+    "canonical/recipes/M17-human-enrichment-and-fva.md": "ba5b8884efe958ccc6a2685c1bf241da0bb95802cfe087d95a403a86f949b0ab",
+    "canonical/recipes/M18-forecast-vintage-variability.md": "43dcdc27d3c25f249a1ad28ff6004d2616b4b5d52dad3dbae6fede068ff14104",
+    "canonical/recipes/M19-ai-assisted-experimentation.md": "826ae7bd11c3dc3b60518d5a75df0f82cd49f486cab8b33fc7e0105f1340743e",
+    "canonical/recipes/M20-submissions-and-inventory-views.md": "6b69192211b23c37e630d239702de6afb4a4753c947d55e867f337e8f4031e11",
+    "canonical/sources.json": "8ed71ed0f9273fa94c87a2ad2365fee7962eabc5569ec4a91b93a7e590d5cbc1",
+    "VERSION": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03"
+  },
+  "support_sha256": {
+    "tools/README.md": "5aa1403f9a0ed096553dc9d07480b8f1948182169512d69dd4832b7d4eaffb68",
+    "tools/build_pack.py": "14431f4664cda3abc00ea70712d0d355d6e01172390fb2a32eaff8c14cf85ce6",
+    "tools/test_validate_pack.py": "91e8e4e00e9a9b4d8ce519e8c03374d09cb31c7bfee7a1b96f42c42a31a711cd",
+    "tools/validate_pack.py": "6e6e31b6afbc0701517fc1abc2e6a59b876680aef326be41046537e71d66b7b5",
+    "reference/README.md": "3d3e1178311391ef9599d6f736009e7b42eebf2e5ffa4d6c3cf70d1955db40aa",
+    "reference/core.py": "3aaf3c936f89b9084ed45868ba0ce45cd7e74bb006aa52dfb5eb72f45f7a7593",
+    "reference/test_core.py": "0e85d1234a4c22168c43212a1abf7252a0824b0b33313ba3063546b586916f41"
+  },
+  "generated": {
+    "CHANGELOG.md": {
+      "bytes": 1225,
+      "sha256": "3bdfc95947af0c541ff44c8f8452aa7dbd811edbb151a7c5e55de2b5198b34a1",
+      "words": 150
+    },
+    "QUICKSTART.md": {
+      "bytes": 2651,
+      "sha256": "4ed0e7881729ce78da64da5450c5d50bea87deccb1a8080126bb2db71e78ea56",
+      "words": 355
+    },
+    "README.md": {
+      "bytes": 5263,
+      "sha256": "de6ce11f9cd24ad715f61ef868a3b6dc80a3b5683ed2df9310e13e5fa3407887",
+      "words": 669
+    },
+    "SOURCE_COVERAGE.md": {
+      "bytes": 42362,
+      "sha256": "758c095a58937641a6824cb0573b12518617c7bf3d33c08f758f82631aba2f21",
+      "words": 3720
+    },
+    "SOURCE_REGISTER.json": {
+      "bytes": 59590,
+      "sha256": "8ed71ed0f9273fa94c87a2ad2365fee7962eabc5569ec4a91b93a7e590d5cbc1"
+    },
+    "SOURCE_REVIEW.md": {
+      "bytes": 9980,
+      "sha256": "0de974def2de6cb2de543517e39536f48371ab46e5cf1ae0c949e88d349313c1",
+      "words": 1449
+    },
+    "VALIDATION.md": {
+      "bytes": 5566,
+      "sha256": "85d14f8835a5bbbccd42987419bf44e42ae35ccf2f419d44fda7c7009dd580d6",
+      "words": 746
+    },
+    "cursor-project/.cursor/rules/10-vandeput-method.mdc": {
+      "bytes": 4079,
+      "sha256": "d10dd3badd0db10cec7694ddce18cafac882a8b0ea651f8b6c0a713efa6b74cd",
+      "words": 533
+    },
+    "cursor-project/.vandeput/00-operating-contract.md": {
+      "bytes": 6721,
+      "sha256": "fdfc5e15fe3acb838093914a87c2be40382f0523d923a46b7b56c16973f09c7b",
+      "words": 885
+    },
+    "cursor-project/.vandeput/10-thirteen-practices.md": {
+      "bytes": 11090,
+      "sha256": "22d07a4a36f3e872211e91fe45331f13e72e79194b0b4ef0754f1e56641371ea",
+      "words": 1533
+    },
+    "cursor-project/.vandeput/20-project-workflow.md": {
+      "bytes": 6868,
+      "sha256": "b2b6a2a9207734c2fda2e5664f92426a208c9f1dc99e03e227dd03342cf8f01b",
+      "words": 967
+    },
+    "cursor-project/.vandeput/30-forecast-design.md": {
+      "bytes": 8310,
+      "sha256": "33140b9ca9405585a8edfe976fc15084da67923993c9d82bce372aca1687c5c6",
+      "words": 1093
+    },
+    "cursor-project/.vandeput/40-inventory-decisions.md": {
+      "bytes": 7681,
+      "sha256": "a68d2c76ff8eb2fed157b1ee123ac3d3d8600cb49ad06b03d0dbaadb42233c77",
+      "words": 1046
+    },
+    "cursor-project/.vandeput/50-human-value-added.md": {
+      "bytes": 4585,
+      "sha256": "c315788db2b7bea27342a2dd26d3c3a7c47cbf92403b14ec47b816746dbee3ad",
+      "words": 629
+    },
+    "cursor-project/.vandeput/60-memory-and-engineering.md": {
+      "bytes": 6586,
+      "sha256": "87ced5e68a3616d2c955459a31dc4165fb2aab2ffad2ee16ef3decb4a47390b8",
+      "words": 893
+    },
+    "cursor-project/.vandeput/70-method-recipes.md": {
+      "bytes": 43122,
+      "sha256": "48448efa3c815900bfb7e37c237804763637e9ddcc63c2b4cff8effa1ec16755",
+      "words": 5755
+    },
+    "cursor-project/.vandeput/80-worked-examples-and-checks.md": {
+      "bytes": 13535,
+      "sha256": "48bfceafb9f438c50c68b61b6454748fcdf8af171d5705774c202a56ff20b3d8",
+      "words": 2024
+    },
+    "cursor-project/.vandeput/85-templates-and-prompts.md": {
+      "bytes": 8326,
+      "sha256": "78b542db6429e74b2f66346049c77fa880ae6a14e7ac6acf3f164153e91f19a1",
+      "words": 1161
+    },
+    "cursor-project/.vandeput/90-sources.md": {
+      "bytes": 31615,
+      "sha256": "80fc760ae64809aaf5dfdd135f86e1098ba42fb50a34eadc68317f9798ba1e91",
+      "words": 3075
+    },
+    "cursor-project/.vandeput/95-source-observations.md": {
+      "bytes": 9953,
+      "sha256": "d43fc34f627ee5c499f13f98b4f15f8baa7da8685e454334387d318b9fe9ccdf",
+      "words": 1449
+    },
+    "cursor-project/.vandeput/loader.md": {
+      "bytes": 3974,
+      "sha256": "1ccbcc7f347c631dab5a07d72ff75b3cf30731c350062e9e452337bcd0f3ed0f",
+      "words": 521
+    },
+    "cursor-project/.vandeput/recipes/M01-decision-and-risk-horizon.md": {
+      "bytes": 2023,
+      "sha256": "fca00f32b6feb751bb6547d6e29912e4bf407f92f2d73b21880e3a1edba45dc2",
+      "words": 285
+    },
+    "cursor-project/.vandeput/recipes/M02-data-and-stockouts.md": {
+      "bytes": 2155,
+      "sha256": "a6a191813c2820428ccd2e79ae3b7ca3e4d1cc11ef7cff43d2cceaa5213b30c6",
+      "words": 295
+    },
+    "cursor-project/.vandeput/recipes/M03-temporal-validation.md": {
+      "bytes": 2244,
+      "sha256": "bec3d5947300643bcc238fbb0870096c9107027e02e145d76ac899c50610eea6",
+      "words": 292
+    },
+    "cursor-project/.vandeput/recipes/M04-metrics-and-cumulative-errors.md": {
+      "bytes": 2041,
+      "sha256": "306a8a5f698963017d498e9fce38213fddd731b757fb6059ef185d4a3d7d755e",
+      "words": 276
+    },
+    "cursor-project/.vandeput/recipes/M05-moving-average-benchmarks.md": {
+      "bytes": 2122,
+      "sha256": "d72e30e0a9916cf2609f63f4e2af7b2302c43fa57c9013980bd69d31a899ba78",
+      "words": 274
+    },
+    "cursor-project/.vandeput/recipes/M06-global-ml-features.md": {
+      "bytes": 2074,
+      "sha256": "0eb25e6486247eed864748e9666ca16405eff028c11aee6f72cbba55de03e08b",
+      "words": 274
+    },
+    "cursor-project/.vandeput/recipes/M07-horizon-representations.md": {
+      "bytes": 1998,
+      "sha256": "f84f1b6931035ff5a3665df9ed7f6d5bbdb483187349d39ec691055909ac2526",
+      "words": 271
+    },
+    "cursor-project/.vandeput/recipes/M08-winner-catboost-pattern.md": {
+      "bytes": 2353,
+      "sha256": "610a03e1ca45d23a35cf3a09cafb32b05ffaea2b8c0993ce060ef9e0ab9be5a7",
+      "words": 298
+    },
+    "cursor-project/.vandeput/recipes/M09-ensembles.md": {
+      "bytes": 2024,
+      "sha256": "d2e392696b1edfb388de9caa2cb36f50099096c6333e02cc5402d2809930eb75",
+      "words": 270
+    },
+    "cursor-project/.vandeput/recipes/M10-statistical-and-hierarchical-alternatives.md": {
+      "bytes": 2307,
+      "sha256": "e77846da11f2e3c63d0736043889f6f411cd416c0756876390c046a0faad50c7",
+      "words": 279
+    },
+    "cursor-project/.vandeput/recipes/M11-foundation-model-experiments.md": {
+      "bytes": 2318,
+      "sha256": "2d2a4d74fc2054adc582c9aab8d228d13ba2f1fe4a1d6f0d1743e6f801c58bf0",
+      "words": 284
+    },
+    "cursor-project/.vandeput/recipes/M12-lost-sales-simulation.md": {
+      "bytes": 2085,
+      "sha256": "907ffec0fcb8d3d05131c90617ec5d3586f15f3b6000bfbcddd617286935a2ea",
+      "words": 302
+    },
+    "cursor-project/.vandeput/recipes/M13-arrival-stock-and-cost-buffer.md": {
+      "bytes": 2063,
+      "sha256": "f36e4dffe00d358f41f1346b31facfd7fc2c26a71a4bb5810a242e4e0b84f74c",
+      "words": 290
+    },
+    "cursor-project/.vandeput/recipes/M14-simulation-tuned-targets.md": {
+      "bytes": 2180,
+      "sha256": "f82833030120ab77a2cc6ae803bc9b66da3d0af0d0b6f24f4ebf77ecd689c307",
+      "words": 297
+    },
+    "cursor-project/.vandeput/recipes/M15-probabilistic-ordering.md": {
+      "bytes": 2220,
+      "sha256": "c52710ae41a17e15c7391737ad7dfb3cb8e3861753297f02a7e04f3d370b64c3",
+      "words": 288
+    },
+    "cursor-project/.vandeput/recipes/M16-differentiable-policy-learning.md": {
+      "bytes": 2337,
+      "sha256": "b925907b32f992f6f4f5ee61f5149ef766e3c05d8debdf1f3c89fdd9024b2320",
+      "words": 307
+    },
+    "cursor-project/.vandeput/recipes/M17-human-enrichment-and-fva.md": {
+      "bytes": 1984,
+      "sha256": "07ea6d3dd2a8f339e38b7a48de9864d62d7886290c1f827e1770fb89ce5f248c",
+      "words": 276
+    },
+    "cursor-project/.vandeput/recipes/M18-forecast-vintage-variability.md": {
+      "bytes": 1894,
+      "sha256": "012bbf23b95784dc2d5e0faea34570875ff0f3f52ad63143978969bfe537d043",
+      "words": 262
+    },
+    "cursor-project/.vandeput/recipes/M19-ai-assisted-experimentation.md": {
+      "bytes": 2083,
+      "sha256": "f52b323713658ddb0d9fb5965c918cc0349a0dd3e055fcf0f92453765b04af09",
+      "words": 282
+    },
+    "cursor-project/.vandeput/recipes/M20-submissions-and-inventory-views.md": {
+      "bytes": 2137,
+      "sha256": "4b2aba67dd7f4b39620ce83d3768eedb26f092063652e636a7c9e826dde28a53",
+      "words": 273
+    },
+    "cursor-project/.vandeput/recipes/README.md": {
+      "bytes": 1985,
+      "sha256": "df172de6517978bef15d8d08fc9327e74246c03ec6cbcec03be013fa2cf8360f",
+      "words": 205
+    },
+    "cursor-project/.vandeput/reference/README.md": {
+      "bytes": 1594,
+      "sha256": "d39586d9d57561186b0db76ccc6b9eb4281d095210508d7e41fa149742abb12a",
+      "words": 214
+    },
+    "cursor-project/.vandeput/reference/core.py": {
+      "bytes": 8336,
+      "sha256": "3aaf3c936f89b9084ed45868ba0ce45cd7e74bb006aa52dfb5eb72f45f7a7593"
+    },
+    "cursor-project/.vandeput/reference/test_core.py": {
+      "bytes": 4940,
+      "sha256": "0e85d1234a4c22168c43212a1abf7252a0824b0b33313ba3063546b586916f41"
+    },
+    "cursor-project/README.md": {
+      "bytes": 1329,
+      "sha256": "8a9b1caf0b9e5bd96daa7e5925564664d1a2957ed8963775e43c702db8fd42be",
+      "words": 170
+    },
+    "cursor-project/SOURCE_COVERAGE.md": {
+      "bytes": 42362,
+      "sha256": "758c095a58937641a6824cb0573b12518617c7bf3d33c08f758f82631aba2f21",
+      "words": 3720
+    },
+    "cursor-project/SOURCE_REGISTER.json": {
+      "bytes": 59590,
+      "sha256": "8ed71ed0f9273fa94c87a2ad2365fee7962eabc5569ec4a91b93a7e590d5cbc1"
+    },
+    "cursor-project/VALIDATION.md": {
+      "bytes": 5566,
+      "sha256": "85d14f8835a5bbbccd42987419bf44e42ae35ccf2f419d44fda7c7009dd580d6",
+      "words": 746
+    },
+    "cursor-project/cursor.md": {
+      "bytes": 158710,
+      "sha256": "6f3c0398445a906ac7ec8868f123928e4ed57669398f09209b3ed7d76d453605",
+      "words": 20852
+    },
+    "cursor.md": {
+      "bytes": 158710,
+      "sha256": "6f3c0398445a906ac7ec8868f123928e4ed57669398f09209b3ed7d76d453605",
+      "words": 20852
+    },
+    "memory.md": {
+      "bytes": 158961,
+      "sha256": "27b65466decbb0992b3e49671abd0d95932d8c4ec421080bfe998a1ae13b28b1",
+      "words": 20893
+    },
+    "portable-project/.vandeput/00-operating-contract.md": {
+      "bytes": 6721,
+      "sha256": "fdfc5e15fe3acb838093914a87c2be40382f0523d923a46b7b56c16973f09c7b",
+      "words": 885
+    },
+    "portable-project/.vandeput/10-thirteen-practices.md": {
+      "bytes": 11090,
+      "sha256": "22d07a4a36f3e872211e91fe45331f13e72e79194b0b4ef0754f1e56641371ea",
+      "words": 1533
+    },
+    "portable-project/.vandeput/20-project-workflow.md": {
+      "bytes": 6868,
+      "sha256": "b2b6a2a9207734c2fda2e5664f92426a208c9f1dc99e03e227dd03342cf8f01b",
+      "words": 967
+    },
+    "portable-project/.vandeput/30-forecast-design.md": {
+      "bytes": 8310,
+      "sha256": "33140b9ca9405585a8edfe976fc15084da67923993c9d82bce372aca1687c5c6",
+      "words": 1093
+    },
+    "portable-project/.vandeput/40-inventory-decisions.md": {
+      "bytes": 7681,
+      "sha256": "a68d2c76ff8eb2fed157b1ee123ac3d3d8600cb49ad06b03d0dbaadb42233c77",
+      "words": 1046
+    },
+    "portable-project/.vandeput/50-human-value-added.md": {
+      "bytes": 4585,
+      "sha256": "c315788db2b7bea27342a2dd26d3c3a7c47cbf92403b14ec47b816746dbee3ad",
+      "words": 629
+    },
+    "portable-project/.vandeput/60-memory-and-engineering.md": {
+      "bytes": 6586,
+      "sha256": "87ced5e68a3616d2c955459a31dc4165fb2aab2ffad2ee16ef3decb4a47390b8",
+      "words": 893
+    },
+    "portable-project/.vandeput/70-method-recipes.md": {
+      "bytes": 43122,
+      "sha256": "48448efa3c815900bfb7e37c237804763637e9ddcc63c2b4cff8effa1ec16755",
+      "words": 5755
+    },
+    "portable-project/.vandeput/80-worked-examples-and-checks.md": {
+      "bytes": 13535,
+      "sha256": "48bfceafb9f438c50c68b61b6454748fcdf8af171d5705774c202a56ff20b3d8",
+      "words": 2024
+    },
+    "portable-project/.vandeput/85-templates-and-prompts.md": {
+      "bytes": 8326,
+      "sha256": "78b542db6429e74b2f66346049c77fa880ae6a14e7ac6acf3f164153e91f19a1",
+      "words": 1161
+    },
+    "portable-project/.vandeput/90-sources.md": {
+      "bytes": 31615,
+      "sha256": "80fc760ae64809aaf5dfdd135f86e1098ba42fb50a34eadc68317f9798ba1e91",
+      "words": 3075
+    },
+    "portable-project/.vandeput/95-source-observations.md": {
+      "bytes": 9953,
+      "sha256": "d43fc34f627ee5c499f13f98b4f15f8baa7da8685e454334387d318b9fe9ccdf",
+      "words": 1449
+    },
+    "portable-project/.vandeput/loader.md": {
+      "bytes": 3974,
+      "sha256": "1ccbcc7f347c631dab5a07d72ff75b3cf30731c350062e9e452337bcd0f3ed0f",
+      "words": 521
+    },
+    "portable-project/.vandeput/recipes/M01-decision-and-risk-horizon.md": {
+      "bytes": 2023,
+      "sha256": "fca00f32b6feb751bb6547d6e29912e4bf407f92f2d73b21880e3a1edba45dc2",
+      "words": 285
+    },
+    "portable-project/.vandeput/recipes/M02-data-and-stockouts.md": {
+      "bytes": 2155,
+      "sha256": "a6a191813c2820428ccd2e79ae3b7ca3e4d1cc11ef7cff43d2cceaa5213b30c6",
+      "words": 295
+    },
+    "portable-project/.vandeput/recipes/M03-temporal-validation.md": {
+      "bytes": 2244,
+      "sha256": "bec3d5947300643bcc238fbb0870096c9107027e02e145d76ac899c50610eea6",
+      "words": 292
+    },
+    "portable-project/.vandeput/recipes/M04-metrics-and-cumulative-errors.md": {
+      "bytes": 2041,
+      "sha256": "306a8a5f698963017d498e9fce38213fddd731b757fb6059ef185d4a3d7d755e",
+      "words": 276
+    },
+    "portable-project/.vandeput/recipes/M05-moving-average-benchmarks.md": {
+      "bytes": 2122,
+      "sha256": "d72e30e0a9916cf2609f63f4e2af7b2302c43fa57c9013980bd69d31a899ba78",
+      "words": 274
+    },
+    "portable-project/.vandeput/recipes/M06-global-ml-features.md": {
+      "bytes": 2074,
+      "sha256": "0eb25e6486247eed864748e9666ca16405eff028c11aee6f72cbba55de03e08b",
+      "words": 274
+    },
+    "portable-project/.vandeput/recipes/M07-horizon-representations.md": {
+      "bytes": 1998,
+      "sha256": "f84f1b6931035ff5a3665df9ed7f6d5bbdb483187349d39ec691055909ac2526",
+      "words": 271
+    },
+    "portable-project/.vandeput/recipes/M08-winner-catboost-pattern.md": {
+      "bytes": 2353,
+      "sha256": "610a03e1ca45d23a35cf3a09cafb32b05ffaea2b8c0993ce060ef9e0ab9be5a7",
+      "words": 298
+    },
+    "portable-project/.vandeput/recipes/M09-ensembles.md": {
+      "bytes": 2024,
+      "sha256": "d2e392696b1edfb388de9caa2cb36f50099096c6333e02cc5402d2809930eb75",
+      "words": 270
+    },
+    "portable-project/.vandeput/recipes/M10-statistical-and-hierarchical-alternatives.md": {
+      "bytes": 2307,
+      "sha256": "e77846da11f2e3c63d0736043889f6f411cd416c0756876390c046a0faad50c7",
+      "words": 279
+    },
+    "portable-project/.vandeput/recipes/M11-foundation-model-experiments.md": {
+      "bytes": 2318,
+      "sha256": "2d2a4d74fc2054adc582c9aab8d228d13ba2f1fe4a1d6f0d1743e6f801c58bf0",
+      "words": 284
+    },
+    "portable-project/.vandeput/recipes/M12-lost-sales-simulation.md": {
+      "bytes": 2085,
+      "sha256": "907ffec0fcb8d3d05131c90617ec5d3586f15f3b6000bfbcddd617286935a2ea",
+      "words": 302
+    },
+    "portable-project/.vandeput/recipes/M13-arrival-stock-and-cost-buffer.md": {
+      "bytes": 2063,
+      "sha256": "f36e4dffe00d358f41f1346b31facfd7fc2c26a71a4bb5810a242e4e0b84f74c",
+      "words": 290
+    },
+    "portable-project/.vandeput/recipes/M14-simulation-tuned-targets.md": {
+      "bytes": 2180,
+      "sha256": "f82833030120ab77a2cc6ae803bc9b66da3d0af0d0b6f24f4ebf77ecd689c307",
+      "words": 297
+    },
+    "portable-project/.vandeput/recipes/M15-probabilistic-ordering.md": {
+      "bytes": 2220,
+      "sha256": "c52710ae41a17e15c7391737ad7dfb3cb8e3861753297f02a7e04f3d370b64c3",
+      "words": 288
+    },
+    "portable-project/.vandeput/recipes/M16-differentiable-policy-learning.md": {
+      "bytes": 2337,
+      "sha256": "b925907b32f992f6f4f5ee61f5149ef766e3c05d8debdf1f3c89fdd9024b2320",
+      "words": 307
+    },
+    "portable-project/.vandeput/recipes/M17-human-enrichment-and-fva.md": {
+      "bytes": 1984,
+      "sha256": "07ea6d3dd2a8f339e38b7a48de9864d62d7886290c1f827e1770fb89ce5f248c",
+      "words": 276
+    },
+    "portable-project/.vandeput/recipes/M18-forecast-vintage-variability.md": {
+      "bytes": 1894,
+      "sha256": "012bbf23b95784dc2d5e0faea34570875ff0f3f52ad63143978969bfe537d043",
+      "words": 262
+    },
+    "portable-project/.vandeput/recipes/M19-ai-assisted-experimentation.md": {
+      "bytes": 2083,
+      "sha256": "f52b323713658ddb0d9fb5965c918cc0349a0dd3e055fcf0f92453765b04af09",
+      "words": 282
+    },
+    "portable-project/.vandeput/recipes/M20-submissions-and-inventory-views.md": {
+      "bytes": 2137,
+      "sha256": "4b2aba67dd7f4b39620ce83d3768eedb26f092063652e636a7c9e826dde28a53",
+      "words": 273
+    },
+    "portable-project/.vandeput/recipes/README.md": {
+      "bytes": 1985,
+      "sha256": "df172de6517978bef15d8d08fc9327e74246c03ec6cbcec03be013fa2cf8360f",
+      "words": 205
+    },
+    "portable-project/.vandeput/reference/README.md": {
+      "bytes": 1594,
+      "sha256": "d39586d9d57561186b0db76ccc6b9eb4281d095210508d7e41fa149742abb12a",
+      "words": 214
+    },
+    "portable-project/.vandeput/reference/core.py": {
+      "bytes": 8336,
+      "sha256": "3aaf3c936f89b9084ed45868ba0ce45cd7e74bb006aa52dfb5eb72f45f7a7593"
+    },
+    "portable-project/.vandeput/reference/test_core.py": {
+      "bytes": 4940,
+      "sha256": "0e85d1234a4c22168c43212a1abf7252a0824b0b33313ba3063546b586916f41"
+    },
+    "portable-project/AGENTS.md": {
+      "bytes": 3974,
+      "sha256": "1ccbcc7f347c631dab5a07d72ff75b3cf30731c350062e9e452337bcd0f3ed0f",
+      "words": 521
+    },
+    "portable-project/README.md": {
+      "bytes": 1334,
+      "sha256": "06456cbc3ab511e01b01e0ee4622ee1f0db4b0d3d2e83e440ede1ff7ce2a13e7",
+      "words": 171
+    },
+    "portable-project/SOURCE_COVERAGE.md": {
+      "bytes": 42362,
+      "sha256": "758c095a58937641a6824cb0573b12518617c7bf3d33c08f758f82631aba2f21",
+      "words": 3720
+    },
+    "portable-project/SOURCE_REGISTER.json": {
+      "bytes": 59590,
+      "sha256": "8ed71ed0f9273fa94c87a2ad2365fee7962eabc5569ec4a91b93a7e590d5cbc1"
+    },
+    "portable-project/VALIDATION.md": {
+      "bytes": 5566,
+      "sha256": "85d14f8835a5bbbccd42987419bf44e42ae35ccf2f419d44fda7c7009dd580d6",
+      "words": 746
+    },
+    "portable-project/memory.md": {
+      "bytes": 158961,
+      "sha256": "27b65466decbb0992b3e49671abd0d95932d8c4ec421080bfe998a1ae13b28b1",
+      "words": 20893
+    },
+    "portable-project/optional-adapters/cline/10-vandeput-method.md": {
+      "bytes": 3974,
+      "sha256": "1ccbcc7f347c631dab5a07d72ff75b3cf30731c350062e9e452337bcd0f3ed0f",
+      "words": 521
+    },
+    "portable-project/optional-adapters/opencode/opencode.instructions.example.json": {
+      "bytes": 54,
+      "sha256": "4f18c2323f22a98a2f37c6fa73f6cc32649761bdf1414d0a2d73744a4007cf41"
+    }
+  }
+}

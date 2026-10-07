@@ -3,3 +3,6 @@
 .env.*
 !.env.example
 *.log
+
+# Working folder: raw downloads for reference extraction (not curated pack content)
+workspace/
