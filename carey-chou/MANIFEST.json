@@ -5,12 +5,12 @@
     "cursor.md": {
       "bytes": 137945,
       "words": 19519,
-      "sha256": "23976d5f6682ba7339a6714cd0fb99529a6ea6e87b7d5fb9ca8bfabe10a36db0"
+      "sha256": "231008786ea652bb07d2cb8afd749bf4ca63b76f8968df21db5336c63758de69"
     },
     "memory.md": {
       "bytes": 138127,
       "words": 19543,
-      "sha256": "232643ea6c3810d36a9d3b902c652b4e680ab46e162812f0fdd9bd129a1b1f1e"
+      "sha256": "d37bdd779dd84c8fdcc3cc11dcbcae1fffd7c5a8f511a894b88ee837fcb06070"
     }
   },
   "modules": [
