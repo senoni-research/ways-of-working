@@ -4,7 +4,7 @@
 
 ## Request
 
-A fictional tenant exports requisition `REQ-SYN-0001` (revision 1, information date 2026-10-08) from a mock procure-to-pay system. One line asks for 5,000 pieces of molded component `DEMO-H01` at revision B for a fictional UK receiving point, required by 2026-11-15, with an annual forecast of 50,000. The request declares **annual forecast** as its evaluation basis—the mistake the replay later corrects. Category `custom-molded-component` carries standard review depth. The requester may read, draft and return a reviewed decision; supplier contact, event launch, award and purchase-order creation are not permitted.
+A fictional tenant exports requisition `REQ-SYN-0001` (revision 1, information date 2026-10-08) from a mock procure-to-pay system. One line asks for 5,000 pieces of molded component `DEMO-H01` at revision B for a fictional UK receiving point, required by 2026-11-30, with an annual forecast of 50,000. The request declares **annual forecast** as its evaluation basis—the mistake the replay later corrects. Category `custom-molded-component` carries standard review depth. The requester may read, draft and return a reviewed decision; supplier contact, event launch, award and purchase-order creation are not permitted.
 
 ## Route
 

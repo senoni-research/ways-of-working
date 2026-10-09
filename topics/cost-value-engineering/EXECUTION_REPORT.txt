@@ -844,3 +844,90 @@ Remaining limits (unchanged by design): one Python process; detached views are
   file;   one quote unit with no conversion; a missing order quantity is not a
   correction target (it needs a new source revision); declared roles are
   not authenticated people. Live-agent behavior for B01–B45: UNRUN.
+
+--------------------------------------------------------------------------------
+v0.3.2 SAFEGUARDS RECONCILIATION — 9 October 2026
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.3.2-safeguards-reconcile from main
+  097167b (0.3.1 merged). Pack 0.3.1 -> 0.3.2; workflow schema stays 0.2.0
+  (fixture R01 unchanged); core schema 0.1.0. No connector, supplier contact,
+  deployment or customer data. Records above are kept as history.
+
+Trigger: a parallel branch, cve-workflow-safeguards (e129f62), written against
+  0.3.0 (4877b50) while 0.3.1 was in review. It does not merge onto 0.3.1
+  (25 conflicting paths), and taking it whole would reintroduce what 0.3.1
+  fixed (editable packet views trusted at handoff, keys without source
+  identity, no route recheck at the action date, unsupported units, the raw
+  missing-quantity error). Decision: port its unique safeguards onto 0.3.1 and
+  keep 0.3.1's behavior where both addressed the same rule. The branch is left
+  in place, unmerged.
+  Kept from 0.3.1: pending packets for non-event routes (not a hard stop);
+    malformed eligibility statuses rejected; accepted-approval record and
+    detached views; key tenant|source|requisition|r<rev>|packet|<action>;
+    CORRECTION_TARGETS registry with applied/record_only effects.
+  Ported (re-implemented on 0.3.1's design):
+    already_submitted: GO/NO GO on a revision whose execution_state is not
+      not_requested is rejected; a correction creates a new revision.
+    policy effective_date: required on policy_change (missing_input /
+      invalid_date); stored on the policy and correction record; handoff
+      before it raises stale_approval (inclusive).
+    requirement setting: requirement.<name> -> mandatory | optional by the
+      requirement owner; other values unsupported_correction_target; no-op
+      invalid_correction; eligibility recomputed.
+    commercial_judgment.supplier_choice: applied; only an eligible, comparable
+      offer of the current recommendation; premium_over_lowest shown; withheld
+      if that supplier later stops being eligible; judgment on a withheld
+      packet or naming the current supplier rejected; precedent still stored.
+      Other commercial-judgment fields stay record_only.
+    assumption corrections listed on the packet (used_by_this_evaluation
+      false); packet diff also covers economics, exceptions, assumptions.
+    run_replay(trace=True) and reference/export_replay.py (deterministic JSON,
+      self-labelled synthetic, fixture sha256). Changed from the branch: the
+      per-step snapshot key is case_state, not state, because state overwrote
+      step fields such as a packet's recommendation state.
+    R01 description states its required date (2026-11-30).
+  Tests: test_workflow.py 111 -> 132 (21 new: re-decision 4, effective date 3,
+    requirement setting 3, commercial judgment 6, export 5). Four existing
+    tests adapted to the new contracts (repeated override uses real offers;
+    two policy tests carry an effective date; record-only test uses a
+    non-supplier commercial-judgment field). Run against 097167b workflow.py:
+    19 of 21 new tests fail and the 2 positive controls pass.
+  Docs: CHANGELOG 0.3.2; module 55 (applied targets, commercial-judgment row,
+    effective date and re-decision rule, export in the four-claim list);
+    README, VALIDATION, ROADMAP, tools/README; prefaces and metadata 0.3.2.
+Inventories unchanged: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture), 7 scenarios. Generated
+  artifacts: 131 (export_replay.py copied into both installable trees).
+
+Commands and observed results (from this pack directory unless noted):
+  python3 -B tools/build_pack.py              -> Built 131 generated artifacts; 20 changed
+  python3 -B tools/build_pack.py  (again)     -> Built 131 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py           -> STATIC VALIDATION PASSED (131 artifacts)
+  python3 -B tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s . -p 'test_*.py'
+      reference/                              -> Ran 188 tests, OK (56 core + 132 workflow)
+      cursor-project/.costvalue/reference     -> Ran 188 tests, OK
+      portable-project/.costvalue/reference   -> Ran 188 tests, OK
+  python3 -B reference/run_replay.py --scenario <s>, all seven: step sequences
+      unchanged from the records above.
+  python3 -B reference/export_replay.py --out <tmp>, twice
+      -> identical sha256; 7 scenarios, 41 steps each with case_state; no
+         absolute path in the output; no export file kept in the package.
+  reviewer probe script (outside repo): not rerun this time (approval prompt
+      unavailable); the 0.3.1 regressions it covers are in test_workflow.py.
+  Carey Chou:   python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py      -> PASSED
+                git diff --check                    -> clean
+  Tracked files outside this pack changed vs 097167b: none. Untracked: .specstory/ (local, not staged).
+  python3 -B tools/scan_publication.py <pack> --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  same scanner over the full repository working tree
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Remaining limits: as in the record above. In addition, a commercial judgment
+  chooses among offers already eligible and comparable; it cannot waive a
+  requirement (that is a requirement correction by its owner). Live-agent
+  behavior for B01–B45: UNRUN.

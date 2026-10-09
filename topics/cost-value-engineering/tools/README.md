@@ -9,9 +9,10 @@ python3 tools/validate_pack.py .
 python3 tools/test_validate_pack.py .
 python3 -m unittest discover -s reference -p 'test_*.py' -v
 python3 reference/run_replay.py --scenario baseline
+python3 reference/export_replay.py --out /tmp/r01-replay.json
 ```
 
-`test_*.py` covers `test_core.py` (arithmetic) and `test_workflow.py` (synthetic workflow harness against fixture R01, including the 0.3.1 hardening regressions). `run_replay.py` accepts `--scenario baseline|timeout|stale_quote|stale_approval_after_correction|missing_information|engineering_review|existing_route` and uses an in-memory mock destination only.
+`test_*.py` covers `test_core.py` (arithmetic) and `test_workflow.py` (synthetic workflow harness against fixture R01, including the 0.3.1 hardening and 0.3.2 safeguard regressions). `run_replay.py` accepts `--scenario baseline|timeout|stale_quote|stale_approval_after_correction|missing_information|engineering_review|existing_route` and uses an in-memory mock destination only. `export_replay.py [--scenario S ...] [--out FILE]` writes the same replays with each step's case-file and destination state under `case_state`, byte-identical for identical inputs, for a static display that must not recompute; no export file is part of the package.
 
 Maintained inputs are `canonical/`, `reference/` (original Python), `tools/` and `EXECUTION_REPORT.txt`; the root books, platform trees, fixture copies and manifest are generated from them.
 
