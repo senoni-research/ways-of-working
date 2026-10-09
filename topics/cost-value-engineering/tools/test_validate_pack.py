@@ -40,7 +40,21 @@ def run(root):
     def duplicate_recipe(r):shutil.copyfile(next((r/'canonical/recipes').glob('M01-*.md')),r/'canonical/recipes/M01-duplicate.md')
     def duplicate_template(r):replace(r/'canonical/modules/80-templates-and-prompts.md','## T05 ','## T04 ')
     def missing_prompt(r):replace(r/'canonical/modules/80-templates-and-prompts.md','## P04 ','## P99 ')
-    specs=[('duplicate canonical recipe ID',duplicate_recipe,'recipes:'),('duplicate template ID',duplicate_template,'templates:'),('missing expected prompt ID',missing_prompt,'prompts:'),('stale canonical source',stale,'canonical-drift:'),('coordinated handbook edits',books,'canonical-drift:'),('empty installed extracts',extract,'canonical-drift:'),('heading-only canonical recipe',empty,'recipe-content:'),('extra installed file',extra,'installed-inventory:'),('broken root link',link,'link:'),('nonexistent loader target',loader,'loader-target:'),('missing case',missingcase,'cases:'),('unknown source ref',source,'source-reference:'),('duplicate behavior ID',behavior,'behaviors:'),('changed hash',hashbad,'manifest:'),('wrong count',countbad,'manifest:'),('wrong word count',wordbad,'manifest:'),('stale preface',preface,'canonical-drift:')]
+    def loader_via_symlink(r):
+        # Regression for the macOS /var -> /private/var root-resolution fix:
+        # the validator must reach the package through a symlinked root and
+        # still report the intended loader-target diagnostic (not a spurious
+        # link-escape). The runner calls validate(r) afterwards; r itself is
+        # replaced by a symlink to the copied tree.
+        parent=r.parent
+        real=parent/'real-pack'
+        shutil.move(str(r),str(real))
+        r.symlink_to(real)
+        # r is now a symlink; mutate the canonical loader through it.
+        t=(real/'canonical/loader.md').read_text()
+        (real/'canonical/loader.md').write_text(t.replace('.costvalue/10-workflow.md','.costvalue/missing.md',1))
+        rebuild(real)
+    specs=[('duplicate canonical recipe ID',duplicate_recipe,'recipes:'),('duplicate template ID',duplicate_template,'templates:'),('missing expected prompt ID',missing_prompt,'prompts:'),('stale canonical source',stale,'canonical-drift:'),('coordinated handbook edits',books,'canonical-drift:'),('empty installed extracts',extract,'canonical-drift:'),('heading-only canonical recipe',empty,'recipe-content:'),('extra installed file',extra,'installed-inventory:'),('broken root link',link,'link:'),('nonexistent loader target',loader,'loader-target:'),('loader target via symlinked root (macOS path fix)',loader_via_symlink,'loader-target:'),('missing case',missingcase,'cases:'),('unknown source ref',source,'source-reference:'),('duplicate behavior ID',behavior,'behaviors:'),('changed hash',hashbad,'manifest:'),('wrong count',countbad,'manifest:'),('wrong word count',wordbad,'manifest:'),('stale preface',preface,'canonical-drift:')]
     for title,mut,diag in specs:
         with tempfile.TemporaryDirectory() as td:
             r=Path(td)/'pack';shutil.copytree(root,r,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))

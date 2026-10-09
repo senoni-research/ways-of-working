@@ -364,3 +364,66 @@ browser smoke checks, and any live agent scenario.
 
 The 8 October 2026 preparation evidence above remains the historical record
 for the delivered archive; this section records the 9 October integration.
+
+--------------------------------------------------------------------------------
+FINAL-PATCH EXECUTION RECORD — 9 October 2026 (PR #3 review follow-up)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0, reviewed head ea6c151 (this is a
+local uncommitted patch; no push/merge has occurred in this task).
+
+R1 — Synthetic-provenance guard (reference/core.py review_case):
+  Before: both probe inputs (explicit synthetic=False; marker removed) were
+  accepted and relabelled synthetic=True (PR3_Provenance_Reproduction.py exit 1).
+  After:  review_case now requires case.get("synthetic") is True (Boolean
+  identity) and raises ModelError code "unsupported_case_provenance" otherwise.
+  Six new tests (False, missing, None, string "true", integer 1, positive
+  control). Reference suite: 48/48 pass. Reproduction script: 0/2 unsupported
+  cases accepted, both rejected with the intended code; exit 0.
+  The guard checks the declared boundary only; it does not verify data origins.
+
+Symlinked-root regression added (tools/test_validate_pack.py):
+  new case "loader target via symlinked root (macOS path fix)": the pack copy
+  is validated through a symlinked root after a loader-target mutation and
+  must raise the intended loader-target diagnostic. Suite: 18/18 pass
+  (17 prior + 1 new). The earlier root-resolution fix in validate_pack.py
+  remains and is now covered by a regression.
+
+Editorial corrections in this patch:
+  R2 root README: ".carey/ or .vandeput/" -> ".carey/, .vandeput/ or .costvalue/"
+  in the first installation paragraph.
+  R3 canonical/pages/README.md: "Proposed home" replaced by current placement
+  ("lives at topics/cost-value-engineering/"), commands run from the pack
+  directory, archive-preparation closing line replaced by the current-state
+  publication boundary; regenerated into README.md.
+  R4 tools/README.md: scanner description corrected — aggregate results and
+  counts without matched terms or potentially identifying paths.
+  R5 canonical/pages/README.md: explicit "original, clearly labelled synthetic
+  SVG schematics are included" alongside the no-redistribution statement.
+  R6 root tools/check_docs.py docstring: "tracked files" -> "local files".
+
+Commands run at the pack directory (observed outcomes):
+  python3 -B tools/build_pack.py .          -> Built 97 generated artifacts (5 changed after reference edits; then 0)
+  python3 -B tools/build_pack.py . --check  -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .      -> STATIC VALIDATION PASSED (97 artifacts)
+  python3 -B tools/test_validate_pack.py .  -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_core.py' -> 48 tests OK
+  python3 -B reference/run_case.py --case C01 --quantity 5000  -> 25300.00 / 15700.00
+  python3 -B reference/run_case.py --case C01 --quantity 20000  -> 62800.00 / 62800.00 (exact tie)
+  python3 -B reference/run_case.py --case C01 --quantity 30000  -> 87800.00 / 94200.00
+  python3 -B <review bundle>/PR3_Provenance_Reproduction.py .  -> exit 0 (intended rejections)
+  Symlinked-root positive + mutation probe (inline)              -> intended loader-target diagnostic
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root)              -> PASSED
+  carey-chou/tools/validate_pack.py      -> STATIC VALIDATION PASSED (unchanged pack)
+  nicolas-vandeput/tools/validate_pack.py . -> STATIC VALIDATION PASSED (unchanged pack)
+  git diff --check                       -> clean
+
+Not run in this task: the private publication-exclusion scan (requires the
+owner's external list; the reviewer's 9 October scan of the pinned pack
+reported no matches — historical evidence for that snapshot, and new changes
+still need their own owner-side check before final publication); browser,
+JS/website, live-agent and industrial-accuracy checks (out of scope).
+The 8 October preparation and 9 October ingestion records above remain the
+historical record for those sessions; this section records the final patch.

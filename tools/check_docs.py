@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Root documentation check: verify README/ATTRIBUTION local links and pack entry points.
 
-Checks local Markdown links in the root documents resolve to tracked files,
+Checks local Markdown links in the root documents resolve to existing local files,
 and that every mandatory pack entry point and attribution target exists.
 Mechanical presence checks only; semantic attribution review is recorded in
 ATTRIBUTION.md and the per-pack source registers, not proven here.

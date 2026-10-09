@@ -173,6 +173,9 @@ def molding_cost(inputs: Mapping[str,Any], quantity: int) -> dict[str,Any]:
                 "modeled_total_inc_tooling":recurring+tooling,"modeled_unit_inc_tooling":(recurring+tooling)/Q}
 
 def review_case(case: Mapping[str,Any], quantity: int|None=None)->dict[str,Any]:
+    if case.get("synthetic") is not True:
+        raise ModelError("unsupported_case_provenance",
+            "This reference accepts explicitly synthetic cases only: the input must declare \"synthetic\": true (Boolean). The guard checks the declared boundary, not the actual origins of the data.")
     q=case["default_quantity"] if quantity is None else quantity
     comparison=compare_quotes(case["quotes"],case["context"],q)
     model=None;model_error=None

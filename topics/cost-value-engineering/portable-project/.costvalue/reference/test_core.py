@@ -97,4 +97,29 @@ class ReferenceTests(unittest.TestCase):
     def test_all_cases_executable(self):
         for c in CASES:
             with self.subTest(c=c['case_id']):self.assertTrue(review_case(c)['synthetic'])
+
+class ProvenanceGuardTests(unittest.TestCase):
+    """Synthetic-only boundary at the direct review_case API (R1 patch)."""
+    def setUp(self):self.c=copy.deepcopy(CASES[0])
+    def _reject(self,case,label):
+        with self.assertRaises(ModelError) as cm:
+            review_case(case)
+        self.assertEqual(cm.exception.code,'unsupported_case_provenance',label)
+    def test_valid_synthetic_positive_control(self):
+        self.assertIs(review_case(self.c)['synthetic'],True)
+    def test_explicit_non_synthetic_rejected(self):
+        self.c['synthetic']=False
+        self._reject(self.c,'explicit False')
+    def test_missing_marker_rejected(self):
+        del self.c['synthetic']
+        self._reject(self.c,'missing marker')
+    def test_none_marker_rejected(self):
+        self.c['synthetic']=None
+        self._reject(self.c,'None marker')
+    def test_string_marker_rejected(self):
+        self.c['synthetic']='true'
+        self._reject(self.c,'string "true" is not Boolean True')
+    def test_integer_marker_rejected(self):
+        self.c['synthetic']=1
+        self._reject(self.c,'integer 1 is not Boolean True')
 if __name__=='__main__':unittest.main()

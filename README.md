@@ -16,7 +16,7 @@ We have started with two person-inspired collections — one drawing on **Carey 
 
 The first two packs are **person-inspired** (drawn from one author's public writing); Cost & Value Engineering is **topic-led** (assembled from public sources across several fields). It is a focused prototype-method edition with original synthetic arithmetic — not automated drawing extraction, industrial-accuracy validation, or a costing product.
 
-Each pack ships **two installation routes**: a Cursor pack (a small native `.mdc` rule plus selectively loaded modules under `.carey/` or `.vandeput/`) and a portable pack for Cline/OpenCode/other agents (an `AGENTS.md` loader plus modules, with optional adapters). The handbooks are complete reference editions — readable at any time; a file named `cursor.md` or `memory.md` does not load itself as a rule. These are instructional packs and small reference examples — not production recommendation engines, forecasting services, trained models, or automatic memory systems.
+Each pack ships **two installation routes**: a Cursor pack (a small native `.mdc` rule plus selectively loaded modules under `.carey/`, `.vandeput/`, or `.costvalue/`) and a portable pack for Cline/OpenCode/other agents (an `AGENTS.md` loader plus modules, with optional adapters). The handbooks are complete reference editions — readable at any time; a file named `cursor.md` or `memory.md` does not load itself as a rule. These are instructional packs and small reference examples — not production recommendation engines, forecasting services, trained models, automatic memory systems, or costing products.
 
 ## Who it's for, and why
 

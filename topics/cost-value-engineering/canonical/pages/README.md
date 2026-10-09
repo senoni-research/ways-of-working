@@ -20,7 +20,7 @@ The full Cost & Value Engineering research collection remains a broader acquisit
 
 ## Repository placement
 
-Proposed home: `topics/cost-value-engineering/` in the Ways of Working repository. This package's root is that folder, not the repository root. Merge its README entry into the repository's existing overview. Do not overwrite Carey or Vandeput packs or install all sample loaders as active root rules.
+This pack lives at `topics/cost-value-engineering/` in the Ways of Working repository; this package's root is that folder, not the repository root. Commands shown in this README run from this pack directory. Do not overwrite the Carey or Vandeput packs or install all sample loaders as active root rules.
 
 The runtime project namespace is `.costvalue/`, distinct from `.carey/` and `.vandeput/`. Choose relevant guidance explicitly. These are compatible packaging conventions, not a source-author-endorsed combined methodology.
 
@@ -42,4 +42,4 @@ C01 flips the lower declared-scope offer at a supported quantity. C02 withholds 
 
 Edit `canonical/` for guidance, source records, cases and generated page templates. Edit `reference/` for the original Python implementation. Run `python3 tools/build_pack.py .` then all checks. The builder generates the books and platform trees; the validator independently renders expected outputs and does not repair them. [Validation](VALIDATION.md) states observed results and limits. [Tools](tools/README.md) explains reproducibility and mutation checks.
 
-No raw course files, external publications, real drawings, supplier quotations or model checkpoints are redistributed. Original public authors remain credited; the repository's MIT terms cover the original package, not external source works or third-party logos. No public-repo publication, real-data processing or production deployment has been performed by preparing this archive.
+No raw course files, external publications, private drawings, customer records, supplier quotations or model checkpoints are redistributed; the pack does contain original, clearly labelled synthetic SVG schematics. Original public authors remain credited; the repository's MIT terms cover the original package, not external source works or third-party logos. Publishing this methodology pack does not deploy a production service or authorize the use of customer data.

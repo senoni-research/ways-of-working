@@ -34,9 +34,9 @@
       "words": 282
     },
     "README.md": {
-      "bytes": 4222,
-      "sha256": "435654b52893f5be8f441a242f0acf125d5c534942f48ca173c197b3fb42491b",
-      "words": 552
+      "bytes": 4311,
+      "sha256": "31f7224945d3cdbfcfae1c4d062855cb53911cde39a0cd43fc422300a3a02f50",
+      "words": 570
     },
     "ROADMAP.md": {
       "bytes": 2389,
@@ -178,9 +178,9 @@
       "words": 282
     },
     "canonical/pages/README.md": {
-      "bytes": 4222,
-      "sha256": "435654b52893f5be8f441a242f0acf125d5c534942f48ca173c197b3fb42491b",
-      "words": 552
+      "bytes": 4311,
+      "sha256": "31f7224945d3cdbfcfae1c4d062855cb53911cde39a0cd43fc422300a3a02f50",
+      "words": 570
     },
     "canonical/pages/ROADMAP.md": {
       "bytes": 2389,
@@ -440,16 +440,16 @@
       "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
     },
     "cursor-project/.costvalue/reference/core.py": {
-      "bytes": 10466,
-      "sha256": "39ff05998e85ea2b4bbfe6db39860edb066538a628ccbeeaa9efbfb1cde6e068"
+      "bytes": 10765,
+      "sha256": "7f8a86dad133809dc07828a4971e6250dde972c194cc8b87b463fe7f0c19930e"
     },
     "cursor-project/.costvalue/reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "cursor-project/.costvalue/reference/test_core.py": {
-      "bytes": 7601,
-      "sha256": "a6e9c84641e82ae42e1204c7460a6e27a32868e7a7062f174d1c62d254feb8ae"
+      "bytes": 8733,
+      "sha256": "9683db8ef346e37e0e71affeccb4fe32c3d29faa2cdb0f28b77dda848e0ce82a"
     },
     "cursor-project/.cursor/rules/20-costvalue-method.mdc": {
       "bytes": 1355,
@@ -627,16 +627,16 @@
       "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
     },
     "portable-project/.costvalue/reference/core.py": {
-      "bytes": 10466,
-      "sha256": "39ff05998e85ea2b4bbfe6db39860edb066538a628ccbeeaa9efbfb1cde6e068"
+      "bytes": 10765,
+      "sha256": "7f8a86dad133809dc07828a4971e6250dde972c194cc8b87b463fe7f0c19930e"
     },
     "portable-project/.costvalue/reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "portable-project/.costvalue/reference/test_core.py": {
-      "bytes": 7601,
-      "sha256": "a6e9c84641e82ae42e1204c7460a6e27a32868e7a7062f174d1c62d254feb8ae"
+      "bytes": 8733,
+      "sha256": "9683db8ef346e37e0e71affeccb4fe32c3d29faa2cdb0f28b77dda848e0ce82a"
     },
     "portable-project/AGENTS.md": {
       "bytes": 1296,
@@ -672,21 +672,21 @@
       "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
     },
     "reference/core.py": {
-      "bytes": 10466,
-      "sha256": "39ff05998e85ea2b4bbfe6db39860edb066538a628ccbeeaa9efbfb1cde6e068"
+      "bytes": 10765,
+      "sha256": "7f8a86dad133809dc07828a4971e6250dde972c194cc8b87b463fe7f0c19930e"
     },
     "reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "reference/test_core.py": {
-      "bytes": 7601,
-      "sha256": "a6e9c84641e82ae42e1204c7460a6e27a32868e7a7062f174d1c62d254feb8ae"
+      "bytes": 8733,
+      "sha256": "9683db8ef346e37e0e71affeccb4fe32c3d29faa2cdb0f28b77dda848e0ce82a"
     },
     "tools/README.md": {
-      "bytes": 1744,
-      "sha256": "9274b38a3217880914661507179d310b627b729ff7b66b0db01440d45a0f1a33",
-      "words": 225
+      "bytes": 1832,
+      "sha256": "a85e042203688552616300452bca5a816a9800b09d0b38524d6614c5bb7523be",
+      "words": 237
     },
     "tools/build_pack.py": {
       "bytes": 9041,
@@ -697,8 +697,8 @@
       "sha256": "72f9ab7c6c652a2ca1446d37dc7d6e096c816420bb41e33626550842db330304"
     },
     "tools/test_validate_pack.py": {
-      "bytes": 4396,
-      "sha256": "f6ed1c1e74f1079de3f4d62ca5861bb8d4a836e29b35510221e12746cb54d606"
+      "bytes": 5254,
+      "sha256": "1359bec0454c6627fb431636534a73ebfaa62833c642eb070d1f8efbde86af1c"
     },
     "tools/validate_pack.py": {
       "bytes": 3246,

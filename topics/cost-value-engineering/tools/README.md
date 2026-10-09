@@ -22,4 +22,4 @@ Optional private identifier check:
 python3 tools/scan_publication.py . --terms-file /absolute/private/exclusions.txt
 ```
 
-Supply one excluded term per line in a file outside the package. The tool checks normalized text, paths and ZIP members; it reports counts and affected paths without printing matched terms. It does not inspect hidden PDF text or image pixels; this package deliberately avoids opaque source binaries. Missing scanner input is an unrun check, not a pass.
+Supply one excluded term per line in a file outside the package. The tool checks normalized text, paths and ZIP members; it reports aggregate results and counts without printing matched terms or potentially identifying paths (an excluded identifier could itself be a filename). It does not inspect hidden PDF text or image pixels; this package deliberately avoids opaque source binaries. Missing scanner input is an unrun check, not a pass.
