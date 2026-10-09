@@ -83,6 +83,32 @@ Send the structure with its units and conventions. Accept partial returns and ma
 
 A request that cannot be decomposed is not refused by this record; it is left with an unsupported portion visible until the basis arrives.
 
+## T08 — Requisition snapshot
+
+**Identity (tenant, source system, requisition ID, source revision, line IDs, information timestamp):**
+**Need per line (item or specification reference, required revision, quantity and unit, destination, required date, intended use):**
+**Declared evaluation basis (order quantity, annual forecast or program volume) and decision horizon:**
+**Context (category, existing contract or catalogue reference, permitted supplier set, policy version):**
+**Evidence (authorized attachment references, source positions, review status, unresolved data):**
+**Authority (requester role, approver roles, action permissions with scope and expiry):**
+**Route decided, reasons, missing fields and review depth:**
+
+The snapshot is immutable and versioned; a later change is a new revision. A missing decision-critical field is recorded as missing, never defaulted. The template records the customer's field names; it does not define their system's API.
+
+## T09 — Buyer decision packet
+
+**References and versions (requisition and line IDs, request revision, event and round IDs, policy version, quote set, evaluation quantity, information date, input fingerprint):**
+**Decision requested (exactly what, for which line and revision) and roles authorized to decide:**
+**Recommendation (proposed supplier, allocation or next action) with declared-scope economics:**
+**Non-price considerations (recorded, not scored):**
+**Exceptions (excluded offers and failed requirement; incomplete offers and missing term; unresolved eligibility; flagged content):**
+**Assumptions that move the result, their provenance and the condition under which they would change it:**
+**Difference from the previous packet and conclusions that changed:**
+**Reviewer decision (GO / NO GO / correction with type, prior value, proposed value, reason, evidence, scope):**
+**Execution state (not requested / requested / acknowledged / unknown / blocked) and reconciliation note:**
+
+Recommendation state, reviewer decision, execution state and observed outcome are four different fields. An approval binds to this revision and fingerprint; a correction produces a new packet and invalidates the old approval.
+
 ## P01 — Start the prototype
 
 Read the installed Cost & Value operating contract and workflow. Inspect this project and existing tests. Build the smallest synthetic part-and-quote review using explicit inputs and deterministic calculation. Separate offer totals from manufacturing estimates. Load only the required recipes. Implement one independent hand-check and one blocking-error case before improving the interface. State what you actually ran and do not add an external model provider or customer upload endpoint.
@@ -106,6 +132,10 @@ Read the installed operating contract, workflow and cost-breakdown module. Map t
 ## P06 — Evaluate a price-change request
 
 Read the installed operating contract and the price-change recipe. Start from the agreed baseline and its breakdown, decompose the request into affected lines with shares, indices, bases and dates, compute the exposed effect line by line and compare it with the request. Note omitted compensating movements and propose a symmetric review rule. Do not apply a material index to the whole price, interpret the contract as a lawyer, or forecast the index.
+
+## P07 — Replay a requisition through decision and handoff
+
+Read the installed operating contract, the requisition-routing and buyer-decision modules and the workflow recipes. Run the synthetic replay (`reference/run_replay.py`) for the baseline, timeout and stale scenarios and explain each step: the route and its reasons, why the first packet preferred one offer and the corrected packet another, why one offer was excluded and one left incomplete, why the duplicate submission produced one destination record and why the timeout required reconciliation. Then propose the field mapping a real snapshot would need, as questions to the system owner. Do not build a connector, contact a supplier, create an order or set a real record's synthetic marker to true.
 
 ## What not to ask an agent
 

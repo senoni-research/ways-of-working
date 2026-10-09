@@ -45,6 +45,21 @@ Preserve the original quote and its normalized snapshot. Compare a revision with
 
 When the supplier provides credible contrary evidence, revise the appropriate assumption and record scope. “Supplier X has a measured setup of two hours for this machine and tool” is not a global rule for all plants. If the evidence remains disputed, preserve both positions and the unanswered question rather than averaging them into false consensus.
 
+## Bounded action and negotiation permissions
+
+Analysis, drafting, sending, accepting and committing are separate permissions. The table states the default for the proposed prototype; a later live integration changes a row only through explicit, configured authority.
+
+| Action | Default in the prototype |
+|---|---|
+| Read approved snapshots and calculate | Allowed within the explicitly provided scope. |
+| Draft questions, event sheets or recommendations | Allowed; marked draft; no external dispatch. |
+| Return a reviewed decision to a mock destination | Allowed with a current, valid approval and fresh inputs. |
+| Contact a supplier or launch a live event | Not enabled; requires separately configured authorization. |
+| Change terms, select or award a supplier, create a purchase order | Not enabled; requires specific authority and destination controls. |
+| Modify supplier master or bank data, pay invoices, approve technical substitutions | Out of scope. |
+
+For any later bounded negotiation, specify the counterparties, the permissible subjects and concessions, the evidence required before a concession, the duration, the stopping and escalation rules, and who may make a binding commitment. Drafting permission does not imply sending permission; sending does not imply awarding. Never expose internal reservation prices or another supplier's confidential submission. Several platforms describe negotiation within configured parameters ([[VEN01]], [[VEN08]]); the permission separation here is Senoni's design, not a description of any product.
+
 ## Decision memo
 
 The memo should state the business question, considered alternatives, information date and supported quantity, current blockers, comparable totals, influential assumptions and conditional preference. Identify technical, commercial and finance sign-off separately. A button that exports a memo does not approve it; the export must say whether it is an analyst draft or actually approved under the customer's process.

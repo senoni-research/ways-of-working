@@ -15,6 +15,10 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Evaluate a price-change request | [[M10]] | Decomposed claim; exposed effect versus requested; symmetric review rule. |
 | Prepare a negotiation | [[M11]], [[50-supplier-dialogue]] | Preparation sheet, lever hypotheses with owners, anticipated objections. |
 | Choose an estimation approach | [[40-calculation-and-value]] | Named approach matched to design maturity; validity domain stated. |
+| Route a requisition | [[15-requisition-routing]], [[M12]] | One of five routes with reasons; missing fields named, not assumed. |
+| Review a sourcing-event snapshot | [[55-buyer-decision-and-handoff]], [[M13]] | Eligibility, comparability and preference separated; infeasible aggregates rejected. |
+| Process a buyer correction and return a decision | [[M14]], [[55-buyer-decision-and-handoff]] | Typed correction, new packet revision, invalidated stale approval, idempotent handoff. |
+| Evaluate incremental value alongside an existing process | [[M15]], [[70-evaluation]] | Current process versus current process plus this contribution; effort by role, decision quality, reliability. |
 | Preserve a correction or evaluate the assistant | [[M08]], [[60-memory]], [[70-evaluation]] | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop

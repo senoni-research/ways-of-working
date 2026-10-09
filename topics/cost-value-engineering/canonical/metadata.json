@@ -1,17 +1,19 @@
 {
   "name": "Cost & Value Engineering",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "date": "2026-10-09",
   "namespace": ".costvalue",
   "status": "Focused prototype-method release; not industrial validation",
   "module_ids": [
     "00-operating-contract",
     "10-workflow",
+    "15-requisition-routing",
     "20-evidence-and-drawings",
     "30-economic-contract",
     "35-cost-breakdown-and-levers",
     "40-calculation-and-value",
     "50-supplier-dialogue",
+    "55-buyer-decision-and-handoff",
     "60-memory",
     "70-evaluation",
     "80-templates-and-prompts"
@@ -27,7 +29,11 @@
     "M08",
     "M09",
     "M10",
-    "M11"
+    "M11",
+    "M12",
+    "M13",
+    "M14",
+    "M15"
   ],
   "case_ids": [
     "C01",
@@ -68,7 +74,21 @@
     "B28",
     "B29",
     "B30",
-    "B31"
+    "B31",
+    "B32",
+    "B33",
+    "B34",
+    "B35",
+    "B36",
+    "B37",
+    "B38",
+    "B39",
+    "B40",
+    "B41",
+    "B42",
+    "B43",
+    "B44",
+    "B45"
   ],
   "source_ids": [
     "CV01",
@@ -80,7 +100,15 @@
     "CV07",
     "HOST01",
     "HOST02",
-    "HOST03"
+    "HOST03",
+    "VEN01",
+    "VEN02",
+    "VEN03",
+    "VEN04",
+    "VEN05",
+    "VEN06",
+    "VEN07",
+    "VEN08"
   ],
   "template_ids": [
     "T01",
@@ -89,7 +117,9 @@
     "T04",
     "T05",
     "T06",
-    "T07"
+    "T07",
+    "T08",
+    "T09"
   ],
   "prompt_ids": [
     "P01",
@@ -97,6 +127,7 @@
     "P03",
     "P04",
     "P05",
-    "P06"
+    "P06",
+    "P07"
   ]
 }

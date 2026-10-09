@@ -38,7 +38,7 @@ def canonical(root:Path):
 
 def source_text(src):
     t=['# Public sources and inspection limits','',
-       'Independently attributed sources. Inspection recorded 8 October 2026; not a claim of full review, code execution, endorsement or redistributed rights. Detailed rules and examples not specified in a source are Senoni implementation choices.','']
+       'Independently attributed sources. Inspection dates are recorded per source (8–9 October 2026); none is a claim of full review, code execution, endorsement or redistributed rights. Entries marked vendor-reported describe marketing pages: capabilities as the vendor states them, with no product used, tested or endorsed and no outcome figure accepted as evidence. Detailed rules and examples not specified in a source are Senoni implementation choices.','']
     for s in src:
         t += [f'<a id="{s["id"].lower()}"></a>',f'## {s["id"]} — {s["title"]}','',
               '**Authors:** '+', '.join(s['authors'])+'.',

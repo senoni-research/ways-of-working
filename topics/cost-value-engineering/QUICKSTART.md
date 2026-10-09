@@ -14,6 +14,10 @@ A tiny always-present routing contract is intentional. It reads the detailed dom
 
 Ask the assistant to name the installed loader and module paths, explain why an unknown freight charge cannot be zero, and identify the implemented calculation entry point. Then give it a new small case without the expected answer. Verify its behavior yourself; a plausible explanation of the rules does not establish that the rules were loaded or followed.
 
+## Workflow replay
+
+If your organization already automates requisition-to-decision, start with P07: run `python3 reference/run_replay.py --scenario baseline` (then `timeout`, `stale_quote`, `stale_approval_after_correction`) and ask the assistant to explain each step from the routing and buyer-decision modules. The fixture R01 is synthetic and the destination is a mock; the exercise shows the rules, not an integration.
+
 ## Published examples are not blind evaluation
 
 The [case packets](cases/README.md) include expected outcomes. C05/C06 are intended as regression-style evaluation tasks, not secret holdouts. For a real guide ablation, obtain independently prepared new cases and keep answer keys outside the agent workspace. Read [the evaluation module](portable-project/.costvalue/70-evaluation.md).

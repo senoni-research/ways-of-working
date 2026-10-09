@@ -16,6 +16,10 @@ Quantity bands and quote validity must be enforced rather than treated as footno
 
 The reference comparison uses one currency and an explicit delivery boundary. It does not infer Incoterms obligations, taxes, duties, legal rights or FX conversions. Those require the actual agreement and current authoritative guidance. Avoid translating a short delivery label into an imagined complete contract.
 
+## Eligible, comparable, preferable
+
+Inside a sourcing event, ask three questions in order and keep their answers apart. *Eligible* is a requirement question: a failed mandatory requirement excludes an offer, and no price compensates. *Comparable* is a scope question: the quantities, units, revisions, dates and charging statuses above must be established. *Preferable* is the only economic question, asked among eligible and comparable offers at the declared quantity. Hard requirements are not weights; an unknown is not a low score; an incomplete offer is not a free one. [[55-buyer-decision-and-handoff]] applies this to the decision packet.
+
 ## Resource-rate scope
 
 A machine rate may include energy, maintenance, depreciation or labor—or exclude them. Record inclusions. Separately adding labor to a labor-loaded machine rate double counts the same resource. Use an explicit flag and reject incompatible charges in the reference model.

@@ -1,6 +1,6 @@
 # Public sources and inspection limits
 
-Independently attributed sources. Inspection recorded 8 October 2026; not a claim of full review, code execution, endorsement or redistributed rights. Detailed rules and examples not specified in a source are Senoni implementation choices.
+Independently attributed sources. Inspection dates are recorded per source (8–9 October 2026); none is a claim of full review, code execution, endorsement or redistributed rights. Entries marked vendor-reported describe marketing pages: capabilities as the vendor states them, with no product used, tested or endorsed and no outcome figure accepted as evidence. Detailed rules and examples not specified in a source are Senoni implementation choices.
 
 <a id="cv01"></a>
 ## CV01 — Should Cost Modelling — Guidance Note
@@ -101,3 +101,83 @@ Independently attributed sources. Inspection recorded 8 October 2026; not a clai
 **Inspected:** Supported rule types and workspace rule directories, including AGENTS.md.
 **Use here:** Portable Cline installation; optional .clinerules alternative.
 **Limit:** Live-host behavior is not tested in this release; check installed versions and Rules panel.
+
+<a id="ven01"></a>
+## VEN01 — Platform - Globality
+
+**Authors:** Globality, Inc..
+**Publication/version:** not established.
+**Source:** [Platform - Globality](https://www.globality.com/products/sourcing/)
+**Inspected:** Vendor product page: intake routing, RFx creation, planning, supplier discovery, response collection, negotiation, scenario analysis, award recommendation, autonomous and collaborative modes, governance claims.
+**Use here:** Evidence that intake routing, event creation and award-scenario recommendation are widely described platform capabilities; motivates the incremental-value framing.
+**Limit:** Vendor-reported; efficiency and satisfaction figures on the page are not accepted as evidence. No product was used, tested or endorsed; the pack describes none of its internals.
+
+<a id="ven02"></a>
+## VEN02 — Globality | Integration
+
+**Authors:** Globality, Inc..
+**Publication/version:** not established.
+**Source:** [Globality | Integration](https://www.globality.com/products/integrations/)
+**Inspected:** Vendor integration page: prebuilt connectors, APIs, webhooks, project creation from a guided-buying intake, requisition creation or update through middleware.
+**Use here:** Illustrates that a procurement platform typically keeps the customer's procurement system authoritative for requisitions and contracts and exchanges records through connectors.
+**Limit:** Vendor-reported; no connector is implemented, described or recommended by this pack.
+
+<a id="ven03"></a>
+## VEN03 — Autonomous and Automatic Sourcing Software - Keelvar
+
+**Authors:** Keelvar Technologies Ltd..
+**Publication/version:** not established.
+**Source:** [Autonomous and Automatic Sourcing Software - Keelvar](https://www.keelvar.com/sourcing-automation)
+**Inspected:** Vendor product page: automated sourcing-event creation from requests, bidder invitation, bid collection, award recommendation with human review.
+**Use here:** Evidence that automated event creation and award recommendation with human checkpoints are described capabilities.
+**Limit:** Vendor-reported; outcome figures not accepted as evidence; no product used or endorsed.
+
+<a id="ven04"></a>
+## VEN04 — Direct Materials Sourcing for Buyers - Keelvar
+
+**Authors:** Keelvar Technologies Ltd..
+**Publication/version:** not established.
+**Source:** [Direct Materials Sourcing for Buyers - Keelvar](https://www.keelvar.com/direct-materials-sourcing)
+**Inspected:** Vendor product page: direct-materials sourcing, award scenarios with capacity, bundle and supplier-count constraints, cost-breakdown collection.
+**Use here:** Evidence that constrained award scenarios (capacity, bundles, concentration) are a recognized problem; motivates the allocation-feasibility check.
+**Limit:** Vendor-reported; the pack's feasibility check is a tiny exhaustive illustration, not a reimplementation of any optimizer.
+
+<a id="ven05"></a>
+## VEN05 — AI-Native Autonomous Sourcing Software for Procurement | Procol
+
+**Authors:** Procol.
+**Publication/version:** not established.
+**Source:** [AI-Native Autonomous Sourcing Software for Procurement | Procol](https://www.procol.ai/autonomous-sourcing-software/)
+**Inspected:** Vendor product page: autonomous sourcing from request to recommendation, quote comparison, approval routing, audit trail.
+**Use here:** Evidence that quote comparison with approval routing and audit trail is a described capability.
+**Limit:** Vendor-reported; no product used or endorsed; no metric accepted as evidence.
+
+<a id="ven06"></a>
+## VEN06 — Procurement Orchestration Platform | Procol
+
+**Authors:** Procol.
+**Publication/version:** not established.
+**Source:** [Procurement Orchestration Platform | Procol](https://www.procol.ai/procurement-orchestration/)
+**Inspected:** Vendor product page: intake, routing and workflow orchestration across procurement systems.
+**Use here:** Evidence that intake routing across existing systems is a recognized orchestration need.
+**Limit:** Vendor-reported; the pack's five-route rule set is Senoni's own design.
+
+<a id="ven07"></a>
+## VEN07 — Autonomous Indirect Procurement | Pactum
+
+**Authors:** Pactum AI, Inc..
+**Publication/version:** not established.
+**Source:** [Autonomous Indirect Procurement | Pactum](https://pactum.com/price-list-agents)
+**Inspected:** Vendor product page: agents operating inside an existing procure-to-pay flow, rulebook checks, observe-advise-act progression, human review.
+**Use here:** Evidence that rule-checked recommendations inside an existing P2P flow with graduated autonomy are described capabilities; informs the bounded-action table.
+**Limit:** Vendor-reported; page title differs from its URL slug and is recorded as displayed on inspection; no product used or endorsed.
+
+<a id="ven08"></a>
+## VEN08 — Alignment Agent | Pactum
+
+**Authors:** Pactum AI, Inc..
+**Publication/version:** not established.
+**Source:** [Alignment Agent | Pactum](https://pactum.com/alignment-agents)
+**Inspected:** Vendor product page: automated supplier negotiation within configured parameters and reported outcome figures.
+**Use here:** Evidence that bounded automated negotiation is a described capability; the pack specifies permission separation and enables none of it.
+**Limit:** Vendor-reported; outcome figures not accepted as evidence; no negotiation agent is implemented or recommended.

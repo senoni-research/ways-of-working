@@ -169,5 +169,133 @@
     "source_execution": "none",
     "title": "Rules",
     "url": "https://docs.cline.bot/customization/cline-rules"
+  },
+  {
+    "authors": [
+      "Globality, Inc."
+    ],
+    "date": null,
+    "id": "VEN01",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; efficiency and satisfaction figures on the page are not accepted as evidence. No product was used, tested or endorsed; the pack describes none of its internals.",
+    "redistributed_original": false,
+    "role": "Evidence that intake routing, event creation and award-scenario recommendation are widely described platform capabilities; motivates the incremental-value framing.",
+    "scope": "Vendor product page: intake routing, RFx creation, planning, supplier discovery, response collection, negotiation, scenario analysis, award recommendation, autonomous and collaborative modes, governance claims.",
+    "source_execution": "none",
+    "title": "Platform - Globality",
+    "url": "https://www.globality.com/products/sourcing/"
+  },
+  {
+    "authors": [
+      "Globality, Inc."
+    ],
+    "date": null,
+    "id": "VEN02",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; no connector is implemented, described or recommended by this pack.",
+    "redistributed_original": false,
+    "role": "Illustrates that a procurement platform typically keeps the customer's procurement system authoritative for requisitions and contracts and exchanges records through connectors.",
+    "scope": "Vendor integration page: prebuilt connectors, APIs, webhooks, project creation from a guided-buying intake, requisition creation or update through middleware.",
+    "source_execution": "none",
+    "title": "Globality | Integration",
+    "url": "https://www.globality.com/products/integrations/"
+  },
+  {
+    "authors": [
+      "Keelvar Technologies Ltd."
+    ],
+    "date": null,
+    "id": "VEN03",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; outcome figures not accepted as evidence; no product used or endorsed.",
+    "redistributed_original": false,
+    "role": "Evidence that automated event creation and award recommendation with human checkpoints are described capabilities.",
+    "scope": "Vendor product page: automated sourcing-event creation from requests, bidder invitation, bid collection, award recommendation with human review.",
+    "source_execution": "none",
+    "title": "Autonomous and Automatic Sourcing Software - Keelvar",
+    "url": "https://www.keelvar.com/sourcing-automation"
+  },
+  {
+    "authors": [
+      "Keelvar Technologies Ltd."
+    ],
+    "date": null,
+    "id": "VEN04",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; the pack's feasibility check is a tiny exhaustive illustration, not a reimplementation of any optimizer.",
+    "redistributed_original": false,
+    "role": "Evidence that constrained award scenarios (capacity, bundles, concentration) are a recognized problem; motivates the allocation-feasibility check.",
+    "scope": "Vendor product page: direct-materials sourcing, award scenarios with capacity, bundle and supplier-count constraints, cost-breakdown collection.",
+    "source_execution": "none",
+    "title": "Direct Materials Sourcing for Buyers - Keelvar",
+    "url": "https://www.keelvar.com/direct-materials-sourcing"
+  },
+  {
+    "authors": [
+      "Procol"
+    ],
+    "date": null,
+    "id": "VEN05",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; no product used or endorsed; no metric accepted as evidence.",
+    "redistributed_original": false,
+    "role": "Evidence that quote comparison with approval routing and audit trail is a described capability.",
+    "scope": "Vendor product page: autonomous sourcing from request to recommendation, quote comparison, approval routing, audit trail.",
+    "source_execution": "none",
+    "title": "AI-Native Autonomous Sourcing Software for Procurement | Procol",
+    "url": "https://www.procol.ai/autonomous-sourcing-software/"
+  },
+  {
+    "authors": [
+      "Procol"
+    ],
+    "date": null,
+    "id": "VEN06",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; the pack's five-route rule set is Senoni's own design.",
+    "redistributed_original": false,
+    "role": "Evidence that intake routing across existing systems is a recognized orchestration need.",
+    "scope": "Vendor product page: intake, routing and workflow orchestration across procurement systems.",
+    "source_execution": "none",
+    "title": "Procurement Orchestration Platform | Procol",
+    "url": "https://www.procol.ai/procurement-orchestration/"
+  },
+  {
+    "authors": [
+      "Pactum AI, Inc."
+    ],
+    "date": null,
+    "id": "VEN07",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; page title differs from its URL slug and is recorded as displayed on inspection; no product used or endorsed.",
+    "redistributed_original": false,
+    "role": "Evidence that rule-checked recommendations inside an existing P2P flow with graduated autonomy are described capabilities; informs the bounded-action table.",
+    "scope": "Vendor product page: agents operating inside an existing procure-to-pay flow, rulebook checks, observe-advise-act progression, human review.",
+    "source_execution": "none",
+    "title": "Autonomous Indirect Procurement | Pactum",
+    "url": "https://pactum.com/price-list-agents"
+  },
+  {
+    "authors": [
+      "Pactum AI, Inc."
+    ],
+    "date": null,
+    "id": "VEN08",
+    "inspected_on": "2026-10-09",
+    "inspection": "vendor-reported capability (marketing page)",
+    "note": "Vendor-reported; outcome figures not accepted as evidence; no negotiation agent is implemented or recommended.",
+    "redistributed_original": false,
+    "role": "Evidence that bounded automated negotiation is a described capability; the pack specifies permission separation and enables none of it.",
+    "scope": "Vendor product page: automated supplier negotiation within configured parameters and reported outcome figures.",
+    "source_execution": "none",
+    "title": "Alignment Agent | Pactum",
+    "url": "https://pactum.com/alignment-agents"
   }
 ]

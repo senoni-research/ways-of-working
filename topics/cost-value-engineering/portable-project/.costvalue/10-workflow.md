@@ -15,6 +15,10 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Evaluate a price-change request | [M10](recipes/M10-price-change-request.md) | Decomposed claim; exposed effect versus requested; symmetric review rule. |
 | Prepare a negotiation | [M11](recipes/M11-negotiation-preparation.md), [50-supplier-dialogue](50-supplier-dialogue.md) | Preparation sheet, lever hypotheses with owners, anticipated objections. |
 | Choose an estimation approach | [40-calculation-and-value](40-calculation-and-value.md) | Named approach matched to design maturity; validity domain stated. |
+| Route a requisition | [15-requisition-routing](15-requisition-routing.md), [M12](recipes/M12-route-requisition.md) | One of five routes with reasons; missing fields named, not assumed. |
+| Review a sourcing-event snapshot | [55-buyer-decision-and-handoff](55-buyer-decision-and-handoff.md), [M13](recipes/M13-event-snapshot.md) | Eligibility, comparability and preference separated; infeasible aggregates rejected. |
+| Process a buyer correction and return a decision | [M14](recipes/M14-buyer-correction-and-handoff.md), [55-buyer-decision-and-handoff](55-buyer-decision-and-handoff.md) | Typed correction, new packet revision, invalidated stale approval, idempotent handoff. |
+| Evaluate incremental value alongside an existing process | [M15](recipes/M15-incremental-value.md), [70-evaluation](70-evaluation.md) | Current process versus current process plus this contribution; effort by role, decision quality, reliability. |
 | Preserve a correction or evaluate the assistant | [M08](recipes/M08-memory-and-learning.md), [60-memory](60-memory.md), [70-evaluation](70-evaluation.md) | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop

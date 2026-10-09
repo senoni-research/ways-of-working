@@ -20,6 +20,10 @@ A model-originated proposal should not re-enter the evidence store as a customer
 
 This discipline is compatible with the separate Carey-inspired WoW pack's attention to scoped corrections and context. It is not an implementation of Carey's personalized-memory algorithm, a claim of his endorsement, or a reason to load that entire pack for quote arithmetic.
 
+## Typed corrections and scoped precedents
+
+A correction is an event with a type—data, assumption, requirement, commercial judgment or policy change—and each type has an owner and a retention rule ([[55-buyer-decision-and-handoff]]). Store the prior and proposed values, reason, evidence, actor, scope, the revision corrected and whether an approval was invalidated. A commercial judgment is a rationale, not a cost fact; store it as a precedent with its scope. Three identical overrides are three precedents, not a rule; promotion to a rule needs the policy owner's explicit approval and an effective date. Concurrent edits to the same revision are a conflict to reconcile, not a last-writer-wins update.
+
 ## Public/private separation
 
 The public method contains only original general guidance, permitted references and synthetic examples. Product development may remain private. Customer evidence must stay out of public handbooks, pull-request comments, test fixtures, screenshots and deployment previews. Raw source publications are not automatically redistributable because they are readable on the web.
