@@ -1,7 +1,8 @@
 """Deterministic workflow-harness tests (synthetic R01 fixture). Map to B32–B45 (W01–W14).
 
-Hardening regressions (F1–F5, v0.3.1) follow the original classes. Each asserts the specific
-violated contract; the positive controls are retained unchanged.
+Hardening regressions (F1–F5, v0.3.1) follow the original classes, then the final-patch
+regressions (R1–R3 and the missing-quantity case). Each asserts the specific violated
+contract next to a positive control.
 """
 import copy, json, unittest
 from decimal import Decimal
@@ -82,12 +83,12 @@ class DecisionAndCorrectionTests(unittest.TestCase):
     def test_W07_correction_creates_revision_and_changes_recommendation(self):
         p2 = self.cf.apply_correction(self.corr, expected_revision=1)
         self.assertEqual(p2['revision'], 2); self.assertEqual(p2['proposed_action']['supplier'], 'Offer B')
-        self.assertEqual(self.p1['recommendation_state'], 'superseded'); self.assertIn('proposed_action', p2['diff_from_previous']['changed'])
+        self.assertEqual(self.cf.packets[0]['recommendation_state'], 'superseded'); self.assertIn('proposed_action', p2['diff_from_previous']['changed'])
         self.assertEqual(self.cf.corrections[0]['evidence'], self.corr['evidence'])
     def test_W07_approval_of_old_packet_is_invalidated(self):
-        self.cf.record_decision(self.p1['packet_id'], 'GO', 'buyer', expected_revision=1); self.assertTrue(self.p1['approval_valid'])
+        self.cf.record_decision(self.p1['packet_id'], 'GO', 'buyer', expected_revision=1); self.assertTrue(self.cf.packets[0]['approval_valid'])
         self.cf.apply_correction(self.corr, expected_revision=1)
-        self.assertFalse(self.p1['approval_valid']); self.assertTrue(self.cf.corrections[0]['invalidated_approval'])
+        self.assertFalse(self.cf.packets[0]['approval_valid']); self.assertTrue(self.cf.corrections[0]['invalidated_approval'])
         with self.assertRaises(ModelError) as cm: self.cf.request_handoff(MockDestination(), action_date='2026-10-15', actor_role='buyer')
         self.assertEqual(cm.exception.code, 'approval_required')
     def test_W09_concurrent_corrections_conflict(self):
@@ -199,6 +200,13 @@ def _err(fn):
     return None
 
 
+class CapturingDestination(MockDestination):
+    """Records each outgoing payload, then delegates to the mock's own logic."""
+    def __init__(self): super().__init__(); self.payloads = []
+    def submit(self, key, payload, **kw):
+        self.payloads.append(copy.deepcopy(payload)); return super().submit(key, payload, **kw)
+
+
 class F1EligibilitySchemaTests(unittest.TestCase):
     """F1: mandatory eligibility must not fail open."""
     def setUp(self): self.f = copy.deepcopy(FIXTURE)
@@ -263,9 +271,11 @@ class F2ApprovalBindingTests(unittest.TestCase):
         self.assertEqual(_err(lambda: self.handoff('procurement-manager')), 'stale_approval')
     def test_revoked_action_flag_blocks_as_action_not_enabled(self):
         self.cf.snapshot['action_permissions']['return_reviewed_decision'] = False; self.assertEqual(_err(self.handoff), 'action_not_enabled')
-    def test_public_packet_action_rewrite_does_not_inherit_approval(self):
+    def test_public_packet_action_rewrite_does_not_change_transmitted_action(self):
         self.cf.current['proposed_action'] = {'type': 'award_recommendation_for_review', 'supplier': 'Offer A'}
-        self.assertEqual(_err(self.handoff), 'stale_approval')
+        dest = CapturingDestination()
+        self.assertEqual(self.cf.request_handoff(dest, action_date='2026-10-15', actor_role='buyer')['execution_state'], 'acknowledged')
+        self.assertEqual(dest.payloads[0]['proposed_action']['supplier'], 'Offer B')
     def test_public_approval_flags_cannot_forge_a_go(self):
         cf = CaseFile(copy.deepcopy(FIXTURE)); cf.build_packet()
         cf.current['reviewer_decision'] = 'approved'; cf.current['approval_valid'] = True
@@ -447,6 +457,128 @@ class HardeningReplayTests(unittest.TestCase):
         self.assertEqual(steps['packet']['proposed']['type'], 'use_existing_route'); self.assertNotIn('correction', steps)
         self.assertEqual(steps['handoff']['execution_state'], 'acknowledged'); self.assertTrue(steps['duplicate_submission']['replayed'])
     def test_unknown_scenario_rejected(self): self.assertEqual(_err(lambda: run_replay(FIXTURE, 'nope')), 'unknown_scenario')
+
+
+# ----------------------------------------------------------------------------- v0.3.1 final patch (R1–R3)
+
+class R1AcceptedApprovalTests(unittest.TestCase):
+    """R1: handoff checks and payload come from the accepted approval, never from a public packet view."""
+    def setUp(self): self.cf = _approved_case(); self.dest = CapturingDestination()
+    def handoff(self, action_date='2026-10-15'): return self.cf.request_handoff(self.dest, action_date=action_date, actor_role='buyer')
+    def test_positive_control_transmits_approved_content(self):
+        fp = self.cf.current['input_fingerprint']
+        self.assertEqual(self.handoff()['execution_state'], 'acknowledged'); sent = self.dest.payloads[0]
+        self.assertEqual(sent['decision'], {'decision': 'GO', 'actor_role': 'buyer'}); self.assertEqual(sent['input_fingerprint'], fp)
+        self.assertEqual(sent['proposed_action']['supplier'], 'Offer B'); self.assertEqual(sent['packet_id'], 'REQ-SYN-0001-P2')
+        self.assertEqual(sent['supersedes'], 'REQ-SYN-0001-P1')
+    def test_cleared_public_evidence_cannot_skip_expiry(self):
+        view = self.cf.current; view['evidence']['offers'].clear(); self.cf.current['evidence']['offers'] = []
+        self.assertEqual(_err(lambda: self.handoff('2026-11-05')), 'stale_approval')
+        self.assertEqual(len(self.dest.records), 0); self.assertEqual(self.cf.handoffs, [])
+    def test_altered_public_decision_record_is_not_transmitted(self):
+        view = self.cf.current
+        view['decision_record'].update(decision='NO_GO', actor_role='requester'); view['reviewer_decision'] = 'rejected'
+        self.assertEqual(self.handoff()['execution_state'], 'acknowledged')
+        self.assertEqual(self.dest.payloads[0]['decision'], {'decision': 'GO', 'actor_role': 'buyer'})
+    def test_altered_public_fingerprint_is_not_transmitted(self):
+        original = self.cf.current['input_fingerprint']; view = self.cf.current; view['input_fingerprint'] = 'unapproved-replacement'
+        self.handoff(); self.assertEqual(self.dest.payloads[0]['input_fingerprint'], original)
+    def test_public_views_and_return_values_are_detached(self):
+        packets = self.cf.packets; packets[0]['recommendation_state'] = 'recommended'; packets.clear()
+        self.assertEqual(len(self.cf.packets), 2); self.assertEqual(self.cf.packets[0]['recommendation_state'], 'superseded')
+        for name in ('corrections', 'precedents', 'scoped_parameters', 'handoffs'):
+            with self.subTest(view=name):
+                before = getattr(self.cf, name); getattr(self.cf, name).append({'injected': True}); self.assertEqual(getattr(self.cf, name), before)
+        cf = CaseFile(copy.deepcopy(FIXTURE)); p = cf.build_packet(); p['proposed_action']['supplier'] = 'Offer D'
+        d = cf.record_decision(p['packet_id'], 'GO', 'buyer', expected_revision=1); d['approval_valid'] = False
+        self.assertEqual(cf.current['proposed_action']['supplier'], 'Offer A'); self.assertTrue(cf.current['approval_valid'])
+    def test_handoff_views_cannot_clear_an_unknown_outcome(self):
+        h = self.cf.request_handoff(self.dest, action_date='2026-10-15', actor_role='buyer', lose_response=True)
+        h['execution_state'] = 'acknowledged'; self.cf.handoffs[0]['execution_state'] = 'acknowledged'
+        self.assertEqual(self.cf.handoffs[0]['execution_state'], 'unknown'); self.assertEqual(_err(self.handoff), 'reconcile_required')
+    def test_source_change_before_decision_requires_rebuild(self):
+        cf = CaseFile(copy.deepcopy(FIXTURE)); p = cf.build_packet(); cf.event['offers'][0]['unit_price'] = 30
+        self.assertEqual(_err(lambda: cf.record_decision(p['packet_id'], 'GO', 'buyer', expected_revision=1)), 'stale_packet')
+        p2 = cf.build_packet(); self.assertEqual(cf.record_decision(p2['packet_id'], 'GO', 'buyer', expected_revision=2)['reviewer_decision'], 'approved')
+
+
+class R2ExistingRouteValidityTests(unittest.TestCase):
+    """R2: an approved existing route is rechecked at the action date (inclusive), not only at the information date."""
+    def approved_route_case(self, valid_to=None):
+        f = copy.deepcopy(FIXTURE); route = copy.deepcopy(FIXTURE['replay']['variants']['existing_route']['line_overrides']['existing_route'])
+        if valid_to: route['valid_to'] = valid_to
+        f['snapshot']['lines'][0]['existing_route'] = route; cf = CaseFile(f); p = cf.build_packet()
+        self.assertEqual(p['proposed_action']['type'], 'use_existing_route')
+        cf.record_decision(p['packet_id'], 'GO', 'buyer', expected_revision=1); return cf
+    def test_positive_control_route_valid_at_action_date(self):
+        d = CapturingDestination(); self.approved_route_case().request_handoff(d, action_date='2026-10-15', actor_role='buyer')
+        self.assertEqual(d.payloads[0]['proposed_action'], {'type': 'use_existing_route', 'route_reference': 'CTR-SYN-0009'})
+    def test_route_valid_through_the_action_date_is_acknowledged(self):
+        h = self.approved_route_case('2026-10-15').request_handoff(MockDestination(), action_date='2026-10-15', actor_role='buyer')
+        self.assertEqual(h['execution_state'], 'acknowledged')
+    def test_route_expired_before_action_date_is_blocked(self):
+        for valid_to in ('2026-10-12', '2026-10-14'):
+            with self.subTest(valid_to=valid_to):
+                cf = self.approved_route_case(valid_to); d = MockDestination()
+                self.assertEqual(_err(lambda: cf.request_handoff(d, action_date='2026-10-15', actor_role='buyer')), 'stale_approval')
+                self.assertEqual(len(d.records), 0); self.assertEqual(cf.handoffs, []); self.assertEqual(cf.current['execution_state'], 'not_requested')
+
+
+class R3QuoteUnitTests(unittest.TestCase):
+    """R3: the quote model counts and prices pieces; another unit is rejected, never relabelled over per-piece economics."""
+    def setUp(self): self.f = copy.deepcopy(FIXTURE)
+    def unit_correction(self, prior, proposed):
+        return dict(FIXTURE['replay']['variants']['missing_information']['clarification'], prior_value=prior, proposed_value=proposed)
+    def state(self, cf): return (len(cf.packets), len(cf.corrections), copy.deepcopy(cf.line), cf.current['recommendation_state'], cf.current['reviewer_decision'])
+    def test_positive_control_missing_unit_clarified_to_piece(self):
+        self.f['snapshot']['lines'][0]['unit'] = None; cf = CaseFile(self.f); cf.build_packet()
+        p2 = cf.apply_correction(self.unit_correction(None, 'piece'), expected_revision=1)
+        self.assertEqual(p2['recommendation_state'], 'recommended'); self.assertEqual(cf.line['unit'], 'piece')
+    def test_initial_unsupported_unit_rejected(self):
+        for unit in ('kg', 'Piece', 'm'):
+            with self.subTest(unit=unit):
+                f = copy.deepcopy(FIXTURE); f['snapshot']['lines'][0]['unit'] = unit
+                self.assertEqual(_err(lambda: CaseFile(f)), 'unsupported_unit')
+    def test_piece_to_kg_correction_rejected_and_state_unchanged(self):
+        cf = CaseFile(self.f); cf.build_packet(); before = self.state(cf)
+        self.assertEqual(_err(lambda: cf.apply_correction(self.unit_correction('piece', 'kg'), expected_revision=1)), 'unsupported_unit')
+        self.assertEqual(self.state(cf), before); self.assertEqual(cf.line['unit'], 'piece')
+    def test_missing_unit_clarified_to_kg_rejected_and_still_pending(self):
+        self.f['snapshot']['lines'][0]['unit'] = None; cf = CaseFile(self.f); cf.build_packet(); before = self.state(cf)
+        self.assertEqual(_err(lambda: cf.apply_correction(self.unit_correction(None, 'kg'), expected_revision=1)), 'unsupported_unit')
+        self.assertEqual(self.state(cf), before); self.assertEqual(cf.current['recommendation_state'], 'pending_information')
+    def test_unchanged_unit_correction_rejected(self):
+        cf = CaseFile(self.f); cf.build_packet()
+        self.assertEqual(_err(lambda: cf.apply_correction(self.unit_correction('piece', 'piece'), expected_revision=1)), 'invalid_correction')
+    def test_source_unit_change_blocks_rebuild(self):
+        cf = CaseFile(self.f); cf.build_packet(); cf.line['unit'] = 'kg'
+        self.assertEqual(_err(cf.build_packet), 'unsupported_unit'); self.assertEqual(len(cf.packets), 1)
+
+
+class MissingQuantityTests(unittest.TestCase):
+    """A missing order quantity is pending information: never zero, never the annual forecast."""
+    def setUp(self):
+        self.f = copy.deepcopy(FIXTURE); self.line = self.f['snapshot']['lines'][0]; self.line['evaluation_basis'] = 'order_quantity'
+    def test_missing_order_quantity_routes_to_pending_information(self):
+        self.line['quantity'] = None; cf = CaseFile(self.f); p = cf.build_packet()
+        self.assertIsNone(cf.evaluation_quantity); self.assertEqual(p['recommendation_state'], 'pending_information')
+        self.assertEqual(p['proposed_action']['missing_fields'], ['quantity']); self.assertEqual(p['declared_scope_economics'], [])
+        self.assertEqual(_err(lambda: cf.record_decision(p['packet_id'], 'GO', 'buyer', expected_revision=1)), 'route_gate')
+    def test_evaluation_quantity_correction_cannot_stand_in_for_missing_order_quantity(self):
+        self.line['quantity'] = None; cf = CaseFile(self.f); cf.build_packet()
+        c = dict(FIXTURE['replay']['correction'], prior_value=None)
+        self.assertEqual(_err(lambda: cf.apply_correction(c, expected_revision=1)), 'invalid_correction')
+        self.assertEqual((len(cf.packets), len(cf.corrections), cf.evaluation_quantity), (1, 0, None))
+    def test_missing_order_quantity_does_not_fall_back_to_forecast(self):
+        del self.line['quantity']; self.assertIsNotNone(self.line.get('annual_forecast'))
+        self.assertIsNone(CaseFile(self.f).evaluation_quantity)
+    def test_zero_quantity_rejected(self):
+        self.line['quantity'] = 0; self.assertEqual(_err(lambda: CaseFile(self.f)), 'invalid_count')
+    def test_annual_basis_without_forecast_rejected(self):
+        self.line['evaluation_basis'] = 'annual_forecast'; del self.line['annual_forecast']
+        self.assertEqual(_err(lambda: CaseFile(self.f)), 'missing_input')
+    def test_unknown_evaluation_basis_rejected(self):
+        self.line['evaluation_basis'] = 'monthly'; self.assertEqual(_err(lambda: CaseFile(self.f)), 'invalid_snapshot')
 
 
 if __name__ == '__main__': unittest.main()

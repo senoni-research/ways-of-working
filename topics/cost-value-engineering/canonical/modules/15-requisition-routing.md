@@ -30,7 +30,7 @@ Not every request should trigger a competition, and not every purchase deserves 
 - **Authorized exception.** The requester asks to deviate from the standard route; the deviation needs an authorized approver, not a buyer's assent.
 - **Engineering or commercial review first.** The category or the consequence requires a review gate before any sourcing step.
 
-The reference harness implements these rules deterministically on the synthetic snapshot (`route_requisition`) and enforces them as a gate inside the case file: a pending route yields a pending packet that cannot be approved or handed off, and an existing route yields a confirmation without a sourcing event. The rules themselves are Senoni's and are not a procurement standard.
+The reference harness implements these rules deterministically on the synthetic snapshot (`route_requisition`) and enforces them as a gate inside the case file: a pending route yields a pending packet that cannot be approved or handed off, and an existing route yields a confirmation without a sourcing event that is rechecked at the action date before handoff. The rules themselves are Senoni's and are not a procurement standard.
 
 ## Category and consequence set the review depth
 

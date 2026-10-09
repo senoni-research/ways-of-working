@@ -18,11 +18,15 @@ within its documented single-line contract.
 
 Schema 0.2.0 (hardening) changes relative to 0.1.0: strict eligibility status
 schema; approval bound to a stored decision basis (content, not labels) plus an
-internal approval ledger; typed corrections with a supported-target registry,
-per-type authority, prior-value checks and atomic validation; routing enforced
-as a gate inside ``CaseFile``; single-line case files with coherence checks;
-destination idempotency keys that include source identity and that raise on
-conflicting payloads.
+internal accepted-approval record from which handoff freshness checks and the
+outgoing payload are built; detached public packet views; typed corrections
+with a supported-target registry, per-type authority, prior-value checks and
+atomic validation; routing enforced as a gate inside ``CaseFile``; an approved
+existing route rechecked at the action date; the quote unit restricted to
+``piece`` (no conversion); a missing order quantity routed to pending
+information; single-line case files with coherence checks; destination
+idempotency keys that include source identity and that raise on conflicting
+payloads.
 """
 from __future__ import annotations
 
@@ -39,6 +43,10 @@ from core import ModelError, count, parsed_date, quote_total, serializable
 WORKFLOW_SCHEMA = "0.2.0"
 
 DECISION_CRITICAL_FIELDS = ("item_ref", "required_revision", "quantity", "unit", "destination", "required_date")
+# The quote arithmetic in core counts pieces and prices per piece. This reference
+# supports that unit only; it does not convert units or infer part mass.
+QUOTE_UNIT = "piece"
+EVALUATION_BASES = ("order_quantity", "annual_forecast")
 ROUTES = ("existing_route", "prepare_event", "request_information", "authorized_exception", "engineering_review")
 ELIGIBILITY_STATUSES = ("met", "not_met", "unknown")
 CORRECTION_TYPES = ("data", "assumption", "requirement", "commercial_judgment", "policy_change")
@@ -361,7 +369,15 @@ class CaseFile:
     Routing is a gate: a pending route produces a pending packet that cannot be
     approved or handed off. Approval binds to a stored decision basis (the
     decision-critical content) and to the proposed action, kept in an internal
-    ledger that public packet views cannot rewrite.
+    accepted-approval record. Handoff freshness checks and the outgoing payload are
+    built from that record only.
+
+    ``packets``, ``current``, ``handoffs``, ``corrections``, ``precedents``,
+    ``scoped_parameters`` and every method's return value are detached copies:
+    editing them changes nothing. ``snapshot``, ``policy``, ``context`` and
+    ``event`` are deliberately live: they stand for the authoritative source
+    system, whose later changes the approval binding must detect. This is an API
+    invariant of the mock, not caller authentication.
     """
 
     def __init__(self, fixture: Mapping[str, Any]) -> None:
@@ -378,13 +394,42 @@ class CaseFile:
         self.context = copy.deepcopy(fixture["context"])
         self.event = copy.deepcopy(fixture["event"])
         self._check_coherence()
-        self.packets: list[dict[str, Any]] = []
-        self.corrections: list[dict[str, Any]] = []
-        self.scoped_parameters: list[dict[str, Any]] = []
-        self.precedents: list[dict[str, Any]] = []
-        self.handoffs: list[dict[str, Any]] = []
-        self._approvals: dict[str, dict[str, Any]] = {}  # internal ledger; not a public packet field
-        self.evaluation_quantity: int = self._initial_quantity()
+        self._packets: list[dict[str, Any]] = []
+        self._corrections: list[dict[str, Any]] = []
+        self._scoped_parameters: list[dict[str, Any]] = []
+        self._precedents: list[dict[str, Any]] = []
+        self._handoffs: list[dict[str, Any]] = []
+        self._approvals: dict[str, dict[str, Any]] = {}  # accepted approvals; never exposed
+        self.evaluation_quantity: int | None = self._initial_quantity()
+
+    # -- detached public views ----------------------------------------------
+    @property
+    def packets(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._packets)
+
+    @property
+    def current(self) -> dict[str, Any] | None:
+        return copy.deepcopy(self._packets[-1]) if self._packets else None
+
+    @property
+    def handoffs(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._handoffs)
+
+    @property
+    def corrections(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._corrections)
+
+    @property
+    def precedents(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._precedents)
+
+    @property
+    def scoped_parameters(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._scoped_parameters)
+
+    @property
+    def _cur(self) -> dict[str, Any] | None:
+        return self._packets[-1] if self._packets else None
 
     # -- coherence and routing ---------------------------------------------
     @property
@@ -398,13 +443,24 @@ class CaseFile:
                              f"event.request_revision {self.event.get('request_revision')!r} does not match snapshot.source_revision {self.snapshot['source_revision']!r}.")
         if self.context.get("part_id") != line.get("item_ref") or self.context.get("revision") != line.get("required_revision"):
             raise ModelError("context_mismatch", "context part/revision do not match the requisition line; a comparison context for another item is not evidence for this one.")
+        if line.get("unit") not in (None, "") and line.get("unit") != QUOTE_UNIT:
+            raise ModelError("unsupported_unit",
+                             f"line.unit {line.get('unit')!r}: this reference prices per {QUOTE_UNIT!r} only and does not convert units; relabelling the quantity would leave per-piece economics unchanged.")
 
     def route(self) -> dict[str, Any]:
         return route_line(self.line, self.snapshot, self.policy)
 
-    def _initial_quantity(self) -> int:
+    def _initial_quantity(self) -> int | None:
         basis = self.line.get("evaluation_basis", "order_quantity")
-        return int(self.line["annual_forecast"]) if basis == "annual_forecast" else int(self.line["quantity"])
+        if basis not in EVALUATION_BASES:
+            raise ModelError("invalid_snapshot", f"line.evaluation_basis {basis!r}: use one of {EVALUATION_BASES}.")
+        field = "annual_forecast" if basis == "annual_forecast" else "quantity"
+        value = self.line.get(field)
+        if value in (None, ""):
+            if field == "quantity":
+                return None  # routed to request_information; never zero, never the annual forecast
+            raise ModelError("missing_input", "line.annual_forecast: the declared evaluation basis is annual_forecast but no forecast was supplied.")
+        return count(value, f"line.{field}")
 
     # -- decision basis -----------------------------------------------------
     def _decision_basis(self) -> dict[str, Any]:
@@ -415,7 +471,7 @@ class CaseFile:
                 "line": copy.deepcopy(self.line), "context": copy.deepcopy(self.context),
                 "event": copy.deepcopy(self.event), "policy": copy.deepcopy(self.policy),
                 "evaluation_quantity": self.evaluation_quantity,
-                "scoped_parameters": copy.deepcopy(self.scoped_parameters)}
+                "scoped_parameters": copy.deepcopy(self._scoped_parameters)}
 
     def _input_versions(self) -> dict[str, Any]:
         return {"request_revision": self.snapshot["source_revision"], "event_id": self.event.get("event_id"),
@@ -424,14 +480,11 @@ class CaseFile:
                 "evaluation_quantity": self.evaluation_quantity, "as_of": self.context.get("as_of")}
 
     # -- packets -------------------------------------------------------------
-    @property
-    def current(self) -> dict[str, Any] | None:
-        return self.packets[-1] if self.packets else None
-
     def build_packet(self) -> dict[str, Any]:
+        self._check_coherence()
         routing = self.route()
-        prev = self.current
-        n = len(self.packets) + 1
+        prev = self._cur
+        n = len(self._packets) + 1
         basis = self._decision_basis()
         packet: dict[str, Any] = {
             "packet_id": f"{self.snapshot['requisition_id']}-P{n}", "revision": n,
@@ -477,7 +530,7 @@ class CaseFile:
                             "untrusted_content_flags": ev["untrusted_content_flags"],
                             "authorized_exception": self.line.get("exception_approval") if route == "authorized_exception" else None},
                 assumptions=[{"name": "evaluation_quantity", "value": self.evaluation_quantity,
-                              "provenance": "snapshot evaluation_basis" if not any(c["field"] == "evaluation_quantity" for c in self.corrections) else "buyer correction",
+                              "provenance": "snapshot evaluation_basis" if not any(c["field"] == "evaluation_quantity" for c in self._corrections) else "buyer correction",
                               "changes_result_if": "quantity crosses an offer crossover or band"}])
         if prev is not None:
             changed = [k for k in ("recommendation_state", "proposed_action", "input_fingerprint") if prev[k] != packet[k]]
@@ -486,8 +539,8 @@ class CaseFile:
             prev["recommendation_state"] = "superseded"
             prev["approval_valid"] = False
             self._approvals.pop(prev["packet_id"], None)
-        self.packets.append(packet)
-        return packet
+        self._packets.append(packet)
+        return copy.deepcopy(packet)
 
     def _exception_approved(self) -> bool:
         appr = self.line.get("exception_approval")
@@ -495,7 +548,7 @@ class CaseFile:
 
     # -- decisions -----------------------------------------------------------
     def _check_current(self, packet_id: str, expected_revision: int) -> dict[str, Any]:
-        cur = self.current
+        cur = self._cur
         if cur is None or cur["packet_id"] != packet_id or cur["recommendation_state"] == "superseded":
             raise ModelError("stale_packet", f"{packet_id}: not the current packet; review the latest revision.")
         if expected_revision != cur["revision"]:
@@ -514,16 +567,21 @@ class CaseFile:
             raise ModelError("invalid_decision", "Use GO, NO_GO, or apply_correction for CORRECT.")
         if cur["recommendation_state"] in PENDING_STATES:
             raise ModelError("route_gate", f"{packet_id} is {cur['recommendation_state']}; nothing can be approved or rejected until the route is cleared.")
+        if _fingerprint(self._decision_basis()) != cur["input_fingerprint"]:
+            raise ModelError("stale_packet", f"{packet_id}: source content changed after this packet was built; rebuild before deciding.")
         cur["reviewer_decision"] = "approved" if decision == "GO" else "rejected"
         cur["approval_valid"] = decision == "GO"
         bound = {"packet_id": packet_id, "revision": cur["revision"], "input_fingerprint": cur["input_fingerprint"],
                  "action_fingerprint": _fingerprint(cur["proposed_action"]), "actor_role": actor_role}
         cur["decision_record"] = {"decision": decision, "actor_role": actor_role, "reason": reason, "bound_to": bound}
         if decision == "GO":
-            self._approvals[packet_id] = dict(bound)
+            self._approvals[packet_id] = copy.deepcopy({
+                **bound, "decision": decision, "action": cur["proposed_action"], "evidence_offers": cur["evidence"]["offers"],
+                "decision_basis": cur["decision_basis"],
+                "supersedes": cur["diff_from_previous"]["previous_packet"] if cur["diff_from_previous"] else None})
         else:
             self._approvals.pop(packet_id, None)
-        return cur
+        return copy.deepcopy(cur)
 
     # -- corrections ---------------------------------------------------------
     def _current_value(self, ctype: str, field: str) -> Any:
@@ -537,7 +595,7 @@ class CaseFile:
 
     def _plan_correction(self, correction: Mapping[str, Any], expected_revision: int) -> tuple[dict[str, Any], Callable[[], None]]:
         """Validate the whole operation before any state changes; return (record, mutation)."""
-        cur = self.current
+        cur = self._cur
         if cur is None:
             raise ModelError("no_packet", "Build a packet before correcting it.")
         if expected_revision != cur["revision"]:
@@ -571,21 +629,29 @@ class CaseFile:
         if effect == "record_only":
             def mutate_note() -> None:
                 if ctype == "assumption":
-                    self.scoped_parameters.append({"field": field, "value": proposed, "scope": correction["scope"], "evidence": correction["evidence"]})
+                    self._scoped_parameters.append({"field": field, "value": proposed, "scope": correction["scope"], "evidence": correction["evidence"]})
                 else:
-                    self.precedents.append({"packet": cur["packet_id"], "rationale": correction["reason"], "scope": correction["scope"],
-                                            "field": field, "proposed_value": proposed})
+                    self._precedents.append({"packet": cur["packet_id"], "rationale": correction["reason"], "scope": correction["scope"],
+                                             "field": field, "proposed_value": proposed})
             return record, mutate_note
         # applied targets: prior value must match the current value
         current_value = self._current_value(ctype, field)
         if correction["prior_value"] != current_value:
             raise ModelError("prior_value_mismatch", f"{ctype}.{field}: prior_value {correction['prior_value']!r} does not match the current value {current_value!r}.")
         if ctype == "data" and field == "evaluation_quantity":
+            if self.line.get("quantity") in (None, ""):
+                raise ModelError("invalid_correction",
+                                 "data.evaluation_quantity: the order quantity is missing from the source request; the requester supplies it in a new source revision, and an evaluation-quantity correction cannot stand in for it.")
             value = count(proposed, "evaluation_quantity")
             def mutate() -> None: self.evaluation_quantity = value
         elif ctype == "data":  # unit / required_date: clarification of a decision-critical field
             if not isinstance(proposed, str) or not proposed:
                 raise ModelError("invalid_correction", f"data.{field}: a non-empty string is required.")
+            if field == "unit" and proposed != QUOTE_UNIT:
+                raise ModelError("unsupported_unit",
+                                 f"data.unit {proposed!r}: this reference prices per {QUOTE_UNIT!r} only; a different unit would relabel unchanged per-piece economics.")
+            if proposed == current_value:
+                raise ModelError("invalid_correction", f"data.{field}: the proposed value equals the current value; nothing to correct.")
             if field == "required_date":
                 parsed_date(proposed, "required_date")
             def mutate() -> None: self.line[field] = proposed
@@ -598,7 +664,7 @@ class CaseFile:
         elif field == "subset_comparison_allowed":
             if not isinstance(proposed, bool):
                 raise ModelError("invalid_correction", "policy_change.subset_comparison_allowed: a boolean is required.")
-            new_label = f"{self.policy.get('policy_version')}+c{len(self.corrections) + 1}"
+            new_label = f"{self.policy.get('policy_version')}+c{len(self._corrections) + 1}"
             record["policy_version_after"] = new_label
             def mutate() -> None:
                 self.policy["subset_comparison_allowed"] = proposed
@@ -611,17 +677,17 @@ class CaseFile:
 
     def apply_correction(self, correction: Mapping[str, Any], *, expected_revision: int) -> dict[str, Any]:
         record, mutate = self._plan_correction(correction, expected_revision)
-        cur = self.current
+        cur = self._cur
         # Atomic: dry-run the mutation and dependent recompute on a deep copy first;
         # a failure there raises before anything on self has changed.
         trial = copy.deepcopy(self)
         trial_record, trial_mutate = trial._plan_correction(correction, expected_revision)
         trial_mutate()
-        trial.corrections.append(trial_record)
+        trial._corrections.append(trial_record)
         trial.build_packet()
         mutate()
         cur["reviewer_decision"] = "correction_requested"
-        self.corrections.append(record)
+        self._corrections.append(record)
         new = self.build_packet()
         record["new_revision"] = new["revision"]
         record["proposed_action_changed"] = new["proposed_action"] != cur["proposed_action"]
@@ -630,7 +696,7 @@ class CaseFile:
     def promote_rule(self, precedent_indexes: list[int], actor_role: str, rule_text: str) -> dict[str, Any]:
         if actor_role not in (self.policy.get("policy_owners") or []):
             raise ModelError("insufficient_authority", "repeated overrides are scoped precedents; promotion needs the policy owner.")
-        return {"rule": rule_text, "based_on": [self.precedents[i] for i in precedent_indexes],
+        return {"rule": rule_text, "based_on": [copy.deepcopy(self._precedents[i]) for i in precedent_indexes],
                 "approved_by": actor_role, "policy_version": self.policy.get("policy_version")}
 
     # -- drafts and actions --------------------------------------------------
@@ -652,49 +718,64 @@ class CaseFile:
         if action in NEVER_ENABLED_IN_MOCK or self.snapshot["action_permissions"].get(action) is not True:
             raise ModelError("action_not_enabled", f"{action}: not enabled; requires separately configured authority.")
 
-    def _handoff_key(self, packet: Mapping[str, Any]) -> str:
+    @staticmethod
+    def _handoff_key(approval: Mapping[str, Any]) -> str:
         """Stable logical action identity: source identity + authoritative revision + packet revision + operation."""
-        s = self.snapshot
-        return f"{s['tenant']}|{s['source_system']}|{s['requisition_id']}|r{s['source_revision']}|{packet['packet_id']}|return_reviewed_decision"
+        b = approval["decision_basis"]
+        return f"{b['tenant']}|{b['source_system']}|{b['requisition_id']}|r{b['source_revision']}|{approval['packet_id']}|return_reviewed_decision"
+
+    @staticmethod
+    def _check_fresh_at(approval: Mapping[str, Any], act: date) -> None:
+        """Freshness at the action date, from the accepted approval only (never a public view)."""
+        basis, action = approval["decision_basis"], approval["action"]
+        if action["type"] == "use_existing_route":
+            er = basis["line"].get("existing_route") or {}
+            if er.get("approved") is not True or er.get("reference") != action["route_reference"]:
+                raise ModelError("stale_approval", "the approved existing route is no longer the route on record.")
+            if parsed_date(er.get("valid_to"), "existing_route.valid_to") < act:
+                raise ModelError("stale_approval", f"{action['route_reference']}: existing route expired before the action date; a fresh review is required.")
+        offers = {o["quote_id"]: o for o in basis["event"]["offers"]}
+        relied_on = list(approval["evidence_offers"])
+        if action["type"] == "award_recommendation_for_review" and action["supplier"] not in relied_on:
+            raise ModelError("stale_approval", "the approved supplier is not among the offers the approval relied on.")
+        for qid in relied_on:
+            if parsed_date(offers[qid]["valid_to"], "valid_to") < act:
+                raise ModelError("stale_approval", f"{qid}: quote expired before the action date.")
 
     def request_handoff(self, destination: MockDestination, *, action_date: str, actor_role: str,
                         lose_response: bool = False) -> dict[str, Any]:
         self.check_action("return_reviewed_decision")
-        cur = self.current
+        cur = self._cur
         if cur is None or cur["reviewer_decision"] != "approved" or not cur["approval_valid"]:
             raise ModelError("approval_required", "a current, valid approval is required before handoff.")
-        ledger = self._approvals.get(cur["packet_id"])
-        if ledger is None or ledger["revision"] != cur["revision"]:
-            raise ModelError("approval_required", "no ledger approval for the current packet revision.")
+        approval = self._approvals.get(cur["packet_id"])
+        if approval is None or approval["revision"] != cur["revision"]:
+            raise ModelError("approval_required", "no accepted approval for the current packet revision.")
         roles = self._reviewer_roles()
         if actor_role not in roles:
             raise ModelError("insufficient_authority", f"{actor_role!r} may not request the handoff under the current policy.")
-        if ledger["actor_role"] not in roles:
-            raise ModelError("stale_approval", f"the approving role {ledger['actor_role']!r} is no longer authorized under the current policy.")
-        if ledger["input_fingerprint"] != _fingerprint(self._decision_basis()):
+        if approval["actor_role"] not in roles:
+            raise ModelError("stale_approval", f"the approving role {approval['actor_role']!r} is no longer authorized under the current policy.")
+        if approval["input_fingerprint"] != _fingerprint(self._decision_basis()):
             raise ModelError("stale_approval", "decision-critical content changed since approval; a current review is required.")
-        if ledger["action_fingerprint"] != _fingerprint(cur["proposed_action"]):
-            raise ModelError("stale_approval", "the proposed action differs from the one approved.")
-        act = parsed_date(action_date, "action_date")
-        for o in self.event["offers"]:
-            if o.get("quote_id") in cur["evidence"]["offers"] and parsed_date(o["valid_to"], "valid_to") < act:
-                raise ModelError("stale_approval", f"{o['quote_id']}: quote expired before the action date.")
-        if any(h["execution_state"] == "unknown" for h in self.handoffs):
+        self._check_fresh_at(approval, parsed_date(action_date, "action_date"))
+        if any(h["execution_state"] == "unknown" for h in self._handoffs):
             raise ModelError("reconcile_required", "a previous submission has an unknown outcome; reconcile before retrying or replacing it.")
-        key = self._handoff_key(cur)
-        payload = {"key": key, "packet_id": cur["packet_id"], "revision": cur["revision"], "source_revision": self.snapshot["source_revision"],
-                   "input_fingerprint": cur["input_fingerprint"], "proposed_action": cur["proposed_action"],
-                   "decision": {"decision": cur["decision_record"]["decision"], "actor_role": cur["decision_record"]["actor_role"]},
-                   "supersedes": cur["diff_from_previous"]["previous_packet"] if cur["diff_from_previous"] else None}
+        key = self._handoff_key(approval)
+        payload = {"key": key, "packet_id": approval["packet_id"], "revision": approval["revision"],
+                   "source_revision": approval["decision_basis"]["source_revision"],
+                   "input_fingerprint": approval["input_fingerprint"], "proposed_action": copy.deepcopy(approval["action"]),
+                   "decision": {"decision": approval["decision"], "actor_role": approval["actor_role"]},
+                   "supersedes": approval["supersedes"]}
         resp = destination.submit(key, payload, lose_response=lose_response)
-        rec = {"key": key, "packet_id": cur["packet_id"], "payload_fingerprint": _fingerprint(payload),
+        rec = {"key": key, "packet_id": approval["packet_id"], "payload_fingerprint": _fingerprint(payload),
                "execution_state": "unknown" if resp is None else "acknowledged", "destination": resp, "action_date": action_date}
-        self.handoffs.append(rec)
+        self._handoffs.append(rec)
         cur["execution_state"] = rec["execution_state"]
-        return rec
+        return copy.deepcopy(rec)
 
     def reconcile(self, destination: MockDestination) -> dict[str, Any]:
-        pending = [h for h in self.handoffs if h["execution_state"] == "unknown"]
+        pending = [h for h in self._handoffs if h["execution_state"] == "unknown"]
         if not pending:
             raise ModelError("nothing_to_reconcile", "no unknown execution state.")
         h = pending[-1]
@@ -705,10 +786,10 @@ class CaseFile:
             raise ModelError("idempotency_conflict", f"{h['key']}: the destination holds a different payload under this key.")
         h["execution_state"] = "acknowledged" if status else "not_recorded"
         h["destination"] = status
-        for p in self.packets:
+        for p in self._packets:
             if p["packet_id"] == h["packet_id"]:
                 p["execution_state"] = h["execution_state"]
-        return h
+        return copy.deepcopy(h)
 
 
 # ------------------------------------------------------------------ replay
@@ -767,17 +848,17 @@ def run_replay(fixture: Mapping[str, Any], scenario: str = "baseline") -> dict[s
         cf.record_decision(p1["packet_id"], "GO", "buyer", expected_revision=1)
         log("decision", packet_id=p1["packet_id"], decision="GO")
     if corr and cf.current["proposed_action"].get("type") == "award_recommendation_for_review":
-        before = cf.current
-        p2 = cf.apply_correction(corr, expected_revision=before["revision"])
+        p2 = cf.apply_correction(corr, expected_revision=cf.current["revision"])
+        previous = cf.packets[-2]
         log("correction", type=corr["type"], field=corr["field"], prior=corr["prior_value"], proposed=corr["proposed_value"],
             new_packet=p2["packet_id"], proposed_action=p2["proposed_action"], diff=p2["diff_from_previous"],
-            effect=cf.corrections[-1]["effect"], previous_state=before["recommendation_state"], previous_approval_valid=before["approval_valid"])
+            effect=cf.corrections[-1]["effect"], previous_state=previous["recommendation_state"], previous_approval_valid=previous["approval_valid"])
     cur = cf.current
     if scenario == "stale_approval_after_correction":
         attempt("handoff_blocked", lambda: cf.request_handoff(dest, action_date=action_date, actor_role="buyer"))
         return done()
-    cf.record_decision(cur["packet_id"], "GO", "buyer", expected_revision=cur["revision"])
-    log("decision", packet_id=cur["packet_id"], decision="GO", bound_to=cur["decision_record"]["bound_to"])
+    decided = cf.record_decision(cur["packet_id"], "GO", "buyer", expected_revision=cur["revision"])
+    log("decision", packet_id=decided["packet_id"], decision="GO", bound_to=decided["decision_record"]["bound_to"])
     h = attempt("handoff_blocked", lambda: cf.request_handoff(dest, action_date=action_date, actor_role="buyer", lose_response=(scenario == "timeout")))
     if h is None:
         return done()
