@@ -11,7 +11,9 @@ python3 -m unittest discover -s reference -p 'test_*.py' -v
 python3 reference/run_replay.py --scenario baseline
 ```
 
-`test_*.py` covers `test_core.py` (arithmetic) and `test_workflow.py` (synthetic workflow harness against fixture R01). `run_replay.py` accepts `--scenario baseline|timeout|stale_quote|stale_approval_after_correction` and uses an in-memory mock destination only.
+`test_*.py` covers `test_core.py` (arithmetic) and `test_workflow.py` (synthetic workflow harness against fixture R01, including the 0.3.1 hardening regressions). `run_replay.py` accepts `--scenario baseline|timeout|stale_quote|stale_approval_after_correction|missing_information|engineering_review|existing_route` and uses an in-memory mock destination only.
+
+Maintained inputs are `canonical/`, `reference/` (original Python), `tools/` and `EXECUTION_REPORT.txt`; the root books, platform trees, fixture copies and manifest are generated from them.
 
 `build_pack.py` has pure rendering functions. `--check` compares without writing. `validate_pack.py` renders expected outputs and checks the entire generated set, then validates the manifest and links. It never calls the writing build to repair a fixture.
 

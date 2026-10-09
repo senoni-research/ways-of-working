@@ -3,7 +3,8 @@
   "title": "Synthetic requisition replay: correction changes the recommendation; handoff is idempotent",
   "synthetic": true,
   "schema_version": "0.1.0",
-  "notice": "Original synthetic fixture. No real requisition, supplier, customer or source-system record is represented. Figures reuse the public C01 synthetic offers.",
+  "workflow_schema": "0.2.0",
+  "notice": "Original synthetic fixture. No real requisition, supplier, customer or source-system record is represented. Figures reuse the public C01 synthetic offers. schema_version is the core quote-arithmetic contract; workflow_schema is the replay-harness contract.",
   "snapshot": {
     "synthetic": true,
     "tenant": "synthetic-tenant",
@@ -129,7 +130,36 @@
       "scope": "this requisition line only"
     },
     "action_date": "2026-10-15",
-    "late_action_date": "2026-11-05"
+    "late_action_date": "2026-11-05",
+    "variants": {
+      "missing_information": {
+        "line_overrides": {"unit": null},
+        "clarification": {
+          "type": "data",
+          "field": "unit",
+          "prior_value": null,
+          "proposed_value": "piece",
+          "reason": "The requester confirmed the unit of measure.",
+          "evidence": "synthetic requester reply recorded against REQ-SYN-0001 line L1",
+          "actor_role": "buyer",
+          "scope": "this requisition line only"
+        }
+      },
+      "engineering_review": {
+        "line_overrides": {"category": "safety-relevant-component"}
+      },
+      "existing_route": {
+        "line_overrides": {
+          "existing_route": {
+            "reference": "CTR-SYN-0009",
+            "approved": true,
+            "covers_revision": "B",
+            "covers_destinations": ["same fictional UK receiving point"],
+            "valid_to": "2027-01-31"
+          }
+        }
+      }
+    }
   },
   "expected": {
     "route": "prepare_event",
@@ -139,6 +169,9 @@
     "incomplete": ["Offer C"],
     "allocation_naive_feasible": false,
     "allocation_best_feasible_total": "15100.00",
-    "duplicate_submission_destination_records": 1
+    "duplicate_submission_destination_records": 1,
+    "missing_information": {"packet_1_state": "pending_information", "decision_blocked": "route_gate", "after_clarification_preferred": "Offer A", "final_preferred": "Offer B"},
+    "engineering_review": {"packet_1_state": "pending_engineering_review", "decision_blocked": "route_gate", "handoff": "none"},
+    "existing_route": {"proposed_action_type": "use_existing_route", "route_reference": "CTR-SYN-0009", "economics_rows": 0}
   }
 }

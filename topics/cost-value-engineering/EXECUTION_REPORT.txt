@@ -642,3 +642,205 @@ UNRUN / not established by this tree: live-agent behavior for B01–B45 on any h
   value at any organization. The private practitioner conversation that motivated
   this edition is not represented in the pack; no name, employer or workflow metric
   from it was entered.
+
+--------------------------------------------------------------------------------
+v0.3.1 HARDENING PATCH — 9 October 2026 (local working tree; NOT committed)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.3.1-hardening, based on main 4877b50
+  (the commit an independent review inspected). Uncommitted working tree:
+  42 changed paths under this pack + root README.md (two sentences). No commit,
+  push, PR, merge, deployment, connector, supplier contact or customer data.
+
+Trigger: independent review of main 4877b50 reporting five executable gaps
+  (F1 eligibility fail-open; F2 approval bound to labels not content; F3
+  corrections not consistently authorized or applied; F4 routing reported not
+  enforced; F5 idempotency key collisions). The reviewer's probe script was run
+  read-only against the unpatched tree first: all five reproduced exactly
+  (e.g. status False/'pending'/'MET'/null -> Offer D preferred; price 3.14->30
+  after approval -> handoff acknowledged; requester correction accepted;
+  requirement B->C recorded with no effect; policy_version set to 'False';
+  missing-unit / engineering-review / existing-route all reached acknowledged
+  handoff; same key different payload -> replay; fresh instance at revision 2
+  collided with P1). After the patch an exception-tolerant equivalent of the
+  same probes (kept outside the repo) shows each gap closed; the reviewer's own
+  script now stops at the first malformed status with invalid_eligibility_status,
+  which is the intended behavior.
+
+Scope delivered (no new module/recipe/behavior/template/prompt/source):
+  reference/workflow.py  -> WORKFLOW_SCHEMA 0.2.0. Strict ELIGIBILITY_STATUSES;
+    _validate_event_shape (explicit, unique requirement and quote IDs);
+    decision basis stored per packet and fingerprinted (content, not labels);
+    internal approval ledger (packet, revision, input + action fingerprint,
+    approver role) checked at handoff with current policy/permissions;
+    CORRECTION_TARGETS registry with per-type authority, prior_value check,
+    applied vs record_only effect, atomic dry-run on a deep copy; CaseFile
+    single-line + revision/context coherence; routing gate producing pending
+    packets (route_gate on GO; approval_required on handoff); existing route ->
+    confirmation without event economics; exception approval record modelled;
+    handoff key tenant|source_system|requisition|r<source_revision>|packet|op;
+    MockDestination raises idempotency_conflict on differing payload; any
+    unknown handoff blocks replacement until reconcile; reconcile detects a
+    conflicting destination record. SCENARIOS extended (7).
+  reference/run_replay.py -> scenario choices from SCENARIOS.
+  reference/test_workflow.py -> 38 original tests retained unchanged + 51 new
+    (F1 7, F2 12, F3 11, F4 9, F5 8, replay 4) = 89.
+  canonical/cases/R01-requisition-replay.json -> workflow_schema 0.2.0;
+    replay.variants (missing_information with clarification, engineering_review,
+    existing_route); expected block extended. R01-source.md updated.
+  canonical: modules 15 and 55 narrowed/extended to the implemented subset and
+    the four-claim separation; pages README/CHANGELOG/VALIDATION/ROADMAP;
+    prefaces and metadata 0.3.1. tools/README.md: scenarios and maintained-inputs
+    sentence. Root README.md: catalogue row mentions buyer correction/replay;
+    maintenance sentence no longer says "everything else is generated".
+Inventories unchanged: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture). Generated artifacts: 129.
+  core.py schema_version 0.1.0 unchanged.
+
+Commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .            -> Built 129 generated artifacts; 18 changed
+  python3 -B tools/build_pack.py .  (again)   -> Built 129 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .         -> STATIC VALIDATION PASSED (129 artifacts)
+  python3 -B tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_*.py'
+      canonical reference/                    -> Ran 145 tests, OK (56 core + 89 workflow)
+      cursor-project/.costvalue/reference     -> Ran 145 tests, OK
+      portable-project/.costvalue/reference   -> Ran 145 tests, OK
+  python3 -B reference/run_replay.py --scenario <s>, all seven:
+      baseline    -> ... handoff acknowledged; duplicate replayed; records 1
+      timeout     -> handoff unknown; retry_blocked reconcile_required; reconciled acknowledged
+      stale_quote -> handoff_blocked stale_approval
+      stale_approval_after_correction -> handoff_blocked approval_required
+      missing_information -> packet pending_information; decision_blocked route_gate;
+                     handoff_blocked approval_required; clarification -> recommended
+                     (Offer A); correction -> Offer B; GO; handoff acknowledged; packets 3
+      engineering_review  -> pending_engineering_review; decision_blocked route_gate;
+                     handoff_blocked; stops with 1 packet
+      existing_route      -> use_existing_route, no event economics; GO; acknowledged
+  Carey Chou:   python3 -B tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py        -> PASSED
+                git diff --check                      -> clean
+  Tracked files outside this pack changed: README.md only. Untracked: .specstory/ (local, not staged).
+  Local aggregate private-term check (pack; terms not echoed): 0 files matched.
+  python3 -B tools/scan_publication.py . --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  same scanner from repository root over the full working tree
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Remaining unsupported paths (by design, stated in module 55 and README):
+  multi-line case files (allocation illustration only); correction targets outside
+  the registry; bounded negotiation; incremental-value measurement beyond the
+  arithmetic ledger; any real connector, authority/identity service or destination.
+  Declared roles are not authenticated people; synthetic mock validation is not
+  live-user behavior, data permission, industrial accuracy or destination
+  reliability. Live-agent behavior for B01–B45: UNRUN.
+
+--------------------------------------------------------------------------------
+v0.3.1 PRE-MERGE CORRECTIONS — 9 October 2026 (local working tree; NOT committed)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.3.1-hardening at a5d53b9 (PR #4 head,
+  unmerged; main 4877b50). Uncommitted working tree: 26 changed paths, all
+  under this pack. Version stays 0.3.1; workflow schema stays 0.2.0; core
+  schema 0.1.0. No commit, push, PR comment, merge, deployment, connector,
+  supplier contact or customer data. The record above is kept as history; its
+  test counts describe a5d53b9.
+
+Trigger: a pre-merge review of a5d53b9 reporting three remaining gaps, with a
+  read-only probe script (8 tests). Run unchanged against a5d53b9: 6 failed,
+  2 positive controls passed, as the reviewer stated.
+  R1 handoff trusted editable packet fields: clearing current['evidence']
+     ['offers'] skipped quote expiry; an edited decision_record (NO_GO,
+     requester) and an edited input_fingerprint were transmitted.
+  R2 an approved existing route valid at the information date (8 Oct) but
+     expired before the action date (valid_to 12 Oct, handoff 15 Oct) was
+     acknowledged.
+  R3 a data.unit correction piece -> kg was "applied" over unchanged per-piece
+     economics; an initial unit of kg reached a recommendation.
+  Minor: CHANGELOG said null eligibility raises invalid_eligibility_status (it
+     is unresolved by design). Optional: a missing order quantity raised a raw
+     TypeError in CaseFile._initial_quantity.
+
+Changes (no new module/recipe/behavior/template/prompt/source/scenario):
+  reference/workflow.py
+    R1  internal state held privately; packets, current, handoffs, corrections,
+        precedents, scoped_parameters and all method return values are deep
+        copies. On GO the accepted-approval record stores packet, revision,
+        decision, approving role, input and action fingerprints, the approved
+        action, the evidence offer IDs, the decision basis and the superseded
+        packet. request_handoff derives expiry checks, the idempotency key and
+        the payload from that record only. record_decision raises stale_packet
+        if source content changed after the packet was built. Source inputs
+        (snapshot, policy, context, event) stay live by design so later source
+        changes are detected by the basis fingerprint.
+    R2  an approved use_existing_route action is rechecked at the action date
+        from the approved basis: approved flag, same reference, valid_to >=
+        action_date (inclusive). Otherwise stale_approval; nothing submitted.
+    R3  QUOTE_UNIT = "piece". A line unit other than piece (or empty) raises
+        unsupported_unit at CaseFile construction and at every build_packet; a
+        data.unit correction accepts only piece and rejects an unchanged value
+        (invalid_correction). No unit conversion.
+    Optional  _initial_quantity validates evaluation_basis (invalid_snapshot);
+        a missing order quantity on the order basis is None and routes to
+        pending_information (never zero, never the annual forecast); a missing
+        forecast on the annual basis raises missing_input; values pass core
+        count(). Because that state is now reachable, a data.evaluation_quantity
+        correction while the order quantity is missing is rejected
+        (invalid_correction) instead of being recorded as applied with no
+        effect; the quantity comes in a new source revision.
+    run_replay: previous-packet fields read from packets[-2]; the decision
+        log uses record_decision's return value (no reliance on live views).
+  reference/test_workflow.py -> 89 + 22 new = 111. New: R1 7, R2 3, R3 6,
+    missing quantity 6. Three existing tests adapted to detached views: two
+    read the superseded packet via packets[0] instead of a held reference;
+    the public-action-rewrite test now asserts the approved action (Offer B)
+    is transmitted rather than that the rewrite blocks. Run against the
+    a5d53b9 workflow.py, every new non-control test fails and every positive
+    control passes.
+  canonical: CHANGELOG 0.3.1 entry (null-eligibility sentence corrected;
+    approval-record, route-validity, unit and quantity behavior; test counts;
+    limits); module 55 (unit-only-piece, accepted-approval record, detached
+    views, route lapse, inclusive validity dates, in-process limit); module 15
+    (route rechecked at action date); README, VALIDATION, ROADMAP narrowed to
+    the listed subset.
+Inventories unchanged: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture), 7 scenarios. Fixture
+  R01 unchanged. Generated artifacts: 129.
+
+Commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py              -> Built 129 generated artifacts; 16 changed
+                                                 (then 11 after the evaluation-quantity guard)
+  python3 -B tools/build_pack.py  (again)     -> Built 129 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py           -> STATIC VALIDATION PASSED (129 artifacts)
+  python3 -B tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s . -p 'test_*.py'
+      reference/                              -> Ran 167 tests, OK (56 core + 111 workflow)
+      cursor-project/.costvalue/reference     -> Ran 167 tests, OK
+      portable-project/.costvalue/reference   -> Ran 167 tests, OK
+  reviewer probe script (outside repo) --package .
+      -> 8/8 OK (target workflow blob 3459a8f6; a5d53b9 blob 165efb4c)
+  python3 -B reference/run_replay.py --scenario <s>, all seven: step sequences
+      unchanged from the record above (baseline 2 packets, duplicate replayed;
+      timeout reconcile_required then reconciled; stale_quote stale_approval;
+      stale_approval_after_correction approval_required; missing_information 3
+      packets; engineering_review stops at 1 packet; existing_route acknowledged).
+  Carey Chou:   python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py      -> PASSED
+                git diff --check                    -> clean
+  Tracked files outside this pack changed vs a5d53b9: none. Untracked: .specstory/ (local, not staged).
+  python3 -B tools/scan_publication.py <pack> --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  same scanner over the full repository working tree
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  Separate grep-based aggregate private-term check: not rerun (scanner above
+      reports aggregate counts only).
+
+Remaining limits (unchanged by design): one Python process; detached views are
+  an API invariant of the mock, not caller authentication; one line per case
+  file;   one quote unit with no conversion; a missing order quantity is not a
+  correction target (it needs a new source revision); declared roles are
+  not authenticated people. Live-agent behavior for B01–B45: UNRUN.

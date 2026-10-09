@@ -3,12 +3,12 @@ import argparse, json, sys
 from pathlib import Path
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from workflow import run_replay  # noqa: E402
+from workflow import SCENARIOS, run_replay  # noqa: E402
 
 def main() -> None:
     a = argparse.ArgumentParser()
     a.add_argument('--fixture', default='R01')
-    a.add_argument('--scenario', default='baseline', choices=['baseline', 'timeout', 'stale_quote', 'stale_approval_after_correction'])
+    a.add_argument('--scenario', default='baseline', choices=list(SCENARIOS))
     args = a.parse_args()
     root = Path(__file__).resolve().parents[1]
     for cand in (root / 'cases' / f'{args.fixture}-requisition-replay.json', root / 'canonical/cases' / f'{args.fixture}-requisition-replay.json'):
