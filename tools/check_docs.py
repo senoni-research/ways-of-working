@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Root documentation check: verify README/ATTRIBUTION local links and pack entry points.
 
-Checks local Markdown links in the root documents resolve to tracked files,
+Checks local Markdown links in the root documents resolve to existing local files,
 and that every mandatory pack entry point and attribution target exists.
 Mechanical presence checks only; semantic attribution review is recorded in
 ATTRIBUTION.md and the per-pack source registers, not proven here.
@@ -35,6 +35,15 @@ REQUIRED_PATHS = [
     'nicolas-vandeput/SOURCE_REGISTER.json',
     'nicolas-vandeput/cursor-project/.cursor/rules/10-vandeput-method.mdc',
     'nicolas-vandeput/portable-project/AGENTS.md',
+    'topics/cost-value-engineering/README.md',
+    'topics/cost-value-engineering/QUICKSTART.md',
+    'topics/cost-value-engineering/cursor.md',
+    'topics/cost-value-engineering/memory.md',
+    'topics/cost-value-engineering/VALIDATION.md',
+    'topics/cost-value-engineering/ATTRIBUTION.md',
+    'topics/cost-value-engineering/SOURCE_REGISTER.md',
+    'topics/cost-value-engineering/cursor-project/.cursor/rules/20-costvalue-method.mdc',
+    'topics/cost-value-engineering/portable-project/AGENTS.md',
 ]
 
 # Mandatory attribution content in the root policy and README.
@@ -49,6 +58,8 @@ REQUIRED_CONTENT = {
         'ATTRIBUTION.md',
         'Carey Chou',
         'SupChains',
+        'Cost & Value Engineering',
+        'topics/cost-value-engineering',
         'not measured team-productivity claims',
         'specifications',
     ],

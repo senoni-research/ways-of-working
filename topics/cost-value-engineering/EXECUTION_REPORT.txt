@@ -1,0 +1,644 @@
+COST & VALUE ENGINEERING — actual local execution record
+8 October 2026 | v0.1.0
+Python: 3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]
+No GitHub, hosting, DNS or customer-data action occurred.
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py .
+Built 97 generated artifacts; 0 changed.
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py .
+Built 97 generated artifacts; 0 changed.
+
+Exit: 0
+
+PASS: two consecutive complete builds produced identical file hashes.
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py . --check
+BUILD CHECK PASSED
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 tools/validate_pack.py .
+STATIC VALIDATION PASSED (97 canonical artifacts, links, loaders, inventories and manifest).
+
+Exit: 0
+
+PASS: read-only validator did not modify package files.
+
+$ /opt/pyvenv/bin/python3 tools/test_validate_pack.py .
+PASS: duplicate canonical recipe ID -> recipes:
+PASS: duplicate template ID -> templates:
+PASS: missing expected prompt ID -> prompts:
+PASS: stale canonical source -> canonical-drift:
+PASS: coordinated handbook edits -> canonical-drift:
+PASS: empty installed extracts -> canonical-drift:
+PASS: heading-only canonical recipe -> recipe-content:
+PASS: extra installed file -> installed-inventory:
+PASS: broken root link -> link:
+PASS: nonexistent loader target -> loader-target:
+PASS: missing case -> cases:
+PASS: unknown source ref -> source-reference:
+PASS: duplicate behavior ID -> behaviors:
+PASS: changed hash -> manifest:
+PASS: wrong count -> manifest:
+PASS: wrong word count -> manifest:
+PASS: stale preface -> canonical-drift:
+ALL 17 CORRUPTION REGRESSIONS PASSED; positive control passed.
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.005s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s cursor-project/.costvalue/reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.006s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s portable-project/.costvalue/reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.006s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 reference/run_case.py --case C01 --quantity 5000
+{
+  "schema_version": "0.1.0",
+  "case_id": "C01",
+  "synthetic": true,
+  "quantity": 5000,
+  "comparison": {
+    "status": "comparable",
+    "rows": [
+      {
+        "quote_id": "Offer A",
+        "quantity": 5000,
+        "variable_per_unit": "2.50",
+        "one_time_tooling": "12800",
+        "total": "25300.00",
+        "effective_per_unit": "5.06",
+        "currency": "GBP"
+      },
+      {
+        "quote_id": "Offer B",
+        "quantity": 5000,
+        "variable_per_unit": "3.14",
+        "one_time_tooling": "0",
+        "total": "15700.00",
+        "effective_per_unit": "3.14",
+        "currency": "GBP"
+      }
+    ],
+    "issues": [],
+    "preferred": "Offer B",
+    "difference": "9600.00",
+    "crossover": {
+      "quantity": "2.00E+4",
+      "within_common_band": true
+    }
+  },
+  "manufacturing_model": {
+    "expected_shots": "2604.166666666666666666666666666666666667",
+    "material_kg": "234.3750000000000000000000000000000000000",
+    "run_hours": "26.04166666666666666666666666666666666667",
+    "setup_events": 2,
+    "setup_hours": "3.0",
+    "required_hours": "29.04166666666666666666666666666666666667",
+    "material_cost": "656.2500000000000000000000000000000000000",
+    "run_cost": "1575.520833333333333333333333333333333334",
+    "setup_cost": "240.0",
+    "manufacturing_total_ex_tooling": "2471.770833333333333333333333333333333334",
+    "manufacturing_per_good_unit_ex_tooling": "0.4943541666666666666666666666666666666668",
+    "tooling_upfront": "12800",
+    "modeled_total_inc_tooling": "15271.77083333333333333333333333333333333",
+    "modeled_unit_inc_tooling": "3.054354166666666666666666666666666666666"
+  },
+  "manufacturing_issue": null,
+  "notice": "Synthetic pre-entered inputs. No automated drawing reading or factory-cost validation."
+}
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 reference/run_case.py --case C01 --quantity 30000
+{
+  "schema_version": "0.1.0",
+  "case_id": "C01",
+  "synthetic": true,
+  "quantity": 30000,
+  "comparison": {
+    "status": "comparable",
+    "rows": [
+      {
+        "quote_id": "Offer A",
+        "quantity": 30000,
+        "variable_per_unit": "2.50",
+        "one_time_tooling": "12800",
+        "total": "87800.00",
+        "effective_per_unit": "2.926666666666666666666666667",
+        "currency": "GBP"
+      },
+      {
+        "quote_id": "Offer B",
+        "quantity": 30000,
+        "variable_per_unit": "3.14",
+        "one_time_tooling": "0",
+        "total": "94200.00",
+        "effective_per_unit": "3.14",
+        "currency": "GBP"
+      }
+    ],
+    "issues": [],
+    "preferred": "Offer A",
+    "difference": "6400.00",
+    "crossover": {
+      "quantity": "2.00E+4",
+      "within_common_band": true
+    }
+  },
+  "manufacturing_model": {
+    "expected_shots": "15625",
+    "material_kg": "1406.250",
+    "run_hours": "156.25",
+    "setup_events": 12,
+    "setup_hours": "18.0",
+    "required_hours": "174.25",
+    "material_cost": "3937.5000",
+    "run_cost": "9453.1250",
+    "setup_cost": "1440.0",
+    "manufacturing_total_ex_tooling": "14830.6250",
+    "manufacturing_per_good_unit_ex_tooling": "0.4943541666666666666666666666666666666667",
+    "tooling_upfront": "12800",
+    "modeled_total_inc_tooling": "27630.6250",
+    "modeled_unit_inc_tooling": "0.9210208333333333333333333333333333333333"
+  },
+  "manufacturing_issue": null,
+  "notice": "Synthetic pre-entered inputs. No automated drawing reading or factory-cost validation."
+}
+
+Exit: 0
+
+RESULT: 17 corruption regressions; 42 numerical tests in the canonical reference and the same 42 in each installed copy. The copies do not constitute additional independent tests.
+Unrun: live Cursor/Cline/OpenCode behavior, external source code, industrial data, drawing extraction, expert cost adjudication, customer pilots and production deployment.
+B01–B24 remain specifications. Six published fixtures are not blind holdouts.
+Public-source inspection limits are recorded in SOURCE_REGISTER.md.
+
+--------------------------------------------------------------------------------
+INGESTION/REVIEW RECORD — 9 October 2026 (ways-of-working repository)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Location under test: topics/cost-value-engineering/ (as integrated into
+senoni-research/ways-of-working, branch topics-cost-value-engineering-v0.1.0).
+
+One delivery defect was found and fixed before integration:
+- tools/validate_pack.py compared resolved link destinations against an
+  unresolved package root. On macOS temporary directories (/var symlinked
+  to /private/var), every root-level link was reported as escaping the
+  package, and the 'nonexistent loader target' regression case failed with
+  the wrong diagnostic. Fix: resolve root at validation entry. The 17-case
+  regression suite, build check, validator and 42 numerical tests then pass.
+  This fix is in tools/validate_pack.py; the manifest was rebuilt to match.
+
+Commands run at the integrated destination (all observed outcomes here):
+  python3 tools/build_pack.py .            -> Built 97 generated artifacts; 0 changed
+  python3 tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 tools/validate_pack.py .         -> STATIC VALIDATION PASSED (97 artifacts)
+  python3 tools/test_validate_pack.py .   -> ALL 17 CORRUPTION REGRESSIONS PASSED
+  python3 -m unittest discover -s reference -p 'test_core.py' -> 42 tests OK
+  python3 reference/run_case.py --case C01 --quantity 5000
+      -> offer totals 25300.00 / 15700.00 (matches declared reference)
+  python3 reference/run_case.py --case C01 --quantity 30000
+      -> offer totals 87800.00 / 94200.00 (matches declared reference)
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root, updated for three packs) -> PASSED
+  carey-chou/tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged pack)
+  nicolas-vandeput/tools/validate_pack.py . -> STATIC VALIDATION PASSED (unchanged pack)
+  git diff --check -> clean
+
+Not run in this ingestion session: the private publication-exclusion scan
+(requires the owner's externally stored private list; the delivery-side scan
+of 8 October 2026 reported no matches and is historical evidence for the
+archive as delivered), JS/website suites (separate senoni-site handoff),
+browser smoke checks, and any live agent scenario.
+
+The 8 October 2026 preparation evidence above remains the historical record
+for the delivered archive; this section records the 9 October integration.
+
+--------------------------------------------------------------------------------
+FINAL-PATCH EXECUTION RECORD — 9 October 2026 (PR #3 review follow-up)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0, reviewed head ea6c151 (this is a
+local uncommitted patch; no push/merge has occurred in this task).
+
+R1 — Synthetic-provenance guard (reference/core.py review_case):
+  Before: both probe inputs (explicit synthetic=False; marker removed) were
+  accepted and relabelled synthetic=True (PR3_Provenance_Reproduction.py exit 1).
+  After:  review_case now requires case.get("synthetic") is True (Boolean
+  identity) and raises ModelError code "unsupported_case_provenance" otherwise.
+  Six new tests (False, missing, None, string "true", integer 1, positive
+  control). Reference suite: 48/48 pass. Reproduction script: 0/2 unsupported
+  cases accepted, both rejected with the intended code; exit 0.
+  The guard checks the declared boundary only; it does not verify data origins.
+
+Symlinked-root regression added (tools/test_validate_pack.py):
+  new case "loader target via symlinked root (macOS path fix)": the pack copy
+  is validated through a symlinked root after a loader-target mutation and
+  must raise the intended loader-target diagnostic. Suite: 18/18 pass
+  (17 prior + 1 new). The earlier root-resolution fix in validate_pack.py
+  remains and is now covered by a regression.
+
+Editorial corrections in this patch:
+  R2 root README: ".carey/ or .vandeput/" -> ".carey/, .vandeput/ or .costvalue/"
+  in the first installation paragraph.
+  R3 canonical/pages/README.md: "Proposed home" replaced by current placement
+  ("lives at topics/cost-value-engineering/"), commands run from the pack
+  directory, archive-preparation closing line replaced by the current-state
+  publication boundary; regenerated into README.md.
+  R4 tools/README.md: scanner description corrected — aggregate results and
+  counts without matched terms or potentially identifying paths.
+  R5 canonical/pages/README.md: explicit "original, clearly labelled synthetic
+  SVG schematics are included" alongside the no-redistribution statement.
+  R6 root tools/check_docs.py docstring: "tracked files" -> "local files".
+
+Commands run at the pack directory (observed outcomes):
+  python3 -B tools/build_pack.py .          -> Built 97 generated artifacts (5 changed after reference edits; then 0)
+  python3 -B tools/build_pack.py . --check  -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .      -> STATIC VALIDATION PASSED (97 artifacts)
+  python3 -B tools/test_validate_pack.py .  -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_core.py' -> 48 tests OK
+  python3 -B reference/run_case.py --case C01 --quantity 5000  -> 25300.00 / 15700.00
+  python3 -B reference/run_case.py --case C01 --quantity 20000  -> 62800.00 / 62800.00 (exact tie)
+  python3 -B reference/run_case.py --case C01 --quantity 30000  -> 87800.00 / 94200.00
+  python3 -B <review bundle>/PR3_Provenance_Reproduction.py .  -> exit 0 (intended rejections)
+  Symlinked-root positive + mutation probe (inline)              -> intended loader-target diagnostic
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root)              -> PASSED
+  carey-chou/tools/validate_pack.py      -> STATIC VALIDATION PASSED (unchanged pack)
+  nicolas-vandeput/tools/validate_pack.py . -> STATIC VALIDATION PASSED (unchanged pack)
+  git diff --check                       -> clean
+
+Not run in this task: the private publication-exclusion scan (requires the
+owner's external list; the reviewer's 9 October scan of the pinned pack
+reported no matches — historical evidence for that snapshot, and new changes
+still need their own owner-side check before final publication); browser,
+JS/website, live-agent and industrial-accuracy checks (out of scope).
+The 8 October preparation and 9 October ingestion records above remain the
+historical record for those sessions; this section records the final patch.
+
+--------------------------------------------------------------------------------
+v0.2.0 METHODOLOGY EXPANSION RECORD — 9 October 2026 (purchasing-side guidance)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0, from reviewed head 4528b90
+(local uncommitted change set; no push/merge has occurred in this task).
+
+Motivation: an owner-side gap review of private purchasing-training material
+against the 0.1.0 method identified strategic practice the pack lacked. The
+material itself is private and is not reproduced, cited, named or registered;
+the additions below are Senoni syntheses in original wording of widely
+practiced industrial purchasing and cost-engineering methods (CHANGELOG 0.2.0,
+ATTRIBUTION). No private names, figures, exercises or case descriptions were
+transferred. Identifier scan of topics/, tools/, README.md and ATTRIBUTION.md
+for the material's identifying terms: no matches (scan terms kept outside the
+repository, consistent with the exclusion-list policy).
+
+Canonical changes (guidance only; reference arithmetic and C01-C06 unchanged):
+  + modules/35-cost-breakdown-and-levers.md (structured breakdown request,
+    breakdowns as conventions, fixed/variable and direct/indirect, threshold
+    and volume effects, lever map, price-change requests, shared vocabulary
+    incl. the two meanings of "LCC")
+  ~ modules/40: "Choose the estimation approach for the design maturity"
+    (analogy / parametric / analytical; precision vs maturity; top-down target
+    vs bottom-up convergence; parametric validity domain; process-family and
+    location parameter sets)
+  ~ modules/50: "Prepare a negotiation around cost drivers" + frequent-
+    objections table (10 rows)
+  ~ modules/00 (0.2.0 scope sentence), /30 (pointer to 35), /10 (4 routing
+    rows), /70 (B25-B31; "B01-B31"), /80 (T06, T07, P05, P06)
+  + recipes/M09-cost-breakdown-review.md, M10-price-change-request.md,
+    M11-negotiation-preparation.md; M01 adds B30, M04 adds B29
+  ~ loader.md scope sentence; metadata.json 0.2.0 / 2026-10-09 with
+    inventories 10 modules, 11 recipes, 31 behaviors, 7 templates, 6 prompts;
+    prefaces version line; pages README/CHANGELOG/VALIDATION/ROADMAP/
+    ATTRIBUTION updated.
+
+Commands run at the pack directory (observed outcomes):
+  python3 -B tools/build_pack.py .          -> Built 105 generated artifacts; 39 changed
+  python3 -B tools/build_pack.py .          -> Built 105 generated artifacts; 0 changed (idempotent)
+  python3 -B tools/build_pack.py . --check  -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .      -> STATIC VALIDATION PASSED (105 artifacts)
+  python3 -B tools/test_validate_pack.py .  -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_core.py' -> 48 tests OK
+  same suite in cursor-project/ and portable-project/ installed copies -> OK (copies, not extra evidence)
+  python3 -B reference/run_case.py --case C01 --quantity 5000  -> 25300.00 / 15700.00, Offer B
+  python3 -B reference/run_case.py --case C01 --quantity 20000 -> 62800.00 / 62800.00, tie
+  python3 -B reference/run_case.py --case C01 --quantity 30000 -> 87800.00 / 94200.00, Offer A
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root)                 -> PASSED
+  nicolas-vandeput/tools/validate_pack.py .  -> STATIC VALIDATION PASSED (unchanged pack)
+  carey-chou/tools/validate_pack.py          -> FAIL: Platform drift in shared recipe:
+     M01-fast-personalization.md. Cause: pre-existing uncommitted whitespace-only
+     edits (final newline / blank line) in three portable .carey recipes that
+     predate this task and were not made here; the cursor-project copies are
+     unchanged. Not modified in this task; owner decision whether to revert or
+     mirror them.
+  git diff --check                           -> clean
+
+Not run in this task: the private publication-exclusion scan with the owner's
+external list (the local identifier scan above is a narrower, task-specific
+check and does not replace it); live-agent scenarios for B25-B31 (they remain
+specifications); browser, website and industrial-accuracy checks.
+
+--------------------------------------------------------------------------------
+FINAL-PATCH (CURRENT HEAD) — 9 October 2026 — Decimal policy + docs + full revalidation
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0
+Base reviewed head before this patch: c4369b43e0a620077a706972e2cafa225579ffd7
+(Local uncommitted/unpushed patch at the time of this record; no merge.)
+
+Closes external review findings R1–R5 for the expanded five-commit PR
+(companion: PR3_Current_Review_2026-10-09.md / Cursor_PR3_Current_Final_Patch.md).
+R6 (add public purchasing sources) deferred as recommended, not a merge blocker.
+
+R1/R2 — Deterministic Decimal reference (reference/core.py):
+  Public numeric entry points (quote_total, compare_quotes, molding_cost) now
+  run under a local Decimal Context(prec=40, rounding=ROUND_HALF_EVEN) with
+  Overflow/Underflow traps. Caller getcontext() is neither inherited nor mutated.
+  number() rejects out-of-range finite values (abs > 1E20 or |adjusted| > 20)
+  with ModelError code "numeric_range"; Overflow/Underflow from defined
+  arithmetic maps to the same code. schema_version remains "0.1.0" (independent
+  of pack VERSION 0.2.0).
+  New DecimalPolicyTests (8): normal C01 totals; ambient prec=4 and prec=28 at
+  19,999 (B wins £62,797.50 vs £62,796.86, difference £0.64 — no false tie);
+  crossover edges 19999/20000/20001 under prec=4; caller context restored;
+  nested localcontext unchanged; extreme '1e999999' rejected.
+  Suite: 56/56 (48 prior + 8 decimal-policy).
+
+R3 — Documentation:
+  VALIDATION.md: removed unsupported "price/markup distinctions"; noted Decimal
+  policy and that markup is not implemented.
+  Module 35 threshold section: band boundaries are validity/eligibility checks;
+  the calculator does not implement multi-band price curves or slope change at
+  bands.
+  README: pack VERSION 0.2.0 vs reference schema_version 0.1.0 stated as
+  independent. CHANGELOG 0.2.0 notes the Decimal policy on the same release line.
+  PR body update prepared for after push (authorization required; not applied
+  in this task).
+
+R4 — Latest-head validation (this record supersedes the v0.2.0 Carey-failure note):
+  Cost/Value:
+    python3 -B tools/build_pack.py .           -> Built 105 artifacts; 0 changed (×2)
+    python3 -B tools/build_pack.py . --check   -> BUILD CHECK PASSED
+    python3 -B tools/validate_pack.py .        -> STATIC VALIDATION PASSED (105)
+    python3 -B tools/test_validate_pack.py .   -> ALL 18 CORRUPTION REGRESSIONS PASSED
+    python3 -B -m unittest discover -s reference -p 'test_core.py' -> 56 tests OK
+    installed copies (cursor + portable)       -> OK each
+    C01 5000  -> 25300.00 / 15700.00, Offer B
+    C01 19999 -> 62797.50 / 62796.86, Offer B
+    C01 20000 -> 62800.00 / 62800.00, tie
+    C01 30000 -> 87800.00 / 94200.00, Offer A
+  Carey Chou:
+    python3 -B tools/validate_pack.py          -> STATIC VALIDATION PASSED
+    python3 -B tools/test_validate_pack.py     -> ALL 12 REGRESSION CASES PASSED
+  Nicolas Vandeput:
+    python3 -B tools/validate_pack.py .        -> STATIC VALIDATION PASSED
+  Root:
+    python3 -B tools/check_docs.py             -> PASSED
+    git diff --check                           -> clean
+
+R5 — Carey scope: retained in PR #3 (whitespace/mirror sync only; no substantive
+  guidance change). Carey validator + 12-case corruption suite pass at this head.
+  Disclose in PR description; splitting deferred as higher-risk than disclosing.
+
+Publication-exclusion scan: UNRUN — owner's private list not available in this
+session; do not treat as passed. Live-agent (B01–B31) and industrial checks: UNRUN.
+
+--------------------------------------------------------------------------------
+PUBLICATION-EXCLUSION SCAN — 9 October 2026 (final head f367c90)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7.
+Head under test: f367c9000f4540d6a8abfd57299457698003dfb5 (PR #3 branch tip).
+Private terms file: located outside the repository (owner-supplied; path and
+contents are not recorded here and were not committed).
+
+Commands (aggregate output only; scanner does not print matched terms or paths):
+  python3 -B tools/scan_publication.py . --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns).
+         exit 0
+  From repository root, same terms file over the full working tree (publication
+  surface including root README/ATTRIBUTION/check_docs targets):
+  python3 -B topics/cost-value-engineering/tools/scan_publication.py . --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns).
+         exit 0
+
+Limit: textual/path/ZIP identifier scan only; not a semantic or IP audit.
+The private exclusion list was not printed, staged, or committed.
+
+--------------------------------------------------------------------------------
+v0.3.0 WORKFLOW EDITION — 9 October 2026 (local working tree; NOT committed)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.3-workflow, based on f367c90 (PR #3 head).
+State: uncommitted working tree (93 changed/new paths under this pack). No commit,
+push, merge, deployment, connector, supplier contact or customer-data ingestion.
+
+Scope delivered (bounded per owner's brief):
+  canonical: modules 15-requisition-routing, 55-buyer-decision-and-handoff (new);
+    10/30/50/60/70/80/00 and loader.md extended; recipes M12–M15 (new);
+    B32–B45; T08, T09, P07; sources VEN01–VEN08 ("vendor-reported capability",
+    inspected 2026-10-09, titles as displayed); metadata 0.3.0; pages updated;
+    cases/R01-requisition-replay.json + R01-source.md (synthetic fixture, NOT in
+    cases.json; C-case inventory unchanged at 6).
+  reference: workflow.py (workflow_schema 0.1.0), run_replay.py, test_workflow.py.
+  tools: build_pack.py source header wording (per-source inspection dates;
+    vendor-reported class). No validator logic change.
+Inventories at this tree: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture). Generated artifacts: 129.
+  Manifest entries: 193. core.py schema_version stays 0.1.0.
+
+Commands and observed results:
+  python3 tools/build_pack.py .            -> Built 129 generated artifacts; 59 changed
+  python3 tools/build_pack.py .  (again)   -> Built 129 generated artifacts; 0 changed
+  python3 tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 tools/validate_pack.py .         -> STATIC VALIDATION PASSED (129 artifacts)
+  python3 tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_*.py'
+      canonical reference/                 -> Ran 94 tests, OK (56 core + 38 workflow)
+      cursor-project/.costvalue/reference  -> Ran 94 tests, OK
+      portable-project/.costvalue/reference-> Ran 94 tests, OK
+  python3 -B reference/run_replay.py --scenario <s>  (all four scenarios)
+      baseline   -> route prepare_event; P1 Offer A (50,000); data correction ->
+                    P2 Offer B (5,000); GO; handoff acknowledged; duplicate
+                    submission replayed, destination records = 1, submissions = 2
+      timeout    -> handoff unknown; retry blocked (reconcile_required);
+                    reconciled -> acknowledged; destination records = 1
+      stale_quote-> handoff_blocked (stale_approval) at action date 2026-11-05
+      stale_approval_after_correction -> GO on P1, correction invalidates it,
+                    handoff_blocked (approval_required)
+  Carey Chou:   python3 tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 tools/check_docs.py        -> PASSED
+                git diff --check                   -> clean
+  Local aggregate private-term check (pack; terms not echoed): 0 files matched.
+    Vendor names appear only in sources.json and the generated source register /
+    handbooks that embed it (9 files each).
+  python3 tools/scan_publication.py . --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  same scanner from repository root over the full working tree
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Vendor pages: eight URLs fetched 2026-10-09 to confirm they are live and to record
+  the displayed titles; content used only to attribute capability classes. No
+  efficiency, satisfaction or savings figure from any vendor page is adopted.
+
+UNRUN / not established by this tree: live-agent behavior for B01–B45 on any host;
+  any real P2P/ERP field mapping or connector; destination-side idempotency; shadow
+  replay on real requisitions; buyer/engineer review of recommendations; incremental
+  value at any organization. The private practitioner conversation that motivated
+  this edition is not represented in the pack; no name, employer or workflow metric
+  from it was entered.

@@ -1,0 +1,931 @@
+{
+  "counts": {
+    "behaviors": 45,
+    "cases": 6,
+    "modules": 12,
+    "prompts": 7,
+    "recipes": 15,
+    "sources": 18,
+    "templates": 9
+  },
+  "date": "2026-10-09",
+  "files": {
+    ".gitignore": {
+      "bytes": 63,
+      "sha256": "31c892fe3efa826672bbee23adade9dce3cd86068901dd923bfb83af665cfe3e"
+    },
+    "ATTRIBUTION.md": {
+      "bytes": 3527,
+      "sha256": "5958aa9111e38c67eb29c073d7e9c76851b0701575f8e16e2664d6ede6c1adcd",
+      "words": 457
+    },
+    "CHANGELOG.md": {
+      "bytes": 4470,
+      "sha256": "24b2dab73e51a37300e16154c0c69a60a13dd4e5a4313c6b20b4e67d9ad9411c",
+      "words": 573
+    },
+    "LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "QUICKSTART.md": {
+      "bytes": 2537,
+      "sha256": "d64532f063018f121375356f913c7ce2af5ace7d26b0da6292ef275120f49c75",
+      "words": 336
+    },
+    "README.md": {
+      "bytes": 6762,
+      "sha256": "7ee93ed9c7b1af092a3534649f627b0ce3e339c1a410288bc1760367e829a73b",
+      "words": 903
+    },
+    "ROADMAP.md": {
+      "bytes": 3838,
+      "sha256": "439ab6fcc84a6d4e8a2f7297b95fa471322da9299dc67b10cad6d463a1933320",
+      "words": 522
+    },
+    "SOURCE_REGISTER.json": {
+      "bytes": 14798,
+      "sha256": "488131846a54911b0e7ec580a35070c458df902900d3ff555ee63bb834256827"
+    },
+    "SOURCE_REGISTER.md": {
+      "bytes": 12598,
+      "sha256": "1edb76d44d0ecda6be36d4bb90fdf6d8cd932d523b7f74bb9bd8b424ef70c19e",
+      "words": 1405
+    },
+    "VALIDATION.md": {
+      "bytes": 2710,
+      "sha256": "9a0ed650ec0c552fe0658d8a2283323761a2d0087b5e014723a0f35eb5674285",
+      "words": 366
+    },
+    "VERSION": {
+      "bytes": 6,
+      "sha256": "d915cc95d6ca8f47ae297713ed46d4e5c5d99ddd29fc3c61e263bdf305f2b5b0"
+    },
+    "canonical/cases/C01-source.md": {
+      "bytes": 2584,
+      "sha256": "a82a6b2cf97aeec0c686b29462397d6fdbafd99a34ff77f4669ef69ec974d596",
+      "words": 388
+    },
+    "canonical/cases/C02-source.md": {
+      "bytes": 2554,
+      "sha256": "fc1de4c6e2802db5cfb90b96dc4ae8b122750cc9cb5d4138268d9d8f580556c8",
+      "words": 375
+    },
+    "canonical/cases/C03-source.md": {
+      "bytes": 2561,
+      "sha256": "8d25ce842c7bf6eebac8c2d026e09a77efe10c50e928df77fb5725de0967abd0",
+      "words": 378
+    },
+    "canonical/cases/C04-source.md": {
+      "bytes": 2550,
+      "sha256": "36de53645888c1b8bda82a253c497079bdbe07cfa7510fc4454cffea33387bcb",
+      "words": 375
+    },
+    "canonical/cases/C05-source.md": {
+      "bytes": 2531,
+      "sha256": "8832bb16b28621a6a48b3482f4cd858e2b602de1da24ad94e63d9a3452068440",
+      "words": 374
+    },
+    "canonical/cases/C06-source.md": {
+      "bytes": 2546,
+      "sha256": "3472d12ec150374281b17cad3103d4111d79a7a6f9b8a5988404c3dd61364943",
+      "words": 373
+    },
+    "canonical/cases/R01-requisition-replay.json": {
+      "bytes": 6517,
+      "sha256": "52c5d793225a3c5bfe9a62ef43464a4b5ffb97c88f5562ba7c8822711ec6b49f"
+    },
+    "canonical/cases/R01-source.md": {
+      "bytes": 2973,
+      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "words": 450
+    },
+    "canonical/cases/README.md": {
+      "bytes": 1446,
+      "sha256": "e6625ca4b5850939304b8c224ebecf67c935ac57bf5be7a47e2d058c3fe8f986",
+      "words": 189
+    },
+    "canonical/cases/cases.json": {
+      "bytes": 15185,
+      "sha256": "f1f4732bcb811b2c60be12157c49c213928bfa5f3173074f8fb95c84810248db"
+    },
+    "canonical/cases/cover-schematic.svg": {
+      "bytes": 1053,
+      "sha256": "d47272a93086288404a7dbcdbe5db193fb2c348a04360a0aa2d85edd129dfd60"
+    },
+    "canonical/cases/housing-schematic.svg": {
+      "bytes": 1045,
+      "sha256": "7b09d011232f75e3b845e6d170e014c2aca3f82e25e765ebe9175ca17ab2afcb"
+    },
+    "canonical/loader.md": {
+      "bytes": 1415,
+      "sha256": "9f1c8e5f4592037063f7a38df1d07c0aefe6c3fedc6489d70b7d5b4eef3e421f",
+      "words": 198
+    },
+    "canonical/metadata.json": {
+      "bytes": 1820,
+      "sha256": "ad13f866162ea693f60a7020a0a04ecabc59d1d1aecdfa231eb47f7cafe26138"
+    },
+    "canonical/modules/00-operating-contract.md": {
+      "bytes": 5078,
+      "sha256": "5d5ee647b119f7d64102e32f8d110e29a1fe98c2aa6c5398a9f74d695d6efca0",
+      "words": 721
+    },
+    "canonical/modules/10-workflow.md": {
+      "bytes": 5867,
+      "sha256": "3db3d1a5efbea5947953b81e2f038c7e1e0fd4c1ac3951a4225ba6a80d3fc638",
+      "words": 806
+    },
+    "canonical/modules/15-requisition-routing.md": {
+      "bytes": 4633,
+      "sha256": "07cb0a150109d67b5dbdb7559e00c9dcdd2c44ef07ee778d15effc41a6672c65",
+      "words": 682
+    },
+    "canonical/modules/20-evidence-and-drawings.md": {
+      "bytes": 4872,
+      "sha256": "196097c32c29f4c229eee546ef0dabd04daf77fab41b98cac1c5693ebc65c77e",
+      "words": 692
+    },
+    "canonical/modules/30-economic-contract.md": {
+      "bytes": 5257,
+      "sha256": "0481137efe8221c07cebfe50c6c6dadb45fb98f2755ac2f9b07d50022eefaee6",
+      "words": 741
+    },
+    "canonical/modules/35-cost-breakdown-and-levers.md": {
+      "bytes": 9150,
+      "sha256": "01b7183602ff548e255f309f66c0fe930b69d846fc7165fb91250554e7eeabad",
+      "words": 1367
+    },
+    "canonical/modules/40-calculation-and-value.md": {
+      "bytes": 7287,
+      "sha256": "75eebba6dc09518856d75c3ee7feff940a285418e8b9416ccbdf0c63a0b46a78",
+      "words": 1052
+    },
+    "canonical/modules/50-supplier-dialogue.md": {
+      "bytes": 8800,
+      "sha256": "b349a7ec7fa01ed6c851c20ea00c0c97f1939794fca84161d3d75dc70e0f989c",
+      "words": 1294
+    },
+    "canonical/modules/55-buyer-decision-and-handoff.md": {
+      "bytes": 7511,
+      "sha256": "12de5dd87e3e64e63f08f8a028046d606b646c392477f558ab13f5269d9e8135",
+      "words": 1086
+    },
+    "canonical/modules/60-memory.md": {
+      "bytes": 4416,
+      "sha256": "8abd7d115d1625254158004b910f310c056e7d12af6d7119e386d21ed0dda7b8",
+      "words": 635
+    },
+    "canonical/modules/70-evaluation.md": {
+      "bytes": 11794,
+      "sha256": "ca8b09e11cb7cda4c7f65b38586420b8e6e98e3a0c43dbcba2656f67d64ba009",
+      "words": 1823
+    },
+    "canonical/modules/80-templates-and-prompts.md": {
+      "bytes": 10431,
+      "sha256": "7e746c076cbe1780e67d90ac90ef20c354ffe3b0f20d065ce4fdad5fcd1e1975",
+      "words": 1447
+    },
+    "canonical/pages/ATTRIBUTION.md": {
+      "bytes": 3527,
+      "sha256": "5958aa9111e38c67eb29c073d7e9c76851b0701575f8e16e2664d6ede6c1adcd",
+      "words": 457
+    },
+    "canonical/pages/CHANGELOG.md": {
+      "bytes": 4470,
+      "sha256": "24b2dab73e51a37300e16154c0c69a60a13dd4e5a4313c6b20b4e67d9ad9411c",
+      "words": 573
+    },
+    "canonical/pages/QUICKSTART.md": {
+      "bytes": 2537,
+      "sha256": "d64532f063018f121375356f913c7ce2af5ace7d26b0da6292ef275120f49c75",
+      "words": 336
+    },
+    "canonical/pages/README.md": {
+      "bytes": 6762,
+      "sha256": "7ee93ed9c7b1af092a3534649f627b0ce3e339c1a410288bc1760367e829a73b",
+      "words": 903
+    },
+    "canonical/pages/ROADMAP.md": {
+      "bytes": 3838,
+      "sha256": "439ab6fcc84a6d4e8a2f7297b95fa471322da9299dc67b10cad6d463a1933320",
+      "words": 522
+    },
+    "canonical/pages/VALIDATION.md": {
+      "bytes": 2710,
+      "sha256": "9a0ed650ec0c552fe0658d8a2283323761a2d0087b5e014723a0f35eb5674285",
+      "words": 366
+    },
+    "canonical/prefaces/cursor.md": {
+      "bytes": 853,
+      "sha256": "2634bccafb97d4d9e7088cf11aaf11608d9f98490efd88cbc96579e72f66bb1b",
+      "words": 119
+    },
+    "canonical/prefaces/portable.md": {
+      "bytes": 855,
+      "sha256": "5bcd0d6808c0da608a29f64efbc6451ffbedd7add9fc26ae327c88fd1333f243",
+      "words": 121
+    },
+    "canonical/recipes/M01-frame-the-decision.md": {
+      "bytes": 1632,
+      "sha256": "dcc59307cf9c4615479be6de3938181f2343f8d4c2c9b1b0533cd7703e38c8fb",
+      "words": 228
+    },
+    "canonical/recipes/M02-read-evidence.md": {
+      "bytes": 1513,
+      "sha256": "3c242d7c4cb61eaff115b546b9dc303d3db664f902a38e5e0b1d8e970a88f649",
+      "words": 208
+    },
+    "canonical/recipes/M03-normalize-quotes.md": {
+      "bytes": 1649,
+      "sha256": "f94431bf06eeaf8717949e8d0ae36c0346448efe27cf3225d0cee56b84dc937c",
+      "words": 228
+    },
+    "canonical/recipes/M04-one-stage-cost.md": {
+      "bytes": 1544,
+      "sha256": "bce220df96944c036cd52fc7abba67c1266dfc56af4d618be08af44998b44aec",
+      "words": 213
+    },
+    "canonical/recipes/M05-calculation-qa.md": {
+      "bytes": 1453,
+      "sha256": "c0348eae555c59fe29efdcfa7a9d6618a5d2d25b93d52142a79eacc9f33fed18",
+      "words": 189
+    },
+    "canonical/recipes/M06-scenarios-and-value.md": {
+      "bytes": 1462,
+      "sha256": "0faf56d129272cb087c059202268c6a22fdc79a6bbd68d5c562b7fd8a82b509b",
+      "words": 197
+    },
+    "canonical/recipes/M07-supplier-review.md": {
+      "bytes": 1304,
+      "sha256": "a9f9f551cdee6d6696ab09be23cf87a9da40926fc25956fbf986254a3bfbe398",
+      "words": 174
+    },
+    "canonical/recipes/M08-memory-and-learning.md": {
+      "bytes": 1403,
+      "sha256": "22f175347c926ed2552c2597b5c43151f4fbacd04595ed49fe8ab84cd861840d",
+      "words": 199
+    },
+    "canonical/recipes/M09-cost-breakdown-review.md": {
+      "bytes": 1932,
+      "sha256": "e44caac991d0709f8f543bd94d0624bcc680f3894d24f1fffaefcac5ae4e1975",
+      "words": 279
+    },
+    "canonical/recipes/M10-price-change-request.md": {
+      "bytes": 1674,
+      "sha256": "b621485fad6c83ecb5d466de9ebe6bc8f95a2a410668f83480797867ba0a13e1",
+      "words": 248
+    },
+    "canonical/recipes/M11-negotiation-preparation.md": {
+      "bytes": 1817,
+      "sha256": "c7fe7573f6c118144f6b5a0e2fcc3670b04e94f05d326e37bd52d191ac518aae",
+      "words": 241
+    },
+    "canonical/recipes/M12-route-requisition.md": {
+      "bytes": 1626,
+      "sha256": "4463fcdb8aff8896c2dfd716bc4ea678055721a6437550c77e4e33e2830210fa",
+      "words": 238
+    },
+    "canonical/recipes/M13-event-snapshot.md": {
+      "bytes": 1704,
+      "sha256": "052b6c1e2585f930ff5aa09e513f4d4dc980dbcb18b2cc210bd6f5069a24fc9d",
+      "words": 231
+    },
+    "canonical/recipes/M14-buyer-correction-and-handoff.md": {
+      "bytes": 1699,
+      "sha256": "5bc5877d983befd023f496784884fe1036c240c0e735f262b80782332887f85b",
+      "words": 245
+    },
+    "canonical/recipes/M15-incremental-value.md": {
+      "bytes": 1791,
+      "sha256": "15f87dcd8bd8d3de7963ed6a18acb20cc27b9207d233e980d243e23b925d8b69",
+      "words": 245
+    },
+    "canonical/sources.json": {
+      "bytes": 14798,
+      "sha256": "18a815c81e61b564b4913bdb7763c3f4f4a8c19cc5bd5f745c647a65e1064102"
+    },
+    "cases/C01-source.md": {
+      "bytes": 2584,
+      "sha256": "a82a6b2cf97aeec0c686b29462397d6fdbafd99a34ff77f4669ef69ec974d596",
+      "words": 388
+    },
+    "cases/C02-source.md": {
+      "bytes": 2554,
+      "sha256": "fc1de4c6e2802db5cfb90b96dc4ae8b122750cc9cb5d4138268d9d8f580556c8",
+      "words": 375
+    },
+    "cases/C03-source.md": {
+      "bytes": 2561,
+      "sha256": "8d25ce842c7bf6eebac8c2d026e09a77efe10c50e928df77fb5725de0967abd0",
+      "words": 378
+    },
+    "cases/C04-source.md": {
+      "bytes": 2550,
+      "sha256": "36de53645888c1b8bda82a253c497079bdbe07cfa7510fc4454cffea33387bcb",
+      "words": 375
+    },
+    "cases/C05-source.md": {
+      "bytes": 2531,
+      "sha256": "8832bb16b28621a6a48b3482f4cd858e2b602de1da24ad94e63d9a3452068440",
+      "words": 374
+    },
+    "cases/C06-source.md": {
+      "bytes": 2546,
+      "sha256": "3472d12ec150374281b17cad3103d4111d79a7a6f9b8a5988404c3dd61364943",
+      "words": 373
+    },
+    "cases/R01-requisition-replay.json": {
+      "bytes": 6517,
+      "sha256": "52c5d793225a3c5bfe9a62ef43464a4b5ffb97c88f5562ba7c8822711ec6b49f"
+    },
+    "cases/R01-source.md": {
+      "bytes": 2973,
+      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "words": 450
+    },
+    "cases/README.md": {
+      "bytes": 1446,
+      "sha256": "e6625ca4b5850939304b8c224ebecf67c935ac57bf5be7a47e2d058c3fe8f986",
+      "words": 189
+    },
+    "cases/cases.json": {
+      "bytes": 15185,
+      "sha256": "f1f4732bcb811b2c60be12157c49c213928bfa5f3173074f8fb95c84810248db"
+    },
+    "cases/cover-schematic.svg": {
+      "bytes": 1053,
+      "sha256": "d47272a93086288404a7dbcdbe5db193fb2c348a04360a0aa2d85edd129dfd60"
+    },
+    "cases/housing-schematic.svg": {
+      "bytes": 1045,
+      "sha256": "7b09d011232f75e3b845e6d170e014c2aca3f82e25e765ebe9175ca17ab2afcb"
+    },
+    "cursor-project/.costvalue/00-operating-contract.md": {
+      "bytes": 5150,
+      "sha256": "f6d4387279b1268ccf4781af7f9caeeb0ab9809c394dcf0bba96afd8c3e64cde",
+      "words": 721
+    },
+    "cursor-project/.costvalue/10-workflow.md": {
+      "bytes": 6665,
+      "sha256": "f91ebd823daa7be435fd92f0bbc538cf707c265152765fefd7e34047c2cbfecb",
+      "words": 806
+    },
+    "cursor-project/.costvalue/15-requisition-routing.md": {
+      "bytes": 4818,
+      "sha256": "e07ae333d2379763f0dfde6783546e4453815cf09ed2333f9a7d8b4fc640aedc",
+      "words": 682
+    },
+    "cursor-project/.costvalue/20-evidence-and-drawings.md": {
+      "bytes": 4890,
+      "sha256": "5c890810b63279f9bcdbbae98633a1af61061abaad2ad821d48d12c0cae56761",
+      "words": 692
+    },
+    "cursor-project/.costvalue/30-economic-contract.md": {
+      "bytes": 5374,
+      "sha256": "bc3371e6db7b8cac55319d8a89ab624213034ab316da041d78f5fc59c6f8af1d",
+      "words": 741
+    },
+    "cursor-project/.costvalue/35-cost-breakdown-and-levers.md": {
+      "bytes": 9371,
+      "sha256": "661904033c4debbf97b99cdb94f99bac07e32b7b2b9a869af2986c53baa01038",
+      "words": 1367
+    },
+    "cursor-project/.costvalue/40-calculation-and-value.md": {
+      "bytes": 7341,
+      "sha256": "25484055629503dec1c4c15ad318d0fd5368855e1e2d36283e1faa64401d393b",
+      "words": 1052
+    },
+    "cursor-project/.costvalue/50-supplier-dialogue.md": {
+      "bytes": 9024,
+      "sha256": "d0bab395094cf3ef76013ac29c1021a113805d108645ffab985bdae658a52599",
+      "words": 1294
+    },
+    "cursor-project/.costvalue/55-buyer-decision-and-handoff.md": {
+      "bytes": 7703,
+      "sha256": "1bdc9ce643c62d1776ac01abad9f1453daa8fab1310fc27e989013b9f83025df",
+      "words": 1086
+    },
+    "cursor-project/.costvalue/60-memory.md": {
+      "bytes": 4448,
+      "sha256": "2f6998b856653198f884a01041db93cefff3ec5c50db54938e4631d14270feb5",
+      "words": 635
+    },
+    "cursor-project/.costvalue/70-evaluation.md": {
+      "bytes": 11883,
+      "sha256": "e10fb279f1f549491afce2e89d640c256242a6896f7c2e8bd2b0916b0d0b69a3",
+      "words": 1823
+    },
+    "cursor-project/.costvalue/80-templates-and-prompts.md": {
+      "bytes": 10431,
+      "sha256": "7e746c076cbe1780e67d90ac90ef20c354ffe3b0f20d065ce4fdad5fcd1e1975",
+      "words": 1447
+    },
+    "cursor-project/.costvalue/90-sources.md": {
+      "bytes": 12598,
+      "sha256": "1edb76d44d0ecda6be36d4bb90fdf6d8cd932d523b7f74bb9bd8b424ef70c19e",
+      "words": 1405
+    },
+    "cursor-project/.costvalue/README.md": {
+      "bytes": 356,
+      "sha256": "decd81c2db61ad120489f29f77043f048a08e7f05aeee7dbe3033b48755de4f9",
+      "words": 38
+    },
+    "cursor-project/.costvalue/cases/C01-source.md": {
+      "bytes": 2584,
+      "sha256": "a82a6b2cf97aeec0c686b29462397d6fdbafd99a34ff77f4669ef69ec974d596",
+      "words": 388
+    },
+    "cursor-project/.costvalue/cases/C02-source.md": {
+      "bytes": 2554,
+      "sha256": "fc1de4c6e2802db5cfb90b96dc4ae8b122750cc9cb5d4138268d9d8f580556c8",
+      "words": 375
+    },
+    "cursor-project/.costvalue/cases/C03-source.md": {
+      "bytes": 2561,
+      "sha256": "8d25ce842c7bf6eebac8c2d026e09a77efe10c50e928df77fb5725de0967abd0",
+      "words": 378
+    },
+    "cursor-project/.costvalue/cases/C04-source.md": {
+      "bytes": 2550,
+      "sha256": "36de53645888c1b8bda82a253c497079bdbe07cfa7510fc4454cffea33387bcb",
+      "words": 375
+    },
+    "cursor-project/.costvalue/cases/C05-source.md": {
+      "bytes": 2531,
+      "sha256": "8832bb16b28621a6a48b3482f4cd858e2b602de1da24ad94e63d9a3452068440",
+      "words": 374
+    },
+    "cursor-project/.costvalue/cases/C06-source.md": {
+      "bytes": 2546,
+      "sha256": "3472d12ec150374281b17cad3103d4111d79a7a6f9b8a5988404c3dd61364943",
+      "words": 373
+    },
+    "cursor-project/.costvalue/cases/R01-requisition-replay.json": {
+      "bytes": 6517,
+      "sha256": "52c5d793225a3c5bfe9a62ef43464a4b5ffb97c88f5562ba7c8822711ec6b49f"
+    },
+    "cursor-project/.costvalue/cases/R01-source.md": {
+      "bytes": 2973,
+      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "words": 450
+    },
+    "cursor-project/.costvalue/cases/README.md": {
+      "bytes": 1446,
+      "sha256": "e6625ca4b5850939304b8c224ebecf67c935ac57bf5be7a47e2d058c3fe8f986",
+      "words": 189
+    },
+    "cursor-project/.costvalue/cases/cases.json": {
+      "bytes": 15185,
+      "sha256": "f1f4732bcb811b2c60be12157c49c213928bfa5f3173074f8fb95c84810248db"
+    },
+    "cursor-project/.costvalue/cases/cover-schematic.svg": {
+      "bytes": 1053,
+      "sha256": "d47272a93086288404a7dbcdbe5db193fb2c348a04360a0aa2d85edd129dfd60"
+    },
+    "cursor-project/.costvalue/cases/housing-schematic.svg": {
+      "bytes": 1045,
+      "sha256": "7b09d011232f75e3b845e6d170e014c2aca3f82e25e765ebe9175ca17ab2afcb"
+    },
+    "cursor-project/.costvalue/recipes/M01-frame-the-decision.md": {
+      "bytes": 1704,
+      "sha256": "964a551688a83b76e59314123626b795c031266753a0405ff469db767494dcd8",
+      "words": 228
+    },
+    "cursor-project/.costvalue/recipes/M02-read-evidence.md": {
+      "bytes": 1555,
+      "sha256": "eb924572f114bc156481fa3035cc1e20babf87f3a3291183d7385133916041ae",
+      "words": 208
+    },
+    "cursor-project/.costvalue/recipes/M03-normalize-quotes.md": {
+      "bytes": 1691,
+      "sha256": "1bcdd3315849c42e89ef439f3e671b6c341363ef6c9d92b4d78252161cd908b1",
+      "words": 228
+    },
+    "cursor-project/.costvalue/recipes/M04-one-stage-cost.md": {
+      "bytes": 1586,
+      "sha256": "c632d3d18b71b7e4d94d399df2cd373bc8a84c3df4c108d6055b6bc1ca1c286e",
+      "words": 213
+    },
+    "cursor-project/.costvalue/recipes/M05-calculation-qa.md": {
+      "bytes": 1495,
+      "sha256": "1a1b1c65428609d0375a5660d346fc650d2b697e35541489fcf248f7f4f5634c",
+      "words": 189
+    },
+    "cursor-project/.costvalue/recipes/M06-scenarios-and-value.md": {
+      "bytes": 1504,
+      "sha256": "d9f98a999bb6dc7c395d126091615fb49c6a4a1e915251e1c703230a8c78b769",
+      "words": 197
+    },
+    "cursor-project/.costvalue/recipes/M07-supplier-review.md": {
+      "bytes": 1346,
+      "sha256": "37462e33c16bcc89698c1b4706a108b7104db36688ac3d116c6f83d037fb1cfc",
+      "words": 174
+    },
+    "cursor-project/.costvalue/recipes/M08-memory-and-learning.md": {
+      "bytes": 1424,
+      "sha256": "7fbed3bc5a5acbc43d9fd54a5ad83f5defb87579121ba97fbb32a6c4ae62f825",
+      "words": 199
+    },
+    "cursor-project/.costvalue/recipes/M09-cost-breakdown-review.md": {
+      "bytes": 2030,
+      "sha256": "1313dea4c4a93035411e693bf9bec11cb11dd9ed639388b295910c5e0419a907",
+      "words": 279
+    },
+    "cursor-project/.costvalue/recipes/M10-price-change-request.md": {
+      "bytes": 1791,
+      "sha256": "385c7cc058a077b0f23ee1e79c60c62df75e86950110d6ab4359ce02368c3f82",
+      "words": 248
+    },
+    "cursor-project/.costvalue/recipes/M11-negotiation-preparation.md": {
+      "bytes": 1920,
+      "sha256": "f8731e5f746a568550f3a9738542f23ba644fbe8067f33c6c21ed451186d4e1e",
+      "words": 241
+    },
+    "cursor-project/.costvalue/recipes/M12-route-requisition.md": {
+      "bytes": 1815,
+      "sha256": "fe322bb559d1e3264d7b713a30cadf14f3128fc0e57210069bdfcc7c695f48f3",
+      "words": 238
+    },
+    "cursor-project/.costvalue/recipes/M13-event-snapshot.md": {
+      "bytes": 1889,
+      "sha256": "563abf622c0c03d5ef2744cf75c3a1485013343d64cee3656772a0fd34ef5b67",
+      "words": 231
+    },
+    "cursor-project/.costvalue/recipes/M14-buyer-correction-and-handoff.md": {
+      "bytes": 1871,
+      "sha256": "0a952edafd483ce2aa509f98a294709cdfa0953abfd4275ba8da0399fbf54853",
+      "words": 245
+    },
+    "cursor-project/.costvalue/recipes/M15-incremental-value.md": {
+      "bytes": 1901,
+      "sha256": "dbef52282fad001d07136221bfdbb522713898fdf8018dd0c61040ec09d77255",
+      "words": 245
+    },
+    "cursor-project/.costvalue/reference/__init__.py": {
+      "bytes": 86,
+      "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
+    },
+    "cursor-project/.costvalue/reference/core.py": {
+      "bytes": 13053,
+      "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
+    },
+    "cursor-project/.costvalue/reference/run_case.py": {
+      "bytes": 753,
+      "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
+    },
+    "cursor-project/.costvalue/reference/run_replay.py": {
+      "bytes": 996,
+      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+    },
+    "cursor-project/.costvalue/reference/test_core.py": {
+      "bytes": 12268,
+      "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
+    },
+    "cursor-project/.costvalue/reference/test_workflow.py": {
+      "bytes": 15950,
+      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+    },
+    "cursor-project/.costvalue/reference/workflow.py": {
+      "bytes": 31856,
+      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+    },
+    "cursor-project/.cursor/rules/20-costvalue-method.mdc": {
+      "bytes": 1523,
+      "sha256": "e996e31a1f1f9ea7449d287cc8c2b47825318744cbfdc7366bf2c83f39ca5f97",
+      "words": 213
+    },
+    "cursor-project/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "cursor-project/README.md": {
+      "bytes": 470,
+      "sha256": "d4bf556b2b7c349dfd81c7e354be14868224e81ccd591494e2e49bf5ba9cef39",
+      "words": 50
+    },
+    "cursor-project/cursor.md": {
+      "bytes": 125369,
+      "sha256": "ed09cc048930dffe76326a26f93b369093bff32d62255547d021d70b49362a5c",
+      "words": 17315
+    },
+    "cursor.md": {
+      "bytes": 125369,
+      "sha256": "ed09cc048930dffe76326a26f93b369093bff32d62255547d021d70b49362a5c",
+      "words": 17315
+    },
+    "memory.md": {
+      "bytes": 125371,
+      "sha256": "5578c28d713120f1141c6286f3afc63d15cc3b7c37e98cbbd6d474f97941485c",
+      "words": 17317
+    },
+    "portable-project/.costvalue/00-operating-contract.md": {
+      "bytes": 5150,
+      "sha256": "f6d4387279b1268ccf4781af7f9caeeb0ab9809c394dcf0bba96afd8c3e64cde",
+      "words": 721
+    },
+    "portable-project/.costvalue/10-workflow.md": {
+      "bytes": 6665,
+      "sha256": "f91ebd823daa7be435fd92f0bbc538cf707c265152765fefd7e34047c2cbfecb",
+      "words": 806
+    },
+    "portable-project/.costvalue/15-requisition-routing.md": {
+      "bytes": 4818,
+      "sha256": "e07ae333d2379763f0dfde6783546e4453815cf09ed2333f9a7d8b4fc640aedc",
+      "words": 682
+    },
+    "portable-project/.costvalue/20-evidence-and-drawings.md": {
+      "bytes": 4890,
+      "sha256": "5c890810b63279f9bcdbbae98633a1af61061abaad2ad821d48d12c0cae56761",
+      "words": 692
+    },
+    "portable-project/.costvalue/30-economic-contract.md": {
+      "bytes": 5374,
+      "sha256": "bc3371e6db7b8cac55319d8a89ab624213034ab316da041d78f5fc59c6f8af1d",
+      "words": 741
+    },
+    "portable-project/.costvalue/35-cost-breakdown-and-levers.md": {
+      "bytes": 9371,
+      "sha256": "661904033c4debbf97b99cdb94f99bac07e32b7b2b9a869af2986c53baa01038",
+      "words": 1367
+    },
+    "portable-project/.costvalue/40-calculation-and-value.md": {
+      "bytes": 7341,
+      "sha256": "25484055629503dec1c4c15ad318d0fd5368855e1e2d36283e1faa64401d393b",
+      "words": 1052
+    },
+    "portable-project/.costvalue/50-supplier-dialogue.md": {
+      "bytes": 9024,
+      "sha256": "d0bab395094cf3ef76013ac29c1021a113805d108645ffab985bdae658a52599",
+      "words": 1294
+    },
+    "portable-project/.costvalue/55-buyer-decision-and-handoff.md": {
+      "bytes": 7703,
+      "sha256": "1bdc9ce643c62d1776ac01abad9f1453daa8fab1310fc27e989013b9f83025df",
+      "words": 1086
+    },
+    "portable-project/.costvalue/60-memory.md": {
+      "bytes": 4448,
+      "sha256": "2f6998b856653198f884a01041db93cefff3ec5c50db54938e4631d14270feb5",
+      "words": 635
+    },
+    "portable-project/.costvalue/70-evaluation.md": {
+      "bytes": 11883,
+      "sha256": "e10fb279f1f549491afce2e89d640c256242a6896f7c2e8bd2b0916b0d0b69a3",
+      "words": 1823
+    },
+    "portable-project/.costvalue/80-templates-and-prompts.md": {
+      "bytes": 10431,
+      "sha256": "7e746c076cbe1780e67d90ac90ef20c354ffe3b0f20d065ce4fdad5fcd1e1975",
+      "words": 1447
+    },
+    "portable-project/.costvalue/90-sources.md": {
+      "bytes": 12598,
+      "sha256": "1edb76d44d0ecda6be36d4bb90fdf6d8cd932d523b7f74bb9bd8b424ef70c19e",
+      "words": 1405
+    },
+    "portable-project/.costvalue/README.md": {
+      "bytes": 356,
+      "sha256": "decd81c2db61ad120489f29f77043f048a08e7f05aeee7dbe3033b48755de4f9",
+      "words": 38
+    },
+    "portable-project/.costvalue/cases/C01-source.md": {
+      "bytes": 2584,
+      "sha256": "a82a6b2cf97aeec0c686b29462397d6fdbafd99a34ff77f4669ef69ec974d596",
+      "words": 388
+    },
+    "portable-project/.costvalue/cases/C02-source.md": {
+      "bytes": 2554,
+      "sha256": "fc1de4c6e2802db5cfb90b96dc4ae8b122750cc9cb5d4138268d9d8f580556c8",
+      "words": 375
+    },
+    "portable-project/.costvalue/cases/C03-source.md": {
+      "bytes": 2561,
+      "sha256": "8d25ce842c7bf6eebac8c2d026e09a77efe10c50e928df77fb5725de0967abd0",
+      "words": 378
+    },
+    "portable-project/.costvalue/cases/C04-source.md": {
+      "bytes": 2550,
+      "sha256": "36de53645888c1b8bda82a253c497079bdbe07cfa7510fc4454cffea33387bcb",
+      "words": 375
+    },
+    "portable-project/.costvalue/cases/C05-source.md": {
+      "bytes": 2531,
+      "sha256": "8832bb16b28621a6a48b3482f4cd858e2b602de1da24ad94e63d9a3452068440",
+      "words": 374
+    },
+    "portable-project/.costvalue/cases/C06-source.md": {
+      "bytes": 2546,
+      "sha256": "3472d12ec150374281b17cad3103d4111d79a7a6f9b8a5988404c3dd61364943",
+      "words": 373
+    },
+    "portable-project/.costvalue/cases/R01-requisition-replay.json": {
+      "bytes": 6517,
+      "sha256": "52c5d793225a3c5bfe9a62ef43464a4b5ffb97c88f5562ba7c8822711ec6b49f"
+    },
+    "portable-project/.costvalue/cases/R01-source.md": {
+      "bytes": 2973,
+      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "words": 450
+    },
+    "portable-project/.costvalue/cases/README.md": {
+      "bytes": 1446,
+      "sha256": "e6625ca4b5850939304b8c224ebecf67c935ac57bf5be7a47e2d058c3fe8f986",
+      "words": 189
+    },
+    "portable-project/.costvalue/cases/cases.json": {
+      "bytes": 15185,
+      "sha256": "f1f4732bcb811b2c60be12157c49c213928bfa5f3173074f8fb95c84810248db"
+    },
+    "portable-project/.costvalue/cases/cover-schematic.svg": {
+      "bytes": 1053,
+      "sha256": "d47272a93086288404a7dbcdbe5db193fb2c348a04360a0aa2d85edd129dfd60"
+    },
+    "portable-project/.costvalue/cases/housing-schematic.svg": {
+      "bytes": 1045,
+      "sha256": "7b09d011232f75e3b845e6d170e014c2aca3f82e25e765ebe9175ca17ab2afcb"
+    },
+    "portable-project/.costvalue/recipes/M01-frame-the-decision.md": {
+      "bytes": 1704,
+      "sha256": "964a551688a83b76e59314123626b795c031266753a0405ff469db767494dcd8",
+      "words": 228
+    },
+    "portable-project/.costvalue/recipes/M02-read-evidence.md": {
+      "bytes": 1555,
+      "sha256": "eb924572f114bc156481fa3035cc1e20babf87f3a3291183d7385133916041ae",
+      "words": 208
+    },
+    "portable-project/.costvalue/recipes/M03-normalize-quotes.md": {
+      "bytes": 1691,
+      "sha256": "1bcdd3315849c42e89ef439f3e671b6c341363ef6c9d92b4d78252161cd908b1",
+      "words": 228
+    },
+    "portable-project/.costvalue/recipes/M04-one-stage-cost.md": {
+      "bytes": 1586,
+      "sha256": "c632d3d18b71b7e4d94d399df2cd373bc8a84c3df4c108d6055b6bc1ca1c286e",
+      "words": 213
+    },
+    "portable-project/.costvalue/recipes/M05-calculation-qa.md": {
+      "bytes": 1495,
+      "sha256": "1a1b1c65428609d0375a5660d346fc650d2b697e35541489fcf248f7f4f5634c",
+      "words": 189
+    },
+    "portable-project/.costvalue/recipes/M06-scenarios-and-value.md": {
+      "bytes": 1504,
+      "sha256": "d9f98a999bb6dc7c395d126091615fb49c6a4a1e915251e1c703230a8c78b769",
+      "words": 197
+    },
+    "portable-project/.costvalue/recipes/M07-supplier-review.md": {
+      "bytes": 1346,
+      "sha256": "37462e33c16bcc89698c1b4706a108b7104db36688ac3d116c6f83d037fb1cfc",
+      "words": 174
+    },
+    "portable-project/.costvalue/recipes/M08-memory-and-learning.md": {
+      "bytes": 1424,
+      "sha256": "7fbed3bc5a5acbc43d9fd54a5ad83f5defb87579121ba97fbb32a6c4ae62f825",
+      "words": 199
+    },
+    "portable-project/.costvalue/recipes/M09-cost-breakdown-review.md": {
+      "bytes": 2030,
+      "sha256": "1313dea4c4a93035411e693bf9bec11cb11dd9ed639388b295910c5e0419a907",
+      "words": 279
+    },
+    "portable-project/.costvalue/recipes/M10-price-change-request.md": {
+      "bytes": 1791,
+      "sha256": "385c7cc058a077b0f23ee1e79c60c62df75e86950110d6ab4359ce02368c3f82",
+      "words": 248
+    },
+    "portable-project/.costvalue/recipes/M11-negotiation-preparation.md": {
+      "bytes": 1920,
+      "sha256": "f8731e5f746a568550f3a9738542f23ba644fbe8067f33c6c21ed451186d4e1e",
+      "words": 241
+    },
+    "portable-project/.costvalue/recipes/M12-route-requisition.md": {
+      "bytes": 1815,
+      "sha256": "fe322bb559d1e3264d7b713a30cadf14f3128fc0e57210069bdfcc7c695f48f3",
+      "words": 238
+    },
+    "portable-project/.costvalue/recipes/M13-event-snapshot.md": {
+      "bytes": 1889,
+      "sha256": "563abf622c0c03d5ef2744cf75c3a1485013343d64cee3656772a0fd34ef5b67",
+      "words": 231
+    },
+    "portable-project/.costvalue/recipes/M14-buyer-correction-and-handoff.md": {
+      "bytes": 1871,
+      "sha256": "0a952edafd483ce2aa509f98a294709cdfa0953abfd4275ba8da0399fbf54853",
+      "words": 245
+    },
+    "portable-project/.costvalue/recipes/M15-incremental-value.md": {
+      "bytes": 1901,
+      "sha256": "dbef52282fad001d07136221bfdbb522713898fdf8018dd0c61040ec09d77255",
+      "words": 245
+    },
+    "portable-project/.costvalue/reference/__init__.py": {
+      "bytes": 86,
+      "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
+    },
+    "portable-project/.costvalue/reference/core.py": {
+      "bytes": 13053,
+      "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
+    },
+    "portable-project/.costvalue/reference/run_case.py": {
+      "bytes": 753,
+      "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
+    },
+    "portable-project/.costvalue/reference/run_replay.py": {
+      "bytes": 996,
+      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+    },
+    "portable-project/.costvalue/reference/test_core.py": {
+      "bytes": 12268,
+      "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
+    },
+    "portable-project/.costvalue/reference/test_workflow.py": {
+      "bytes": 15950,
+      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+    },
+    "portable-project/.costvalue/reference/workflow.py": {
+      "bytes": 31856,
+      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+    },
+    "portable-project/AGENTS.md": {
+      "bytes": 1464,
+      "sha256": "9881210c04beb12fb025eddc36b26ee254b36dfb7e491957b19b36f83b861af8",
+      "words": 206
+    },
+    "portable-project/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "portable-project/README.md": {
+      "bytes": 465,
+      "sha256": "22c6a6a0e5b4e133d4f605483a14eb5bcb62d746d9f4a9e2b2ac85c3b95116b7",
+      "words": 53
+    },
+    "portable-project/memory.md": {
+      "bytes": 125371,
+      "sha256": "5578c28d713120f1141c6286f3afc63d15cc3b7c37e98cbbd6d474f97941485c",
+      "words": 17317
+    },
+    "portable-project/optional-adapters/.clinerules/20-costvalue.md": {
+      "bytes": 1415,
+      "sha256": "9f1c8e5f4592037063f7a38df1d07c0aefe6c3fedc6489d70b7d5b4eef3e421f",
+      "words": 198
+    },
+    "portable-project/optional-adapters/README.md": {
+      "bytes": 222,
+      "sha256": "f42ff3ac7ebafeecdb9ba0ddd9a87dc6f7e9ed927ed758bff9d9c7a80047f0af",
+      "words": 31
+    },
+    "reference/__init__.py": {
+      "bytes": 86,
+      "sha256": "7519005cc4228d8f4ef10b65a1a0ff3da866dda4982f7d3dde464c3abd3bf33b"
+    },
+    "reference/core.py": {
+      "bytes": 13053,
+      "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
+    },
+    "reference/run_case.py": {
+      "bytes": 753,
+      "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
+    },
+    "reference/run_replay.py": {
+      "bytes": 996,
+      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+    },
+    "reference/test_core.py": {
+      "bytes": 12268,
+      "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
+    },
+    "reference/test_workflow.py": {
+      "bytes": 15950,
+      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+    },
+    "reference/workflow.py": {
+      "bytes": 31856,
+      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+    },
+    "tools/README.md": {
+      "bytes": 2145,
+      "sha256": "97516cfc021d5c031836eafcfd23330b75de7481417fdf37ca0774baa684ba95",
+      "words": 264
+    },
+    "tools/build_pack.py": {
+      "bytes": 9254,
+      "sha256": "4a3b7b55e635334a95daa3b993282c4998216408f81b422f1db9cd7ee80f7261"
+    },
+    "tools/scan_publication.py": {
+      "bytes": 1782,
+      "sha256": "72f9ab7c6c652a2ca1446d37dc7d6e096c816420bb41e33626550842db330304"
+    },
+    "tools/test_validate_pack.py": {
+      "bytes": 5254,
+      "sha256": "1359bec0454c6627fb431636534a73ebfaa62833c642eb070d1f8efbde86af1c"
+    },
+    "tools/validate_pack.py": {
+      "bytes": 3246,
+      "sha256": "2801af3937e7da477321c360ac2be8ed7eade492547201f5fe6ec99048b6404f"
+    }
+  },
+  "version": "0.3.0"
+}

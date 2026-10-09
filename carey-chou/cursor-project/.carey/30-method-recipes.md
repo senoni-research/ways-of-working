@@ -111,8 +111,8 @@ The person's objective may be variety, discovery, relevance for the current task
 In an organization-owned system, accepted evidence may inform an authorized later training or consolidation process. In a user-controlled overlay on an external service, durable learning belongs to the user's permitted state; do not imply it can retrain the external platform's model.
 
 Consolidation requires: a scope (repeated context, not automatically universal), a review or reversal path, and an explicit promotion rule. Do not advertise universal thresholds, retention periods, gains, or performance guarantees — those are project decisions.
-
 **Acceptance:** useful adaptation after a genuine shift; little movement after irrelevant noise; temporary influence expires by its stated rule (not merely by silence); stable covariance; isolation between users and contexts; a working baseline-only fallback; no measured benefit over the baseline means no reason to retain the layer. Test the algorithmic failure modes separately from agent behavior: correlated or duplicate events, out-of-order observations, cold start, missing measurements, covariance stability, elapsed-time behavior, and identity isolation.
+
 
 ## M02 — Evidence-based decision routing
 
@@ -144,8 +144,8 @@ Agreement measures consistency, not correctness: a whole desk can share a habit.
 Include temporal contrastive probes ("would this still hold if the deadline moved?") to separate a standing preference from a reaction to something recent, and route a small audit sample of settled cases back to people so automation does not eliminate all new evidence. Do not treat a repeated personal preference as organization-wide policy.
 
 **Acceptance:** known routine cases route correctly; conflicting policies remain visible; stale or structurally different cases do not inflate confidence; lack of precedent produces abstention or investigation. Report automation coverage alongside error and escalation rates. Sample some routine outcomes for audit so silent drift can be detected.
-
 **Avoid:** "High confidence, therefore execute." Permission and consequence checks remain independent.
+
 
 ## M03 — Collaborative episodic memory
 
@@ -160,8 +160,8 @@ Do not exclude verified machine-generated *measurements* from an evidence ledger
 If a graph is justified, normalize the transition matrix, handle dangling nodes, normalize the personalization vector, and set convergence tolerance. Graph centrality is a retrieval-priority score, not a truth probability. Repeated summaries must not increase evidence support. Rank usefulness separately from authority.
 
 Semantic similarity can group opposite claims — negation detection by token parity is measurably weak, so treat lexical contradiction detection and graph centrality as fallible aids that produce *candidates for a human*, not findings. Include scope and dates before labeling two statements contradictory, and keep temporal restatements and same-record rephrases out of the conflict list. Silence is not dissent; a partially shared session means "not shared," never "disagreed with."
-
 **Acceptance:** deduplication is idempotent; "allowed" and "not allowed" are not merged; a summary does not corroborate its own source; a system prompt cannot recur its way into corroboration; superseded decisions are retrievable but not silently applied; deletion removes unauthorized derivative access. Keep legal or policy obligations out of recency-based forgetting.
+
 
 ## M04 — Recover explicit decision criteria from examples
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" role="img" aria-labelledby="title desc">
+<title id="title">DEMO-H01 / Rev B / alternate view layout</title><desc id="desc">Original synthetic reference shape. Not to scale, not for manufacture. It does not establish mass, cycle time or tooling.</desc>
+<rect width="720" height="440" fill="#f7f9fc"/><g fill="none" stroke="#0b56a4" stroke-width="2">
+<path d="M150 245 L365 305 L558 195 L341 140 Z"/><path d="M150 245 V185 L341 82 L558 137 V195 M150 185 L365 244 L558 137 M365 244 V305"/>
+<path d="M181 185 L343 98 L527 144 L364 235 Z"/><path d="M181 185 V232 M527 144 V184"/>
+<path d="M178 280 L360 331 M380 332 L560 228" stroke-dasharray="4 4"/>
+</g><g font-family="sans-serif" fill="#26364a"><text x="28" y="38" font-size="20">DEMO-H01 / Rev B / alternate view layout</text>
+<text x="28" y="366" font-size="16">Illustrative ABS part. Mass and process data are supplied separately.</text>
+<text x="28" y="399" font-size="15">SYNTHETIC · NOT TO SCALE · NOT FOR MANUFACTURE</text></g></svg>

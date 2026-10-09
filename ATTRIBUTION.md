@@ -23,6 +23,7 @@ Each pack carries its own complete source register with per-entry scope, limits,
 
 - **Carey Chou pack** — [`carey-chou/portable-project/.carey/90-sources.md`](carey-chou/portable-project/.carey/90-sources.md): the sixteen articles, inspected repository files, and the primary research behind named methods (TTT-Discover; Nested Learning).
 - **Nicolas Vandeput pack** — [`nicolas-vandeput/SOURCE_COVERAGE.md`](nicolas-vandeput/SOURCE_COVERAGE.md) and [`nicolas-vandeput/SOURCE_REGISTER.json`](nicolas-vandeput/SOURCE_REGISTER.json): all catalogue entries with inspected scope, access limits, and attribution separating author guidance, official material, participant solutions, and provider tutorials.
+- **Cost & Value Engineering pack** — [`topics/cost-value-engineering/SOURCE_REGISTER.md`](topics/cost-value-engineering/SOURCE_REGISTER.md): the selected public cost-estimation, capacity-costing, target/lifecycle-costing, manufacturing, and supplier-collaboration sources (UK Cabinet Office; US GAO; Kaplan & Anderson; Ken Garrett; Protolabs; Kajüter & Kulmala; plus host-documentation records), with per-entry inspection levels. The one-stage model, schemas, workflows, and examples in that pack are Senoni's original adaptations, not transcriptions of any source template.
 
 Originals are linked so readers can go to the sources directly: [Carey Chou's writing](https://careychou.tech/writing) and [The SupChains Way](https://supchains.com/supchains-way/guide/).
 
