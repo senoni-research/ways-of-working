@@ -10,7 +10,7 @@ The purpose is a decision that can be inspected: what is comparable, what drives
 
 Read [QUICKSTART](QUICKSTART.md). Complete handbooks: [Cursor](cursor.md) and [portable memory](memory.md). Installable directories: [Cursor project](cursor-project/README.md) and [portable project](portable-project/README.md). The two books contain identical method content with host-specific installation prefaces; their filenames alone do not activate rules.
 
-This release has **10 modules, 11 recipes, 10 source records (7 domain + 3 host documentation), 6 published synthetic cases, 31 behavioral specifications, 7 templates and 6 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs. It does not implement AI document extraction, CAD analysis, a cost-breakdown or index engine, a customer database, an approval service or industrial validation.
+This release has **10 modules, 11 recipes, 10 source records (7 domain + 3 host documentation), 6 published synthetic cases, 31 behavioral specifications, 7 templates and 6 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs. The **method pack** version is 0.2.0 (`VERSION`); the reference arithmetic **schema** remains `schema_version` 0.1.0 — those version numbers are independent deliberately. It does not implement AI document extraction, CAD analysis, a cost-breakdown or index engine, a customer database, an approval service or industrial validation.
 
 ## What it covers
 

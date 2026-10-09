@@ -1,9 +1,18 @@
 """Synthetic reference tests. No customer data or production-cost claims."""
 import copy,json,unittest
 from datetime import date
-from decimal import Decimal
+from decimal import ROUND_DOWN, Decimal, getcontext, localcontext
 from pathlib import Path
-from core import ModelError,number,count,quote_total,compare_quotes,molding_cost,review_case
+from core import (
+    ARITHMETIC_PREC,
+    ModelError,
+    number,
+    count,
+    quote_total,
+    compare_quotes,
+    molding_cost,
+    review_case,
+)
 ROOT=Path(__file__).resolve().parents[1]
 CASES=json.loads((ROOT/'cases/cases.json').read_text()) if (ROOT/'cases/cases.json').exists() else json.loads((ROOT/'canonical/cases/cases.json').read_text())
 class ReferenceTests(unittest.TestCase):
@@ -99,7 +108,7 @@ class ReferenceTests(unittest.TestCase):
             with self.subTest(c=c['case_id']):self.assertTrue(review_case(c)['synthetic'])
 
 class ProvenanceGuardTests(unittest.TestCase):
-    """Synthetic-only boundary at the direct review_case API (R1 patch)."""
+    """Synthetic-only boundary at the direct review_case API."""
     def setUp(self):self.c=copy.deepcopy(CASES[0])
     def _reject(self,case,label):
         with self.assertRaises(ModelError) as cm:
@@ -122,4 +131,68 @@ class ProvenanceGuardTests(unittest.TestCase):
     def test_integer_marker_rejected(self):
         self.c['synthetic']=1
         self._reject(self.c,'integer 1 is not Boolean True')
+
+class DecimalPolicyTests(unittest.TestCase):
+    """Local arithmetic policy: independent of caller Decimal context (review R1/R2)."""
+    def setUp(self):
+        self.c=copy.deepcopy(CASES[0]);self.q=self.c['quotes'];self.x=self.c['context']
+        self._saved_prec=getcontext().prec
+        self._saved_rounding=getcontext().rounding
+    def tearDown(self):
+        getcontext().prec=self._saved_prec
+        getcontext().rounding=self._saved_rounding
+    def test_normal_c01_totals_unchanged(self):
+        self.assertEqual(quote_total(self.q[0],self.x,5000)['total'],Decimal('25300'))
+        self.assertEqual(quote_total(self.q[1],self.x,5000)['total'],Decimal('15700'))
+        self.assertEqual(compare_quotes(self.q,self.x,20000)['status'],'tie')
+        self.assertEqual(quote_total(self.q[0],self.x,30000)['total'],Decimal('87800'))
+        self.assertEqual(quote_total(self.q[1],self.x,30000)['total'],Decimal('94200'))
+    def test_results_stable_under_caller_prec_4(self):
+        # Ambient prec=4 previously produced a false tie at 19,999; local policy must not.
+        getcontext().prec=4
+        getcontext().rounding=ROUND_DOWN
+        r=compare_quotes(self.q,self.x,19999)
+        self.assertEqual(r['status'],'comparable')
+        self.assertEqual(r['preferred'],'Offer B')
+        self.assertEqual(r['rows'][0]['total'],Decimal('62797.50'))
+        self.assertEqual(r['rows'][1]['total'],Decimal('62796.86'))
+        self.assertEqual(r['difference'],Decimal('0.64'))
+    def test_results_stable_under_caller_prec_28(self):
+        getcontext().prec=28
+        r=compare_quotes(self.q,self.x,19999)
+        self.assertEqual(r['preferred'],'Offer B')
+        self.assertEqual(r['rows'][0]['total'],Decimal('62797.50'))
+        self.assertEqual(r['rows'][1]['total'],Decimal('62796.86'))
+    def test_crossover_edges_stable_under_caller_prec_4(self):
+        getcontext().prec=4
+        self.assertEqual(compare_quotes(self.q,self.x,19999)['preferred'],'Offer B')
+        self.assertEqual(compare_quotes(self.q,self.x,20000)['status'],'tie')
+        self.assertEqual(compare_quotes(self.q,self.x,20001)['preferred'],'Offer A')
+        self.assertEqual(compare_quotes(self.q,self.x,5000)['crossover']['quantity'],Decimal('20000'))
+    def test_caller_context_restored_after_return(self):
+        getcontext().prec=4
+        getcontext().rounding=ROUND_DOWN
+        compare_quotes(self.q,self.x,19999)
+        molding_cost(self.c['process'],5000)
+        self.assertEqual(getcontext().prec,4)
+        self.assertEqual(getcontext().rounding,ROUND_DOWN)
+    def test_nested_localcontext_caller_unaffected(self):
+        with localcontext() as outer:
+            outer.prec=5
+            outer.rounding=ROUND_DOWN
+            r=compare_quotes(self.q,self.x,19999)
+            self.assertEqual(r['preferred'],'Offer B')
+            self.assertEqual(getcontext().prec,5)
+            self.assertEqual(getcontext().rounding,ROUND_DOWN)
+        self.assertEqual(ARITHMETIC_PREC,40)
+    def test_extreme_finite_string_rejected(self):
+        with self.assertRaises(ModelError) as cm:
+            number('1e999999','unit_price')
+        self.assertEqual(cm.exception.code,'numeric_range')
+    def test_extreme_rate_in_quote_rejected(self):
+        self.q[0]['unit_price']='1e999999'
+        with self.assertRaises(ModelError) as cm:
+            quote_total(self.q[0],self.x,5000)
+        self.assertEqual(cm.exception.code,'numeric_range')
+
 if __name__=='__main__':unittest.main()

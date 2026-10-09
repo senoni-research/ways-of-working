@@ -1,31 +1,69 @@
-"""Original Senoni reference arithmetic, v0.1.0. Standard library only.
+"""Original Senoni reference arithmetic. Schema version v0.1.0 (independent of pack VERSION).
 
 No source-document extraction, database, model call or industrial validation.
 Money is Decimal internally; JSON representations use numeric strings.
 All quote charges are in the single currency specified by the context.
+
+Arithmetic policy: every public numeric entry point runs under a *local*
+Decimal context with precision ARITHMETIC_PREC and ROUND_HALF_EVEN. It does
+not inherit the caller's precision, rounding or traps, and it restores the
+caller's context on exit. Inputs outside MAX_ABS_VALUE / MAX_ADJUSTED_EXPONENT
+are rejected as ModelError(numeric_range). Decimal Overflow/Underflow from
+defined computation is translated to the same error; other exceptions propagate.
 """
 from __future__ import annotations
+from contextlib import contextmanager
 from datetime import date
-from decimal import Decimal, InvalidOperation, localcontext
-from typing import Any, Mapping
+from decimal import (
+    ROUND_HALF_EVEN,
+    Context,
+    Decimal,
+    InvalidOperation,
+    Overflow,
+    Underflow,
+    localcontext,
+)
+from typing import Any, Iterator, Mapping
 
-VERSION = "0.1.0"
+VERSION = "0.1.0"  # reference schema / JSON contract; pack release version is separate (see VERSION file)
+ARITHMETIC_PREC = 40
+ARITHMETIC_ROUNDING = ROUND_HALF_EVEN
+MAX_ABS_VALUE = Decimal("1E20")
+MAX_ADJUSTED_EXPONENT = 20
 
 class ModelError(ValueError):
     def __init__(self, code: str, message: str):
         super().__init__(message)
         self.code = code
 
+@contextmanager
+def arithmetic_context() -> Iterator[Context]:
+    """Fixed local Decimal policy for reference money/resource arithmetic."""
+    with localcontext(
+        Context(prec=ARITHMETIC_PREC, rounding=ARITHMETIC_ROUNDING, traps=[Overflow, Underflow])
+    ) as ctx:
+        yield ctx
+
+def _bounded(n: Decimal, name: str) -> Decimal:
+    if n.is_zero():
+        return n
+    if abs(n) > MAX_ABS_VALUE or abs(n.adjusted()) > MAX_ADJUSTED_EXPONENT:
+        raise ModelError(
+            "numeric_range",
+            f"{name}: value outside the supported numeric range for this reference.",
+        )
+    return n
+
 def number(value: Any, name: str, *, positive: bool = False) -> Decimal:
     if value is None or isinstance(value, bool) or not isinstance(value, (str, int, float, Decimal)):
         raise ModelError("invalid_number", f"{name}: a finite numeric value is required; blank is not zero.")
     try:
         n = Decimal(str(value))
-    except (InvalidOperation, ValueError):
+    except (InvalidOperation, ValueError, Overflow):
         raise ModelError("invalid_number", f"{name}: invalid number.") from None
     if not n.is_finite() or n < 0 or (positive and n == 0):
         raise ModelError("invalid_number", f"{name}: {'positive' if positive else 'nonnegative'} finite value required.")
-    return n
+    return _bounded(n, name)
 
 def count(value: Any, name: str) -> int:
     # External schema uses integers, not strings, fractional numbers or booleans.
@@ -93,11 +131,15 @@ def quote_terms(q: Mapping[str, Any], context: Mapping[str, Any], quantity: int)
     return variable, fixed
 
 def quote_total(q: Mapping[str, Any], context: Mapping[str, Any], quantity: int) -> dict[str, Any]:
-    variable, fixed = quote_terms(q, context, quantity)
-    total = Decimal(quantity)*variable + fixed
-    return {"quote_id": q["quote_id"], "quantity":quantity, "variable_per_unit":variable,
-            "one_time_tooling":fixed, "total":total, "effective_per_unit":total/quantity,
-            "currency":context["currency"]}
+    try:
+        with arithmetic_context():
+            variable, fixed = quote_terms(q, context, quantity)
+            total = Decimal(quantity)*variable + fixed
+            return {"quote_id": q["quote_id"], "quantity":quantity, "variable_per_unit":variable,
+                    "one_time_tooling":fixed, "total":total, "effective_per_unit":total/quantity,
+                    "currency":context["currency"]}
+    except (Overflow, Underflow):
+        raise ModelError("numeric_range", "Quantity or rate combination exceeds the supported numeric range.") from None
 
 def compare_quotes(quotes: list[Mapping[str, Any]], context: Mapping[str, Any], quantity: int) -> dict[str, Any]:
     count(quantity,"quantity")
@@ -105,26 +147,30 @@ def compare_quotes(quotes: list[Mapping[str, Any]], context: Mapping[str, Any], 
         raise ModelError("quote_count", "This reference compares exactly two offers.")
     if text(quotes[0],"quote_id") == text(quotes[1],"quote_id"):
         raise ModelError("duplicate_quote", "Two distinct quote IDs are required.")
-    rows, issues = [], []
-    for q in quotes:
-        try:
-            rows.append(quote_total(q,context,quantity))
-        except ModelError as e:
-            rows.append(None)
-            issues.append({"quote_id":q.get("quote_id"),"code":e.code,"message":str(e)})
-    if issues:
-        return {"status":"blocked","rows":rows,"issues":issues,"preferred":None,"difference":None,"crossover":None}
-    a,b=rows
-    delta=a["total"]-b["total"]
-    preferred=None if delta==0 else (a["quote_id"] if delta<0 else b["quote_id"])
-    slope=a["variable_per_unit"]-b["variable_per_unit"]
-    cross=None
-    if slope != 0:
-        root=(b["one_time_tooling"]-a["one_time_tooling"])/slope
-        lo=max(q["min_quantity"] for q in quotes);hi=min(q["max_quantity"] for q in quotes)
-        cross={"quantity":root,"within_common_band":bool(root>0 and lo<=root<=hi)}
-    return {"status":"tie" if delta==0 else "comparable","rows":rows,"issues":[],
-            "preferred":preferred,"difference":abs(delta),"crossover":cross}
+    try:
+        with arithmetic_context():
+            rows, issues = [], []
+            for q in quotes:
+                try:
+                    rows.append(quote_total(q,context,quantity))
+                except ModelError as e:
+                    rows.append(None)
+                    issues.append({"quote_id":q.get("quote_id"),"code":e.code,"message":str(e)})
+            if issues:
+                return {"status":"blocked","rows":rows,"issues":issues,"preferred":None,"difference":None,"crossover":None}
+            a,b=rows
+            delta=a["total"]-b["total"]
+            preferred=None if delta==0 else (a["quote_id"] if delta<0 else b["quote_id"])
+            slope=a["variable_per_unit"]-b["variable_per_unit"]
+            cross=None
+            if slope != 0:
+                root=(b["one_time_tooling"]-a["one_time_tooling"])/slope
+                lo=max(q["min_quantity"] for q in quotes);hi=min(q["max_quantity"] for q in quotes)
+                cross={"quantity":root,"within_common_band":bool(root>0 and lo<=root<=hi)}
+            return {"status":"tie" if delta==0 else "comparable","rows":rows,"issues":[],
+                    "preferred":preferred,"difference":abs(delta),"crossover":cross}
+    except (Overflow, Underflow):
+        raise ModelError("numeric_range", "Quantity or rate combination exceeds the supported numeric range.") from None
 
 def molding_cost(inputs: Mapping[str,Any], quantity: int) -> dict[str,Any]:
     """One-stage expected resource model, with no regrind, salvage or multi-stage loss.
@@ -147,30 +193,32 @@ def molding_cost(inputs: Mapping[str,Any], quantity: int) -> dict[str,Any]:
     if y>1:raise ModelError("invalid_yield","good_yield must be in (0,1].")
     machine,labor,operator,crew=n("machine_rate_per_hour"),n("labor_rate_per_hour"),n("run_operator_fraction"),n("setup_crew")
     if operator>1:raise ModelError("invalid_fraction","run_operator_fraction must be between 0 and 1 in this model.")
-    if inputs["machine_includes_labor"] and labor*(operator+crew)>0:
+    if inputs["machine_includes_labor"] and labor > 0 and (operator + crew) > 0:
         raise ModelError("double_count","Machine rate includes labor; separately charged labor must be zero.")
     setup_hours_each=n("setup_hours_per_batch")
     available=n("available_hours",True)
     tooling=n("tooling_upfront")
-    with localcontext() as ctx:
-        ctx.prec=40
-        Q=Decimal(quantity)
-        shots=Q/(Decimal(k)*y)
-        run_hours=shots*cycle/Decimal(3600)
-        batches=(quantity+batch-1)//batch
-        setup_hours=Decimal(batches)*setup_hours_each
-        if run_hours+setup_hours>available:
-            raise ModelError("capacity_exceeded","Expected run plus setup hours exceed the declared available capacity.")
-        material_kg=shots*(Decimal(k)*m+s)
-        material_cost=material_kg*price
-        run_cost=run_hours*(machine+operator*labor)
-        setup_cost=setup_hours*(machine+crew*labor)
-        recurring=material_cost+run_cost+setup_cost
-        return {"expected_shots":shots,"material_kg":material_kg,"run_hours":run_hours,"setup_events":batches,
-                "setup_hours":setup_hours,"required_hours":run_hours+setup_hours,"material_cost":material_cost,
-                "run_cost":run_cost,"setup_cost":setup_cost,"manufacturing_total_ex_tooling":recurring,
-                "manufacturing_per_good_unit_ex_tooling":recurring/Q,"tooling_upfront":tooling,
-                "modeled_total_inc_tooling":recurring+tooling,"modeled_unit_inc_tooling":(recurring+tooling)/Q}
+    try:
+        with arithmetic_context():
+            Q=Decimal(quantity)
+            shots=Q/(Decimal(k)*y)
+            run_hours=shots*cycle/Decimal(3600)
+            batches=(quantity+batch-1)//batch
+            setup_hours=Decimal(batches)*setup_hours_each
+            if run_hours+setup_hours>available:
+                raise ModelError("capacity_exceeded","Expected run plus setup hours exceed the declared available capacity.")
+            material_kg=shots*(Decimal(k)*m+s)
+            material_cost=material_kg*price
+            run_cost=run_hours*(machine+operator*labor)
+            setup_cost=setup_hours*(machine+crew*labor)
+            recurring=material_cost+run_cost+setup_cost
+            return {"expected_shots":shots,"material_kg":material_kg,"run_hours":run_hours,"setup_events":batches,
+                    "setup_hours":setup_hours,"required_hours":run_hours+setup_hours,"material_cost":material_cost,
+                    "run_cost":run_cost,"setup_cost":setup_cost,"manufacturing_total_ex_tooling":recurring,
+                    "manufacturing_per_good_unit_ex_tooling":recurring/Q,"tooling_upfront":tooling,
+                    "modeled_total_inc_tooling":recurring+tooling,"modeled_unit_inc_tooling":(recurring+tooling)/Q}
+    except (Overflow, Underflow):
+        raise ModelError("numeric_range", "Quantity or rate combination exceeds the supported numeric range.") from None
 
 def review_case(case: Mapping[str,Any], quantity: int|None=None)->dict[str,Any]:
     if case.get("synthetic") is not True:

@@ -492,3 +492,68 @@ Not run in this task: the private publication-exclusion scan with the owner's
 external list (the local identifier scan above is a narrower, task-specific
 check and does not replace it); live-agent scenarios for B25-B31 (they remain
 specifications); browser, website and industrial-accuracy checks.
+
+--------------------------------------------------------------------------------
+FINAL-PATCH (CURRENT HEAD) — 9 October 2026 — Decimal policy + docs + full revalidation
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0
+Base reviewed head before this patch: c4369b43e0a620077a706972e2cafa225579ffd7
+(Local uncommitted/unpushed patch at the time of this record; no merge.)
+
+Closes external review findings R1–R5 for the expanded five-commit PR
+(companion: PR3_Current_Review_2026-10-09.md / Cursor_PR3_Current_Final_Patch.md).
+R6 (add public purchasing sources) deferred as recommended, not a merge blocker.
+
+R1/R2 — Deterministic Decimal reference (reference/core.py):
+  Public numeric entry points (quote_total, compare_quotes, molding_cost) now
+  run under a local Decimal Context(prec=40, rounding=ROUND_HALF_EVEN) with
+  Overflow/Underflow traps. Caller getcontext() is neither inherited nor mutated.
+  number() rejects out-of-range finite values (abs > 1E20 or |adjusted| > 20)
+  with ModelError code "numeric_range"; Overflow/Underflow from defined
+  arithmetic maps to the same code. schema_version remains "0.1.0" (independent
+  of pack VERSION 0.2.0).
+  New DecimalPolicyTests (8): normal C01 totals; ambient prec=4 and prec=28 at
+  19,999 (B wins £62,797.50 vs £62,796.86, difference £0.64 — no false tie);
+  crossover edges 19999/20000/20001 under prec=4; caller context restored;
+  nested localcontext unchanged; extreme '1e999999' rejected.
+  Suite: 56/56 (48 prior + 8 decimal-policy).
+
+R3 — Documentation:
+  VALIDATION.md: removed unsupported "price/markup distinctions"; noted Decimal
+  policy and that markup is not implemented.
+  Module 35 threshold section: band boundaries are validity/eligibility checks;
+  the calculator does not implement multi-band price curves or slope change at
+  bands.
+  README: pack VERSION 0.2.0 vs reference schema_version 0.1.0 stated as
+  independent. CHANGELOG 0.2.0 notes the Decimal policy on the same release line.
+  PR body update prepared for after push (authorization required; not applied
+  in this task).
+
+R4 — Latest-head validation (this record supersedes the v0.2.0 Carey-failure note):
+  Cost/Value:
+    python3 -B tools/build_pack.py .           -> Built 105 artifacts; 0 changed (×2)
+    python3 -B tools/build_pack.py . --check   -> BUILD CHECK PASSED
+    python3 -B tools/validate_pack.py .        -> STATIC VALIDATION PASSED (105)
+    python3 -B tools/test_validate_pack.py .   -> ALL 18 CORRUPTION REGRESSIONS PASSED
+    python3 -B -m unittest discover -s reference -p 'test_core.py' -> 56 tests OK
+    installed copies (cursor + portable)       -> OK each
+    C01 5000  -> 25300.00 / 15700.00, Offer B
+    C01 19999 -> 62797.50 / 62796.86, Offer B
+    C01 20000 -> 62800.00 / 62800.00, tie
+    C01 30000 -> 87800.00 / 94200.00, Offer A
+  Carey Chou:
+    python3 -B tools/validate_pack.py          -> STATIC VALIDATION PASSED
+    python3 -B tools/test_validate_pack.py     -> ALL 12 REGRESSION CASES PASSED
+  Nicolas Vandeput:
+    python3 -B tools/validate_pack.py .        -> STATIC VALIDATION PASSED
+  Root:
+    python3 -B tools/check_docs.py             -> PASSED
+    git diff --check                           -> clean
+
+R5 — Carey scope: retained in PR #3 (whitespace/mirror sync only; no substantive
+  guidance change). Carey validator + 12-case corruption suite pass at this head.
+  Disclose in PR description; splitting deferred as higher-risk than disclosing.
+
+Publication-exclusion scan: UNRUN — owner's private list not available in this
+session; do not treat as passed. Live-agent (B01–B31) and industrial checks: UNRUN.
