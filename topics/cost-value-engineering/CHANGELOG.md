@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.2 — 9 October 2026
+
+Reconciles a parallel safeguards branch, written against 0.3.0 at the same time as 0.3.1, onto 0.3.1. Where both versions addressed the same rule, 0.3.1's reviewed behavior is kept: pending packets rather than a hard stop for non-event routes, rejection of malformed eligibility statuses, the accepted-approval record and detached views, and idempotency keys with source identity. The branch's remaining safeguards are re-implemented on that design. Workflow schema stays 0.2.0 and fixture R01 is unchanged; core arithmetic schema 0.1.0. No new module, recipe, behavior, template, prompt, source, case or scenario.
+
+- Re-decision: once a handoff has been requested for a revision (acknowledged, unknown, not recorded or blocked), GO and NO GO on it raise `already_submitted`; a correction creates a new revision instead.
+- Policy changes require an `effective_date` (YYYY-MM-DD; `missing_input` or `invalid_date` otherwise). It is stored on the policy and the correction record, and a handoff before the approved policy takes effect raises `stale_approval` (inclusive on the date).
+- Requirement corrections by the requirement owner may also set a named requirement to `mandatory` or `optional`; eligibility is recomputed. Other settings are unsupported targets; unchanged settings are rejected.
+- Commercial judgment on `supplier_choice` is now applied: it selects an eligible, comparable offer of the current recommendation (never an excluded, incomplete or unknown one), shows the premium over the lowest declared-scope total, changes no cost fact and still records a scoped precedent. A judgment on a withheld packet, or naming the current supplier, is rejected; if the chosen supplier later stops being eligible the packet is withheld. Judgments on other fields stay record-only.
+- Assumption corrections are listed in the packet's assumptions, marked `used_by_this_evaluation: false`. Packet diffs also report changed economics, exceptions and assumptions.
+- Recorded replay: `run_replay(..., trace=True)` attaches each step's case-file and mock-destination state under `case_state`, so the step's own fields (for example a packet's `state`) are preserved. `reference/export_replay.py` writes all seven scenarios as deterministic, self-labelled JSON for a static display that must not recompute.
+- R01 description now states the fixture's required date (2026-11-30).
+- Tests: `test_workflow.py` 111 → 132 (reference total 188). Four existing tests were adapted to the new contracts: the repeated-override test uses real offer identities, two policy tests carry an effective date, and the record-only test uses a non-supplier commercial-judgment field.
+
 ## 0.3.1 — 9 October 2026
 
 Hardening patch after an independent review of 0.3.0 on `main`. No new module, recipe, behavior, template, prompt or source; inventories unchanged. The executable workflow harness now enforces what the method already taught, and the documentation is narrowed to the implemented and tested subset. Workflow schema bumped to 0.2.0 (fixture R01 declares `workflow_schema`; packets gain a stored `decision_basis` and new pending states; handoff keys change shape). Core arithmetic schema unchanged at 0.1.0.

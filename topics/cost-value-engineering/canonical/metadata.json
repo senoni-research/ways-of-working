@@ -1,6 +1,6 @@
 {
   "name": "Cost & Value Engineering",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "date": "2026-10-09",
   "namespace": ".costvalue",
   "status": "Focused prototype-method release; not industrial validation",
