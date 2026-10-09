@@ -1,0 +1,11 @@
+# Attribution and reuse
+
+Senoni Research authored the synthesis, instruction packaging, schemas, examples and small reference implementation in this release. The economic methods are not claimed as Senoni inventions. This is an independent adaptation, not an official framework, certification, collaboration or endorsement by the cited authors or institutions.
+
+The focused public source basis is the UK Cabinet Office's should-cost guidance; the US GAO's published overview; Robert S. Kaplan and Steven R. Anderson's capacity/time-based costing work; Ken Garrett's ACCA explanation of target and lifecycle costing; Protolabs' manufacturing guidance; and Peter Kajüter and Harri Kulmala's open-book-accounting research record. Official Cursor, OpenCode and Cline documentation supports only the host integration choices. See the [source register](SOURCE_REGISTER.md) for exact inspection limits and links.
+
+We do not redistribute those publications, illustrations, empirical datasets or case exercises. A citation is not a license grant. Source works retain their own terms. The repository's MIT license covers this original package; it does not relicense external publications, data, marks or logos. General mathematical operations, our hypothetical figures and our testing contracts are not represented as reproduced source experiments.
+
+The separate Carey and Nicolas Vandeput packs keep their own authorship chains and scopes. Mentioning compatibility with their packaging does not make this cost-engineering guide their work. Axiocost is a Senoni product experiment using selected working disciplines, not an endorsed product of any researcher.
+
+Future additions require point-of-use credit, primary authors and coauthors where available, inspected scope and version/date. Keep an indirect account distinct from the original paper. Preserve conflicting interpretations rather than silently attributing a reconciled opinion to everyone.

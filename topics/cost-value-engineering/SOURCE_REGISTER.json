@@ -1,0 +1,173 @@
+[
+  {
+    "authors": [
+      "UK Cabinet Office"
+    ],
+    "date": "May 2021",
+    "id": "CV01",
+    "inspected_on": "2026-10-08",
+    "inspection": "selected text",
+    "note": "The guide describes estimates under stated circumstances and periods, and a staged development approach. Senoni adapts that discipline to component review; it does not import procurement thresholds or claim government endorsement.",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research G01",
+    "role": "Model purpose, scope and lifecycle; UK public-procurement context, not an industrial certification.",
+    "scope": "Selected parsed sections 1, 2, 5 and 6; scope, whole-life boundaries and model-development stages. Not every figure or legal provision reviewed.",
+    "source_execution": "none",
+    "title": "Should Cost Modelling — Guidance Note",
+    "url": "https://assets.publishing.service.gov.uk/media/60a3879f8fa8f56a32f91cfd/Should_Cost_Modelling_guidance_note_May_2021.pdf"
+  },
+  {
+    "authors": [
+      "UK Cabinet Office"
+    ],
+    "date": "May 2021",
+    "id": "CV02",
+    "inspected_on": "2026-10-08",
+    "inspection": "selected text",
+    "note": "Our Python/JavaScript functions, schemas, test data and generators are original reference implementations, not a transcription of the government templates.",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research G02",
+    "role": "Traceable inputs, separable calculations and quality checks.",
+    "scope": "Selected technical guidance on inputs, assumptions, workbook structure, units and checks; not its entire spreadsheet implementation.",
+    "source_execution": "none",
+    "title": "SCM Technical Build Guidance",
+    "url": "https://assets.publishing.service.gov.uk/media/60a4ef9a8fa8f56a353a13e4/SCM_Technical_Build_Guidance_V1_May_2021.pdf"
+  },
+  {
+    "authors": [
+      "US Government Accountability Office"
+    ],
+    "date": "2020",
+    "id": "CV03",
+    "inspected_on": "2026-10-08",
+    "inspection": "official overview",
+    "note": "Use the overview only for these high-level principles. Do not claim the full guide has been read, implement an uninspected appendix, or import public-sector decision rules into a private contract.",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research G06",
+    "role": "Technical baseline, assumptions, sensitivity, documentation and updates using actual costs.",
+    "scope": "Official product overview and Highlights, especially the stated estimating steps; not the full 476-page report.",
+    "source_execution": "none",
+    "title": "Cost Estimating and Assessment Guide: Best Practices for Developing and Managing Program Costs",
+    "url": "https://www.gao.gov/products/gao-20-195g"
+  },
+  {
+    "authors": [
+      "Robert S. Kaplan",
+      "Steven R. Anderson"
+    ],
+    "date": "November 2003 in paper; copyright 2004 on cover",
+    "id": "CV04",
+    "inspected_on": "2026-10-08",
+    "inspection": "selected text and tables",
+    "note": "Capacity percentages and the source case amounts are examples, not our defaults. Our single-stage molding example is not a full TDABC implementation. The PDF metadata title is misleading; the cover identifies this work.",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research P12",
+    "role": "Separate resource capacity supplied, activity time and unused capacity.",
+    "scope": "Abstract and selected capacity-cost / unit-time sections, PDF pages 7–10, with capacity tables visually checked; no source examples or code reproduced.",
+    "source_execution": "none",
+    "title": "Time-Driven Activity-Based Costing, Working Paper 04-045",
+    "url": "https://www.hbs.edu/ris/Publication%20Files/04-045_d62528d4-7931-4ea1-a205-d9683c639d6e.pdf"
+  },
+  {
+    "authors": [
+      "Ken Garrett"
+    ],
+    "date": null,
+    "id": "CV05",
+    "inspected_on": "2026-10-08",
+    "inspection": "article text",
+    "note": "We credit Garrett’s explanation; we do not claim he or Senoni invented target or lifecycle costing. Our arithmetic examples and controls are separately specified.",
+    "publisher": "ACCA",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research A01",
+    "role": "Separate market-facing targets from estimates and include relevant lifecycle consequences.",
+    "scope": "Article text on target costing, lifecycle scope and margin/markup; original exercise amounts not reused.",
+    "source_execution": "none",
+    "title": "Target costing and life-cycle costing",
+    "url": "https://www.accaglobal.com/uk/en/student/exam-support-resources/fundamentals-exams-study-resources/f5/technical-articles/target-lifestyle.html"
+  },
+  {
+    "authors": [
+      "Protolabs"
+    ],
+    "date": null,
+    "id": "CV06",
+    "inspected_on": "2026-10-08",
+    "inspection": "article text",
+    "note": "Vendor guidance, not an independent performance study or transferable price database. No source design images are redistributed.",
+    "redistributed_original": false,
+    "related_catalogue": "Supplementary manufacturing context",
+    "role": "Explain why a drawing alone does not supply all production and quotation assumptions.",
+    "scope": "Qualitative manufacturer guidance about geometry, material, mold complexity and volume; no process-capability tables or rates adopted.",
+    "source_execution": "none",
+    "title": "Understanding Injection Mold Cost for Parts and Tooling",
+    "url": "https://www.protolabs.com/resources/design-tips/11-tips-to-reduce-injection-molding-costs/"
+  },
+  {
+    "authors": [
+      "Peter Kajüter",
+      "Harri Kulmala"
+    ],
+    "date": "2005",
+    "doi": "10.1016/j.mar.2005.01.003",
+    "id": "CV07",
+    "inspected_on": "2026-10-08",
+    "inspection": "abstract and metadata",
+    "note": "The detailed supplier-dialogue and confidentiality rules here are Senoni design choices, not a reconstructed six-factor model attributed to these authors.",
+    "redistributed_original": false,
+    "related_catalogue": "Earlier research P14",
+    "role": "Reminder that cost transparency has enabling conditions and failure modes.",
+    "scope": "Institutional abstract and bibliographic record only; full empirical methods and six failure reasons not inspected.",
+    "source_execution": "none",
+    "title": "Open-book accounting in networks: Potential achievements and reasons for failures",
+    "url": "https://cris.vtt.fi/en/publications/open-book-accounting-in-networks-potential-achievements-and-reaso/"
+  },
+  {
+    "authors": [
+      "Cursor documentation team"
+    ],
+    "date": null,
+    "id": "HOST01",
+    "inspected_on": "2026-10-08",
+    "inspection": "official documentation",
+    "note": "Referenced files are not automatically inlined; the agent must read them. Instruction loading is not a security boundary or evidence of compliant behavior.",
+    "redistributed_original": false,
+    "role": "Cursor loader structure.",
+    "scope": "Project .mdc rules, frontmatter, file references and AGENTS.md sections.",
+    "source_execution": "none",
+    "title": "Rules",
+    "url": "https://cursor.com/docs/rules"
+  },
+  {
+    "authors": [
+      "OpenCode documentation team"
+    ],
+    "date": null,
+    "id": "HOST02",
+    "inspected_on": "2026-10-08",
+    "inspection": "official documentation",
+    "note": "Use one entry route; preserve existing instructions. No remote auto-updating rules are installed.",
+    "redistributed_original": false,
+    "role": "Portable installation through AGENTS.md.",
+    "scope": "AGENTS.md, custom instructions and explicit selective file reading.",
+    "source_execution": "none",
+    "title": "Rules",
+    "url": "https://opencode.ai/docs/rules/"
+  },
+  {
+    "authors": [
+      "Cline documentation team"
+    ],
+    "date": null,
+    "id": "HOST03",
+    "inspected_on": "2026-10-08",
+    "inspection": "official documentation",
+    "note": "Live-host behavior is not tested in this release; check installed versions and Rules panel.",
+    "redistributed_original": false,
+    "role": "Portable Cline installation; optional .clinerules alternative.",
+    "scope": "Supported rule types and workspace rule directories, including AGENTS.md.",
+    "source_execution": "none",
+    "title": "Rules",
+    "url": "https://docs.cline.bot/customization/cline-rules"
+  }
+]

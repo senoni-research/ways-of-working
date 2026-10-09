@@ -1,0 +1,366 @@
+COST & VALUE ENGINEERING — actual local execution record
+8 October 2026 | v0.1.0
+Python: 3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]
+No GitHub, hosting, DNS or customer-data action occurred.
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py .
+Built 97 generated artifacts; 0 changed.
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py .
+Built 97 generated artifacts; 0 changed.
+
+Exit: 0
+
+PASS: two consecutive complete builds produced identical file hashes.
+
+$ /opt/pyvenv/bin/python3 tools/build_pack.py . --check
+BUILD CHECK PASSED
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 tools/validate_pack.py .
+STATIC VALIDATION PASSED (97 canonical artifacts, links, loaders, inventories and manifest).
+
+Exit: 0
+
+PASS: read-only validator did not modify package files.
+
+$ /opt/pyvenv/bin/python3 tools/test_validate_pack.py .
+PASS: duplicate canonical recipe ID -> recipes:
+PASS: duplicate template ID -> templates:
+PASS: missing expected prompt ID -> prompts:
+PASS: stale canonical source -> canonical-drift:
+PASS: coordinated handbook edits -> canonical-drift:
+PASS: empty installed extracts -> canonical-drift:
+PASS: heading-only canonical recipe -> recipe-content:
+PASS: extra installed file -> installed-inventory:
+PASS: broken root link -> link:
+PASS: nonexistent loader target -> loader-target:
+PASS: missing case -> cases:
+PASS: unknown source ref -> source-reference:
+PASS: duplicate behavior ID -> behaviors:
+PASS: changed hash -> manifest:
+PASS: wrong count -> manifest:
+PASS: wrong word count -> manifest:
+PASS: stale preface -> canonical-drift:
+ALL 17 CORRUPTION REGRESSIONS PASSED; positive control passed.
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.005s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s cursor-project/.costvalue/reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.006s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 -m unittest discover -s portable-project/.costvalue/reference -p test_core.py -v
+test_all_cases_executable (test_core.ReferenceTests.test_all_cases_executable) ... ok
+test_bad_date (test_core.ReferenceTests.test_bad_date) ... ok
+test_blank_not_zero (test_core.ReferenceTests.test_blank_not_zero) ... ok
+test_capacity_at_boundary (test_core.ReferenceTests.test_capacity_at_boundary) ... ok
+test_capacity_only_blocks_model (test_core.ReferenceTests.test_capacity_only_blocks_model) ... ok
+test_crossover_exact (test_core.ReferenceTests.test_crossover_exact) ... ok
+test_currency_mismatch (test_core.ReferenceTests.test_currency_mismatch) ... ok
+test_delivery_mismatch (test_core.ReferenceTests.test_delivery_mismatch) ... ok
+test_duplicate_quote (test_core.ReferenceTests.test_duplicate_quote) ... ok
+test_equal_slopes_no_crossover (test_core.ReferenceTests.test_equal_slopes_no_crossover) ... ok
+test_expired_quote (test_core.ReferenceTests.test_expired_quote) ... ok
+test_explicit_separate_zero (test_core.ReferenceTests.test_explicit_separate_zero) ... ok
+test_hand_calculated_process (test_core.ReferenceTests.test_hand_calculated_process) ... ok
+test_high_quantity_prefers_A (test_core.ReferenceTests.test_high_quantity_prefers_A) ... ok
+test_included_positive_rejected (test_core.ReferenceTests.test_included_positive_rejected) ... ok
+test_inclusive_machine_no_extra_labor (test_core.ReferenceTests.test_inclusive_machine_no_extra_labor) ... ok
+test_inverted_band (test_core.ReferenceTests.test_inverted_band) ... ok
+test_labor_double_count (test_core.ReferenceTests.test_labor_double_count) ... ok
+test_low_quantity_prefers_B (test_core.ReferenceTests.test_low_quantity_prefers_B) ... ok
+test_missing_cycle_only_blocks_model (test_core.ReferenceTests.test_missing_cycle_only_blocks_model) ... ok
+test_missing_separate_amount (test_core.ReferenceTests.test_missing_separate_amount) ... ok
+test_negative_rate (test_core.ReferenceTests.test_negative_rate) ... ok
+test_no_winner_when_rival_blocked (test_core.ReferenceTests.test_no_winner_when_rival_blocked) ... ok
+test_nonfinite_rates (test_core.ReferenceTests.test_nonfinite_rates) ... ok
+test_quality_double_basis_rejected (test_core.ReferenceTests.test_quality_double_basis_rejected) ... ok
+test_quantity_band (test_core.ReferenceTests.test_quantity_band) ... ok
+test_quantity_bool (test_core.ReferenceTests.test_quantity_bool) ... ok
+test_quantity_fraction (test_core.ReferenceTests.test_quantity_fraction) ... ok
+test_quantity_zero (test_core.ReferenceTests.test_quantity_zero) ... ok
+test_quote_A_30000 (test_core.ReferenceTests.test_quote_A_30000) ... ok
+test_quote_A_5000 (test_core.ReferenceTests.test_quote_A_5000) ... ok
+test_quote_B_30000 (test_core.ReferenceTests.test_quote_B_30000) ... ok
+test_quote_B_5000 (test_core.ReferenceTests.test_quote_B_5000) ... ok
+test_revision_mismatch (test_core.ReferenceTests.test_revision_mismatch) ... ok
+test_runner_charged_per_shot (test_core.ReferenceTests.test_runner_charged_per_shot) ... ok
+test_setup_threshold (test_core.ReferenceTests.test_setup_threshold) ... ok
+test_technical_unconfirmed (test_core.ReferenceTests.test_technical_unconfirmed) ... ok
+test_tie (test_core.ReferenceTests.test_tie) ... ok
+test_tooling_charged_once (test_core.ReferenceTests.test_tooling_charged_once) ... ok
+test_unknown_freight_blocks (test_core.ReferenceTests.test_unknown_freight_blocks) ... ok
+test_yield_improves_material (test_core.ReferenceTests.test_yield_improves_material) ... ok
+test_yield_invalid (test_core.ReferenceTests.test_yield_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.006s
+
+OK
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 reference/run_case.py --case C01 --quantity 5000
+{
+  "schema_version": "0.1.0",
+  "case_id": "C01",
+  "synthetic": true,
+  "quantity": 5000,
+  "comparison": {
+    "status": "comparable",
+    "rows": [
+      {
+        "quote_id": "Offer A",
+        "quantity": 5000,
+        "variable_per_unit": "2.50",
+        "one_time_tooling": "12800",
+        "total": "25300.00",
+        "effective_per_unit": "5.06",
+        "currency": "GBP"
+      },
+      {
+        "quote_id": "Offer B",
+        "quantity": 5000,
+        "variable_per_unit": "3.14",
+        "one_time_tooling": "0",
+        "total": "15700.00",
+        "effective_per_unit": "3.14",
+        "currency": "GBP"
+      }
+    ],
+    "issues": [],
+    "preferred": "Offer B",
+    "difference": "9600.00",
+    "crossover": {
+      "quantity": "2.00E+4",
+      "within_common_band": true
+    }
+  },
+  "manufacturing_model": {
+    "expected_shots": "2604.166666666666666666666666666666666667",
+    "material_kg": "234.3750000000000000000000000000000000000",
+    "run_hours": "26.04166666666666666666666666666666666667",
+    "setup_events": 2,
+    "setup_hours": "3.0",
+    "required_hours": "29.04166666666666666666666666666666666667",
+    "material_cost": "656.2500000000000000000000000000000000000",
+    "run_cost": "1575.520833333333333333333333333333333334",
+    "setup_cost": "240.0",
+    "manufacturing_total_ex_tooling": "2471.770833333333333333333333333333333334",
+    "manufacturing_per_good_unit_ex_tooling": "0.4943541666666666666666666666666666666668",
+    "tooling_upfront": "12800",
+    "modeled_total_inc_tooling": "15271.77083333333333333333333333333333333",
+    "modeled_unit_inc_tooling": "3.054354166666666666666666666666666666666"
+  },
+  "manufacturing_issue": null,
+  "notice": "Synthetic pre-entered inputs. No automated drawing reading or factory-cost validation."
+}
+
+Exit: 0
+
+$ /opt/pyvenv/bin/python3 reference/run_case.py --case C01 --quantity 30000
+{
+  "schema_version": "0.1.0",
+  "case_id": "C01",
+  "synthetic": true,
+  "quantity": 30000,
+  "comparison": {
+    "status": "comparable",
+    "rows": [
+      {
+        "quote_id": "Offer A",
+        "quantity": 30000,
+        "variable_per_unit": "2.50",
+        "one_time_tooling": "12800",
+        "total": "87800.00",
+        "effective_per_unit": "2.926666666666666666666666667",
+        "currency": "GBP"
+      },
+      {
+        "quote_id": "Offer B",
+        "quantity": 30000,
+        "variable_per_unit": "3.14",
+        "one_time_tooling": "0",
+        "total": "94200.00",
+        "effective_per_unit": "3.14",
+        "currency": "GBP"
+      }
+    ],
+    "issues": [],
+    "preferred": "Offer A",
+    "difference": "6400.00",
+    "crossover": {
+      "quantity": "2.00E+4",
+      "within_common_band": true
+    }
+  },
+  "manufacturing_model": {
+    "expected_shots": "15625",
+    "material_kg": "1406.250",
+    "run_hours": "156.25",
+    "setup_events": 12,
+    "setup_hours": "18.0",
+    "required_hours": "174.25",
+    "material_cost": "3937.5000",
+    "run_cost": "9453.1250",
+    "setup_cost": "1440.0",
+    "manufacturing_total_ex_tooling": "14830.6250",
+    "manufacturing_per_good_unit_ex_tooling": "0.4943541666666666666666666666666666666667",
+    "tooling_upfront": "12800",
+    "modeled_total_inc_tooling": "27630.6250",
+    "modeled_unit_inc_tooling": "0.9210208333333333333333333333333333333333"
+  },
+  "manufacturing_issue": null,
+  "notice": "Synthetic pre-entered inputs. No automated drawing reading or factory-cost validation."
+}
+
+Exit: 0
+
+RESULT: 17 corruption regressions; 42 numerical tests in the canonical reference and the same 42 in each installed copy. The copies do not constitute additional independent tests.
+Unrun: live Cursor/Cline/OpenCode behavior, external source code, industrial data, drawing extraction, expert cost adjudication, customer pilots and production deployment.
+B01–B24 remain specifications. Six published fixtures are not blind holdouts.
+Public-source inspection limits are recorded in SOURCE_REGISTER.md.
+
+--------------------------------------------------------------------------------
+INGESTION/REVIEW RECORD — 9 October 2026 (ways-of-working repository)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Location under test: topics/cost-value-engineering/ (as integrated into
+senoni-research/ways-of-working, branch topics-cost-value-engineering-v0.1.0).
+
+One delivery defect was found and fixed before integration:
+- tools/validate_pack.py compared resolved link destinations against an
+  unresolved package root. On macOS temporary directories (/var symlinked
+  to /private/var), every root-level link was reported as escaping the
+  package, and the 'nonexistent loader target' regression case failed with
+  the wrong diagnostic. Fix: resolve root at validation entry. The 17-case
+  regression suite, build check, validator and 42 numerical tests then pass.
+  This fix is in tools/validate_pack.py; the manifest was rebuilt to match.
+
+Commands run at the integrated destination (all observed outcomes here):
+  python3 tools/build_pack.py .            -> Built 97 generated artifacts; 0 changed
+  python3 tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 tools/validate_pack.py .         -> STATIC VALIDATION PASSED (97 artifacts)
+  python3 tools/test_validate_pack.py .   -> ALL 17 CORRUPTION REGRESSIONS PASSED
+  python3 -m unittest discover -s reference -p 'test_core.py' -> 42 tests OK
+  python3 reference/run_case.py --case C01 --quantity 5000
+      -> offer totals 25300.00 / 15700.00 (matches declared reference)
+  python3 reference/run_case.py --case C01 --quantity 30000
+      -> offer totals 87800.00 / 94200.00 (matches declared reference)
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root, updated for three packs) -> PASSED
+  carey-chou/tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged pack)
+  nicolas-vandeput/tools/validate_pack.py . -> STATIC VALIDATION PASSED (unchanged pack)
+  git diff --check -> clean
+
+Not run in this ingestion session: the private publication-exclusion scan
+(requires the owner's externally stored private list; the delivery-side scan
+of 8 October 2026 reported no matches and is historical evidence for the
+archive as delivered), JS/website suites (separate senoni-site handoff),
+browser smoke checks, and any live agent scenario.
+
+The 8 October 2026 preparation evidence above remains the historical record
+for the delivered archive; this section records the 9 October integration.
