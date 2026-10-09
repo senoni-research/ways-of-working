@@ -20,9 +20,9 @@
       "words": 457
     },
     "CHANGELOG.md": {
-      "bytes": 4470,
-      "sha256": "24b2dab73e51a37300e16154c0c69a60a13dd4e5a4313c6b20b4e67d9ad9411c",
-      "words": 573
+      "bytes": 6957,
+      "sha256": "fdcc5c83928bd55bb89f6c0bdac23a2faf7155985905202b7eaefd41ebc25e65",
+      "words": 926
     },
     "LICENSE": {
       "bytes": 1072,
@@ -35,7 +35,7 @@
     },
     "README.md": {
       "bytes": 6762,
-      "sha256": "7ee93ed9c7b1af092a3534649f627b0ce3e339c1a410288bc1760367e829a73b",
+      "sha256": "74d44f2902e1d27caa2bc1128aff40b84729aa0e7a4b383b26bd6a4004191e29",
       "words": 903
     },
     "ROADMAP.md": {
@@ -53,13 +53,13 @@
       "words": 1405
     },
     "VALIDATION.md": {
-      "bytes": 2710,
-      "sha256": "9a0ed650ec0c552fe0658d8a2283323761a2d0087b5e014723a0f35eb5674285",
-      "words": 366
+      "bytes": 3028,
+      "sha256": "146ae9e8cc095c14061638004219121f500964ed971e0674a266918992524aae",
+      "words": 419
     },
     "VERSION": {
       "bytes": 6,
-      "sha256": "d915cc95d6ca8f47ae297713ed46d4e5c5d99ddd29fc3c61e263bdf305f2b5b0"
+      "sha256": "79e3f22ca37c7fdf4c29ae3648d6b008c3cb6547260a453409275470919dc674"
     },
     "canonical/cases/C01-source.md": {
       "bytes": 2584,
@@ -97,7 +97,7 @@
     },
     "canonical/cases/R01-source.md": {
       "bytes": 2973,
-      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "sha256": "d767f48955a274fc26c5381dcf75a5746d26433dd48b488fe575e856c8ba9fa7",
       "words": 450
     },
     "canonical/cases/README.md": {
@@ -124,7 +124,7 @@
     },
     "canonical/metadata.json": {
       "bytes": 1820,
-      "sha256": "ad13f866162ea693f60a7020a0a04ecabc59d1d1aecdfa231eb47f7cafe26138"
+      "sha256": "56c6cf93a1e9a2b4ba0a156e1c86239a03c78b841ed2bb860409dd4a4e177702"
     },
     "canonical/modules/00-operating-contract.md": {
       "bytes": 5078,
@@ -167,9 +167,9 @@
       "words": 1294
     },
     "canonical/modules/55-buyer-decision-and-handoff.md": {
-      "bytes": 7511,
-      "sha256": "12de5dd87e3e64e63f08f8a028046d606b646c392477f558ab13f5269d9e8135",
-      "words": 1086
+      "bytes": 7653,
+      "sha256": "e8aca21a8a7322e432324932c09227e9a41552def6d87c9f462165901b48c45d",
+      "words": 1109
     },
     "canonical/modules/60-memory.md": {
       "bytes": 4416,
@@ -192,9 +192,9 @@
       "words": 457
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 4470,
-      "sha256": "24b2dab73e51a37300e16154c0c69a60a13dd4e5a4313c6b20b4e67d9ad9411c",
-      "words": 573
+      "bytes": 6957,
+      "sha256": "fdcc5c83928bd55bb89f6c0bdac23a2faf7155985905202b7eaefd41ebc25e65",
+      "words": 926
     },
     "canonical/pages/QUICKSTART.md": {
       "bytes": 2537,
@@ -203,7 +203,7 @@
     },
     "canonical/pages/README.md": {
       "bytes": 6762,
-      "sha256": "7ee93ed9c7b1af092a3534649f627b0ce3e339c1a410288bc1760367e829a73b",
+      "sha256": "74d44f2902e1d27caa2bc1128aff40b84729aa0e7a4b383b26bd6a4004191e29",
       "words": 903
     },
     "canonical/pages/ROADMAP.md": {
@@ -212,18 +212,18 @@
       "words": 522
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 2710,
-      "sha256": "9a0ed650ec0c552fe0658d8a2283323761a2d0087b5e014723a0f35eb5674285",
-      "words": 366
+      "bytes": 3028,
+      "sha256": "146ae9e8cc095c14061638004219121f500964ed971e0674a266918992524aae",
+      "words": 419
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 853,
-      "sha256": "2634bccafb97d4d9e7088cf11aaf11608d9f98490efd88cbc96579e72f66bb1b",
+      "sha256": "a5445733989dbce4730db0ca0264b22b9a4c08e53a367c5a86c883dadf72789d",
       "words": 119
     },
     "canonical/prefaces/portable.md": {
       "bytes": 855,
-      "sha256": "5bcd0d6808c0da608a29f64efbc6451ffbedd7add9fc26ae327c88fd1333f243",
+      "sha256": "f71f33d75cb43806b9336c42f89160e240b740fc0bba9f3267be013769d8453f",
       "words": 121
     },
     "canonical/recipes/M01-frame-the-decision.md": {
@@ -341,7 +341,7 @@
     },
     "cases/R01-source.md": {
       "bytes": 2973,
-      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "sha256": "d767f48955a274fc26c5381dcf75a5746d26433dd48b488fe575e856c8ba9fa7",
       "words": 450
     },
     "cases/README.md": {
@@ -402,9 +402,9 @@
       "words": 1294
     },
     "cursor-project/.costvalue/55-buyer-decision-and-handoff.md": {
-      "bytes": 7703,
-      "sha256": "1bdc9ce643c62d1776ac01abad9f1453daa8fab1310fc27e989013b9f83025df",
-      "words": 1086
+      "bytes": 7845,
+      "sha256": "4b47d7a3554edb0179dfa130483ca605cbce6f1c33ec5fb4a5ce430fbd005fc4",
+      "words": 1109
     },
     "cursor-project/.costvalue/60-memory.md": {
       "bytes": 4448,
@@ -467,7 +467,7 @@
     },
     "cursor-project/.costvalue/cases/R01-source.md": {
       "bytes": 2973,
-      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "sha256": "d767f48955a274fc26c5381dcf75a5746d26433dd48b488fe575e856c8ba9fa7",
       "words": 450
     },
     "cursor-project/.costvalue/cases/README.md": {
@@ -570,25 +570,29 @@
       "bytes": 13053,
       "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
     },
+    "cursor-project/.costvalue/reference/export_replay.py": {
+      "bytes": 2847,
+      "sha256": "a018c88522a177e89548f801d6477b4c651abe419e9f0305add879a7f692a8ff"
+    },
     "cursor-project/.costvalue/reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "cursor-project/.costvalue/reference/run_replay.py": {
-      "bytes": 996,
-      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+      "bytes": 957,
+      "sha256": "0c7de27d9a278fe04e483bb72dcf4df903a493be75f8b51a6f8c39a015b6aa66"
     },
     "cursor-project/.costvalue/reference/test_core.py": {
       "bytes": 12268,
       "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
     },
     "cursor-project/.costvalue/reference/test_workflow.py": {
-      "bytes": 15950,
-      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+      "bytes": 31866,
+      "sha256": "daf66191edd54adafdaf62a723f950cde6cad9cd648afcbd39d637bc31e684f1"
     },
     "cursor-project/.costvalue/reference/workflow.py": {
-      "bytes": 31856,
-      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+      "bytes": 38566,
+      "sha256": "e2034dcacaf5e2ee2064606adc8aa1877144d3516c3d32717ef4d1dee490d953"
     },
     "cursor-project/.cursor/rules/20-costvalue-method.mdc": {
       "bytes": 1523,
@@ -605,19 +609,19 @@
       "words": 50
     },
     "cursor-project/cursor.md": {
-      "bytes": 125369,
-      "sha256": "ed09cc048930dffe76326a26f93b369093bff32d62255547d021d70b49362a5c",
-      "words": 17315
+      "bytes": 125511,
+      "sha256": "4c22c4b767b6762fe94b0053e5e75b5f9c8a36dc43d073dd1b383b455fc672fc",
+      "words": 17338
     },
     "cursor.md": {
-      "bytes": 125369,
-      "sha256": "ed09cc048930dffe76326a26f93b369093bff32d62255547d021d70b49362a5c",
-      "words": 17315
+      "bytes": 125511,
+      "sha256": "4c22c4b767b6762fe94b0053e5e75b5f9c8a36dc43d073dd1b383b455fc672fc",
+      "words": 17338
     },
     "memory.md": {
-      "bytes": 125371,
-      "sha256": "5578c28d713120f1141c6286f3afc63d15cc3b7c37e98cbbd6d474f97941485c",
-      "words": 17317
+      "bytes": 125513,
+      "sha256": "a7df1e61ef2d35b8c93395555e0bc761ea3bd3aea2e500da66ef668f6e3d687d",
+      "words": 17340
     },
     "portable-project/.costvalue/00-operating-contract.md": {
       "bytes": 5150,
@@ -660,9 +664,9 @@
       "words": 1294
     },
     "portable-project/.costvalue/55-buyer-decision-and-handoff.md": {
-      "bytes": 7703,
-      "sha256": "1bdc9ce643c62d1776ac01abad9f1453daa8fab1310fc27e989013b9f83025df",
-      "words": 1086
+      "bytes": 7845,
+      "sha256": "4b47d7a3554edb0179dfa130483ca605cbce6f1c33ec5fb4a5ce430fbd005fc4",
+      "words": 1109
     },
     "portable-project/.costvalue/60-memory.md": {
       "bytes": 4448,
@@ -725,7 +729,7 @@
     },
     "portable-project/.costvalue/cases/R01-source.md": {
       "bytes": 2973,
-      "sha256": "524ea5076fed3e2ceb7ac7f9ce807834429795630c57057caa48030c08c33c42",
+      "sha256": "d767f48955a274fc26c5381dcf75a5746d26433dd48b488fe575e856c8ba9fa7",
       "words": 450
     },
     "portable-project/.costvalue/cases/README.md": {
@@ -828,25 +832,29 @@
       "bytes": 13053,
       "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
     },
+    "portable-project/.costvalue/reference/export_replay.py": {
+      "bytes": 2847,
+      "sha256": "a018c88522a177e89548f801d6477b4c651abe419e9f0305add879a7f692a8ff"
+    },
     "portable-project/.costvalue/reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "portable-project/.costvalue/reference/run_replay.py": {
-      "bytes": 996,
-      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+      "bytes": 957,
+      "sha256": "0c7de27d9a278fe04e483bb72dcf4df903a493be75f8b51a6f8c39a015b6aa66"
     },
     "portable-project/.costvalue/reference/test_core.py": {
       "bytes": 12268,
       "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
     },
     "portable-project/.costvalue/reference/test_workflow.py": {
-      "bytes": 15950,
-      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+      "bytes": 31866,
+      "sha256": "daf66191edd54adafdaf62a723f950cde6cad9cd648afcbd39d637bc31e684f1"
     },
     "portable-project/.costvalue/reference/workflow.py": {
-      "bytes": 31856,
-      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+      "bytes": 38566,
+      "sha256": "e2034dcacaf5e2ee2064606adc8aa1877144d3516c3d32717ef4d1dee490d953"
     },
     "portable-project/AGENTS.md": {
       "bytes": 1464,
@@ -863,9 +871,9 @@
       "words": 53
     },
     "portable-project/memory.md": {
-      "bytes": 125371,
-      "sha256": "5578c28d713120f1141c6286f3afc63d15cc3b7c37e98cbbd6d474f97941485c",
-      "words": 17317
+      "bytes": 125513,
+      "sha256": "a7df1e61ef2d35b8c93395555e0bc761ea3bd3aea2e500da66ef668f6e3d687d",
+      "words": 17340
     },
     "portable-project/optional-adapters/.clinerules/20-costvalue.md": {
       "bytes": 1415,
@@ -885,30 +893,34 @@
       "bytes": 13053,
       "sha256": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56"
     },
+    "reference/export_replay.py": {
+      "bytes": 2847,
+      "sha256": "a018c88522a177e89548f801d6477b4c651abe419e9f0305add879a7f692a8ff"
+    },
     "reference/run_case.py": {
       "bytes": 753,
       "sha256": "49ada1bedc8ab84f0e0a998374cb10114fcecd20fcf90141f695411e62c03e6f"
     },
     "reference/run_replay.py": {
-      "bytes": 996,
-      "sha256": "c4844d4d576ac2360e57ac679a687d2051cef896be98afd50cf9d151efb68906"
+      "bytes": 957,
+      "sha256": "0c7de27d9a278fe04e483bb72dcf4df903a493be75f8b51a6f8c39a015b6aa66"
     },
     "reference/test_core.py": {
       "bytes": 12268,
       "sha256": "da0c12db08925bd8ab9e95292a70089193b2289912af852f57f0f3a8c0f32e29"
     },
     "reference/test_workflow.py": {
-      "bytes": 15950,
-      "sha256": "1709e964cd3e7b10fefa2e54b10fac089655c0a1ae1b870797238107524fd616"
+      "bytes": 31866,
+      "sha256": "daf66191edd54adafdaf62a723f950cde6cad9cd648afcbd39d637bc31e684f1"
     },
     "reference/workflow.py": {
-      "bytes": 31856,
-      "sha256": "d4ac458b5db757f479e7d44c40e22699fbd9d6f1eb82427d8fac506f2ac01162"
+      "bytes": 38566,
+      "sha256": "e2034dcacaf5e2ee2064606adc8aa1877144d3516c3d32717ef4d1dee490d953"
     },
     "tools/README.md": {
-      "bytes": 2145,
-      "sha256": "97516cfc021d5c031836eafcfd23330b75de7481417fdf37ca0774baa684ba95",
-      "words": 264
+      "bytes": 2344,
+      "sha256": "9fc21ac00dc9f0d2fefade67f85d12d2376a9912712251d5d27b02bba0a0aa79",
+      "words": 293
     },
     "tools/build_pack.py": {
       "bytes": 9254,
@@ -927,5 +939,5 @@
       "sha256": "2801af3937e7da477321c360ac2be8ed7eade492547201f5fe6ec99048b6404f"
     }
   },
-  "version": "0.3.0"
+  "version": "0.3.1"
 }

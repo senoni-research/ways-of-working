@@ -1,4 +1,4 @@
-"""Synthetic procurement-workflow replay harness (Senoni reference, workflow schema 0.1.0).
+"""Synthetic procurement-workflow replay harness (Senoni reference, workflow schema 0.2.0).
 
 Deterministic, standard-library mock of the lifecycle:
   request snapshot -> routing -> event evaluation -> decision packet
@@ -26,12 +26,17 @@ from typing import Any, Mapping
 
 from core import ModelError, count, parsed_date, quote_total, serializable
 
-WORKFLOW_SCHEMA = "0.1.0"
+WORKFLOW_SCHEMA = "0.2.0"
 
 DECISION_CRITICAL_FIELDS = ("item_ref", "required_revision", "quantity", "unit", "destination", "required_date")
 ROUTES = ("existing_route", "prepare_event", "request_information", "authorized_exception", "engineering_review")
+ELIGIBILITY_STATUSES = ("met", "not_met", "unknown")
 CORRECTION_TYPES = ("data", "assumption", "requirement", "commercial_judgment", "policy_change")
 CORRECTION_REQUIRED = ("type", "field", "prior_value", "proposed_value", "reason", "evidence", "actor_role", "scope")
+# The only data field this harness recomputes from. Other data errors belong in the
+# source record and arrive as a new snapshot revision; they are refused, not ignored.
+DATA_CORRECTION_FIELDS = ("evaluation_quantity",)
+REQUIREMENT_SETTINGS = ("mandatory", "optional")
 # Actions a prototype may be asked to perform. Only the first three are enabled by
 # default in the mock; the others require separately configured authority and
 # destination controls and are refused here regardless of the fixture.
@@ -133,12 +138,16 @@ def evaluate_event(event: Mapping[str, Any], context: Mapping[str, Any], quantit
     """Eligibility, comparability and preference for N offers on one line.
 
     Hard requirements are not weights: a failed mandatory requirement excludes an
-    offer regardless of price. Unknown is unknown, not a low score. Preference is
+    offer regardless of price. Only an explicit "met" counts as met: a missing or
+    unrecognised status is unresolved, not a low score. An absent requirement list
+    is missing input; an explicitly empty list declares that none apply. Preference is
     computed only among eligible, comparable offers and is withheld when policy does
     not allow a subset comparison while other offers are incomplete or unresolved.
     """
     count(quantity, "quantity")
-    mandatory = list(event.get("mandatory_requirements") or [])
+    mandatory = _require(event, "mandatory_requirements", "event")
+    if not isinstance(mandatory, list):
+        raise ModelError("invalid_event", "event.mandatory_requirements: a list of requirement identifiers is required.")
     rows, excluded, incomplete, unresolved, flags = [], [], [], [], []
     for offer in event["offers"]:
         qid = offer.get("quote_id", "?")
@@ -148,8 +157,13 @@ def evaluate_event(event: Mapping[str, Any], context: Mapping[str, Any], quantit
         if any(s == "not_met" for s in statuses.values()):
             excluded.append({"quote_id": qid, "failed": [r for r, s in statuses.items() if s == "not_met"]})
             continue
-        if any(s == "unknown" for s in statuses.values()):
-            unresolved.append({"quote_id": qid, "unknown": [r for r, s in statuses.items() if s == "unknown"]})
+        open_reqs = [r for r, s in statuses.items() if s != "met"]
+        if open_reqs:
+            entry = {"quote_id": qid, "unknown": open_reqs}
+            odd = {r: statuses[r] for r in open_reqs if statuses[r] not in ELIGIBILITY_STATUSES}
+            if odd:
+                entry["unrecognized_status"] = odd
+            unresolved.append(entry)
             continue
         try:
             row = quote_total(offer, context, quantity)
@@ -270,11 +284,15 @@ class MockDestination:
 
     def submit(self, key: str, payload: Mapping[str, Any], *, lose_response: bool = False) -> dict[str, Any] | None:
         self.submissions += 1
+        fingerprint = _fingerprint(payload)
         if key in self.records:
+            if self.records[key]["payload_fingerprint"] != fingerprint:
+                raise ModelError("idempotency_conflict",
+                                 f"{key}: already recorded with a different payload; neither replayed nor overwritten.")
             rec = dict(self.records[key]); rec["replayed"] = True
             return None if lose_response else rec
         rec = {"destination_record_id": f"DEST-{len(self.records) + 1:04d}", "key": key,
-               "payload_fingerprint": _fingerprint(payload), "replayed": False}
+               "payload_fingerprint": fingerprint, "replayed": False}
         self.records[key] = rec
         return None if lose_response else dict(rec)
 
@@ -297,6 +315,7 @@ class CaseFile:
         self.scoped_parameters: list[dict[str, Any]] = []
         self.precedents: list[dict[str, Any]] = []
         self.handoffs: list[dict[str, Any]] = []
+        self.supplier_choice: dict[str, Any] | None = None
         self.evaluation_quantity: int = self._initial_quantity()
 
     def _initial_quantity(self) -> int:
@@ -315,8 +334,35 @@ class CaseFile:
                 "quote_ids": sorted(o.get("quote_id", "?") for o in self.event["offers"]),
                 "evaluation_quantity": self.evaluation_quantity, "as_of": self.context.get("as_of")}
 
+    def _evaluation_inputs(self) -> dict[str, Any]:
+        """Everything a recommendation depends on. Approval binds to its fingerprint, so
+        an in-place change to any offer, requirement, context or policy value is stale."""
+        return {"snapshot": {k: v for k, v in self.snapshot.items() if k != "action_permissions"},
+                "policy": self.policy, "context": self.context, "event": self.event,
+                "evaluation_quantity": self.evaluation_quantity, "scoped_parameters": self.scoped_parameters,
+                "supplier_choice": self.supplier_choice}
+
+    def _proposed_action(self, ev: Mapping[str, Any]) -> dict[str, Any]:
+        if not ev["preferred"]:
+            return {"type": "clarify_or_withhold", "reason": ev["withheld_reason"] or ev["status"]}
+        choice = self.supplier_choice
+        if choice is None or choice["supplier"] == ev["preferred"]:
+            return {"type": "award_recommendation_for_review", "supplier": ev["preferred"], "basis": "lowest_declared_scope_total"}
+        rows = {r["quote_id"]: r for r in ev["rows"]}
+        if choice["supplier"] not in rows:
+            return {"type": "clarify_or_withhold",
+                    "reason": f"the commercial judgment names {choice['supplier']}, which is not eligible and comparable on the current inputs"}
+        return {"type": "award_recommendation_for_review", "supplier": choice["supplier"], "basis": "commercial_judgment",
+                "rationale": choice["rationale"], "premium_over_lowest": rows[choice["supplier"]]["total"] - rows[ev["preferred"]]["total"]}
+
     def build_packet(self) -> dict[str, Any]:
+        routing = route_requisition(self.snapshot, self.policy)
+        gated = [l for l in routing["lines"] if l["route"] != "prepare_event"]
+        if gated:
+            raise ModelError("route_not_event", f"{gated[0]['line_id']}: route is {gated[0]['route']}; "
+                                                "no sourcing-event packet is built until that step is resolved.")
         ev = evaluate_event(self.event, self.context, self.evaluation_quantity, self.policy)
+        action = self._proposed_action(ev)
         prev = self.current
         n = len(self.packets) + 1
         packet = {
@@ -324,10 +370,10 @@ class CaseFile:
             "references": {"tenant": self.snapshot["tenant"], "source_system": self.snapshot["source_system"],
                            "requisition_id": self.snapshot["requisition_id"],
                            "line_ids": [l["line_id"] for l in self.snapshot["lines"]]},
-            "input_versions": self._input_versions(), "input_fingerprint": _fingerprint(self._input_versions()),
-            "recommendation_state": "recommended" if ev["preferred"] else "withheld",
-            "proposed_action": ({"type": "award_recommendation_for_review", "supplier": ev["preferred"]}
-                                if ev["preferred"] else {"type": "clarify_or_withhold", "reason": ev["withheld_reason"] or ev["status"]}),
+            "routing": [{"line_id": l["line_id"], "route": l["route"], "review_depth": l["review_depth"]} for l in routing["lines"]],
+            "input_versions": self._input_versions(), "input_fingerprint": _fingerprint(self._evaluation_inputs()),
+            "recommendation_state": "recommended" if action["type"] == "award_recommendation_for_review" else "withheld",
+            "proposed_action": action,
             "decision_requested": "approve, reject or correct this recommendation for the stated requisition line and revision",
             "authority_required": list((self.policy.get("approval_roles") or {}).get("award_recommendation", [])),
             "evidence": {"offers": [r["quote_id"] for r in ev["rows"]], "attachments": [a.get("id") for a in self.snapshot.get("attachments") or []]},
@@ -335,12 +381,16 @@ class CaseFile:
             "exceptions": {"excluded": ev["excluded"], "incomplete": ev["incomplete"], "unresolved": ev["unresolved"],
                            "untrusted_content_flags": ev["untrusted_content_flags"]},
             "assumptions": [{"name": "evaluation_quantity", "value": self.evaluation_quantity,
-                             "provenance": "snapshot evaluation_basis" if n == 1 else "buyer correction", "changes_result_if": "quantity crosses an offer crossover or band"}],
+                             "provenance": "buyer correction" if any(c["type"] == "data" for c in self.corrections) else "snapshot evaluation_basis",
+                             "changes_result_if": "quantity crosses an offer crossover or band"}]
+                           + [{"name": p["field"], "value": p["value"], "provenance": "buyer assumption correction", "scope": p["scope"],
+                               "used_by_this_evaluation": False} for p in self.scoped_parameters],
             "diff_from_previous": None, "reviewer_decision": "pending", "decision_record": None,
             "approval_valid": False, "execution_state": "not_requested", "observed_outcome": "not_observed",
         }
         if prev is not None:
-            changed = [k for k in ("recommendation_state", "proposed_action", "input_fingerprint") if prev[k] != packet[k]]
+            changed = [k for k in ("recommendation_state", "proposed_action", "declared_scope_economics", "exceptions",
+                                   "assumptions", "input_fingerprint") if prev[k] != packet[k]]
             packet["diff_from_previous"] = {"previous_packet": prev["packet_id"], "changed": changed,
                                             "previous_recommendation": prev["proposed_action"]}
             prev["recommendation_state"] = "superseded"
@@ -364,6 +414,9 @@ class CaseFile:
             raise ModelError("insufficient_authority", f"{actor_role!r} may not decide on {packet_id}.")
         if decision not in ("GO", "NO_GO"):
             raise ModelError("invalid_decision", "Use GO, NO_GO, or apply_correction for CORRECT.")
+        if cur["execution_state"] != "not_requested":
+            raise ModelError("already_submitted", f"{packet_id}: a handoff was requested for this revision; "
+                                                  "correct it to create a new revision instead of re-deciding.")
         cur["reviewer_decision"] = "approved" if decision == "GO" else "rejected"
         cur["approval_valid"] = decision == "GO"
         cur["decision_record"] = {"decision": decision, "actor_role": actor_role, "reason": reason,
@@ -380,26 +433,52 @@ class CaseFile:
         for k in CORRECTION_REQUIRED:
             if k not in correction or correction[k] in (None, ""):
                 raise ModelError("invalid_correction", f"correction.{k}: required.")
-        ctype = correction["type"]
+        ctype, field, value, actor = correction["type"], correction["field"], correction["proposed_value"], correction["actor_role"]
         if ctype not in CORRECTION_TYPES:
             raise ModelError("invalid_correction", f"unknown correction type {ctype!r}.")
-        if ctype == "policy_change" and correction["actor_role"] not in (self.policy.get("policy_owners") or []):
-            raise ModelError("insufficient_authority", "policy changes require the policy owner.")
-        if ctype == "requirement" and correction["actor_role"] not in (self.policy.get("requirement_owners") or []):
-            raise ModelError("insufficient_authority", "requirement changes require the requirement owner.")
+        # Authority by type; every check runs before any state changes.
+        if ctype == "policy_change":
+            if actor not in (self.policy.get("policy_owners") or []):
+                raise ModelError("insufficient_authority", "policy changes require the policy owner.")
+            parsed_date(_require(correction, "effective_date", "correction"), "correction.effective_date")
+        elif ctype == "requirement":
+            if actor not in (self.policy.get("requirement_owners") or []):
+                raise ModelError("insufficient_authority", "requirement changes require the requirement owner.")
+        elif actor not in cur["authority_required"]:
+            raise ModelError("insufficient_authority", f"{ctype} corrections require a reviewer with authority on {cur['packet_id']}.")
+        if ctype == "data":
+            if field not in DATA_CORRECTION_FIELDS:
+                raise ModelError("unsupported_correction", f"data correction to {field!r} is not modelled here; "
+                                                           "correct the source record and export a new snapshot revision.")
+            count(value, "evaluation_quantity")
+        elif ctype == "requirement" and value not in REQUIREMENT_SETTINGS:
+            raise ModelError("unsupported_correction", "a requirement correction sets a requirement to 'mandatory' or 'optional'.")
+        elif ctype == "commercial_judgment":
+            if field != "supplier_choice":
+                raise ModelError("unsupported_correction", "a commercial judgment here chooses a supplier (field 'supplier_choice').")
+            if value not in [r["quote_id"] for r in cur["declared_scope_economics"]]:
+                raise ModelError("invalid_correction", f"{value}: not an eligible, comparable offer in {cur['packet_id']}.")
         record = {**dict(correction), "prior_revision": cur["revision"], "applied_to_packet": cur["packet_id"],
                   "invalidated_approval": bool(cur["approval_valid"])}
         cur["reviewer_decision"] = "correction_requested"
-        if ctype == "data" and correction["field"] == "evaluation_quantity":
-            self.evaluation_quantity = count(correction["proposed_value"], "evaluation_quantity")
+        if ctype == "data":
+            self.evaluation_quantity = value
         elif ctype == "assumption":
-            self.scoped_parameters.append({"field": correction["field"], "value": correction["proposed_value"],
-                                           "scope": correction["scope"], "evidence": correction["evidence"]})
+            # Retained as a scoped parameter; the quote comparison here uses no process parameter.
+            self.scoped_parameters.append({"field": field, "value": value, "scope": correction["scope"], "evidence": correction["evidence"]})
+        elif ctype == "requirement":
+            reqs = list(self.event["mandatory_requirements"])
+            if value == "mandatory" and field not in reqs:
+                reqs.append(field)
+            elif value == "optional":
+                reqs = [r for r in reqs if r != field]
+            self.event["mandatory_requirements"] = reqs
         elif ctype == "commercial_judgment":
+            self.supplier_choice = {"supplier": value, "rationale": correction["reason"], "scope": correction["scope"]}
             self.precedents.append({"packet": cur["packet_id"], "rationale": correction["reason"], "scope": correction["scope"]})
         elif ctype == "policy_change":
-            self.policy["policy_version"] = str(correction["proposed_value"])
-        # requirement / other data fields: recorded; dependent recompute happens in build_packet
+            self.policy["policy_version"] = str(value)
+            self.policy["effective_date"] = correction["effective_date"]
         self.corrections.append(record)
         new = self.build_packet()
         record["new_revision"] = new["revision"]
@@ -441,7 +520,7 @@ class CaseFile:
             raise ModelError("approval_required", "a current, valid approval is required before handoff.")
         if actor_role not in cur["authority_required"]:
             raise ModelError("insufficient_authority", f"{actor_role!r} may not request the handoff.")
-        if cur["input_fingerprint"] != _fingerprint(self._input_versions()):
+        if cur["input_fingerprint"] != _fingerprint(self._evaluation_inputs()):
             raise ModelError("stale_approval", "inputs changed since approval; a current review is required.")
         act = parsed_date(action_date, "action_date")
         for o in self.event["offers"]:
@@ -451,8 +530,8 @@ class CaseFile:
         existing = next((h for h in self.handoffs if h["key"] == key), None)
         if existing and existing["execution_state"] == "unknown":
             raise ModelError("reconcile_required", "a previous submission has an unknown outcome; reconcile before retrying.")
-        payload = {"packet_id": cur["packet_id"], "revision": cur["revision"], "decision": cur["decision_record"],
-                   "proposed_action": cur["proposed_action"]}
+        payload = {"packet_id": cur["packet_id"], "revision": cur["revision"], "input_fingerprint": cur["input_fingerprint"],
+                   "decision": cur["decision_record"], "proposed_action": cur["proposed_action"]}
         resp = destination.submit(key, payload, lose_response=lose_response)
         rec = {"key": key, "packet_id": cur["packet_id"], "execution_state": "unknown" if resp is None else "acknowledged",
                "destination": resp, "action_date": action_date}
@@ -474,22 +553,39 @@ class CaseFile:
 
 # ------------------------------------------------------------------ replay
 
-def run_replay(fixture: Mapping[str, Any], scenario: str = "baseline") -> dict[str, Any]:
-    """Execute a named synthetic scenario and return its step log (serializable)."""
+REPLAY_SCENARIOS = ("baseline", "timeout", "stale_quote", "stale_approval_after_correction")
+
+
+def run_replay(fixture: Mapping[str, Any], scenario: str = "baseline", *, trace: bool = False) -> dict[str, Any]:
+    """Execute a named synthetic scenario and return its step log (serializable).
+
+    With ``trace`` each step also carries the case file and mock destination as they
+    stood after that step, so a recorded replay can be displayed without recomputing.
+    """
+    if scenario not in REPLAY_SCENARIOS:
+        raise ModelError("unknown_scenario", f"{scenario!r}: expected one of {', '.join(REPLAY_SCENARIOS)}.")
     cf = CaseFile(fixture)
     dest = MockDestination()
     steps: list[dict[str, Any]] = []
     def log(name: str, **data: Any) -> None:
-        steps.append({"step": name, **serializable(data)})
+        entry = {"step": name, **data}
+        if trace:
+            entry["state"] = copy.deepcopy({"packets": cf.packets, "corrections": cf.corrections, "handoffs": cf.handoffs,
+                                            "destination": {"records": list(dest.records.values()), "submissions": dest.submissions}})
+        steps.append(serializable(entry))
     routing = route_requisition(fixture["snapshot"], cf.policy)
     log("route", result=routing["lines"][0]["route"], review_depth=routing["lines"][0]["review_depth"])
-    p1 = cf.build_packet()
+    try:
+        p1 = cf.build_packet()
+    except ModelError as e:
+        log("packet_blocked", code=e.code)
+        return {"scenario": scenario, "steps": steps, "packets": 0, "schema": WORKFLOW_SCHEMA}
     log("packet", packet_id=p1["packet_id"], state=p1["recommendation_state"], proposed=p1["proposed_action"],
         quantity=cf.evaluation_quantity, exceptions=p1["exceptions"])
     corr = fixture.get("replay", {}).get("correction")
     if scenario == "stale_approval_after_correction":
         cf.record_decision(p1["packet_id"], "GO", "buyer", expected_revision=1)
-        log("decision", packet_id=p1["packet_id"], decision="GO")
+        log("decision", packet_id=p1["packet_id"], decision="GO", bound_to=p1["decision_record"]["bound_to"])
     if corr:
         p2 = cf.apply_correction(corr, expected_revision=1)
         log("correction", type=corr["type"], field=corr["field"], prior=corr["prior_value"], proposed=corr["proposed_value"],
@@ -501,7 +597,7 @@ def run_replay(fixture: Mapping[str, Any], scenario: str = "baseline") -> dict[s
             cf.request_handoff(dest, action_date=fixture["replay"]["action_date"], actor_role="buyer")
         except ModelError as e:
             log("handoff_blocked", code=e.code)
-        return {"scenario": scenario, "steps": steps, "packets": len(cf.packets)}
+        return {"scenario": scenario, "steps": steps, "packets": len(cf.packets), "schema": WORKFLOW_SCHEMA}
     cf.record_decision(cur["packet_id"], "GO", "buyer", expected_revision=cur["revision"])
     log("decision", packet_id=cur["packet_id"], decision="GO", bound_to=cur["decision_record"]["bound_to"])
     action_date = fixture["replay"]["action_date"] if scenario != "stale_quote" else fixture["replay"]["late_action_date"]
@@ -510,7 +606,7 @@ def run_replay(fixture: Mapping[str, Any], scenario: str = "baseline") -> dict[s
         log("handoff", execution_state=h["execution_state"], destination=h["destination"])
     except ModelError as e:
         log("handoff_blocked", code=e.code)
-        return {"scenario": scenario, "steps": steps, "packets": len(cf.packets)}
+        return {"scenario": scenario, "steps": steps, "packets": len(cf.packets), "schema": WORKFLOW_SCHEMA}
     if scenario == "timeout":
         try:
             cf.request_handoff(dest, action_date=action_date, actor_role="buyer")

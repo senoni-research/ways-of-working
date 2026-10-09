@@ -1,6 +1,6 @@
 # Cost & Value Engineering — portable handbook
 
-Version 0.3.0 · 9 October 2026 · Focused prototype-method release
+Version 0.3.1 · 9 October 2026 · Focused prototype-method release
 
 For OpenCode, Cline or another supporting agent, merge the portable pack's `.costvalue/` directory and the supplied `AGENTS.md` section into existing project instructions. Do not overwrite them or install duplicate entry routes. Cline also has an optional `.clinerules` entry. Read the host documentation in HOST02/HOST03, confirm the installed version, and verify in a fresh session that the files actually loaded. A file named `memory.md` does not activate itself.
 
@@ -475,7 +475,7 @@ An approval of the old calculation must not silently approve the corrected one. 
 
 ## Eligibility, comparability, preference
 
-Separate three questions in every event ([30-economic-contract](#mod-30-economic-contract)). **Eligible:** does the offer meet every mandatory requirement for this line and context? A failed requirement excludes the offer regardless of price; an unknown status is unresolved, not a low score. **Comparable:** are price, unit, quantity, revision, delivery and charging scope established? An offer with an unknown freight line is incomplete, not free. **Preferable:** among the eligible and comparable offers, which best supports the declared objective at the declared quantity? Whether a preference may be stated while other offers remain incomplete is a policy decision the owner records, not an analyst's default.
+Separate three questions in every event ([30-economic-contract](#mod-30-economic-contract)). **Eligible:** does the offer meet every mandatory requirement for this line and context? A failed requirement excludes the offer regardless of price; only an explicit “met” counts—a missing or unrecognized status is unresolved, not a low score. **Comparable:** are price, unit, quantity, revision, delivery and charging scope established? An offer with an unknown freight line is incomplete, not free. **Preferable:** among the eligible and comparable offers, which best supports the declared objective at the declared quantity? Whether a preference may be stated while other offers remain incomplete is a policy decision the owner records, not an analyst's default.
 
 For several lines, the cheapest line-by-line choice is not an award. Capacity limits, minimum quantities, bundles and supplier-concentration constraints can make it infeasible. The reference harness contains a tiny exhaustive feasibility check for hand-checkable synthetic examples (`check_allocation`); it is not an optimizer, and a general optimization service is out of scope. Where a customer already has one, consume its approved scenarios rather than reimplementing it.
 
@@ -501,7 +501,7 @@ Keep the customer's system authoritative for transactions and approvals. Add ana
 
 request snapshot → routing → event snapshot → evaluation → decision packet → authorized review or correction → handoff request → acknowledgement or unresolved execution state → reconciliation.
 
-Rules the harness enforces and a real adapter must preserve: an action carries request, revision and operation identifiers as an idempotency key; a duplicate submission is acknowledged as a replay, not executed twice; a timeout after submission is an **unknown** outcome, not a failure—reconcile the destination's state before any retry; authority and freshness are checked again at the action boundary, so an expired quote, a changed snapshot revision, a revoked permission or a changed policy blocks a stale approval. The destination must participate in duplicate prevention; a local flag does not establish exactly-once execution.
+Rules the harness enforces and a real adapter must preserve: an action carries request, revision and operation identifiers as an idempotency key; a duplicate submission is acknowledged as a replay, not executed twice, and the same key arriving with a different payload is a conflict to surface, not a replay; a timeout after submission is an **unknown** outcome, not a failure—reconcile the destination's state before any retry; authority and freshness are checked again at the action boundary, so an expired quote, a changed snapshot revision, a revoked permission or a changed policy blocks a stale approval. The destination must participate in duplicate prevention; a local flag does not establish exactly-once execution.
 
 Start with a JSON replay and a mock destination. No real connector, supplier outreach or purchase-order creation is needed to validate the method. Ordinary failures to design for: the same request arriving twice; a quote expiring after review; the requester changing the specification; two reviewers correcting the same version; an order request timing out after acceptance.
 

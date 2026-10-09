@@ -642,3 +642,49 @@ UNRUN / not established by this tree: live-agent behavior for B01–B45 on any h
   value at any organization. The private practitioner conversation that motivated
   this edition is not represented in the pack; no name, employer or workflow metric
   from it was entered.
+
+--------------------------------------------------------------------------------
+v0.3.1 REFERENCE-HARNESS CORRECTIONS — 9 October 2026
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: cve-workflow-safeguards, based on main 4877b50.
+Trigger: probes of the published 0.3.0 harness against modules 15/55 and recipe
+  M14 found 13 unenforced rules (route ignored after routing; any status other
+  than not_met treated as met; absent requirement list read as none; approval
+  fingerprint over identifiers only; no authority check for data, assumption or
+  commercial-judgment corrections; data/assumption/requirement corrections not
+  applied; commercial judgment unable to choose a supplier; policy change without
+  effective date; same idempotency key with a different payload replayed) plus
+  one fixture-description date mismatch. The same probes report 13 OK on this tree;
+  the date is corrected in R01-source.md.
+
+Scope: reference/workflow.py (workflow_schema 0.2.0), run_replay.py, new
+  export_replay.py, test_workflow.py (+23 tests); canonical metadata 0.3.1,
+  prefaces, pages (README, CHANGELOG, VALIDATION), module 55 (two sentences),
+  cases/R01-source.md (required date); tools/README.md. Inventories unchanged.
+  Generated artifacts: 131 (export_replay.py mirrored into both project packs).
+  Manifest entries: 196. core.py schema_version stays 0.1.0.
+
+Commands and observed results:
+  python3 tools/build_pack.py .            -> Built 131 generated artifacts; 21 changed
+  python3 tools/build_pack.py .  (again)   -> Built 131 generated artifacts; 0 changed
+  python3 tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 tools/validate_pack.py .         -> STATIC VALIDATION PASSED (131 artifacts)
+  python3 tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_*.py'
+      canonical reference/                 -> Ran 117 tests, OK (56 core + 61 workflow)
+      cursor-project/.costvalue/reference  -> Ran 117 tests, OK
+      portable-project/.costvalue/reference-> Ran 117 tests, OK
+  python3 -B reference/run_replay.py --scenario <s>  (all four; workflow schema 0.2.0)
+      baseline   -> route, packet, correction, decision, handoff, duplicate_submission
+      timeout    -> ... handoff unknown; retry_blocked (reconcile_required); reconciled
+      stale_quote-> handoff_blocked (stale_approval)
+      stale_approval_after_correction -> handoff_blocked (approval_required)
+  Carey Chou:   python3 tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 tools/check_docs.py        -> PASSED
+                git diff --check                   -> clean
+
+UNRUN in this record: tools/scan_publication.py (no private terms file was
+  supplied to this session; an unrun check, not a pass). Everything listed as
+  UNRUN for 0.3.0 remains unrun.

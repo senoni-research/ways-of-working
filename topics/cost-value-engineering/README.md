@@ -1,6 +1,6 @@
 # Cost & Value Engineering
 
-**Focused WoW pack · v0.3.0 · 9 October 2026**
+**Focused WoW pack · v0.3.1 · 9 October 2026**
 
 A source-attributed working method for practitioners and AI coding assistants reviewing part specifications, cost assumptions, supplier quotes and cost breakdowns, and handling the buyer's decision inside an existing procurement workflow. This topic-led edition supports the Axiocost prototype, but its guidance is reusable outside that product.
 
@@ -10,7 +10,7 @@ The purpose is a decision that can be inspected: what is comparable, what drives
 
 Read [QUICKSTART](QUICKSTART.md). Complete handbooks: [Cursor](cursor.md) and [portable memory](memory.md). Installable directories: [Cursor project](cursor-project/README.md) and [portable project](portable-project/README.md). The two books contain identical method content with host-specific installation prefaces; their filenames alone do not activate rules.
 
-This release has **12 modules, 15 recipes, 18 source records (7 domain + 3 host documentation + 8 vendor-reported capability pages), 6 published synthetic cases plus 1 synthetic replay fixture, 45 behavioral specifications, 9 templates and 7 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs, and a deterministic synthetic workflow harness (routing, event evaluation, typed corrections, decision packets, mock handoff). The **method pack** version is 0.3.0 (`VERSION`); the reference arithmetic **schema** remains `schema_version` 0.1.0 and the workflow harness carries its own `workflow_schema` 0.1.0 — those version numbers are independent deliberately. It does not implement AI document extraction, CAD analysis, a cost-breakdown or index engine, a customer database, a connector to any procurement system, an optimizer, a negotiation agent, an approval service or industrial validation.
+This release has **12 modules, 15 recipes, 18 source records (7 domain + 3 host documentation + 8 vendor-reported capability pages), 6 published synthetic cases plus 1 synthetic replay fixture, 45 behavioral specifications, 9 templates and 7 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs, and a deterministic synthetic workflow harness (routing, event evaluation, typed corrections, decision packets, mock handoff). The **method pack** version is 0.3.1 (`VERSION`); the reference arithmetic **schema** remains `schema_version` 0.1.0 and the workflow harness carries its own `workflow_schema` 0.2.0 — those version numbers are independent deliberately. It does not implement AI document extraction, CAD analysis, a cost-breakdown or index engine, a customer database, a connector to any procurement system, an optimizer, a negotiation agent, an approval service or industrial validation.
 
 ## What it covers
 

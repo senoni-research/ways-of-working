@@ -1,14 +1,21 @@
-"""Deterministic workflow-harness tests (synthetic R01 fixture). Map to B32–B45 (W01–W14)."""
+"""Deterministic workflow-harness tests (synthetic R01 fixture). Map to B32–B45 (W01–W14).
+
+SafeguardTests hold the method's rules from module 55 and recipe M14 that the 0.3.0
+harness did not enforce: route gates, strict eligibility, authority and application
+for every correction type, content-bound approval and same-key payload conflicts.
+"""
 import copy, json, unittest
 from decimal import Decimal
 from pathlib import Path
 from core import ModelError
+from export_replay import build_export, render
 from workflow import (CaseFile, MockDestination, check_allocation, check_unit, effort_ledger,
                       evaluate_event, flag_untrusted_text, parse_declared_number, route_requisition, run_replay)
 
 ROOT = Path(__file__).resolve().parents[1]
 _FIX = ROOT / 'cases/R01-requisition-replay.json'
-FIXTURE = json.loads(_FIX.read_text()) if _FIX.exists() else json.loads((ROOT / 'canonical/cases/R01-requisition-replay.json').read_text())
+FIXTURE_PATH = _FIX if _FIX.exists() else ROOT / 'canonical/cases/R01-requisition-replay.json'
+FIXTURE = json.loads(FIXTURE_PATH.read_text())
 
 
 class RoutingTests(unittest.TestCase):
@@ -102,13 +109,15 @@ class DecisionAndCorrectionTests(unittest.TestCase):
         p2 = self.cf.apply_correction({'type': 'commercial_judgment', 'field': 'supplier_choice', 'prior_value': 'Offer A', 'proposed_value': 'Offer B',
                                        'reason': 'urgent delivery requires the shorter lead time', 'evidence': 'requester note', 'actor_role': 'buyer', 'scope': 'this order only'}, expected_revision=1)
         self.assertEqual([r['total'] for r in p2['declared_scope_economics']], before); self.assertEqual(len(self.cf.precedents), 1)
+        self.assertEqual(p2['proposed_action']['supplier'], 'Offer B'); self.assertEqual(p2['proposed_action']['basis'], 'commercial_judgment')
+        self.assertEqual(p2['proposed_action']['premium_over_lowest'], Decimal('19200.00'))
     def test_assumption_correction_is_scoped_not_global(self):
         self.cf.apply_correction({'type': 'assumption', 'field': 'setup_hours_per_batch', 'prior_value': 1.5, 'proposed_value': 2,
                                   'reason': 'measured for this supplier and tool', 'evidence': 'supplier statement', 'actor_role': 'buyer', 'scope': 'Offer A tool only'}, expected_revision=1)
         self.assertEqual(self.cf.scoped_parameters[0]['scope'], 'Offer A tool only')
     def test_W12_repeated_override_needs_policy_owner(self):
         for n in range(3):
-            self.cf.apply_correction({'type': 'commercial_judgment', 'field': 'supplier_choice', 'prior_value': 'A', 'proposed_value': 'B', 'reason': 'urgency',
+            self.cf.apply_correction({'type': 'commercial_judgment', 'field': 'supplier_choice', 'prior_value': 'Offer A', 'proposed_value': 'Offer B', 'reason': 'urgency',
                                       'evidence': 'note', 'actor_role': 'buyer', 'scope': 'this order'}, expected_revision=n + 1)
         with self.assertRaises(ModelError) as cm: self.cf.promote_rule([0, 1, 2], 'buyer', 'always prefer B')
         self.assertEqual(cm.exception.code, 'insufficient_authority'); self.assertEqual(len(self.cf.precedents), 3)
@@ -185,6 +194,187 @@ class ReplayTests(unittest.TestCase):
     def test_stale_approval_after_correction_replay_blocks(self):
         steps = {s['step']: s for s in run_replay(FIXTURE, 'stale_approval_after_correction')['steps']}
         self.assertFalse(steps['correction']['previous_approval_valid']); self.assertEqual(steps['handoff_blocked']['code'], 'approval_required')
+    def test_unknown_scenario_refused(self):
+        with self.assertRaises(ModelError) as cm: run_replay(FIXTURE, 'happy_path')
+        self.assertEqual(cm.exception.code, 'unknown_scenario')
+
+
+def _correction(ctype, field, prior, proposed, actor='buyer', **extra):
+    return {'type': ctype, 'field': field, 'prior_value': prior, 'proposed_value': proposed, 'reason': 'test',
+            'evidence': 'test record', 'actor_role': actor, 'scope': 'line L1', **extra}
+
+
+class SafeguardTests(unittest.TestCase):
+    def setUp(self): self.f = copy.deepcopy(FIXTURE)
+    def code(self, fn, *a, **k):
+        with self.assertRaises(ModelError) as cm: fn(*a, **k)
+        return cm.exception.code
+    def approved_p2(self):
+        cf = CaseFile(self.f); cf.build_packet(); cf.apply_correction(self.f['replay']['correction'], expected_revision=1)
+        cf.record_decision(cf.current['packet_id'], 'GO', 'buyer', expected_revision=2); return cf
+    def handoff(self, cf, dest=None):
+        return cf.request_handoff(dest or MockDestination(), action_date=self.f['replay']['action_date'], actor_role='buyer')
+
+    # Routing gates every later step (module 15: review before any sourcing step).
+    def test_W15_non_event_routes_build_no_packet(self):
+        line = self.f['snapshot']['lines'][0]
+        cases = {'engineering_review': lambda: self.f['policy'].__setitem__('engineering_review_categories', [line['category']]),
+                 'request_information': lambda: line.__setitem__('required_date', None),
+                 'authorized_exception': lambda: line.__setitem__('exception_requested', True),
+                 'existing_route': lambda: line.__setitem__('existing_route', {'reference': 'CTR-SYN-9', 'approved': True, 'covers_revision': 'B',
+                                                                                'covers_destinations': [line['destination']], 'valid_to': '2027-01-01'})}
+        for route, mutate in cases.items():
+            with self.subTest(route=route):
+                self.f = copy.deepcopy(FIXTURE); line = self.f['snapshot']['lines'][0]; mutate()
+                self.assertEqual(route_requisition(self.f['snapshot'], self.f['policy'])['lines'][0]['route'], route)
+                self.assertEqual(self.code(CaseFile(self.f).build_packet), 'route_not_event')
+                r = run_replay(self.f, 'baseline'); self.assertEqual([s['step'] for s in r['steps']], ['route', 'packet_blocked'])
+                self.assertEqual(r['packets'], 0)
+    def test_packet_records_its_route(self):
+        p = CaseFile(self.f).build_packet()
+        self.assertEqual(p['routing'], [{'line_id': 'L1', 'route': 'prepare_event', 'review_depth': 'standard'}])
+
+    # Eligibility: only an explicit "met" counts.
+    def test_W16_unrecognised_eligibility_status_is_unresolved(self):
+        d = next(o for o in self.f['event']['offers'] if o['quote_id'] == 'Offer D')
+        d['eligibility'] = {r: 'pending' for r in self.f['event']['mandatory_requirements']}
+        r = evaluate_event(self.f['event'], self.f['context'], 5000, self.f['policy'])
+        u = next(x for x in r['unresolved'] if x['quote_id'] == 'Offer D')
+        self.assertEqual(u['unrecognized_status'], {'qualification_on_file': 'pending', 'delivery_to_destination': 'pending'})
+        self.assertNotIn('Offer D', [x['quote_id'] for x in r['rows']]); self.assertEqual(r['preferred'], 'Offer B')
+    def test_W16_missing_requirement_list_is_missing_input_not_none_apply(self):
+        self.f['event'].pop('mandatory_requirements')
+        self.assertEqual(self.code(evaluate_event, self.f['event'], self.f['context'], 5000, self.f['policy']), 'missing_input')
+        self.f['event']['mandatory_requirements'] = 'qualification_on_file'
+        self.assertEqual(self.code(evaluate_event, self.f['event'], self.f['context'], 5000, self.f['policy']), 'invalid_event')
+    def test_explicitly_empty_requirement_list_declares_none(self):
+        self.f['event']['mandatory_requirements'] = []
+        self.assertEqual(evaluate_event(self.f['event'], self.f['context'], 5000, self.f['policy'])['preferred'], 'Offer D')
+
+    # Approval binds to the full input content, not only to identifiers.
+    def test_W17_in_place_input_changes_make_the_approval_stale(self):
+        changes = {'offer price': lambda cf: next(o for o in cf.event['offers'] if o['quote_id'] == 'Offer B').__setitem__('unit_price', 9.99),
+                   'offer eligibility': lambda cf: cf.event['offers'][0]['eligibility'].__setitem__('qualification_on_file', 'unknown'),
+                   'delivery scope': lambda cf: cf.context.__setitem__('delivery_scope', 'Ex works, buyer collects'),
+                   'policy rule': lambda cf: cf.policy.__setitem__('subset_comparison_allowed', False),
+                   'requisition line': lambda cf: cf.snapshot['lines'][0].__setitem__('destination', 'another receiving point')}
+        for name, mutate in changes.items():
+            with self.subTest(change=name):
+                cf = self.approved_p2(); mutate(cf)
+                self.assertEqual(self.code(self.handoff, cf), 'stale_approval')
+    def test_unrelated_permission_change_does_not_invalidate_approval(self):
+        cf = self.approved_p2(); cf.snapshot['action_permissions']['draft'] = False
+        self.assertEqual(self.handoff(cf)['execution_state'], 'acknowledged')
+    def test_decision_record_binds_to_packet_fingerprint(self):
+        cf = self.approved_p2(); p2 = cf.current
+        self.assertEqual(p2['decision_record']['bound_to'], {'packet_id': 'REQ-SYN-0001-P2', 'revision': 2, 'input_fingerprint': p2['input_fingerprint']})
+        self.assertNotEqual(cf.packets[0]['input_fingerprint'], p2['input_fingerprint'])
+
+    # Every correction type: checked against its owner, then applied or refused.
+    def test_W18_reviewer_types_require_packet_authority(self):
+        for c in (_correction('data', 'evaluation_quantity', 50000, 5000, actor='anyone'),
+                  _correction('assumption', 'setup_hours_per_batch', 1.5, 2, actor='requester'),
+                  _correction('commercial_judgment', 'supplier_choice', 'Offer A', 'Offer B', actor='quality-engineering')):
+            with self.subTest(type=c['type']):
+                cf = CaseFile(self.f); p1 = cf.build_packet()
+                self.assertEqual(self.code(cf.apply_correction, c, expected_revision=1), 'insufficient_authority')
+                self.assertEqual((len(cf.packets), len(cf.corrections), p1['reviewer_decision']), (1, 0, 'pending'))
+    def test_W18_unsupported_data_correction_refused_without_side_effects(self):
+        cf = CaseFile(self.f); p1 = cf.build_packet(); cf.record_decision(p1['packet_id'], 'GO', 'buyer', expected_revision=1)
+        self.assertEqual(self.code(cf.apply_correction, _correction('data', 'freight_per_unit', 0.14, 0.5), expected_revision=1), 'unsupported_correction')
+        self.assertEqual((len(cf.packets), p1['reviewer_decision'], p1['approval_valid']), (1, 'approved', True))
+        self.assertEqual(self.code(cf.apply_correction, _correction('data', 'evaluation_quantity', 50000, 0), expected_revision=1), 'invalid_count')
+        self.assertEqual(len(cf.packets), 1)
+    def test_W18_requirement_correction_by_owner_recomputes_eligibility(self):
+        cf = CaseFile(self.f); cf.build_packet(); cf.apply_correction(self.f['replay']['correction'], expected_revision=1)
+        p3 = cf.apply_correction(_correction('requirement', 'qualification_on_file', 'mandatory', 'optional', actor='quality-engineering'), expected_revision=2)
+        self.assertEqual(cf.event['mandatory_requirements'], ['delivery_to_destination'])
+        self.assertEqual(p3['proposed_action']['supplier'], 'Offer D'); self.assertEqual(p3['exceptions']['excluded'], [])
+        self.assertIn('exceptions', p3['diff_from_previous']['changed'])
+        p4 = cf.apply_correction(_correction('requirement', 'plant_audit', 'optional', 'mandatory', actor='quality-engineering'), expected_revision=3)
+        self.assertEqual(p4['recommendation_state'], 'withheld'); self.assertEqual(len(p4['exceptions']['unresolved']), 4)
+        self.assertEqual(self.code(cf.apply_correction, _correction('requirement', 'plant_audit', 'mandatory', 'preferred', actor='quality-engineering'), expected_revision=4),
+                         'unsupported_correction')
+    def test_W18_commercial_judgment_must_name_an_eligible_comparable_offer(self):
+        cf = CaseFile(self.f); cf.build_packet()
+        for bad in ('Offer C', 'Offer D', 'Offer Z'):
+            with self.subTest(supplier=bad):
+                self.assertEqual(self.code(cf.apply_correction, _correction('commercial_judgment', 'supplier_choice', 'Offer A', bad), expected_revision=1), 'invalid_correction')
+        self.assertEqual(self.code(cf.apply_correction, _correction('commercial_judgment', 'unit_price', 2.36, 2.0), expected_revision=1), 'unsupported_correction')
+    def test_commercial_judgment_withholds_if_its_supplier_stops_being_eligible(self):
+        cf = CaseFile(self.f); cf.build_packet()
+        p2 = cf.apply_correction(_correction('commercial_judgment', 'supplier_choice', 'Offer A', 'Offer B'), expected_revision=1)
+        self.assertEqual(p2['proposed_action']['basis'], 'commercial_judgment')
+        next(o for o in cf.event['offers'] if o['quote_id'] == 'Offer B')['eligibility']['qualification_on_file'] = 'not_met'
+        p3 = cf.build_packet()
+        self.assertEqual(p3['recommendation_state'], 'withheld'); self.assertIn('Offer B', p3['proposed_action']['reason'])
+        self.assertEqual(p2['recommendation_state'], 'superseded')
+    def test_assumption_correction_is_recorded_on_the_packet_as_unused(self):
+        cf = CaseFile(self.f); p1 = cf.build_packet()
+        p2 = cf.apply_correction(_correction('assumption', 'setup_hours_per_batch', 1.5, 2), expected_revision=1)
+        self.assertEqual(p2['declared_scope_economics'], p1['declared_scope_economics'])
+        self.assertEqual(p2['assumptions'][1], {'name': 'setup_hours_per_batch', 'value': 2, 'provenance': 'buyer assumption correction',
+                                                'scope': 'line L1', 'used_by_this_evaluation': False})
+        self.assertEqual(p2['assumptions'][0]['provenance'], 'snapshot evaluation_basis'); self.assertIn('assumptions', p2['diff_from_previous']['changed'])
+    def test_W18_policy_change_needs_owner_and_effective_date(self):
+        cf = CaseFile(self.f); cf.build_packet(); owner = self.f['policy']['policy_owners'][0]
+        c = _correction('policy_change', 'policy_version', 'SYN-POL-1', 'SYN-POL-2', actor=owner, scope='tenant')
+        self.assertEqual(self.code(cf.apply_correction, c, expected_revision=1), 'missing_input')
+        self.assertEqual(self.code(cf.apply_correction, dict(c, effective_date='15/10/2026'), expected_revision=1), 'invalid_date')
+        p2 = cf.apply_correction(dict(c, effective_date='2026-10-12'), expected_revision=1)
+        self.assertEqual((cf.policy['policy_version'], cf.policy['effective_date']), ('SYN-POL-2', '2026-10-12'))
+        self.assertEqual(cf.corrections[0]['effective_date'], '2026-10-12'); self.assertEqual(p2['input_versions']['policy_version'], 'SYN-POL-2')
+
+    # Destination: one key, one payload.
+    def test_W19_same_key_different_payload_is_a_conflict(self):
+        dest = MockDestination(); first = dest.submit('K1', {'decision': 'GO', 'supplier': 'Offer B'})
+        self.assertEqual(self.code(dest.submit, 'K1', {'decision': 'GO', 'supplier': 'Offer A'}), 'idempotency_conflict')
+        self.assertEqual(len(dest.records), 1); self.assertEqual(dest.status('K1'), first)
+        self.assertTrue(dest.submit('K1', {'supplier': 'Offer B', 'decision': 'GO'})['replayed'])
+    def test_W19_submitted_revision_cannot_be_re_decided(self):
+        cf = self.approved_p2(); dest = MockDestination(); self.handoff(cf, dest)
+        self.assertEqual(self.code(cf.record_decision, 'REQ-SYN-0001-P2', 'GO', 'buyer', expected_revision=2, reason='new rationale'), 'already_submitted')
+        self.assertEqual(self.code(cf.record_decision, 'REQ-SYN-0001-P2', 'NO_GO', 'buyer', expected_revision=2), 'already_submitted')
+        self.assertTrue(self.handoff(cf, dest)['destination']['replayed']); self.assertEqual(len(dest.records), 1)
+    def test_handoff_key_and_destination_record(self):
+        cf = self.approved_p2(); dest = MockDestination(); h = self.handoff(cf, dest)
+        self.assertEqual(h['key'], 'synthetic-tenant|REQ-SYN-0001|2|return_reviewed_decision')
+        self.assertEqual(h['destination']['destination_record_id'], 'DEST-0001')
+
+
+class ExportTests(unittest.TestCase):
+    SCENARIOS = ['baseline', 'stale_approval_after_correction']
+    def setUp(self): self.export = build_export(FIXTURE_PATH, self.SCENARIOS)
+    def test_export_is_byte_identical_across_runs(self):
+        self.assertEqual(render(self.export), render(build_export(FIXTURE_PATH, self.SCENARIOS)))
+    def test_export_identifies_its_inputs_and_labels_itself(self):
+        e = self.export
+        self.assertEqual((e['kind'], e['workflow_schema'], e['fixture']['fixture_id'], e['fixture']['synthetic']),
+                         ('recorded_synthetic_replay', '0.2.0', 'R01', True))
+        self.assertEqual(len(e['fixture']['sha256']), 64); self.assertEqual(sorted(e['scenarios']), sorted(self.SCENARIOS))
+        for phrase in ('Scripted synthetic replay', 'nothing in it detected the mistake automatically', 'not authenticated', 'not a blind test'):
+            self.assertIn(phrase, e['notice'])
+    def test_baseline_trace_states(self):
+        steps = self.export['scenarios']['baseline']['steps']
+        self.assertEqual([s['step'] for s in steps], ['route', 'packet', 'correction', 'decision', 'handoff', 'duplicate_submission'])
+        p1 = steps[1]['state']['packets'][0]
+        self.assertEqual([(r['quote_id'], r['total']) for r in p1['declared_scope_economics']], [('Offer A', '137800.00'), ('Offer B', '157000.00')])
+        self.assertEqual((p1['recommendation_state'], p1['reviewer_decision']), ('recommended', 'pending'))
+        after = steps[2]['state']['packets']
+        self.assertEqual([p['recommendation_state'] for p in after], ['superseded', 'recommended'])
+        self.assertEqual([(r['quote_id'], r['total']) for r in after[1]['declared_scope_economics']], [('Offer A', '25300.00'), ('Offer B', '15700.00')])
+        final = steps[-1]['state']
+        self.assertEqual(final['packets'][1]['decision_record']['bound_to']['input_fingerprint'], final['packets'][1]['input_fingerprint'])
+        self.assertEqual((len(final['destination']['records']), final['destination']['submissions']), (1, 2))
+        self.assertEqual(final['packets'][1]['observed_outcome'], 'not_observed')
+    def test_failure_trace_never_acknowledges(self):
+        steps = self.export['scenarios']['stale_approval_after_correction']['steps']
+        self.assertEqual([s['step'] for s in steps], ['route', 'packet', 'decision', 'correction', 'handoff_blocked'])
+        self.assertEqual(steps[-1]['code'], 'approval_required')
+        last = steps[-1]['state']
+        self.assertEqual((last['packets'][0]['approval_valid'], last['packets'][1]['reviewer_decision']), (False, 'pending'))
+        self.assertEqual((last['handoffs'], last['destination']['records']), ([], []))
+        self.assertTrue(last['corrections'][0]['invalidated_approval'])
 
 
 if __name__ == '__main__': unittest.main()
