@@ -29,10 +29,14 @@ The policy `SYN-POL-1` allows a preference among the eligible, comparable offers
 5. **Stale-quote scenario:** acting on 2026-11-05, after the offers' validity, blocks the approval.
 6. **Stale-approval scenario:** GO on P1 followed by the correction leaves P2 without an approval; handoff is refused.
 
+7. **Missing-information scenario** (variant: unit removed): the route is *request information*; packet P1 is pending and can be neither approved nor handed off; the buyer records the requester's clarification (unit = piece) as a data correction with evidence; routing re-runs, P2 recommends Offer A at the annual basis, the quantity correction yields P3 for Offer B, GO, acknowledged handoff.
+8. **Engineering-review scenario** (variant: safety-relevant category): P1 is pending engineering review; GO and handoff are refused; the replay stops.
+9. **Existing-route scenario** (variant: approved contract `CTR-SYN-0009` covering revision B and the destination): P1 proposes *use existing route* with no sourcing event and no quote economics; the buyer confirms; handoff is acknowledged; a duplicate submission is a replay.
+
 ## Allocation example
 
 Two lines and two fictional suppliers: the cheapest line-by-line choice puts both lines on S1, exceeding its capacity. The best feasible allocation is L1→S1, L2→S2 at 15,100.00.
 
 ## What this fixture does not show
 
-No real field mapping, connector, optimizer, negotiation, approval service or outcome measurement. Expected values in the JSON were set for the deterministic harness and hand-checked once.
+No real field mapping, connector, optimizer, negotiation, approval service or outcome measurement. Declared roles are not authenticated people. Expected values in the JSON were set for the deterministic harness and hand-checked once. The fixture declares `workflow_schema` 0.2.0; the harness refuses other schema labels rather than guessing compatibility.

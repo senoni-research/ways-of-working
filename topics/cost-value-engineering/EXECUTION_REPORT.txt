@@ -642,3 +642,97 @@ UNRUN / not established by this tree: live-agent behavior for B01–B45 on any h
   value at any organization. The private practitioner conversation that motivated
   this edition is not represented in the pack; no name, employer or workflow metric
   from it was entered.
+
+--------------------------------------------------------------------------------
+v0.3.1 HARDENING PATCH — 9 October 2026 (local working tree; NOT committed)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.3.1-hardening, based on main 4877b50
+  (the commit an independent review inspected). Uncommitted working tree:
+  42 changed paths under this pack + root README.md (two sentences). No commit,
+  push, PR, merge, deployment, connector, supplier contact or customer data.
+
+Trigger: independent review of main 4877b50 reporting five executable gaps
+  (F1 eligibility fail-open; F2 approval bound to labels not content; F3
+  corrections not consistently authorized or applied; F4 routing reported not
+  enforced; F5 idempotency key collisions). The reviewer's probe script was run
+  read-only against the unpatched tree first: all five reproduced exactly
+  (e.g. status False/'pending'/'MET'/null -> Offer D preferred; price 3.14->30
+  after approval -> handoff acknowledged; requester correction accepted;
+  requirement B->C recorded with no effect; policy_version set to 'False';
+  missing-unit / engineering-review / existing-route all reached acknowledged
+  handoff; same key different payload -> replay; fresh instance at revision 2
+  collided with P1). After the patch an exception-tolerant equivalent of the
+  same probes (kept outside the repo) shows each gap closed; the reviewer's own
+  script now stops at the first malformed status with invalid_eligibility_status,
+  which is the intended behavior.
+
+Scope delivered (no new module/recipe/behavior/template/prompt/source):
+  reference/workflow.py  -> WORKFLOW_SCHEMA 0.2.0. Strict ELIGIBILITY_STATUSES;
+    _validate_event_shape (explicit, unique requirement and quote IDs);
+    decision basis stored per packet and fingerprinted (content, not labels);
+    internal approval ledger (packet, revision, input + action fingerprint,
+    approver role) checked at handoff with current policy/permissions;
+    CORRECTION_TARGETS registry with per-type authority, prior_value check,
+    applied vs record_only effect, atomic dry-run on a deep copy; CaseFile
+    single-line + revision/context coherence; routing gate producing pending
+    packets (route_gate on GO; approval_required on handoff); existing route ->
+    confirmation without event economics; exception approval record modelled;
+    handoff key tenant|source_system|requisition|r<source_revision>|packet|op;
+    MockDestination raises idempotency_conflict on differing payload; any
+    unknown handoff blocks replacement until reconcile; reconcile detects a
+    conflicting destination record. SCENARIOS extended (7).
+  reference/run_replay.py -> scenario choices from SCENARIOS.
+  reference/test_workflow.py -> 38 original tests retained unchanged + 51 new
+    (F1 7, F2 12, F3 11, F4 9, F5 8, replay 4) = 89.
+  canonical/cases/R01-requisition-replay.json -> workflow_schema 0.2.0;
+    replay.variants (missing_information with clarification, engineering_review,
+    existing_route); expected block extended. R01-source.md updated.
+  canonical: modules 15 and 55 narrowed/extended to the implemented subset and
+    the four-claim separation; pages README/CHANGELOG/VALIDATION/ROADMAP;
+    prefaces and metadata 0.3.1. tools/README.md: scenarios and maintained-inputs
+    sentence. Root README.md: catalogue row mentions buyer correction/replay;
+    maintenance sentence no longer says "everything else is generated".
+Inventories unchanged: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture). Generated artifacts: 129.
+  core.py schema_version 0.1.0 unchanged.
+
+Commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .            -> Built 129 generated artifacts; 18 changed
+  python3 -B tools/build_pack.py .  (again)   -> Built 129 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check    -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .         -> STATIC VALIDATION PASSED (129 artifacts)
+  python3 -B tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_*.py'
+      canonical reference/                    -> Ran 145 tests, OK (56 core + 89 workflow)
+      cursor-project/.costvalue/reference     -> Ran 145 tests, OK
+      portable-project/.costvalue/reference   -> Ran 145 tests, OK
+  python3 -B reference/run_replay.py --scenario <s>, all seven:
+      baseline    -> ... handoff acknowledged; duplicate replayed; records 1
+      timeout     -> handoff unknown; retry_blocked reconcile_required; reconciled acknowledged
+      stale_quote -> handoff_blocked stale_approval
+      stale_approval_after_correction -> handoff_blocked approval_required
+      missing_information -> packet pending_information; decision_blocked route_gate;
+                     handoff_blocked approval_required; clarification -> recommended
+                     (Offer A); correction -> Offer B; GO; handoff acknowledged; packets 3
+      engineering_review  -> pending_engineering_review; decision_blocked route_gate;
+                     handoff_blocked; stops with 1 packet
+      existing_route      -> use_existing_route, no event economics; GO; acknowledged
+  Carey Chou:   python3 -B tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py .   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py        -> PASSED
+                git diff --check                      -> clean
+  Tracked files outside this pack changed: README.md only. Untracked: .specstory/ (local, not staged).
+  Local aggregate private-term check (pack; terms not echoed): 0 files matched.
+  python3 -B tools/scan_publication.py . --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+  same scanner from repository root over the full working tree
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Remaining unsupported paths (by design, stated in module 55 and README):
+  multi-line case files (allocation illustration only); correction targets outside
+  the registry; bounded negotiation; incremental-value measurement beyond the
+  arithmetic ledger; any real connector, authority/identity service or destination.
+  Declared roles are not authenticated people; synthetic mock validation is not
+  live-user behavior, data permission, industrial accuracy or destination
+  reliability. Live-agent behavior for B01–B45: UNRUN.

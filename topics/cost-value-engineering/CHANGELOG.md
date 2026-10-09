@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.1 — 9 October 2026
+
+Hardening patch after an independent review of 0.3.0 on `main`. No new module, recipe, behavior, template, prompt or source; inventories unchanged. The executable workflow harness now enforces what the method already taught, and the documentation is narrowed to the implemented and tested subset. Workflow schema bumped to 0.2.0 (fixture R01 declares `workflow_schema`; packets gain a stored `decision_basis` and new pending states; handoff keys change shape). Core arithmetic schema unchanged at 0.1.0.
+
+- Eligibility: only an explicit `met` satisfies a mandatory requirement; a missing status is unresolved; `null`-as-status, booleans, `pending`, `MET` and other malformed values raise `invalid_eligibility_status`. Mandatory-requirement and quote identities must be explicit and unique.
+- Approval binding: approval is bound to a stored decision basis (line, context, offers, policy, evaluation quantity, scoped parameters as content) and to the proposed action, in an internal ledger; a changed price, requirement, scope or policy under a reused label, a rewritten public packet action, a revoked approver role or a revoked action flag blocks handoff.
+- Corrections: per-type authority for all five types; `prior_value` checked against the current value; a registry of supported targets with an explicit `applied` or `record_only` effect; unsupported targets rejected; a requirement change to the required revision and a policy change to the subset flag are actually applied (the latter under a new policy label); validation is atomic on a deep copy.
+- Routing gate: `CaseFile` supports one line, checks event/context coherence, and produces pending packets for missing information, engineering review and unapproved exceptions that cannot be approved or handed off; an approved existing route yields a confirmation without quote economics. Three replay scenarios added (`missing_information` with clarification, `engineering_review`, `existing_route`).
+- Idempotency: keys carry tenant, source system, requisition, source revision, packet and operation; the mock destination raises `idempotency_conflict` on a different payload under a reused key; any unknown outcome blocks replacement until reconciled; reconciliation detects a conflicting record.
+- Tests: 51 regressions added (`test_workflow.py` 38 → 89; reference total 145). Each asserts the specific violated contract and retains the positive control.
+
 ## 0.3.0 — 9 October 2026
 
 Procurement-workflow and buyer-decision edition, bounded to what a team that already automates requisition-to-decision would need. Adds module 15 (requisition intake and five-route classification; review depth by category) and module 55 (buyer decision packet; four state families; eligibility/comparability/preference; typed corrections with owners; idempotent handoff and timeout reconciliation; bounded action). Extends module 10 (routing rows), 30 (eligible/comparable/preferable), 50 (bounded-action and negotiation permission table), 60 (typed corrections and scoped precedents), 70 (section 5 on incremental value; B32–B45) and 80 (T08 requisition snapshot, T09 buyer decision packet, P07 replay prompt). Four recipes: M12 route requisition, M13 event snapshot, M14 buyer correction and handoff, M15 incremental value.

@@ -30,7 +30,7 @@ For several lines, the cheapest line-by-line choice is not an award. Capacity li
 
 ## Typed corrections
 
-A buyer's correction must say what kind of thing it changes. The harness enforces the taxonomy and the authority attached to each type.
+A buyer's correction must say what kind of thing it changes. The reference harness enforces the taxonomy, the authority for each type, a prior-value check against the current value, and a declared registry of supported targets; a correction aimed at an unsupported target is rejected, not recorded as applied. Each accepted correction carries an explicit `effect`: **applied** (the dependent conclusions were recomputed) or **record-only** (a scoped note or precedent; no cost fact or selected action changed). In this release the applied targets are the evaluation quantity, a missing unit or required date, the required revision, the subset-comparison policy flag and the policy version label; everything else is either record-only by type or rejected.
 
 | Correction type | Example | What is retained | Who may make it |
 |---|---|---|---|
@@ -50,9 +50,13 @@ Keep the customer's system authoritative for transactions and approvals. Add ana
 
 request snapshot → routing → event snapshot → evaluation → decision packet → authorized review or correction → handoff request → acknowledgement or unresolved execution state → reconciliation.
 
-Rules the harness enforces and a real adapter must preserve: an action carries request, revision and operation identifiers as an idempotency key; a duplicate submission is acknowledged as a replay, not executed twice; a timeout after submission is an **unknown** outcome, not a failure—reconcile the destination's state before any retry; authority and freshness are checked again at the action boundary, so an expired quote, a changed snapshot revision, a revoked permission or a changed policy blocks a stale approval. The destination must participate in duplicate prevention; a local flag does not establish exactly-once execution.
+Rules the harness enforces on the synthetic fixture and a real adapter must preserve: an action carries tenant, source system, request, authoritative source revision, packet revision and operation as its idempotency key; a retry with the same key and the same payload is acknowledged as a replay, while the same key with a different payload is a conflict, never a silent replay; a timeout after submission is an **unknown** outcome, not a failure—reconcile the destination's state before any retry or replacement; approval binds to a stored decision basis (the line, context, offers, policy and evaluation quantity as content, not version labels) and to the proposed action, held in a ledger that public packet views cannot rewrite; authority and freshness are rechecked at the action boundary against the current policy and permissions, so a changed price, requirement, scope or policy, an expired quote, a revoked role or a revoked action flag blocks a stale approval. The destination must participate in duplicate prevention; a local flag does not establish exactly-once execution. Passing these checks shows the rules are implementable; it says nothing about any real destination's reliability.
 
 Start with a JSON replay and a mock destination. No real connector, supplier outreach or purchase-order creation is needed to validate the method. Ordinary failures to design for: the same request arriving twice; a quote expiring after review; the requester changing the specification; two reviewers correcting the same version; an order request timing out after acceptance.
+
+Routing is a gate inside the case file, not a label on the log: a request with a missing decision-critical field or a category that needs engineering review produces a pending packet that cannot be approved or handed off until the route is cleared by a recorded clarification or review; a requested exception stays pending until an authorized approver's record is present; an approved existing route produces a confirmation packet with no sourcing event and no quote economics. The reference supports one requisition line per case file and rejects an event or technical context that does not refer to the same request revision, item and required revision.
+
+Separate four kinds of claim when you read this module: the **documented method** (everything above), the **implemented subset** (what `reference/workflow.py` enforces), the **recorded demonstration** (fixture R01 and its scenarios) and the **deferred integration** (any real connector, authority service or destination). Only the second and third are tested; the tests show self-consistency on synthetic input, not live behavior.
 
 ## Bounded action
 
