@@ -28,5 +28,4 @@ Agreement measures consistency, not correctness: a whole desk can share a habit.
 Include temporal contrastive probes ("would this still hold if the deadline moved?") to separate a standing preference from a reaction to something recent, and route a small audit sample of settled cases back to people so automation does not eliminate all new evidence. Do not treat a repeated personal preference as organization-wide policy.
 
 **Acceptance:** known routine cases route correctly; conflicting policies remain visible; stale or structurally different cases do not inflate confidence; lack of precedent produces abstention or investigation. Report automation coverage alongside error and escalation rates. Sample some routine outcomes for audit so silent drift can be detected.
-
 **Avoid:** "High confidence, therefore execute." Permission and consequence checks remain independent.
