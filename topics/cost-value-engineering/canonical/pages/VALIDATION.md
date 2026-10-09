@@ -6,7 +6,7 @@ Package checks render expected outputs from canonical inputs, compare generated 
 
 Numerical checks exercise our own declared synthetic contracts: price/markup distinctions, charge statuses, full comparison context, dates, quantity bands, crossover, units, yields, setup/batch counts, labor inclusions and capacity. They do not execute any downloaded costing workbook or train an ML model. A successful result against hypothetical data is not an industrial benchmark.
 
-No live Cursor, Cline or OpenCode session is executed by these scripts. B01–B24 are behavior specifications. No customer documents, expert factory measurements, supplier-book access, savings outcomes or pilot payments have been evaluated. Document schemas and schematic assets do not establish OCR or CAD functionality. The static website handoff has its own separately documented browser checks.
+No live Cursor, Cline or OpenCode session is executed by these scripts. B01–B31 are behavior specifications. No customer documents, expert factory measurements, supplier-book access, savings outcomes or pilot payments have been evaluated. Document schemas and schematic assets do not establish OCR or CAD functionality. The static website handoff has its own separately documented browser checks.
 
 A private publication-exclusion list may be passed to `tools/scan_publication.py`. No private identifiers are embedded in this tool or its tests. A passed identifier scan is a bounded check, not a substitute for reviewing source expression, image content, permissions or staging.
 

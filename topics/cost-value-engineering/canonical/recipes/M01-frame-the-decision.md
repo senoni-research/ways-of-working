@@ -8,4 +8,6 @@ Ask the few questions that determine the calculation. Produce a supported partia
 
 The baseline is the team's actual current method: a manual comparison, approved worksheet or existing software. State what the proposed tool would improve and how to measure it. Do not infer that a spreadsheet workflow is broken just because it is a spreadsheet.
 
-**Output:** a small scoped brief, known blockers and a first test case. **Tests:** B02, B20, B23. A successful synthetic arithmetic run does not establish feasibility or commercial value. **Do not use:** to authorize purchases or make/buy restructuring without the relevant stakeholders.
+State the design maturity and the estimation approach it supports: a concept-stage question deserves a range and its drivers, not a decimal-precise analytical estimate ([[40-calculation-and-value]]).
+
+**Output:** a small scoped brief, known blockers and a first test case. **Tests:** B02, B20, B23, B30. A successful synthetic arithmetic run does not establish feasibility or commercial value. **Do not use:** to authorize purchases or make/buy restructuring without the relevant stakeholders.

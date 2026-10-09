@@ -14,6 +14,31 @@ Prioritize questions by decision impact, feasibility of obtaining an answer, and
 
 Do not invent a competing offer, create false bargaining facts, publish another supplier's quotation, or send source documents to external services without permission. An estimate should support informed collaboration, not deception or coercion.
 
+## Prepare a negotiation around cost drivers, not just price
+
+Bring to the meeting the normalized breakdown, the should-cost scenario with its assumptions, the gaps by line, the lever hypotheses with their owners ([[35-cost-breakdown-and-levers]]), what the buyer can offer—volume visibility, a batch plan, specification flexibility, a longer horizon, payment terms—and the mandatory requirements that cannot move. A target without a mechanism is a wish; a lever list is a proposal.
+
+Transparency is reciprocal. A supplier asked for a breakdown should receive the volume assumptions, the decision horizon and the basis of the target. [[CV07]] motivates the caution that transparency does not succeed automatically; the working conditions we assume are mutual benefit, protection of genuinely sensitive detail, and a decision that the shared information can actually change.
+
+Sequence the meeting: confirm scope and revision; agree on conventions; walk through the lines with the largest gaps; test levers; record what is agreed, conditional and deferred. Do not open with the total, and do not open with an accusation.
+
+## Frequent objections and constructive responses
+
+The table anticipates objections; it does not script the supplier or show that an objection is wrong. Several objections will be correct, and a correct objection is new evidence.
+
+| Objection heard | What it may legitimately mean | Constructive response |
+|---|---|---|
+| “Our costs are confidential.” | Allocation and margin are sensitive. | Narrow to decision-relevant lines; offer reciprocity; accept partial disclosure; do not allege bad faith (B22). |
+| “Your model does not reflect our process.” | The scenario's cycle, cavities, scrap or route differ. | Ask which assumption is wrong and for what evidence; revise and scope the correction ([[M07]]). |
+| “Your volumes are not firm.” | Fixed costs are amortized over an uncertain base. | Discuss band-based pricing, minimums or a review rule; quantify the volume effect instead of arguing it. |
+| “Overheads are structural.” | An allocation convention, not this part's resource use. | Record the convention; compare on direct lines; ask for the basis and whether it moves with volume. |
+| “Quality and certification requirements justify the premium.” | Real qualification, inspection or traceability cost. | Ask for the lines and whether they are per unit, per batch or one-time; check them against the specification. |
+| “The tool is specific to you.” | Tooling ownership, life and amortization arrangement. | Clarify ownership, life, payment arrangement and residual value ([[30-economic-contract]]). |
+| “Raw material prices moved.” | Index exposure on the material share. | Apply the index to the exposed share with basis and dates; agree a symmetric rule ([[M10]]). |
+| “We quoted at a different exchange rate.” | FX convention and date. | Record the convention; do not re-rate silently (B12). |
+| “Small series are expensive.” | Setup intensity and batch plan. | Test another batch plan or consolidation; compute the threshold effect rather than accept the adjective. |
+| “The drawing changed.” | A technical revision and a genuine scope change. | Classify the change; compare with the correct baseline ([[M03]]). |
+
 ## Before/after quotation review
 
 Preserve the original quote and its normalized snapshot. Compare a revision with the correct baseline, then separate changes in specification, economic inputs, quantity, operating arrangement and commercial terms. Keep source dates and known-at dates. A later explanation should improve the current model without rewriting what was known at the earlier decision.

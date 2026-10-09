@@ -20,7 +20,7 @@ The reference comparison uses one currency and an explicit delivery boundary. It
 
 A machine rate may include energy, maintenance, depreciation or labor—or exclude them. Record inclusions. Separately adding labor to a labor-loaded machine rate double counts the same resource. Use an explicit flag and reject incompatible charges in the reference model.
 
-Do not confuse capacity supplied with measured use, or accounting depreciation with prospective cash needs. [CV04](90-sources.md#cv04) provides the capacity-cost and activity-time distinction; the exact molding variables and test implementation here are our limited illustration. There is no universal practical-capacity percentage, machine life or labor rate.
+Do not confuse capacity supplied with measured use, or accounting depreciation with prospective cash needs. [CV04](90-sources.md#cv04) provides the capacity-cost and activity-time distinction; the exact molding variables and test implementation here are our limited illustration. There is no universal practical-capacity percentage, machine life or labor rate. The conventions behind a supplier's own breakdown—allocation keys, amortization volume, overhead basis—and the classification of lines by nature are treated in [35-cost-breakdown-and-levers](35-cost-breakdown-and-levers.md).
 
 ## Commercial comparison is not full TCO
 

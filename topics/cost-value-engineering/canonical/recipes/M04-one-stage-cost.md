@@ -8,4 +8,4 @@ Compute expected shots, material consumption and run hours. Add separate setup e
 
 Check sufficient capacity including setup. Do not let quantity grow beyond feasible time while a per-unit graph suggests endless improvement. Do not infer machine selection, engineering equivalence, tooling life or availability from the arithmetic.
 
-**Output:** a labeled scenario estimate, intermediate resource quantities and applicability limits. **Tests:** B03–B09, B15 and C06. **Do not use:** for multi-stage rework, heterogeneous cavities, recycling, mold-flow, safety compliance or supplier-profit assertions. Those need additional evidence and contracts.
+**Output:** a labeled scenario estimate, intermediate resource quantities and applicability limits. **Tests:** B03–B09, B15, B29 and C06. **Do not use:** for multi-stage rework, heterogeneous cavities, recycling, mold-flow, safety compliance or supplier-profit assertions. Those need additional evidence and contracts.

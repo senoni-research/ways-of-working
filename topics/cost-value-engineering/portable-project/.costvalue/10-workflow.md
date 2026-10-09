@@ -11,6 +11,10 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Compare quotes | [M03](recipes/M03-normalize-quotes.md), [M07](recipes/M07-supplier-review.md) | Compatible totals or named blockers; draft questions. |
 | Build manufacturing arithmetic | [M04](recipes/M04-one-stage-cost.md), [M05](recipes/M05-calculation-qa.md) | Independent hand case, dimensional checks and applicability limits. |
 | Explore a lower-cost alternative | [M06](recipes/M06-scenarios-and-value.md) | Changed physical assumptions, requirement checks and conditional consequences. |
+| Review a supplier cost breakdown | [35-cost-breakdown-and-levers](35-cost-breakdown-and-levers.md), [M09](recipes/M09-cost-breakdown-review.md) | Mapped lines with statuses and conventions; line-level gaps; neutral questions. |
+| Evaluate a price-change request | [M10](recipes/M10-price-change-request.md) | Decomposed claim; exposed effect versus requested; symmetric review rule. |
+| Prepare a negotiation | [M11](recipes/M11-negotiation-preparation.md), [50-supplier-dialogue](50-supplier-dialogue.md) | Preparation sheet, lever hypotheses with owners, anticipated objections. |
+| Choose an estimation approach | [40-calculation-and-value](40-calculation-and-value.md) | Named approach matched to design maturity; validity domain stated. |
 | Preserve a correction or evaluate the assistant | [M08](recipes/M08-memory-and-learning.md), [60-memory](60-memory.md), [70-evaluation](70-evaluation.md) | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop

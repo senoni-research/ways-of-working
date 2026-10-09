@@ -427,3 +427,68 @@ still need their own owner-side check before final publication); browser,
 JS/website, live-agent and industrial-accuracy checks (out of scope).
 The 8 October preparation and 9 October ingestion records above remain the
 historical record for those sessions; this section records the final patch.
+
+--------------------------------------------------------------------------------
+v0.2.0 METHODOLOGY EXPANSION RECORD — 9 October 2026 (purchasing-side guidance)
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Branch: topics-cost-value-engineering-v0.1.0, from reviewed head 4528b90
+(local uncommitted change set; no push/merge has occurred in this task).
+
+Motivation: an owner-side gap review of private purchasing-training material
+against the 0.1.0 method identified strategic practice the pack lacked. The
+material itself is private and is not reproduced, cited, named or registered;
+the additions below are Senoni syntheses in original wording of widely
+practiced industrial purchasing and cost-engineering methods (CHANGELOG 0.2.0,
+ATTRIBUTION). No private names, figures, exercises or case descriptions were
+transferred. Identifier scan of topics/, tools/, README.md and ATTRIBUTION.md
+for the material's identifying terms: no matches (scan terms kept outside the
+repository, consistent with the exclusion-list policy).
+
+Canonical changes (guidance only; reference arithmetic and C01-C06 unchanged):
+  + modules/35-cost-breakdown-and-levers.md (structured breakdown request,
+    breakdowns as conventions, fixed/variable and direct/indirect, threshold
+    and volume effects, lever map, price-change requests, shared vocabulary
+    incl. the two meanings of "LCC")
+  ~ modules/40: "Choose the estimation approach for the design maturity"
+    (analogy / parametric / analytical; precision vs maturity; top-down target
+    vs bottom-up convergence; parametric validity domain; process-family and
+    location parameter sets)
+  ~ modules/50: "Prepare a negotiation around cost drivers" + frequent-
+    objections table (10 rows)
+  ~ modules/00 (0.2.0 scope sentence), /30 (pointer to 35), /10 (4 routing
+    rows), /70 (B25-B31; "B01-B31"), /80 (T06, T07, P05, P06)
+  + recipes/M09-cost-breakdown-review.md, M10-price-change-request.md,
+    M11-negotiation-preparation.md; M01 adds B30, M04 adds B29
+  ~ loader.md scope sentence; metadata.json 0.2.0 / 2026-10-09 with
+    inventories 10 modules, 11 recipes, 31 behaviors, 7 templates, 6 prompts;
+    prefaces version line; pages README/CHANGELOG/VALIDATION/ROADMAP/
+    ATTRIBUTION updated.
+
+Commands run at the pack directory (observed outcomes):
+  python3 -B tools/build_pack.py .          -> Built 105 generated artifacts; 39 changed
+  python3 -B tools/build_pack.py .          -> Built 105 generated artifacts; 0 changed (idempotent)
+  python3 -B tools/build_pack.py . --check  -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .      -> STATIC VALIDATION PASSED (105 artifacts)
+  python3 -B tools/test_validate_pack.py .  -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -s reference -p 'test_core.py' -> 48 tests OK
+  same suite in cursor-project/ and portable-project/ installed copies -> OK (copies, not extra evidence)
+  python3 -B reference/run_case.py --case C01 --quantity 5000  -> 25300.00 / 15700.00, Offer B
+  python3 -B reference/run_case.py --case C01 --quantity 20000 -> 62800.00 / 62800.00, tie
+  python3 -B reference/run_case.py --case C01 --quantity 30000 -> 87800.00 / 94200.00, Offer A
+
+Repository-level checks in the same session:
+  tools/check_docs.py (root)                 -> PASSED
+  nicolas-vandeput/tools/validate_pack.py .  -> STATIC VALIDATION PASSED (unchanged pack)
+  carey-chou/tools/validate_pack.py          -> FAIL: Platform drift in shared recipe:
+     M01-fast-personalization.md. Cause: pre-existing uncommitted whitespace-only
+     edits (final newline / blank line) in three portable .carey recipes that
+     predate this task and were not made here; the cursor-project copies are
+     unchanged. Not modified in this task; owner decision whether to revert or
+     mirror them.
+  git diff --check                           -> clean
+
+Not run in this task: the private publication-exclusion scan with the owner's
+external list (the local identifier scan above is a narrower, task-specific
+check and does not replace it); live-agent scenarios for B25-B31 (they remain
+specifications); browser, website and industrial-accuracy checks.

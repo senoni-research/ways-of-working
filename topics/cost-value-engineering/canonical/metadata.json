@@ -1,7 +1,7 @@
 {
   "name": "Cost & Value Engineering",
-  "version": "0.1.0",
-  "date": "2026-10-08",
+  "version": "0.2.0",
+  "date": "2026-10-09",
   "namespace": ".costvalue",
   "status": "Focused prototype-method release; not industrial validation",
   "module_ids": [
@@ -9,6 +9,7 @@
     "10-workflow",
     "20-evidence-and-drawings",
     "30-economic-contract",
+    "35-cost-breakdown-and-levers",
     "40-calculation-and-value",
     "50-supplier-dialogue",
     "60-memory",
@@ -23,7 +24,10 @@
     "M05",
     "M06",
     "M07",
-    "M08"
+    "M08",
+    "M09",
+    "M10",
+    "M11"
   ],
   "case_ids": [
     "C01",
@@ -57,7 +61,14 @@
     "B21",
     "B22",
     "B23",
-    "B24"
+    "B24",
+    "B25",
+    "B26",
+    "B27",
+    "B28",
+    "B29",
+    "B30",
+    "B31"
   ],
   "source_ids": [
     "CV01",
@@ -76,12 +87,16 @@
     "T02",
     "T03",
     "T04",
-    "T05"
+    "T05",
+    "T06",
+    "T07"
   ],
   "prompt_ids": [
     "P01",
     "P02",
     "P03",
-    "P04"
+    "P04",
+    "P05",
+    "P06"
   ]
 }

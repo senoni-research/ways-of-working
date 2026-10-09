@@ -59,6 +59,30 @@ Identify whether the experiment tests package integrity, arithmetic, extraction,
 
 An assistant may prepare this record but may not invent approval. A scenario exploration is not a change in policy or demand plan.
 
+## T06 — Structured cost-breakdown request
+
+**Part, revision, quantity assumptions (annual, batch, horizon) and price-basis date:**
+**Material lines (grade, net and gross mass, scrap or regrind credit, price basis and index reference):**
+**Conversion lines per operation (resource, rate basis and inclusions, cycle or time, setup per batch, yield):**
+**Tooling (one-time amount; decomposition when material; ownership, life, payment or amortization arrangement):**
+**Logistics and packaging (delivery boundary, transport unit, packaging type):**
+**Indirect costs and margin (basis; declared or embedded):**
+**Conventions (currency, FX convention, overhead basis, amortization volume, period of prices) and validity:**
+
+Send the structure with its units and conventions. Accept partial returns and mark them. The template improves comparability; it does not make a declaration an observation, and a returned line keeps its supplier-reported status.
+
+## T07 — Price-change request record
+
+**Baseline price, breakdown source (agreed or reconstructed) and effective dates:**
+**Claimed change and stated causes:**
+**Affected lines, share of unit price, reference index or evidence, basis and dates:**
+**Compensating movements omitted or verified:**
+**Exposed effect computed versus requested:**
+**Agreed rule (symmetric), effective date and review trigger:**
+**Expected versus measured effect:**
+
+A request that cannot be decomposed is not refused by this record; it is left with an unsupported portion visible until the basis arrives.
+
 ## P01 — Start the prototype
 
 Read the installed Cost & Value operating contract and workflow. Inspect this project and existing tests. Build the smallest synthetic part-and-quote review using explicit inputs and deterministic calculation. Separate offer totals from manufacturing estimates. Load only the required recipes. Implement one independent hand-check and one blocking-error case before improving the interface. State what you actually ran and do not add an external model provider or customer upload endpoint.
@@ -74,6 +98,14 @@ Compare the baseline with this proposed change. State the required function, unc
 ## P04 — Evaluate the working method
 
 Set up a fresh-session comparison with and without the focused domain guidance, ordinary safety rules retained. Propose a bounded case set and independently scored rubric, prevent answer-key exposure, hold tools/model/budget comparable and record failures as well as timing. Do not claim the guide improves performance before running the comparison.
+
+## P05 — Review a supplier cost breakdown
+
+Read the installed operating contract, workflow and cost-breakdown module. Map the supplied breakdown to the requested structure, mark unmapped and interpreted lines, record the supplier's conventions, classify lines by nature and identify thresholds. Compare line by line with the scenario, name the largest gaps and the evidence that would resolve each, and draft neutral questions. Do not fill blanks from another supplier, infer margin, or call a convention an inefficiency.
+
+## P06 — Evaluate a price-change request
+
+Read the installed operating contract and the price-change recipe. Start from the agreed baseline and its breakdown, decompose the request into affected lines with shares, indices, bases and dates, compute the exposed effect line by line and compare it with the request. Note omitted compensating movements and propose a symmetric review rule. Do not apply a material index to the whole price, interpret the contract as a lawyer, or forecast the index.
 
 ## What not to ask an agent
 

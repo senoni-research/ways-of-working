@@ -8,9 +8,11 @@ Use the supplied source-reading recipe and data contract to connect a reviewed P
 
 A private application can start from the original reference arithmetic. Add identity, authorization, retention and versioned case records before real shared use. A separate private repository is a proposal, not an existing asset or authorization to create one. Do not automatically place product code or customer evidence in the public WoW repository.
 
+A natural next executable contract is the structured cost-breakdown request (T06): a typed schema with mapping statuses (mapped, interpreted, unmapped, unknown, included), line classification by nature, and the same charge-status rules as the quote comparison. A second is the line-by-line price-change decomposition (T07) with exposed shares and dated index bases. Both should begin, as the first slice did, with one synthetic case and an independent hand calculation.
+
 ## Broader methods still deferred
 
-Analogy and parametric estimation; process-specific ML costing; multi-stage yield/rework and recycling; CAD-derived geometry; richer machine/tool selection; lifecycle finance and make/buy; formal function/value analysis; supplier allocations; price-index exposure; and realized-outcome measurement all need their own inspected derivations, data and tests.
+Analogy and parametric estimation (0.2.0 adds selection and validity-domain guidance only; no calibrated tool ships); process-specific ML costing; multi-stage yield/rework and recycling; CAD-derived geometry; richer machine/tool selection; location parameter sets; lifecycle finance and make/buy; formal function/value analysis; supplier allocations; price-index computation; and realized-outcome measurement all need their own inspected derivations, data and tests.
 
 For a predictor, distinguish quotes, actual resource use, accounted cost and synthetic engine labels. Keep family/supplier/time generalization separate. For investment decisions, establish incremental cash flows and qualified policy review rather than reusing unit cost as the financial answer. For customer-value learning, distinguish preference elicitation from causal identification.
 

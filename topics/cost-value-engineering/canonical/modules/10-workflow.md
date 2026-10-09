@@ -11,6 +11,10 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Compare quotes | [[M03]], [[M07]] | Compatible totals or named blockers; draft questions. |
 | Build manufacturing arithmetic | [[M04]], [[M05]] | Independent hand case, dimensional checks and applicability limits. |
 | Explore a lower-cost alternative | [[M06]] | Changed physical assumptions, requirement checks and conditional consequences. |
+| Review a supplier cost breakdown | [[35-cost-breakdown-and-levers]], [[M09]] | Mapped lines with statuses and conventions; line-level gaps; neutral questions. |
+| Evaluate a price-change request | [[M10]] | Decomposed claim; exposed effect versus requested; symmetric review rule. |
+| Prepare a negotiation | [[M11]], [[50-supplier-dialogue]] | Preparation sheet, lever hypotheses with owners, anticipated objections. |
+| Choose an estimation approach | [[40-calculation-and-value]] | Named approach matched to design maturity; validity domain stated. |
 | Preserve a correction or evaluate the assistant | [[M08]], [[60-memory]], [[70-evaluation]] | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop

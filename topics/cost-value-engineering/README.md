@@ -1,8 +1,8 @@
 # Cost & Value Engineering
 
-**Focused WoW pack · v0.1.0 · 8 October 2026**
+**Focused WoW pack · v0.2.0 · 9 October 2026**
 
-A source-attributed working method for practitioners and AI coding assistants reviewing part specifications, cost assumptions and supplier quotes. This first topic-led edition supports the Axiocost prototype, but its guidance is reusable outside that product.
+A source-attributed working method for practitioners and AI coding assistants reviewing part specifications, cost assumptions, supplier quotes and cost breakdowns. This topic-led edition supports the Axiocost prototype, but its guidance is reusable outside that product.
 
 The purpose is a decision that can be inspected: what is comparable, what drives a result, what is unknown and what must be reviewed. This is not automated negotiation or a system that knows a supplier's true cost. It does not imitate an author or claim an endorsement.
 
@@ -10,11 +10,13 @@ The purpose is a decision that can be inspected: what is comparable, what drives
 
 Read [QUICKSTART](QUICKSTART.md). Complete handbooks: [Cursor](cursor.md) and [portable memory](memory.md). Installable directories: [Cursor project](cursor-project/README.md) and [portable project](portable-project/README.md). The two books contain identical method content with host-specific installation prefaces; their filenames alone do not activate rules.
 
-This release has **9 modules, 8 recipes, 10 source records (7 domain + 3 host documentation), 6 published synthetic cases, 24 behavioral specifications, 5 templates and 4 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs. It does not implement AI document extraction, CAD analysis, a customer database, an approval service or industrial validation.
+This release has **10 modules, 11 recipes, 10 source records (7 domain + 3 host documentation), 6 published synthetic cases, 31 behavioral specifications, 7 templates and 6 prompts**. It implements a small Python reference for declared-scope quote arithmetic and one-stage expected molding costs. It does not implement AI document extraction, CAD analysis, a cost-breakdown or index engine, a customer database, an approval service or industrial validation.
 
 ## What it covers
 
 Decision framing; drawing/specification evidence; part and quote revisions; included versus separate charges; quantities, dates, units and resource scope; conditional comparison; capacity and yield pitfalls; feasible alternatives; constructive supplier questions; scoped corrections; and evaluation without conflating file checks with business outcomes.
+
+Added in 0.2.0, as guidance rather than code: requesting a structured cost breakdown before the quote; reading a breakdown as conventions rather than a unique truth; fixed/variable and direct/indirect classification; threshold and volume effects; a map of cost-reduction levers with owners and evidence; evaluating price-change requests line by line; preparing a negotiation around cost drivers with a table of frequent supplier objections; choosing an estimation approach (analogy, parametric, analytical) for the design maturity; and a shared vocabulary including the two meanings of “LCC”.
 
 The full Cost & Value Engineering research collection remains a broader acquisition programme. This release selects the public material needed for the first task. It does not claim that all 91 earlier research leads have been fully reviewed or implemented. See [Sources](SOURCE_REGISTER.md), [Attribution](ATTRIBUTION.md) and [Roadmap](ROADMAP.md).
 
