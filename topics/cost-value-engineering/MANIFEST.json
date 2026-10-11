@@ -292,9 +292,9 @@
       "words": 231
     },
     "canonical/recipes/M14-buyer-correction-and-handoff.md": {
-      "bytes": 1699,
-      "sha256": "5bc5877d983befd023f496784884fe1036c240c0e735f262b80782332887f85b",
-      "words": 245
+      "bytes": 1891,
+      "sha256": "b10cd27aea0d5e38379c96780c86b22808af35251276227c291c85d7332a9be5",
+      "words": 280
     },
     "canonical/recipes/M15-incremental-value.md": {
       "bytes": 1791,
@@ -553,9 +553,9 @@
       "words": 231
     },
     "cursor-project/.costvalue/recipes/M14-buyer-correction-and-handoff.md": {
-      "bytes": 1871,
-      "sha256": "0a952edafd483ce2aa509f98a294709cdfa0953abfd4275ba8da0399fbf54853",
-      "words": 245
+      "bytes": 2063,
+      "sha256": "6856c3408e00dc57ae543c0ef7148926c3340fef11b649c1b8f6dfe4cad7f46b",
+      "words": 280
     },
     "cursor-project/.costvalue/recipes/M15-incremental-value.md": {
       "bytes": 1901,
@@ -609,19 +609,19 @@
       "words": 50
     },
     "cursor-project/cursor.md": {
-      "bytes": 129765,
-      "sha256": "28362ffb6de304f45db9cc6b2adf0595ab3d62eb1dea7793481fb76d5afe244c",
-      "words": 17998
+      "bytes": 129957,
+      "sha256": "62b550b439ea6f6c6a75f5f7b34af1ab1b061024b168060b8e9643c3ead5d0e3",
+      "words": 18033
     },
     "cursor.md": {
-      "bytes": 129765,
-      "sha256": "28362ffb6de304f45db9cc6b2adf0595ab3d62eb1dea7793481fb76d5afe244c",
-      "words": 17998
+      "bytes": 129957,
+      "sha256": "62b550b439ea6f6c6a75f5f7b34af1ab1b061024b168060b8e9643c3ead5d0e3",
+      "words": 18033
     },
     "memory.md": {
-      "bytes": 129767,
-      "sha256": "18f0996d5811bd7a56f8badbd03e0b3621160f3c0c9ad12a6555795072a91bcc",
-      "words": 18000
+      "bytes": 129959,
+      "sha256": "439bc626dd06e408db064487efb935a125481978c6b90839687b2c636d035238",
+      "words": 18035
     },
     "portable-project/.costvalue/00-operating-contract.md": {
       "bytes": 5150,
@@ -815,9 +815,9 @@
       "words": 231
     },
     "portable-project/.costvalue/recipes/M14-buyer-correction-and-handoff.md": {
-      "bytes": 1871,
-      "sha256": "0a952edafd483ce2aa509f98a294709cdfa0953abfd4275ba8da0399fbf54853",
-      "words": 245
+      "bytes": 2063,
+      "sha256": "6856c3408e00dc57ae543c0ef7148926c3340fef11b649c1b8f6dfe4cad7f46b",
+      "words": 280
     },
     "portable-project/.costvalue/recipes/M15-incremental-value.md": {
       "bytes": 1901,
@@ -871,9 +871,9 @@
       "words": 53
     },
     "portable-project/memory.md": {
-      "bytes": 129767,
-      "sha256": "18f0996d5811bd7a56f8badbd03e0b3621160f3c0c9ad12a6555795072a91bcc",
-      "words": 18000
+      "bytes": 129959,
+      "sha256": "439bc626dd06e408db064487efb935a125481978c6b90839687b2c636d035238",
+      "words": 18035
     },
     "portable-project/optional-adapters/.clinerules/20-costvalue.md": {
       "bytes": 1415,
