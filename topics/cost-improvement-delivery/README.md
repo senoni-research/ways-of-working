@@ -43,4 +43,4 @@ The builder and validator read the base pack at `../cost-value-engineering` to c
 
 Edit `canonical/` for guidance, sources, cases, the migration map and pages, `reference/` for the helpers and `tools/` for the builder, validator and install check. Then run `python3 tools/build_pack.py .` and all checks. Generated files are overwritten by the builder.
 
-No customer data, private workbooks, correspondence, source publications or vendor assets are included. All cases are synthetic. Public authors are credited in the [source register](SOURCE_REGISTER.md); see [attribution](ATTRIBUTION.md) and the [roadmap](ROADMAP.md) for what remains pending, including licensing review of the candidate material.
+No customer data, private workbooks, correspondence, source publications or vendor assets are included. All cases are synthetic. Public authors are credited in the [source register](SOURCE_REGISTER.md); see [attribution](ATTRIBUTION.md) for the maintainer's origin and licensing conclusions and the [roadmap](ROADMAP.md) for what is not implemented.

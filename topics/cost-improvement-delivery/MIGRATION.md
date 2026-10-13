@@ -6,9 +6,9 @@ Three review candidates are consolidated into one companion pack. The Industrial
 
 | Candidate | Version | Dated | Archive SHA-256 | Role | Licence note | Reported tests |
 |---|---|---|---|---|---|---|
-| Industrial Performance & Value Realisation | 0.1.0 | 2026-10-11 | `ddfc8f297c495f1d…` | scaffold: modules, recipes, templates, prompts, behaviours, cases and public sources | States its synthesis, templates, examples and tests are original material prepared for Senoni Research and asks the base maintainer to review licensing on integration. Adapted and rewritten here; licensing review remains a maintainer item. | 12 arithmetic tests; validator suite with 1 positive control and 7 corruption tests (rerun unchanged on 2026-10-13) |
-| Purchasing Review replication candidate | 0.1.0 | 2026-10-12 | `1e6c337c1a901ed4…` | method ideas: separate measurement baselines and signs, owner coverage with an unassigned bucket, stable-key snapshot reconciliation | No licence metadata. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item. | 39 tests (rerun unchanged on 2026-10-13) |
-| Portfolio Workload reconstruction candidate | 0.1.0 | 2026-10-12 | `9f493ac1c27d69d5…` | method ideas: Once and Regular effort, partial periods, independent scenario gaps, separate milestone target views | No licence metadata; describes itself as a review candidate. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item. | 47 tests (rerun unchanged on 2026-10-13) |
+| Industrial Performance & Value Realisation | 0.1.0 | 2026-10-11 | `ddfc8f297c495f1d…` | scaffold: modules, recipes, templates, prompts, behaviours, cases and public sources | States its synthesis, templates, examples and tests are original material prepared for Senoni Research and asks the base maintainer to review licensing on integration. Adapted and rewritten here. On 13 October 2026 the maintainer confirmed its origin and approved its original and adapted expression for publication under the repository licence, with the conditions recorded in ATTRIBUTION.md; not independent legal certification. | 12 arithmetic tests; validator suite with 1 positive control and 7 corruption tests (rerun unchanged on 2026-10-13) |
+| Purchasing Review replication candidate | 0.1.0 | 2026-10-12 | `1e6c337c1a901ed4…` | method ideas: separate measurement baselines and signs, owner coverage with an unassigned bucket, stable-key snapshot reconciliation | No licence metadata. No code or prose copied; the ideas are re-implemented in original code and wording. On 13 October 2026 the maintainer approved publishing that reimplementation; the candidate archive itself is not relicensed or redistributed. | 39 tests (rerun unchanged on 2026-10-13) |
+| Portfolio Workload reconstruction candidate | 0.1.0 | 2026-10-12 | `9f493ac1c27d69d5…` | method ideas: Once and Regular effort, partial periods, independent scenario gaps, separate milestone target views | No licence metadata; describes itself as a review candidate. No code or prose copied; the ideas are re-implemented in original code and wording. On 13 October 2026 the maintainer approved publishing the independently implemented concepts and their deliberate differences; the candidate archive itself is not relicensed or redistributed. | 47 tests (rerun unchanged on 2026-10-13) |
 
 ## Modules
 
@@ -148,12 +148,12 @@ Three review candidates are consolidated into one companion pack. The Industrial
 | purchasing:period_views | observed_effect | re-implemented as evidence classes; orders and forecasts never count as actuals |
 | purchasing:owner_control | owner_coverage | re-implemented |
 | purchasing:snapshot_delta | snapshot_delta | re-implemented |
-| purchasing:legacy_zero_changeover_capacity | — | excluded pending review: narrow historical diagnostic, not a capacity model |
+| purchasing:legacy_zero_changeover_capacity | — | excluded (maintainer decision, 13 October 2026): narrow historical diagnostic, not a capacity model |
 | portfolio:workload | workload_plan | re-implemented with unestimated and unscheduled lists and exact Once conservation |
 | portfolio:capacity_deviation | capacity_gaps | re-implemented by role and project pool |
 | portfolio:milestone_portfolio | milestone_views | re-implemented with the new cancellation policy |
 | portfolio:action_state | action_state | re-implemented with a separate accepted state |
-| portfolio:decode_legacy_markers | — | excluded pending review: tied to a historical workbook format |
+| portfolio:decode_legacy_markers | — | excluded (maintainer decision, 13 October 2026): tied to a historical workbook format |
 | industrial:reference arithmetic | dated_year_one_effect, bom_rollup, effect_portfolio, observed_effect | case arithmetic reproduced by original helpers; guidance cases checked inline |
 
 ## Superseded or excluded files

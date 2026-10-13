@@ -29,3 +29,8 @@ First edition. Consolidates three internal review candidates into one companion 
 - Helper contract change, recorded here rather than under a new contract number because contract 0.1.0 has not been released. Function signatures, the observed basis schema `valuedelivery_observed_basis/0.1`, the result fields, existing digests and the SYN-VD01 export are unchanged. `outcome_finding` now runs under the fixed decimal policy and can return the new error code `inconsistent_observation`. A result passed through JSON with its numbers written as exact decimal text still classifies.
 - Roadmap: the real-data statement now names the actual guard. Case loading and the export refuse a case not declared synthetic; the arithmetic helpers do not check where their values came from.
 - Behaviour VDB42 and acceptance scenario VD37.
+
+### Provenance and review record, 13 October 2026 (documentation only; version, helper contract, code and tests unchanged)
+
+- Attribution: the maintainer's conclusion for every row of the origin and disposition checklist, with its conditions, and the maintainer's approval of the wording reviewed at `678bea9`. The conclusions concern material and rights under Senoni Research's control, are not independent legal certification and do not relicense the candidate archives. The two excluded candidate helpers stay excluded.
+- Validation and roadmap: the scope of the two independent reviews is stated, and the publication review items are recorded as concluded.

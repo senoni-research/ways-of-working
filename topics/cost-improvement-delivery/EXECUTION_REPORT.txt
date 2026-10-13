@@ -311,3 +311,84 @@ Not run or not shown: any assistant session (VDB01-VDB42 are specifications);
   annex (VD24); integrated-application controls (VD36); any test against the
   private prototype; an independent review of this correction. The
   maintainer licensing conclusion remains pending.
+
+================================================================================
+v0.1.0 PUBLICATION RECORD (maintainer decisions and review scope) — 13 October 2026
+--------------------------------------------------------------------------------
+The records above are kept as observed. This section is appended.
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: branch topics-cost-improvement-delivery-v0.1.0 at 678bea9
+  (equal to its remote) with this record uncommitted when the checks below
+  ran. The owner authorised one documentation-only commit, a push to this
+  branch and a PR description update; no merge, release or branch deletion.
+  No CI exists; every result below is a local run.
+
+Documentation only. Code, tests, tools, install trees, version and helper
+  contract are unchanged since 678bea9 (git diff against 678bea9 is empty
+  for reference/, tools/ and both project trees).
+  Maintainer record (ATTRIBUTION checklist; migration map licence and
+    exclusion notes): a conclusion for each of the seven origin rows, with
+    its conditions. Original material of this edition, the Industrial
+    candidate, the reimplemented Purchasing and Portfolio ideas, the SYN-VD01
+    fixture and the public references: approved. Excluded material:
+    confirmed within the reviewed scope and kept excluded. The candidate
+    archives are not relicensed or redistributed. The maintainer also
+    approved the positioning and limitations of the documentation reviewed
+    at 678bea9. These conclusions concern material and rights under Senoni
+    Research's control; they are not legal certification.
+  Review record: VALIDATION states the scope of the two independent reviews.
+    The focused review of 678bea9 read pinned source and ran the eight
+    result-consistency tests and the original reproduction in a harness of
+    extracted functions (Linux, Python 3.13.5): 8 passed; both earlier
+    counterexamples refused. It did not run the complete suites, builds or
+    install checks; the figures in VALIDATION remain the maintainer's.
+  Roadmap: the publication review items are recorded as concluded; the
+    excluded candidate helpers stay excluded.
+  Edited inputs: canonical/pages/{ATTRIBUTION, CHANGELOG, README, ROADMAP,
+    VALIDATION}.md, canonical/migration_map.json; root ATTRIBUTION.md.
+
+Companion commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .  (twice)     -> 6 pages regenerated relative to 678bea9
+                                                   (ATTRIBUTION, CHANGELOG, MIGRATION, README,
+                                                   ROADMAP, VALIDATION); then 0 changed (95 generated)
+  python3 -B tools/build_pack.py . --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .           -> STATIC VALIDATION PASSED (95 canonical artifacts, ...)
+  python3 -B -m unittest discover -s <dir> -p 'test_*.py'
+      reference/                                 -> Ran 71 tests, OK (0 skipped)
+      cursor-project/.valuedelivery/reference    -> Ran 71 tests, OK (skipped=1)
+      portable-project/.valuedelivery/reference  -> Ran 71 tests, OK (skipped=1)
+  python3 -B tools/test_validate_pack.py .      -> ALL 37 CORRUPTION REGRESSIONS AND 12 INSTALL,
+                                                   READ-ONLY AND IDEMPOTENCE CHECKS PASSED; positive control passed.
+  Composed installs (base 0.3.3 tree + companion tree in a temporary project;
+    portable: .valuedelivery/ copied and AGENTS.valuedelivery.md appended to
+    the base AGENTS.md, as QUICKSTART describes):
+      Cursor rule        -> INSTALL CHECK PASSED (17 base files); Ran 71 tests, OK (0 skipped)
+      AGENTS.md section  -> INSTALL CHECK PASSED (17 base files); Ran 71 tests, OK (0 skipped)
+  Installed helper, test and export copies in both trees: identical to reference/.
+  Manifest: 144 files. REQUIRES.json: 17 base files pinned (unchanged).
+
+Library checks (from the repository root unless noted):
+  Cost & Value Engineering 0.3.3: build --check, validate, 18 corruption
+    regressions, 191 reference tests in the source and both trees -> pass.
+  Carey Chou, Vandeput: STATIC VALIDATION PASSED (unchanged).
+  Root: tools/check_docs.py -> PASSED; git diff --check -> clean.
+  Changed paths outside this pack: root ATTRIBUTION.md only (15 files in
+    all, every one documentation, the manifest or this report).
+
+Publication checks (aggregate results only; changes since 678bea9):
+  scan_publication.py with the private terms file outside the repository:
+      this pack, base pack, repository tree -> IDENTIFIER SCAN PASSED (0 matching paths each)
+  Literal private markers in the changed files -> 0. Identifier-like names
+    from the private corpus that are not already public -> 0.
+  8-word overlaps with the private prototype's docs and code, the earlier
+    feedback and review bundles, the candidate delivery and the merge-review
+    folder of 678bea9 -> 0.
+  A scan or an overlap count is not a rights conclusion; the conclusions
+    recorded above are the maintainer's.
+
+Untouched: the base engine and pinned base copies; the Carey and Vandeput
+  packs; the website; the private prototype; .specstory/ (untracked).
+
+Remaining before merge: the owner's final merge confirmation against the
+  verified final head. Not run: any assistant session, any real data, an
+  executable annex (VD24), integrated-application controls (VD36).

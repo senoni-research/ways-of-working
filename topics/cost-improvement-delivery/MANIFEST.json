@@ -13,14 +13,14 @@
   "date": "2026-10-13",
   "files": {
     "ATTRIBUTION.md": {
-      "bytes": 6251,
-      "sha256": "168843cdbcbf2262d829b741a7595f3ba6ac2f5445fe6b4f01b4171e994a83f1",
-      "words": 899
+      "bytes": 8631,
+      "sha256": "2be2fabedbbe3efc2842a97a73a4f69d661bf8d2349d257b75f298faa8d0763a",
+      "words": 1210
     },
     "CHANGELOG.md": {
-      "bytes": 5678,
-      "sha256": "2652fc85b7973c904cbc4646951285e035bc985c9a77e9c10045733b610ec43a",
-      "words": 832
+      "bytes": 6340,
+      "sha256": "d93c598076b2a08e10d5d2be6fbb92787cabd14ff18cc289549e644258b24bcc",
+      "words": 927
     },
     "COMPATIBILITY.md": {
       "bytes": 5970,
@@ -32,9 +32,9 @@
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "MIGRATION.md": {
-      "bytes": 9268,
-      "sha256": "5548994826da031234e4357b33c0cb08d5b99623ed362079a1a4abeb09420891",
-      "words": 1485
+      "bytes": 9793,
+      "sha256": "645ff6254db8341e2512839eda52147e4b88c2279543ecae957e2f067ce7259f",
+      "words": 1555
     },
     "QUICKSTART.md": {
       "bytes": 2980,
@@ -42,18 +42,18 @@
       "words": 432
     },
     "README.md": {
-      "bytes": 5156,
-      "sha256": "ffdf2afaaae0b58ec734fa1c81f054a490d48fa42c637187f3abfa7134c0d188",
-      "words": 688
+      "bytes": 5159,
+      "sha256": "12727eecfc1c2a75cc8e4413573cd929380f5533e5010a33db5020e33b4fd6ff",
+      "words": 689
     },
     "REQUIRES.json": {
       "bytes": 2461,
       "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
     },
     "ROADMAP.md": {
-      "bytes": 4458,
-      "sha256": "7356fdd09c50d4b63b4d199e485e8820c510c15fef1613bfc180e1adcb9327e6",
-      "words": 658
+      "bytes": 4608,
+      "sha256": "578744cdcd4d69aa26f789a207c5ef17228c198a7ae9265651aec0dd8480c6e1",
+      "words": 672
     },
     "SOURCE_REGISTER.json": {
       "bytes": 6003,
@@ -65,9 +65,9 @@
       "words": 546
     },
     "VALIDATION.md": {
-      "bytes": 5202,
-      "sha256": "769f4b07ebcdc09b4e09ea178f4f1c734aaf92aef17c96dcbb48dc8294e149d5",
-      "words": 798
+      "bytes": 5661,
+      "sha256": "5c9cc5bd64986e834f68577f88cc97ec99177f423b4a875910d757fba361f754",
+      "words": 865
     },
     "VERSION": {
       "bytes": 6,
@@ -96,8 +96,8 @@
       "sha256": "abbb015cb0cac57a352481326ef65359602a35170183a36255bb616d726c1b75"
     },
     "canonical/migration_map.json": {
-      "bytes": 13150,
-      "sha256": "bf9cbce0e8b49b750f7524f276778797c879a7406dc415831fdc62bd49368554"
+      "bytes": 13675,
+      "sha256": "ee4186eb119d2a609ca2bd1e7a24b29f5b1e00edf0aafa3db3ff7df2b16715b4"
     },
     "canonical/modules/00-activation-and-boundary.md": {
       "bytes": 5840,
@@ -165,14 +165,14 @@
       "words": 1369
     },
     "canonical/pages/ATTRIBUTION.md": {
-      "bytes": 6251,
-      "sha256": "168843cdbcbf2262d829b741a7595f3ba6ac2f5445fe6b4f01b4171e994a83f1",
-      "words": 899
+      "bytes": 8631,
+      "sha256": "2be2fabedbbe3efc2842a97a73a4f69d661bf8d2349d257b75f298faa8d0763a",
+      "words": 1210
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 5678,
-      "sha256": "2652fc85b7973c904cbc4646951285e035bc985c9a77e9c10045733b610ec43a",
-      "words": 832
+      "bytes": 6340,
+      "sha256": "d93c598076b2a08e10d5d2be6fbb92787cabd14ff18cc289549e644258b24bcc",
+      "words": 927
     },
     "canonical/pages/COMPATIBILITY.md": {
       "bytes": 5970,
@@ -185,19 +185,19 @@
       "words": 432
     },
     "canonical/pages/README.md": {
-      "bytes": 5156,
-      "sha256": "ffdf2afaaae0b58ec734fa1c81f054a490d48fa42c637187f3abfa7134c0d188",
-      "words": 688
+      "bytes": 5159,
+      "sha256": "12727eecfc1c2a75cc8e4413573cd929380f5533e5010a33db5020e33b4fd6ff",
+      "words": 689
     },
     "canonical/pages/ROADMAP.md": {
-      "bytes": 4458,
-      "sha256": "7356fdd09c50d4b63b4d199e485e8820c510c15fef1613bfc180e1adcb9327e6",
-      "words": 658
+      "bytes": 4608,
+      "sha256": "578744cdcd4d69aa26f789a207c5ef17228c198a7ae9265651aec0dd8480c6e1",
+      "words": 672
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 5202,
-      "sha256": "769f4b07ebcdc09b4e09ea178f4f1c734aaf92aef17c96dcbb48dc8294e149d5",
-      "words": 798
+      "bytes": 5661,
+      "sha256": "5c9cc5bd64986e834f68577f88cc97ec99177f423b4a875910d757fba361f754",
+      "words": 865
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 1003,

@@ -1,10 +1,10 @@
 # Roadmap and pending items
 
-## Before this draft can be published
+## Publication review (recorded 13 October 2026)
 
-- **Maintainer licensing review** of material adapted from the three internal candidates, as each candidate requested or lacked licence metadata. The origin and disposition checklist in [attribution](ATTRIBUTION.md) is prepared for it; the conclusion is pending.
-- **Private exclusion scan** of the final tree with the owner's external configuration, and a human review of distinctive expression; a scan does not establish rights.
-- **Independent source review** of the review corrections of 13 October 2026. The reviewer read the closure summary; the corrected source and its tests have not yet been independently inspected or run by the reviewer.
+- **Origin and licensing.** The maintainer's conclusion for every row of the origin and disposition checklist is recorded in [attribution](ATTRIBUTION.md). The conclusions concern material and rights under Senoni Research's control and are not independent legal certification. The candidate archives are not relicensed or redistributed.
+- **Wording.** The maintainer approved the publication positioning and limitations of the documentation as reviewed at commit `678bea9`.
+- **Scans and reviews.** The private exclusion scan with the owner's external configuration passes on the current tree, and [validation](VALIDATION.md) states the scope of the two independent source reviews. A scan does not establish rights, and neither review is a rights review.
 
 ## Owner decisions on two methodological choices
 
@@ -22,7 +22,7 @@ Both choices are implemented as described. A reviewer recommended supporting bot
 - **Guidance areas.** Physical capacity, industrialisation, inbound flow and inventory, and capability transfer have no helpers or schemas.
 - **Real data.** The case-loading and demonstration entry points, such as the SYN-VD01 export, refuse a case that is not explicitly declared synthetic. The arithmetic helpers, such as `price_measure` or `observed_effect`, receive values rather than a case, and they do not check or authenticate where those values came from. Real inputs need a separately approved adapter, including any locale conversion for comma-formatted numbers.
 - **Website.** VD28 belongs to a later website session; the export here is the only intended interface.
-- **Excluded candidate helpers.** A legacy marker decoder and a zero-changeover capacity diagnostic remain excluded pending review.
+- **Excluded candidate helpers.** A legacy marker decoder and a zero-changeover capacity diagnostic remain excluded by the maintainer's decision of 13 October 2026.
 
 ## Follow-up for the base: range check (reproducible; not changed here)
 

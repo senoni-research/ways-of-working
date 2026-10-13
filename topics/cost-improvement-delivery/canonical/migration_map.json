@@ -11,7 +11,7 @@
       "dated": "2026-10-11",
       "inspected_base": "Cost & Value Engineering 0.3.2 at 67b9d02",
       "role": "scaffold: modules, recipes, templates, prompts, behaviours, cases and public sources",
-      "licence_note": "States its synthesis, templates, examples and tests are original material prepared for Senoni Research and asks the base maintainer to review licensing on integration. Adapted and rewritten here; licensing review remains a maintainer item.",
+      "licence_note": "States its synthesis, templates, examples and tests are original material prepared for Senoni Research and asks the base maintainer to review licensing on integration. Adapted and rewritten here. On 13 October 2026 the maintainer confirmed its origin and approved its original and adapted expression for publication under the repository licence, with the conditions recorded in ATTRIBUTION.md; not independent legal certification.",
       "reported_tests": "12 arithmetic tests; validator suite with 1 positive control and 7 corruption tests (rerun unchanged on 2026-10-13)"
     },
     {
@@ -22,7 +22,7 @@
       "archive_bytes": 29637,
       "dated": "2026-10-12",
       "role": "method ideas: separate measurement baselines and signs, owner coverage with an unassigned bucket, stable-key snapshot reconciliation",
-      "licence_note": "No licence metadata. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item.",
+      "licence_note": "No licence metadata. No code or prose copied; the ideas are re-implemented in original code and wording. On 13 October 2026 the maintainer approved publishing that reimplementation; the candidate archive itself is not relicensed or redistributed.",
       "reported_tests": "39 tests (rerun unchanged on 2026-10-13)"
     },
     {
@@ -33,7 +33,7 @@
       "archive_bytes": 32888,
       "dated": "2026-10-12",
       "role": "method ideas: Once and Regular effort, partial periods, independent scenario gaps, separate milestone target views",
-      "licence_note": "No licence metadata; describes itself as a review candidate. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item.",
+      "licence_note": "No licence metadata; describes itself as a review candidate. No code or prose copied; the ideas are re-implemented in original code and wording. On 13 October 2026 the maintainer approved publishing the independently implemented concepts and their deliberate differences; the candidate archive itself is not relicensed or redistributed.",
       "reported_tests": "47 tests (rerun unchanged on 2026-10-13)"
     }
   ],
@@ -132,12 +132,12 @@
     {"from": "purchasing:period_views", "to": ["observed_effect"], "note": "re-implemented as evidence classes; orders and forecasts never count as actuals"},
     {"from": "purchasing:owner_control", "to": ["owner_coverage"], "note": "re-implemented"},
     {"from": "purchasing:snapshot_delta", "to": ["snapshot_delta"], "note": "re-implemented"},
-    {"from": "purchasing:legacy_zero_changeover_capacity", "to": [], "note": "excluded pending review: narrow historical diagnostic, not a capacity model"},
+    {"from": "purchasing:legacy_zero_changeover_capacity", "to": [], "note": "excluded (maintainer decision, 13 October 2026): narrow historical diagnostic, not a capacity model"},
     {"from": "portfolio:workload", "to": ["workload_plan"], "note": "re-implemented with unestimated and unscheduled lists and exact Once conservation"},
     {"from": "portfolio:capacity_deviation", "to": ["capacity_gaps"], "note": "re-implemented by role and project pool"},
     {"from": "portfolio:milestone_portfolio", "to": ["milestone_views"], "note": "re-implemented with the new cancellation policy"},
     {"from": "portfolio:action_state", "to": ["action_state"], "note": "re-implemented with a separate accepted state"},
-    {"from": "portfolio:decode_legacy_markers", "to": [], "note": "excluded pending review: tied to a historical workbook format"},
+    {"from": "portfolio:decode_legacy_markers", "to": [], "note": "excluded (maintainer decision, 13 October 2026): tied to a historical workbook format"},
     {"from": "industrial:reference arithmetic", "to": ["dated_year_one_effect", "bom_rollup", "effect_portfolio", "observed_effect"], "note": "case arithmetic reproduced by original helpers; guidance cases checked inline"}
   ],
   "superseded": [
