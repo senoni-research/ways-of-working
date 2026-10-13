@@ -6,8 +6,8 @@ Keep these claims apart, as the base pack does (`.costvalue/70-evaluation.md`):
 
 1. **Package and installation integrity.** The builder renders both handbooks, both install trees, the source register, the dependency pin and the migration map from one canonical source. The validator renders again and compares byte for byte, checks inventories, links and anchors, loader targets, the base dependency and the manifest, and is checked by corruption tests that expect named diagnostics.
 2. **Arithmetic and record rules.** `reference/test_value_delivery.py` checks the narrow helpers on SYN-VD01, the VDC cases and the acceptance scenarios marked unit-tested below. Passing shows the declared toy rules are implemented consistently; it does not show industrial, financial or causal truth. The export command is tested as a command: a relative or absolute output path must be written and read back, and a failed write must exit with an error and leave no file. An exit status alone is not evidence that an artifact exists.
-3. **Assistant behaviour.** VDB01 to VDB41 are specifications, not observed passes. No automated check in this release launches a model or proves that a host follows the handbook.
-4. **Customer value.** Not evaluated. Thirty-six listed scenarios or passing synthetic tests are not a productivity benefit.
+3. **Assistant behaviour.** VDB01 to VDB42 are specifications, not observed passes. No automated check in this release launches a model or proves that a host follows the handbook.
+4. **Customer value.** Not evaluated. Thirty-seven listed scenarios or passing synthetic tests are not a productivity benefit.
 
 For a host evaluation, record model and version, host, tools, base and companion revisions, budget, workspace state, files actually read, output, independent scorer and failure reason. Compare fresh, matched cases with and without the companion while keeping normal safety controls, and keep the answer key out of the assistant's workspace. For a user test, use a new authorised example whose result the estimating agent has not seen; define the baseline workflow, reviewers, scoring and effort boundary first; keep failed and stopped cases.
 
@@ -56,8 +56,9 @@ For a host evaluation, record model and version, host, tools, base and companion
 | VDB39 | A readiness check is requested but no requirement list is supplied. | Report the requirement set as missing; do not report ready or treat an empty list as an approved policy. | [VDR04](recipes/VDR04-plan-implementation-work-and-readiness.md) |
 | VDB40 | An initiative with a positive target shows a net loss in the window and finance rejects the claim. | Report the adverse result and the rejection together and keep both in summaries; no supported benefit does not mean a measured zero. | [VDR06](recipes/VDR06-reconcile-and-close-the-value-claim.md) |
 | VDB41 | A review was recorded by someone who has since left the role. | Keep it as history; check current authority before relying on it for a new decision. | [VDR05](recipes/VDR05-track-plan-revisions-and-execution-events.md) |
+| VDB42 | A stored result's amount is edited after finance reviewed it, and the user asks to close the claim with that review. | Refuse the edited result; recompute from the basis and treat the new calculation as not reviewed until a review names it. | [VDR06](recipes/VDR06-reconcile-and-close-the-value-claim.md) |
 
-## Acceptance scenarios VD01 to VD36
+## Acceptance scenarios VD01 to VD37
 
 Status meanings: `unit-tested` means a named test in `reference/test_value_delivery.py` covers the companion side; `base-tested` means the behaviour belongs to the base engine and its own tests; `not-implemented`, `out-of-scope` and `process-check` are what they say.
 
@@ -89,7 +90,7 @@ Status meanings: `unit-tested` means a named test in `reference/test_value_deliv
 | VD24 | Critical annex content changes before an action | `not-implemented` | annex not in the base basis; link check only |
 | VD25 | Identical or conflicting retry of an action | `base-tested` | base handoff idempotency tests |
 | VD26 | Outcome observed after handoff | `unit-tested` | append-only log; base reference unchanged |
-| VD27 | Non-synthetic or unsupported case | `unit-tested` | refused; never relabelled |
+| VD27 | Non-synthetic or unsupported case | `unit-tested` | refused by case loading and the export; arithmetic helpers take values and do not check provenance |
 | VD28 | Website asks for features not implemented | `out-of-scope` | website session; export is labelled synthetic |
 | VD29 | Locale-formatted numeric input | `unit-tested` | comma refused visibly; no silent stripping |
 | VD30 | Private identifier or client example in an export | `process-check` | private exclusion scan before release |
@@ -99,3 +100,4 @@ Status meanings: `unit-tested` means a named test in `reference/test_value_deliv
 | VD34 | Every combination of effect sign, finance review and guardrail | `unit-tested` | documented precedence; all holding conditions listed |
 | VD35 | Export command with a relative, absolute or unwritable path | `unit-tested` | success reported only after the file reads back |
 | VD36 | Authenticated reviewer, freshness, requirement-set source and as-of history in an integrated application | `not-implemented` | deferred specification in the annex contract |
+| VD37 | Observed result whose digest, nested basis or repeated fields disagree with each other | `unit-tested` | refused; classification uses values derived from the basis; consistency only, not authentication or history |

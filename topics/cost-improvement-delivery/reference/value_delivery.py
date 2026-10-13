@@ -106,6 +106,14 @@ SELF_DECLARED_AUTHORITY_FIELDS = (
 _DECIMAL_TEXT = re.compile(r"[+-]?(?:\d+(?:\.\d+)?|\.\d+)\Z")
 _DATE_TEXT = re.compile(r"\d{4}-\d{2}-\d{2}\Z")
 _FINGERPRINT = re.compile(r"[0-9a-f]{64}\Z")
+_NET_EFFECT_SCOPE = ("gross observed price effect less the declared incremental operating expense for the window; "
+                     "not cash, one-off spend, stock or avoided cost")
+_BASIS_FIELDS = frozenset({"basis_schema", "comparator_id", "comparator_unit_price", "currency", "unit", "window",
+                           "required_evidence", "counted", "incremental_operating_expense", "expense_evidence"})
+_COUNTED_FIELDS = frozenset({"obs_id", "evidence_class", "date", "quantity", "unit_price"})
+_RESULT_FIELDS = ("comparator_id", "kind", "sign", "currency", "unit", "window", "required_evidence", "counted",
+                  "incremental_operating_expense", "expense_evidence", "net_effect_scope", "financially_measured_savings",
+                  "status", "observed_quantity", "gross_effect", "net_effect")
 
 
 class DeliveryError(ValueError):
@@ -788,6 +796,7 @@ def observed_effect(observations: Sequence[Mapping[str, Any]], *, comparator_id:
     one-off spend, stock and avoided cost stay outside it. A nonzero expense needs actual
     evidence (receipt, invoice or payment); a forecast expense belongs in a modelled view.
     ``basis_digest`` identifies the exact inputs counted, so a finance review can name what it saw.
+    Every derived field comes from the basis alone, which lets ``outcome_finding`` derive them again.
     """
     _choice(required_evidence, ACTUAL_EVIDENCE_CLASSES, "required_evidence", "invalid_evidence_requirement")
     start, end = _date(window_start, "window_start"), _date(window_end, "window_end")
@@ -800,8 +809,7 @@ def observed_effect(observations: Sequence[Mapping[str, Any]], *, comparator_id:
     if expense_evidence is not None or not expense.is_zero():
         _choice(expense_evidence, ACTUAL_EVIDENCE_CLASSES, "expense_evidence", "non_actual_expense")
     _unique([_text(o.get("obs_id"), "obs_id") for o in observations], "duplicate_observation", "observations")
-    counted, not_used, quantity, gross = [], [], Decimal(0), Decimal(0)
-    counted_rows = []
+    not_used, counted_rows = [], []
     for o in observations:
         oid = o["obs_id"]
         cls = _choice(o.get("evidence_class"), EVIDENCE_CLASSES, f"{oid}.evidence_class", "invalid_evidence_class")
@@ -815,33 +823,130 @@ def observed_effect(observations: Sequence[Mapping[str, Any]], *, comparator_id:
         elif not start <= when <= end:
             not_used.append({"obs_id": oid, "reason": "outside the observation window"})
         else:
-            counted.append(oid)
             counted_rows.append({"obs_id": oid, "evidence_class": cls, "date": when.isoformat(),
                                  "quantity": q, "unit_price": price})
-            quantity += q
-            gross += q * (comparator - price)
     comparator_id = _text(comparator_id, "comparator_id")
     basis = {"basis_schema": OBSERVED_BASIS_SCHEMA, "comparator_id": comparator_id,
              "comparator_unit_price": comparator, "currency": currency, "unit": unit,
              "window": [start.isoformat(), end.isoformat()], "required_evidence": required_evidence,
              "counted": counted_rows, "incremental_operating_expense": expense,
              "expense_evidence": expense_evidence}
-    result = {"comparator_id": comparator_id, "kind": "observed_effect", "sign": "benefit",
-              "currency": currency, "unit": unit, "window": [start.isoformat(), end.isoformat()],
-              "required_evidence": required_evidence, "counted": counted, "not_used_as_actual": not_used,
-              "incremental_operating_expense": expense, "expense_evidence": expense_evidence,
-              "net_effect_scope": "gross observed price effect less the declared incremental operating expense for the window; not cash, one-off spend, stock or avoided cost",
-              "basis": basis, "basis_digest": _digest(basis),
-              "financially_measured_savings": None}
-    if not counted:
+    return _derive_observation(basis, not_used)
+
+
+def _derive_observation(basis: Mapping[str, Any], not_used: Sequence[Mapping[str, Any]] = ()) -> dict:
+    """Every observed quantity, status, amount and the digest, derived from one basis and nothing else."""
+    rows = basis["counted"]
+    result = {"comparator_id": basis["comparator_id"], "kind": "observed_effect", "sign": "benefit",
+              "currency": basis["currency"], "unit": basis["unit"], "window": list(basis["window"]),
+              "required_evidence": basis["required_evidence"], "counted": [r["obs_id"] for r in rows],
+              "not_used_as_actual": list(not_used),
+              "incremental_operating_expense": basis["incremental_operating_expense"],
+              "expense_evidence": basis["expense_evidence"], "net_effect_scope": _NET_EFFECT_SCOPE,
+              "basis": basis, "basis_digest": _digest(basis), "financially_measured_savings": None}
+    if not rows:
         result.update(status="unmeasured", observed_quantity=None, gross_effect=None, net_effect=None)
-    else:
-        result.update(status="calculated_not_reviewed", observed_quantity=quantity,
-                      gross_effect=_out(gross, "gross_effect"), net_effect=_out(gross - expense, "net_effect"))
+        return result
+    quantity, gross = Decimal(0), Decimal(0)
+    for r in rows:
+        quantity += r["quantity"]
+        gross += r["quantity"] * (basis["comparator_unit_price"] - r["unit_price"])
+    result.update(status="calculated_not_reviewed", observed_quantity=quantity, gross_effect=_out(gross, "gross_effect"),
+                  net_effect=_out(gross - basis["incremental_operating_expense"], "net_effect"))
     return result
 
 
-def _finance_review(review: Any, observed: Mapping[str, Any], today: date) -> dict:
+def _canonical_basis(basis: Any) -> dict:
+    """Validate a supplied observed basis and rebuild it from its own values, as observed_effect writes it."""
+    if not isinstance(basis, Mapping) or set(basis) != _BASIS_FIELDS:
+        raise DeliveryError("invalid_observation", "observed.basis: exactly the fields written by observed_effect are required.")
+    if basis["basis_schema"] != OBSERVED_BASIS_SCHEMA:
+        raise DeliveryError("invalid_observation", f"observed.basis.basis_schema: {OBSERVED_BASIS_SCHEMA} required.")
+    required = _choice(basis["required_evidence"], ACTUAL_EVIDENCE_CLASSES, "observed.basis.required_evidence",
+                       "invalid_observation")
+    window = basis["window"]
+    if not isinstance(window, (list, tuple)) or len(window) != 2:
+        raise DeliveryError("invalid_observation", "observed.basis.window: [start, end] required.")
+    start, end = _date(window[0], "observed.basis.window[0]"), _date(window[1], "observed.basis.window[1]")
+    if end < start:
+        raise DeliveryError("invalid_window", "observed.basis.window: end precedes start.")
+    expense = number(basis["incremental_operating_expense"], "observed.basis.incremental_operating_expense",
+                     nonnegative=True)
+    expense_evidence = basis["expense_evidence"]
+    if expense_evidence is not None or not expense.is_zero():
+        _choice(expense_evidence, ACTUAL_EVIDENCE_CLASSES, "observed.basis.expense_evidence", "non_actual_expense")
+    rows = basis["counted"]
+    if not isinstance(rows, (list, tuple)):
+        raise DeliveryError("invalid_observation", "observed.basis.counted: a list of counted rows is required.")
+    counted = []
+    for n, row in enumerate(rows):
+        where = f"observed.basis.counted[{n}]"
+        if not isinstance(row, Mapping) or set(row) != _COUNTED_FIELDS:
+            raise DeliveryError("invalid_observation",
+                                f"{where}: exactly obs_id, evidence_class, date, quantity and unit_price are required.")
+        when = _date(row["date"], f"{where}.date")
+        if row["evidence_class"] != required or not start <= when <= end:
+            raise DeliveryError("inconsistent_observation",
+                                f"{where}: a counted row must carry the required evidence class and fall inside the window.")
+        counted.append({"obs_id": _text(row["obs_id"], f"{where}.obs_id"), "evidence_class": required,
+                        "date": when.isoformat(),
+                        "quantity": number(row["quantity"], f"{where}.quantity", nonnegative=True),
+                        "unit_price": number(row["unit_price"], f"{where}.unit_price", nonnegative=True)})
+    _unique([r["obs_id"] for r in counted], "duplicate_observation", "observed.basis.counted")
+    return {"basis_schema": OBSERVED_BASIS_SCHEMA,
+            "comparator_id": _text(basis["comparator_id"], "observed.basis.comparator_id"),
+            "comparator_unit_price": number(basis["comparator_unit_price"], "observed.basis.comparator_unit_price",
+                                            nonnegative=True),
+            "currency": _text(basis["currency"], "observed.basis.currency"),
+            "unit": _text(basis["unit"], "observed.basis.unit"),
+            "window": [start.isoformat(), end.isoformat()], "required_evidence": required, "counted": counted,
+            "incremental_operating_expense": expense, "expense_evidence": expense_evidence}
+
+
+def _same(supplied: Any, derived: Any) -> bool:
+    """Exact agreement of a repeated field with its derived value; numbers compare by value with every digit, never rounded."""
+    if isinstance(derived, Decimal):
+        if isinstance(supplied, bool) or not isinstance(supplied, (Decimal, int, str)):
+            return False
+        try:
+            return exact_text(number(supplied, "observed")) == exact_text(derived)
+        except DeliveryError:
+            return False
+    if isinstance(derived, list):
+        return isinstance(supplied, (list, tuple)) and list(supplied) == derived
+    return type(supplied) is type(derived) and supplied == derived
+
+
+def _validated_observation(observed: Any) -> dict:
+    """The single boundary between a supplied observed result and classification.
+
+    The basis is rebuilt from its own values, and the digest, quantity, status and amounts are derived
+    from it again exactly as ``observed_effect`` derives them. A supplied digest or repeated field that
+    disagrees is refused rather than trusted or silently replaced, so an edited amount cannot keep the
+    review of the content it replaced. Rows listed as not used lie outside the basis and are not read.
+    This is an internal-consistency check: it does not authenticate who produced the result, and it
+    keeps no history.
+    """
+    if not isinstance(observed, Mapping) or observed.get("kind") != "observed_effect":
+        raise DeliveryError("invalid_observation", "observed: an observed_effect result is required.")
+    digest = observed.get("basis_digest")
+    if not isinstance(digest, str) or not _FINGERPRINT.match(digest):
+        raise DeliveryError("invalid_observation", "observed.basis_digest: a 64-character lowercase hex digest is required.")
+    derived = _derive_observation(_canonical_basis(observed.get("basis")))
+    if digest != derived["basis_digest"]:
+        raise DeliveryError("inconsistent_observation",
+                            "observed.basis_digest does not identify observed.basis; recompute the result with observed_effect.")
+    for field in _RESULT_FIELDS:
+        if field not in observed:
+            raise DeliveryError("invalid_observation", f"observed.{field}: missing.")
+        if not _same(observed[field], derived[field]):
+            raise DeliveryError("inconsistent_observation",
+                                f"observed.{field} disagrees with the value derived from observed.basis; "
+                                "recompute the result with observed_effect.")
+    return derived
+
+
+def _finance_review(review: Any, basis_digest: str, today: date) -> dict:
     if not isinstance(review, Mapping):
         raise DeliveryError("invalid_finance_review", "finance_review: a record with a status is required, not a bare label.")
     status = _choice(review.get("status"), FINANCE_REVIEWS, "finance_review.status", "invalid_finance_review")
@@ -857,29 +962,31 @@ def _finance_review(review: Any, observed: Mapping[str, Any], today: date) -> di
     if not isinstance(digest, str) or not _FINGERPRINT.match(digest):
         raise DeliveryError("invalid_finance_review", "finance_review.basis_digest: the 64-character digest of the reviewed calculation is required.")
     out.update(reviewed_on=reviewed_on.isoformat(), reviewed_basis_digest=digest)
-    if digest == observed.get("basis_digest"):
+    if digest == basis_digest:
         out.update(matches_this_calculation=True, effective_status=status)
     return out
 
 
+@_policy
 def outcome_finding(*, implementation_state: str, observed: Mapping[str, Any], finance_review: Mapping[str, Any],
                     service_guardrail: str, as_of: str) -> dict:
     """Conditional classification that keeps implementation, calculation, finance review and service evidence separate.
 
-    A finance review counts only when its ``basis_digest`` matches the observed calculation; a
-    review of different content is kept visible but treated as not reviewed. The result is a
-    label for named reviewers, not a finance sign-off, an approval or a causal test.
+    ``observed`` must be internally consistent: its digest and every repeated field must equal what
+    its basis derives (``inconsistent_observation`` otherwise), and only the derived values are used.
+    A finance review counts only when its ``basis_digest`` matches that recomputed digest; a review
+    of different content is kept visible but treated as not reviewed. The result is a label for
+    named reviewers, not a finance sign-off, an approval or a causal test.
     """
     today = _date(as_of, "as_of")
     _choice(implementation_state, ACTION_STATES, "implementation_state", "invalid_action_state")
     _choice(service_guardrail, SERVICE_GUARDRAILS, "service_guardrail", "invalid_guardrail")
-    if not isinstance(observed, Mapping) or observed.get("kind") != "observed_effect":
-        raise DeliveryError("invalid_observation", "observed: an observed_effect result is required.")
-    if _date(observed["window"][1], "observed.window_end") > today:
+    obs = _validated_observation(observed)
+    if _date(obs["window"][1], "observed.window_end") > today:
         raise DeliveryError("future_event", "the observation window ends after as_of; this helper does not classify a partial window.")
-    review = _finance_review(finance_review, observed, today)
-    measured = observed.get("status") == "calculated_not_reviewed"
-    net = observed.get("net_effect") if measured else None
+    review = _finance_review(finance_review, obs["basis_digest"], today)
+    measured = obs["status"] == "calculated_not_reviewed"
+    net = obs["net_effect"] if measured else None
     holds = {
         "implementation_unconfirmed": implementation_state != "accepted",
         "unmeasured": not measured,
@@ -896,8 +1003,8 @@ def outcome_finding(*, implementation_state: str, observed: Mapping[str, Any], f
     return {"finding": finding, "closing_category": category,
             "interpretation": CATEGORY_INTERPRETATIONS[category], "conditions": conditions,
             "as_of": today.isoformat(), "implementation_state": implementation_state,
-            "observed_status": observed.get("status"), "observed_net_effect": net,
-            "observed_basis_digest": observed.get("basis_digest"),
+            "observed_status": obs["status"], "observed_net_effect": net,
+            "observed_basis_digest": obs["basis_digest"],
             "finance_review": review, "service_guardrail": service_guardrail,
             "financially_measured_savings": net if finding == "measured_and_accepted_within_scope" else None,
             "causal_attribution_established": False,

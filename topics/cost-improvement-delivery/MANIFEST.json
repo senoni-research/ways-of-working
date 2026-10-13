@@ -1,7 +1,7 @@
 {
   "counts": {
-    "acceptance": 36,
-    "behaviors": 41,
+    "acceptance": 37,
+    "behaviors": 42,
     "cases": 8,
     "fixtures": 1,
     "modules": 13,
@@ -18,23 +18,23 @@
       "words": 899
     },
     "CHANGELOG.md": {
-      "bytes": 4064,
-      "sha256": "78aabb2d0727bacf24016bfd8c149cdb4eadb1fd92095affa9969b64082c7bc2",
-      "words": 596
+      "bytes": 5678,
+      "sha256": "2652fc85b7973c904cbc4646951285e035bc985c9a77e9c10045733b610ec43a",
+      "words": 832
     },
     "COMPATIBILITY.md": {
-      "bytes": 5761,
-      "sha256": "cccf80c791a6c9ae6802769e97b6c1c769d4f02456bd97f2e82a1aa0249f07c0",
-      "words": 873
+      "bytes": 5970,
+      "sha256": "819aa8ab5a59b20747158e4d7853c1325fc355988b392174e89cad3a3f86bcc0",
+      "words": 901
     },
     "LICENSE": {
       "bytes": 1072,
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "MIGRATION.md": {
-      "bytes": 9155,
-      "sha256": "c803be5c074cde335b003f6a3a60a0d27849b09d31f3627a918865d56a70f73f",
-      "words": 1465
+      "bytes": 9268,
+      "sha256": "5548994826da031234e4357b33c0cb08d5b99623ed362079a1a4abeb09420891",
+      "words": 1485
     },
     "QUICKSTART.md": {
       "bytes": 2980,
@@ -43,7 +43,7 @@
     },
     "README.md": {
       "bytes": 5156,
-      "sha256": "270a0d5dec7c8cd000aee79ac956c62f4a4c871ce0252891e4f75d0d5765175e",
+      "sha256": "ffdf2afaaae0b58ec734fa1c81f054a490d48fa42c637187f3abfa7134c0d188",
       "words": 688
     },
     "REQUIRES.json": {
@@ -51,9 +51,9 @@
       "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
     },
     "ROADMAP.md": {
-      "bytes": 4190,
-      "sha256": "1864d40d1f813b7e9adf63a9ceeb55e9752c764e1aabfd29c06f24f6e69a1596",
-      "words": 617
+      "bytes": 4458,
+      "sha256": "7356fdd09c50d4b63b4d199e485e8820c510c15fef1613bfc180e1adcb9327e6",
+      "words": 658
     },
     "SOURCE_REGISTER.json": {
       "bytes": 6003,
@@ -65,9 +65,9 @@
       "words": 546
     },
     "VALIDATION.md": {
-      "bytes": 4589,
-      "sha256": "9de617f68ee1a81804d2e9a3f4d8ac6a621eadbd4d73846aa602adf5fe674867",
-      "words": 700
+      "bytes": 5202,
+      "sha256": "769f4b07ebcdc09b4e09ea178f4f1c734aaf92aef17c96dcbb48dc8294e149d5",
+      "words": 798
     },
     "VERSION": {
       "bytes": 6,
@@ -92,12 +92,12 @@
       "words": 246
     },
     "canonical/metadata.json": {
-      "bytes": 3277,
-      "sha256": "b92075a32db92fb4eb39253d7c24ae06908402bd4a6944aada4ff09bb21125db"
+      "bytes": 3302,
+      "sha256": "abbb015cb0cac57a352481326ef65359602a35170183a36255bb616d726c1b75"
     },
     "canonical/migration_map.json": {
-      "bytes": 13006,
-      "sha256": "0ca743acb869da7fdab82eeacffce44e4b4c14e70c5393e7c5bada28d82fd140"
+      "bytes": 13150,
+      "sha256": "bf9cbce0e8b49b750f7524f276778797c879a7406dc415831fdc62bd49368554"
     },
     "canonical/modules/00-activation-and-boundary.md": {
       "bytes": 5840,
@@ -120,9 +120,9 @@
       "words": 946
     },
     "canonical/modules/40-outcome-reconciliation.md": {
-      "bytes": 8881,
-      "sha256": "1fdb832ad8e247733454f4979514d1d2b824b972e0abc64af05bdbfcd921c0a1",
-      "words": 1315
+      "bytes": 10376,
+      "sha256": "4b01b0fc1013f79b18c349464c7d02f6082f40520572c25b95754d60e50c6389",
+      "words": 1543
     },
     "canonical/modules/50-annex-contract.md": {
       "bytes": 4616,
@@ -155,9 +155,9 @@
       "words": 355
     },
     "canonical/modules/70-evaluation.md": {
-      "bytes": 13421,
-      "sha256": "d840bf2795f391737e3250bf2b3583c408d3e2105dcd1e5e78c0101570619a2c",
-      "words": 2233
+      "bytes": 13985,
+      "sha256": "160f5a68c53c431d3933550f2388feecbf390a665ec0f56b8478d26b83b7c0b2",
+      "words": 2329
     },
     "canonical/modules/80-templates-and-prompts.md": {
       "bytes": 9916,
@@ -170,14 +170,14 @@
       "words": 899
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 4064,
-      "sha256": "78aabb2d0727bacf24016bfd8c149cdb4eadb1fd92095affa9969b64082c7bc2",
-      "words": 596
+      "bytes": 5678,
+      "sha256": "2652fc85b7973c904cbc4646951285e035bc985c9a77e9c10045733b610ec43a",
+      "words": 832
     },
     "canonical/pages/COMPATIBILITY.md": {
-      "bytes": 5761,
-      "sha256": "cccf80c791a6c9ae6802769e97b6c1c769d4f02456bd97f2e82a1aa0249f07c0",
-      "words": 873
+      "bytes": 5970,
+      "sha256": "819aa8ab5a59b20747158e4d7853c1325fc355988b392174e89cad3a3f86bcc0",
+      "words": 901
     },
     "canonical/pages/QUICKSTART.md": {
       "bytes": 2980,
@@ -186,18 +186,18 @@
     },
     "canonical/pages/README.md": {
       "bytes": 5156,
-      "sha256": "270a0d5dec7c8cd000aee79ac956c62f4a4c871ce0252891e4f75d0d5765175e",
+      "sha256": "ffdf2afaaae0b58ec734fa1c81f054a490d48fa42c637187f3abfa7134c0d188",
       "words": 688
     },
     "canonical/pages/ROADMAP.md": {
-      "bytes": 4190,
-      "sha256": "1864d40d1f813b7e9adf63a9ceeb55e9752c764e1aabfd29c06f24f6e69a1596",
-      "words": 617
+      "bytes": 4458,
+      "sha256": "7356fdd09c50d4b63b4d199e485e8820c510c15fef1613bfc180e1adcb9327e6",
+      "words": 658
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 4589,
-      "sha256": "9de617f68ee1a81804d2e9a3f4d8ac6a621eadbd4d73846aa602adf5fe674867",
-      "words": 700
+      "bytes": 5202,
+      "sha256": "769f4b07ebcdc09b4e09ea178f4f1c734aaf92aef17c96dcbb48dc8294e149d5",
+      "words": 798
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 1003,
@@ -235,9 +235,9 @@
       "words": 288
     },
     "canonical/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 1998,
-      "sha256": "031f736d6ec18df4c662da2d43e31b3168a9d8975e2d785ac52268816076406a",
-      "words": 286
+      "bytes": 2105,
+      "sha256": "3ae12d05e9e16aea9059753f06a6283b5ae0c52ca64f9e48ee8e868e2e0f6e5c",
+      "words": 304
     },
     "canonical/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1320,
@@ -302,9 +302,9 @@
       "words": 946
     },
     "cursor-project/.valuedelivery/40-outcome-reconciliation.md": {
-      "bytes": 9056,
-      "sha256": "7796cdbc0e998845a62137971e0eacca59587db79ac45c0d77360bcc2648f1b3",
-      "words": 1315
+      "bytes": 10567,
+      "sha256": "a452428d35de722cb205f56c14892ddb95626c2e810c656191ec52e2a180d411",
+      "words": 1543
     },
     "cursor-project/.valuedelivery/50-annex-contract.md": {
       "bytes": 4674,
@@ -337,9 +337,9 @@
       "words": 355
     },
     "cursor-project/.valuedelivery/70-evaluation.md": {
-      "bytes": 15518,
-      "sha256": "13c4a889bc3b6c4f161622a147a4056a467ed9a24b4a01c374473a3da25c29ed",
-      "words": 2233
+      "bytes": 16134,
+      "sha256": "ce88a59869df474d249ca14725260bf2b18e68152830cf2f41637e1686296043",
+      "words": 2329
     },
     "cursor-project/.valuedelivery/80-templates-and-prompts.md": {
       "bytes": 10343,
@@ -407,9 +407,9 @@
       "words": 288
     },
     "cursor-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 2062,
-      "sha256": "6538c243a9e899163f2e45fcd9e872bcf2ba5aa1a32d3f8d3a37b27f6e5df10f",
-      "words": 286
+      "bytes": 2169,
+      "sha256": "813c183d37f430b517b004cec9c847feddaccc11c978596d30a51076f06c30c0",
+      "words": 304
     },
     "cursor-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1352,
@@ -440,12 +440,12 @@
       "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "cursor-project/.valuedelivery/reference/test_value_delivery.py": {
-      "bytes": 60744,
-      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
+      "bytes": 72637,
+      "sha256": "90d95c4c44b108bc07935d85ed7d04ef9346ad148fefe7afca97957632254634"
     },
     "cursor-project/.valuedelivery/reference/value_delivery.py": {
-      "bytes": 54908,
-      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
+      "bytes": 62127,
+      "sha256": "c65aa8ce85f615d9387ded496beb3b32e78ececeb02657e4cfd4099f744c3380"
     },
     "cursor-project/VALUEDELIVERY-INSTALL.md": {
       "bytes": 791,
@@ -453,19 +453,19 @@
       "words": 86
     },
     "cursor-project/valuedelivery-cursor.md": {
-      "bytes": 100349,
-      "sha256": "37b5a47e11b52aa5f61b39f40978eee5580703231cd6c17df2348fd17ccafa1e",
-      "words": 14230
+      "bytes": 102539,
+      "sha256": "dfed3d9044c744c4e1a8d05a86b0c39eca7b900516a13930fe767074330d2947",
+      "words": 14572
     },
     "cursor.md": {
-      "bytes": 100349,
-      "sha256": "37b5a47e11b52aa5f61b39f40978eee5580703231cd6c17df2348fd17ccafa1e",
-      "words": 14230
+      "bytes": 102539,
+      "sha256": "dfed3d9044c744c4e1a8d05a86b0c39eca7b900516a13930fe767074330d2947",
+      "words": 14572
     },
     "memory.md": {
-      "bytes": 100470,
-      "sha256": "9af687883d6643e6f383fdbf4f982891a6056cc87fe98ef9c28e36820129dcea",
-      "words": 14255
+      "bytes": 102660,
+      "sha256": "e3760c498d7464a9190ec831caaf26e0b5a2929b331f29b8068edc2dfbd5c315",
+      "words": 14597
     },
     "portable-project/.valuedelivery/00-activation-and-boundary.md": {
       "bytes": 6856,
@@ -488,9 +488,9 @@
       "words": 946
     },
     "portable-project/.valuedelivery/40-outcome-reconciliation.md": {
-      "bytes": 9056,
-      "sha256": "7796cdbc0e998845a62137971e0eacca59587db79ac45c0d77360bcc2648f1b3",
-      "words": 1315
+      "bytes": 10567,
+      "sha256": "a452428d35de722cb205f56c14892ddb95626c2e810c656191ec52e2a180d411",
+      "words": 1543
     },
     "portable-project/.valuedelivery/50-annex-contract.md": {
       "bytes": 4674,
@@ -523,9 +523,9 @@
       "words": 355
     },
     "portable-project/.valuedelivery/70-evaluation.md": {
-      "bytes": 15518,
-      "sha256": "13c4a889bc3b6c4f161622a147a4056a467ed9a24b4a01c374473a3da25c29ed",
-      "words": 2233
+      "bytes": 16134,
+      "sha256": "ce88a59869df474d249ca14725260bf2b18e68152830cf2f41637e1686296043",
+      "words": 2329
     },
     "portable-project/.valuedelivery/80-templates-and-prompts.md": {
       "bytes": 10343,
@@ -593,9 +593,9 @@
       "words": 288
     },
     "portable-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 2062,
-      "sha256": "6538c243a9e899163f2e45fcd9e872bcf2ba5aa1a32d3f8d3a37b27f6e5df10f",
-      "words": 286
+      "bytes": 2169,
+      "sha256": "813c183d37f430b517b004cec9c847feddaccc11c978596d30a51076f06c30c0",
+      "words": 304
     },
     "portable-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1352,
@@ -626,12 +626,12 @@
       "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "portable-project/.valuedelivery/reference/test_value_delivery.py": {
-      "bytes": 60744,
-      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
+      "bytes": 72637,
+      "sha256": "90d95c4c44b108bc07935d85ed7d04ef9346ad148fefe7afca97957632254634"
     },
     "portable-project/.valuedelivery/reference/value_delivery.py": {
-      "bytes": 54908,
-      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
+      "bytes": 62127,
+      "sha256": "c65aa8ce85f615d9387ded496beb3b32e78ececeb02657e4cfd4099f744c3380"
     },
     "portable-project/AGENTS.valuedelivery.md": {
       "bytes": 1712,
@@ -654,9 +654,9 @@
       "words": 34
     },
     "portable-project/valuedelivery-memory.md": {
-      "bytes": 100470,
-      "sha256": "9af687883d6643e6f383fdbf4f982891a6056cc87fe98ef9c28e36820129dcea",
-      "words": 14255
+      "bytes": 102660,
+      "sha256": "e3760c498d7464a9190ec831caaf26e0b5a2929b331f29b8068edc2dfbd5c315",
+      "words": 14597
     },
     "reference/__init__.py": {
       "bytes": 0,
@@ -667,12 +667,12 @@
       "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "reference/test_value_delivery.py": {
-      "bytes": 60744,
-      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
+      "bytes": 72637,
+      "sha256": "90d95c4c44b108bc07935d85ed7d04ef9346ad148fefe7afca97957632254634"
     },
     "reference/value_delivery.py": {
-      "bytes": 54908,
-      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
+      "bytes": 62127,
+      "sha256": "c65aa8ce85f615d9387ded496beb3b32e78ececeb02657e4cfd4099f744c3380"
     },
     "tools/README.md": {
       "bytes": 3042,

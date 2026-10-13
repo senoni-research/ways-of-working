@@ -98,7 +98,8 @@
     {"from": "B75", "to": ["VDB30"], "note": "reworded: the base does not see companion records"},
     {"from": "B76", "to": ["VDB31"]}, {"from": "B77", "to": ["VDB32"]},
     {"from": "new", "to": ["VDB33", "VDB34", "VDB35", "VDB36", "VDB37"], "note": "cancellation, non-additive views, unknown owners, unestimated work, role substitution"},
-    {"from": "new", "to": ["VDB38", "VDB39", "VDB40", "VDB41"], "note": "added in the PR review: content-bound finance review, missing requirement set, reportable adverse economics, historical authorship"}
+    {"from": "new", "to": ["VDB38", "VDB39", "VDB40", "VDB41"], "note": "added in the PR review: content-bound finance review, missing requirement set, reportable adverse economics, historical authorship"},
+    {"from": "new", "to": ["VDB42"], "note": "added in the source review: an edited observed result cannot keep another calculation's review"}
   ],
   "cases": [
     {"from": "IP-C01", "to": ["VDC01"], "note": "helper-backed: dated_year_one_effect"},

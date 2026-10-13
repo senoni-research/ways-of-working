@@ -10,7 +10,7 @@ This is a review draft, not a fourth validated product. It contains documentatio
 
 Read [QUICKSTART](QUICKSTART.md) for installation alongside the base pack. Complete handbooks: [Cursor](cursor.md) and [portable](memory.md). Install trees: [Cursor project](cursor-project/VALUEDELIVERY-INSTALL.md) and [portable project](portable-project/VALUEDELIVERY-INSTALL.md). The [migration map](MIGRATION.md) shows where every candidate module, recipe, template, behaviour, case, source and function went. [Compatibility](COMPATIBILITY.md) maps this companion, its base and a separately reviewed private prototype, and says why their records are not interchangeable.
 
-This release has **13 modules (activation, the four active areas, a draft annex contract, 5 guidance chapters, evaluation, templates), 10 recipes, 7 source records plus 1 reused base source, 8 synthetic cases plus the SYN-VD01 fixture, 41 behaviour specifications, 36 acceptance scenarios with their status, 12 templates and 6 prompts**. The helper contract in `reference/value_delivery.py` is version 0.1.0, independent of the pack version.
+This release has **13 modules (activation, the four active areas, a draft annex contract, 5 guidance chapters, evaluation, templates), 10 recipes, 7 source records plus 1 reused base source, 8 synthetic cases plus the SYN-VD01 fixture, 42 behaviour specifications, 37 acceptance scenarios with their status, 12 templates and 6 prompts**. The helper contract in `reference/value_delivery.py` is version 0.1.0, independent of the pack version.
 
 ## The four active areas
 

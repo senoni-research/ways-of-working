@@ -117,7 +117,8 @@
     "VDB38",
     "VDB39",
     "VDB40",
-    "VDB41"
+    "VDB41",
+    "VDB42"
   ],
   "acceptance_ids": [
     "VD01",
@@ -155,7 +156,8 @@
     "VD33",
     "VD34",
     "VD35",
-    "VD36"
+    "VD36",
+    "VD37"
   ],
   "source_ids": [
     "OPS01",

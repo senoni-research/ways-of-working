@@ -207,3 +207,107 @@ Not run or not shown: any assistant session (VDB01-VDB41 are specifications);
   an executable annex (VD24); integrated-application controls (VD36); any
   test against the private prototype; an independent review of the
   corrected source. The maintainer licensing conclusion remains pending.
+
+================================================================================
+v0.1.0 SOURCE-REVIEW CORRECTION (observed-result binding) — 13 October 2026
+--------------------------------------------------------------------------------
+The records above are kept as observed. This section is appended.
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: branch topics-cost-improvement-delivery-v0.1.0 at 19143cf
+  (equal to its remote) with this correction uncommitted. Nothing was
+  committed, pushed or posted to the PR. No CI exists; every result below is
+  a local run.
+Evidence boundary: an independent source review of 19143cf ran its own
+  targeted tests on the inspected helper function bodies. It did not rebuild
+  the pack or rerun the suites below; the results below are the maintainer's.
+
+Finding reproduced before the change, with the reviewer's standard-library
+  probe run read-only from outside the repository against the complete
+  helper (git blob c20baf5):
+    net_effect edited from 20 to 999, old basis, digest and review
+        -> measured_and_accepted_within_scope; 999 as financially measured savings
+    basis quantity edited from 10 to 100 and derived values to 200, old digest
+        -> measured_and_accepted_within_scope; 200
+    Positive controls passed; 2 counterexamples accepted; probe exit 1.
+
+Change (reference/value_delivery.py): outcome_finding now passes the observed
+  result through one boundary before classifying. The basis is rebuilt from
+  its values (closed field set, each validated as an input). The digest,
+  counted rows, quantity, status, gross and net effect are derived from it by
+  the same routine observed_effect uses. The supplied digest and every
+  repeated field must equal the derived values, numbers compared exactly
+  (inconsistent_observation otherwise; invalid_observation if missing or
+  malformed). Only derived values are classified. outcome_finding now runs
+  under the fixed decimal policy. Signatures, the basis schema, result
+  fields and existing digests are unchanged. Version and helper contract
+  number stay 0.1.0 (unreleased draft); the change is recorded in CHANGELOG.
+
+Probe after the change (helper blob 580cb44; the reference copy and both
+  installed copies):
+    net_effect edited only                       -> refused [inconsistent_observation]
+    basis and derived values edited, old digest  -> refused [inconsistent_observation]
+    Positive controls passed; 0 counterexamples accepted; probe exit 0.
+
+New tests against the 19143cf helper (scratch copy outside the repository:
+  19143cf helper and export, the new test file, cases and VERSION):
+    ObservedResultBindingTests, 8 tests -> FAILED (failures=43, errors=3).
+      2 tests pass: the positive control with a fresh review of recalculated
+        content, and caller-context independence with unchanged inputs.
+      43 subtest failures are expected refusals that did not happen
+        (inconsistent_observation 23, invalid_observation 13, other codes 7).
+      3 errors are TypeError from the old classifier comparing a missing
+        amount with zero on an edited result.
+    Whole suite against the 19143cf helper -> FAILED (failures=43, errors=3,
+      skipped=1); the 63 earlier tests pass there.
+SYN-VD01 export from the 19143cf helper and from the corrected helper:
+  byte-identical (3245 bytes).
+
+Companion commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .  (twice)     -> Built 95 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .           -> STATIC VALIDATION PASSED (95 canonical artifacts, ...)
+  python3 -B -m unittest discover -s <dir> -p 'test_*.py'
+      reference/                                 -> Ran 71 tests, OK (0 skipped)
+      cursor-project/.valuedelivery/reference    -> Ran 71 tests, OK (skipped=1: no base core beside the tree)
+      portable-project/.valuedelivery/reference  -> Ran 71 tests, OK (skipped=1)
+    71 = the 63 earlier tests, unchanged, plus 8 new result-consistency tests.
+  python3 -B tools/test_validate_pack.py .      -> ALL 37 CORRUPTION REGRESSIONS AND 12 INSTALL,
+                                                   READ-ONLY AND IDEMPOTENCE CHECKS PASSED; positive control passed.
+  Composed installs (base 0.3.3 tree + companion tree in a temporary project):
+      Cursor rule        -> INSTALL CHECK PASSED (17 base files); Ran 71 tests, OK (0 skipped)
+      AGENTS.md section  -> INSTALL CHECK PASSED (17 base files); Ran 71 tests, OK (0 skipped)
+  Installed helper, test and export copies in both trees: identical to reference/.
+  Manifest: 144 files. REQUIRES.json: 17 base files pinned by SHA-256 (unchanged).
+  Inventories: 42 behaviours, 37 acceptance scenarios (32 unit-tested,
+    1 base-tested, 2 not-implemented, 1 out-of-scope, 1 process-check).
+
+Library checks (from the repository root unless noted):
+  Cost & Value Engineering 0.3.3: build --check, validate, 18 corruption
+    regressions, 191 reference tests in the source and both trees -> pass.
+  Carey Chou, Vandeput: STATIC VALIDATION PASSED (unchanged).
+  Root: tools/check_docs.py -> PASSED; git diff --check -> clean.
+  Carey, Vandeput and base packs: 0 changed paths.
+
+Publication checks (aggregate results only; changes since 19143cf):
+  scan_publication.py with the private terms file outside the repository:
+      this pack, base pack, repository tree -> IDENTIFIER SCAN PASSED (0 matching paths each)
+  Literal private markers in the changed files -> 0. Identifier-like names
+    from the private corpus that are not already public -> 0.
+  8-word overlaps with the private prototype's docs and code, the earlier
+    feedback and review bundles and the candidate delivery -> 0.
+  8-word overlaps with the source-review folder -> 26 in the test file (78
+    counting its two installed copies): the reviewer's invented fixture
+    values (comparator 10, price 8, an October 2030 window, a review dated
+    1 November 2030) in calls to the companion's own functions, used as the
+    requested regressions.
+  A scan or an overlap count does not establish rights; the maintainer
+    licensing conclusion remains pending.
+
+Untouched: the base engine and pinned base copies; the Carey and Vandeput
+  packs; the website; the private prototype; .specstory/ (untracked).
+
+Not run or not shown: any assistant session (VDB01-VDB42 are specifications);
+  any real plan, capacity, observation or finance review; an executable
+  annex (VD24); integrated-application controls (VD36); any test against the
+  private prototype; an independent review of this correction. The
+  maintainer licensing conclusion remains pending.

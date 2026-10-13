@@ -743,6 +743,168 @@ class ActionAndOutcomeTests(unittest.TestCase):
         self.assertEqual(_err(vd.append_outcome, log2, dict(first, outcome_id='OUT-3', base_packet_ref={})), 'unlinked_outcome')
 
 
+class ObservedResultBindingTests(unittest.TestCase):
+    as_of = '2030-11-02'
+
+    def calc(self, quantity='10', price='8', **kw):
+        args = dict(comparator_id='COMP-1', comparator_unit_price='10', currency='GBP', unit='piece',
+                    window_start='2030-10-01', window_end='2030-10-31')
+        rows = [] if quantity is None else [{'obs_id': 'I-1', 'evidence_class': 'invoice', 'date': '2030-10-15',
+                                             'quantity': quantity, 'unit_price': price, 'currency': 'GBP', 'unit': 'piece'}]
+        return vd.observed_effect(rows, **dict(args, **kw))
+
+    def review_of(self, observed):
+        return {'status': 'accepted_within_scope', 'reviewer_role': 'finance-controller', 'reviewed_on': '2030-11-01',
+                'basis_digest': observed['basis_digest']}
+
+    def classify(self, observed, review):
+        return vd.outcome_finding(implementation_state='accepted', observed=observed, finance_review=review,
+                                  service_guardrail='met', as_of=self.as_of)
+
+    def edited(self, observed, **fields):
+        out = copy.deepcopy(observed)
+        out.update(fields)
+        return out
+
+    def test_positive_control_and_a_fresh_review_of_recalculated_content(self):
+        """VD37, VD31: 10 at 8 against 10 is 20 under its review; recalculated 100 units give 200, which the old review does not cover and a fresh review does."""
+        original = self.calc()
+        review = self.review_of(original)
+        f = self.classify(original, review)
+        self.assertEqual((f['finding'], f['financially_measured_savings'], f['finance_review']['matches_this_calculation']),
+                         ('measured_and_accepted_within_scope', D('20'), True))
+        self.assertEqual(f['observed_basis_digest'], original['basis_digest'])
+        recalculated = self.calc('100')
+        g = self.classify(recalculated, review)
+        self.assertEqual((g['finding'], g['financially_measured_savings'], g['observed_net_effect']),
+                         ('calculated_pending_finance_review', None, D('200')))
+        self.assertFalse(g['finance_review']['matches_this_calculation'])
+        fresh = self.classify(recalculated, self.review_of(recalculated))
+        self.assertEqual(fresh['financially_measured_savings'], D('200'))
+
+    def test_an_edited_derived_amount_does_not_keep_the_review(self):
+        """VD37: changing only net_effect from 20 to 999, or any other derived field, is refused, not classified as accepted."""
+        original = self.calc()
+        review = self.review_of(original)
+        for field, value in (('net_effect', D('999')), ('gross_effect', D('999')), ('observed_quantity', D('11')),
+                             ('net_effect', None), ('status', 'unmeasured'), ('financially_measured_savings', D('20'))):
+            with self.subTest(field=field, value=value):
+                self.assertEqual(_err(self.classify, self.edited(original, **{field: value}), review), 'inconsistent_observation')
+
+    def test_an_edited_basis_under_its_old_digest_is_refused(self):
+        """VD37: basis quantity 100 with derived 200 under the stored digest of the 20 calculation is refused, as is any nested edit."""
+        original = self.calc()
+        review = self.review_of(original)
+        probe = self.edited(original, observed_quantity=D('100'), gross_effect=D('200'), net_effect=D('200'))
+        probe['basis']['counted'][0]['quantity'] = D('100')
+        self.assertEqual(_err(self.classify, probe, review), 'inconsistent_observation')
+        for path, value in ((('counted', 0, 'unit_price'), D('7.99')), (('comparator_unit_price',), D('11')),
+                            (('counted', 0, 'date'), '2030-10-16'), (('window', 1), '2030-10-30'),
+                            (('comparator_id',), 'COMP-2')):
+            with self.subTest(path=path):
+                nested = copy.deepcopy(original)
+                target = nested['basis']
+                for key in path[:-1]:
+                    target = target[key]
+                target[path[-1]] = value
+                self.assertEqual(_err(self.classify, nested, review), 'inconsistent_observation')
+        restamped = copy.deepcopy(original)
+        restamped['basis']['counted'][0]['quantity'] = D('100')
+        restamped['basis_digest'] = vd._digest(restamped['basis'])
+        self.assertEqual(_err(self.classify, restamped, self.review_of(restamped)), 'inconsistent_observation')
+
+    def test_an_edited_repeated_field_is_refused(self):
+        """VD37: window, currency, unit, evidence class, counted rows, expense, its evidence, sign and net scope must equal the basis."""
+        original = self.calc(incremental_operating_expense='5', expense_evidence='invoice')
+        review = self.review_of(original)
+        self.assertEqual(self.classify(original, review)['financially_measured_savings'], D('15'))
+        for field, value in (('window', ['2030-10-01', '2030-10-30']), ('window', ['2030-09-01', '2030-10-31']),
+                             ('currency', 'EUR'), ('unit', 'kg'), ('required_evidence', 'payment'), ('counted', []),
+                             ('counted', ['I-2']), ('comparator_id', 'COMP-2'), ('incremental_operating_expense', D('0')),
+                             ('expense_evidence', 'receipt'), ('sign', 'deviation'), ('net_effect_scope', 'net cash saving')):
+            with self.subTest(field=field, value=value):
+                self.assertEqual(_err(self.classify, self.edited(original, **{field: value}), review), 'inconsistent_observation')
+
+    def test_a_malformed_digest_or_basis_is_refused(self):
+        """VD37: a missing or malformed digest or basis, a missing repeated field, or a counted row outside its evidence class or window is refused."""
+        original = self.calc()
+        review = self.review_of(original)
+        for digest in (None, '', 'x', 'A' * 64, original['basis_digest'][:-1], 123):
+            with self.subTest(digest=digest):
+                self.assertEqual(_err(self.classify, self.edited(original, basis_digest=digest), review), 'invalid_observation')
+        row = original['basis']['counted'][0]
+        for label, change, code in (
+                ('no basis', lambda b: None, 'invalid_observation'),
+                ('missing field', lambda b: {k: v for k, v in b.items() if k != 'counted'}, 'invalid_observation'),
+                ('extra field', lambda b: dict(b, note='x'), 'invalid_observation'),
+                ('schema', lambda b: dict(b, basis_schema='valuedelivery_observed_basis/0.2'), 'invalid_observation'),
+                ('window shape', lambda b: dict(b, window=['2030-10-31']), 'invalid_observation'),
+                ('window order', lambda b: dict(b, window=['2030-10-31', '2030-10-01']), 'invalid_window'),
+                ('window date', lambda b: dict(b, window=['2030-13-01', '2030-10-31']), 'invalid_date'),
+                ('non-actual class', lambda b: dict(b, required_evidence='order'), 'invalid_observation'),
+                ('expense without evidence', lambda b: dict(b, incremental_operating_expense=D('5')), 'non_actual_expense'),
+                ('forecast expense', lambda b: dict(b, incremental_operating_expense=D('5'), expense_evidence='forecast'),
+                 'non_actual_expense'),
+                ('row class', lambda b: dict(b, counted=[dict(row, evidence_class='order')]), 'inconsistent_observation'),
+                ('row date', lambda b: dict(b, counted=[dict(row, date='2030-11-15')]), 'inconsistent_observation'),
+                ('row float', lambda b: dict(b, counted=[dict(row, quantity=10.0)]), 'invalid_number'),
+                ('row negative', lambda b: dict(b, counted=[dict(row, quantity=D('-10'))]), 'invalid_number'),
+                ('row extra field', lambda b: dict(b, counted=[dict(row, currency='GBP')]), 'invalid_observation'),
+                ('duplicate rows', lambda b: dict(b, counted=[row, row]), 'duplicate_observation')):
+            with self.subTest(case=label):
+                self.assertEqual(_err(self.classify, self.edited(original, basis=change(original['basis'])), review), code)
+        missing = copy.deepcopy(original)
+        del missing['net_effect']
+        self.assertEqual(_err(self.classify, missing, review), 'invalid_observation')
+
+    def test_every_effect_sign_and_the_empty_result_classify_from_derived_values(self):
+        """VD37, VD34: missing, zero, negative and positive effects, with or without a deducted expense, give observed_effect's own values; edits are refused."""
+        cases = {'missing': (self.calc(None), None, 'implemented_unmeasured'),
+                 'zero': (self.calc(price='10'), D('0'), 'measured_and_accepted_within_scope'),
+                 'negative': (self.calc(price='12'), D('-20'), 'adverse_outcome'),
+                 'positive': (self.calc(), D('20'), 'measured_and_accepted_within_scope'),
+                 'net of expense': (self.calc(incremental_operating_expense='5', expense_evidence='invoice'), D('15'),
+                                    'measured_and_accepted_within_scope'),
+                 'expense exceeds gross': (self.calc(incremental_operating_expense='25', expense_evidence='receipt'), D('-5'),
+                                           'adverse_outcome')}
+        for label, (obs, net, finding) in cases.items():
+            with self.subTest(effect=label):
+                f = self.classify(obs, self.review_of(obs))
+                self.assertEqual((f['finding'], f['observed_net_effect'], f['observed_basis_digest']),
+                                 (finding, net, obs['basis_digest']))
+        empty, loss = cases['missing'][0], cases['negative'][0]
+        for label, bad in (('empty given an amount', self.edited(empty, net_effect=D('5'))),
+                           ('empty marked calculated', self.edited(empty, status='calculated_not_reviewed')),
+                           ('loss turned into a gain', self.edited(loss, gross_effect=D('20'), net_effect=D('20')))):
+            with self.subTest(edit=label):
+                self.assertEqual(_err(self.classify, bad, self.review_of(bad)), 'inconsistent_observation')
+
+    def test_amounts_compare_with_every_digit_and_survive_an_exact_text_round_trip(self):
+        """VD37, VD22: a 42-digit edit that rounds to 20 is refused; the same values written as exact text classify identically."""
+        original = self.calc()
+        review = self.review_of(original)
+        self.assertEqual(_err(self.classify, self.edited(original, net_effect=D('20.' + '0' * 39 + '1')), review),
+                         'inconsistent_observation')
+        expected = self.classify(original, review)
+        self.assertEqual(self.classify(self.edited(original, net_effect='20.00'), review), expected)
+        round_trip = json.loads(json.dumps(original, default=vd.exact_text))
+        self.assertIsInstance(round_trip['basis']['counted'][0]['quantity'], str)
+        self.assertEqual(self.classify(round_trip, review), expected)
+
+    def test_classification_ignores_caller_context_and_leaves_inputs_unchanged(self):
+        """VD37, VD22: the boundary derives the same values under any caller context and never edits the result or review it is given."""
+        obs = self.calc(quantity='1234.5678901234567890123', price='7.000000000000000000001')
+        review = self.review_of(obs)
+        kept_obs, kept_review = copy.deepcopy(obs), copy.deepcopy(review)
+        expected = self.classify(obs, review)
+        self.assertEqual(expected['financially_measured_savings'], obs['net_effect'])
+        for ctx in (Context(prec=3, rounding=ROUND_DOWN, traps=[]),
+                    Context(prec=6, rounding=ROUND_CEILING, traps=[Inexact, Rounded])):
+            with self.subTest(prec=ctx.prec), localcontext(ctx):
+                self.assertEqual(self.classify(obs, review), expected)
+        self.assertEqual((obs, review), (kept_obs, kept_review))
+
+
 class AnnexBoundaryTests(unittest.TestCase):
     def annex(self, **kw):
         return dict({'schema': vd.ANNEX_SCHEMA, 'base_packet_ref': {'packet_id': 'PKT-1', 'packet_revision': 3, 'input_fingerprint': FP},

@@ -20,7 +20,7 @@ Both choices are implemented as described. A reviewer recommended supporting bot
 - **Executable annex.** Acceptance scenario VD24 needs a registered extension of the base decision basis, correction targets for decision-critical delivery facts and handoff tests. This is a base change and is described only as an extension point in the base buyer-decision module.
 - **Integrated-application controls (VD36).** Authenticated finance reviewers with authority checked at the time of use, freshness checks at the action date, requirement sets from a named policy source and a scoped as-of history are deferred specifications in the annex contract. The helpers take these as declared inputs.
 - **Guidance areas.** Physical capacity, industrialisation, inbound flow and inventory, and capability transfer have no helpers or schemas.
-- **Real data.** All helpers refuse non-synthetic cases. Real inputs need a separately approved adapter, including any locale conversion for comma-formatted numbers.
+- **Real data.** The case-loading and demonstration entry points, such as the SYN-VD01 export, refuse a case that is not explicitly declared synthetic. The arithmetic helpers, such as `price_measure` or `observed_effect`, receive values rather than a case, and they do not check or authenticate where those values came from. Real inputs need a separately approved adapter, including any locale conversion for comma-formatted numbers.
 - **Website.** VD28 belongs to a later website session; the export here is the only intended interface.
 - **Excluded candidate helpers.** A legacy marker decoder and a zero-changeover capacity diagnostic remain excluded pending review.
 

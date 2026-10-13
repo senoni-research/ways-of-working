@@ -106,6 +106,7 @@ Three review candidates are consolidated into one companion pack. The Industrial
 | B77 | VDB32 |  |
 | new | VDB33, VDB34, VDB35, VDB36, VDB37 | cancellation, non-additive views, unknown owners, unestimated work, role substitution |
 | new | VDB38, VDB39, VDB40, VDB41 | added in the PR review: content-bound finance review, missing requirement set, reportable adverse economics, historical authorship |
+| new | VDB42 | added in the source review: an edited observed result cannot keep another calculation's review |
 
 ## Cases
 
