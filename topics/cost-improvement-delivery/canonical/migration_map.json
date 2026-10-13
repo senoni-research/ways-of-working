@@ -1,0 +1,157 @@
+{
+  "schema": "valuedelivery_migration_map/1",
+  "decision": "Three review candidates are consolidated into one companion pack. The Industrial candidate's plan to append modules, M16-M23, T10-T19, P08-P13 and B46-B77 directly to Cost & Value Engineering was not executed; none of those IDs was reserved in the base pack.",
+  "candidates": [
+    {
+      "key": "industrial",
+      "name": "Industrial Performance & Value Realisation",
+      "version": "0.1.0",
+      "archive_sha256": "ddfc8f297c495f1d49d3ff97af3429f8f4a1d24971d74315c766c22cadd7f37f",
+      "archive_bytes": 96139,
+      "dated": "2026-10-11",
+      "inspected_base": "Cost & Value Engineering 0.3.2 at 67b9d02",
+      "role": "scaffold: modules, recipes, templates, prompts, behaviours, cases and public sources",
+      "licence_note": "States its synthesis, templates, examples and tests are original material prepared for Senoni Research and asks the base maintainer to review licensing on integration. Adapted and rewritten here; licensing review remains a maintainer item.",
+      "reported_tests": "12 arithmetic tests; validator suite with 1 positive control and 7 corruption tests (rerun unchanged on 2026-10-13)"
+    },
+    {
+      "key": "purchasing",
+      "name": "Purchasing Review replication candidate",
+      "version": "0.1.0",
+      "archive_sha256": "1e6c337c1a901ed48aaf72a785b7413b8ec48fc9b5a02484ac85ec40fe0d72e0",
+      "archive_bytes": 29637,
+      "dated": "2026-10-12",
+      "role": "method ideas: separate measurement baselines and signs, owner coverage with an unassigned bucket, stable-key snapshot reconciliation",
+      "licence_note": "No licence metadata. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item.",
+      "reported_tests": "39 tests (rerun unchanged on 2026-10-13)"
+    },
+    {
+      "key": "portfolio",
+      "name": "Portfolio Workload reconstruction candidate",
+      "version": "0.1.0",
+      "archive_sha256": "9f493ac1c27d69d52a27d96b5a8a7342cd09ce8ef63884d646ee666b38b95053",
+      "archive_bytes": 32888,
+      "dated": "2026-10-12",
+      "role": "method ideas: Once and Regular effort, partial periods, independent scenario gaps, separate milestone target views",
+      "licence_note": "No licence metadata; describes itself as a review candidate. No code or prose copied; the ideas are re-implemented in original code and wording. Maintainer review item.",
+      "reported_tests": "47 tests (rerun unchanged on 2026-10-13)"
+    }
+  ],
+  "modules": [
+    {"from": "industrial:12-system-scope-and-flows", "to": ["00-activation-and-boundary", "60-guide-operating-scope-and-flow"], "note": "activation and scope contract are active; archetypes and interface mapping are guidance"},
+    {"from": "industrial:22-operational-baseline", "to": ["10-benefit-baseline-and-effects"], "note": "the GAO reference now points to base CV03"},
+    {"from": "industrial:37-opportunity-portfolio", "to": ["10-benefit-baseline-and-effects", "20-implementation-readiness"], "note": "effect identities and recommendations; staffing challenge moved to readiness"},
+    {"from": "industrial:42-capacity-and-resources", "to": ["20-implementation-readiness", "62-guide-physical-capacity"], "note": "implementation side is active; physical capacity is guidance"},
+    {"from": "industrial:44-industrialisation-and-change", "to": ["64-guide-industrialisation-and-change"], "note": "guidance only"},
+    {"from": "industrial:46-inbound-logistics-and-inventory", "to": ["66-guide-inbound-flow-and-inventory"], "note": "guidance only"},
+    {"from": "industrial:57-execution-and-capability-transfer", "to": ["20-implementation-readiness", "30-plan-revisions-and-events", "68-guide-capability-transfer"], "note": "role table and action records are active; standard work and transfer are guidance"},
+    {"from": "industrial:65-value-realisation", "to": ["40-outcome-reconciliation"], "note": "five closing categories retained as a mapping"},
+    {"from": "industrial:SCHEMA.md", "to": ["50-annex-contract"], "note": "draft record families; not accepted by the base engine"},
+    {"from": "purchasing:review-controls", "to": ["10-benefit-baseline-and-effects", "40-outcome-reconciliation"], "note": "measurement identity, signs, owner coverage, snapshots, evidence classes"},
+    {"from": "portfolio:METHOD.md", "to": ["20-implementation-readiness", "30-plan-revisions-and-events"], "note": "workload conventions and milestone views; cancellation policy changed"}
+  ],
+  "recipes": [
+    {"from": "M16", "to": ["VDR01"]},
+    {"from": "M17", "to": ["VDR02"]},
+    {"from": "M18", "to": ["VDR03"]},
+    {"from": "M19", "to": ["VDR04", "VDR07"], "note": "split into implementation readiness and physical capacity"},
+    {"from": "M20", "to": ["VDR08"]},
+    {"from": "M21", "to": ["VDR09"]},
+    {"from": "M22", "to": ["VDR05", "VDR10"], "note": "action records to plan and events; transfer to guidance"},
+    {"from": "M23", "to": ["VDR06"]},
+    {"from": "new", "to": ["VDR05"], "note": "plan revisions and milestone views from the Portfolio candidate"}
+  ],
+  "templates": [
+    {"from": "T10", "to": ["VDT01"]},
+    {"from": "T11", "to": ["VDT02"]},
+    {"from": "T12", "to": ["VDT03"]},
+    {"from": "T13", "to": ["VDT04", "VDT09"], "note": "implementation and gate sections to VDT04; production section to VDT09"},
+    {"from": "T14", "to": ["VDT10"]},
+    {"from": "T15", "to": ["VDT11"]},
+    {"from": "T16", "to": ["VDT06"]},
+    {"from": "T17", "to": ["VDT12"]},
+    {"from": "T18", "to": ["VDT07"]},
+    {"from": "T19", "to": ["VDT08"], "note": "annex marked as not accepted by the base engine"},
+    {"from": "new", "to": ["VDT05"], "note": "plan record and revision history"}
+  ],
+  "prompts": [
+    {"from": "P08", "to": ["VDP01"]},
+    {"from": "P09", "to": ["VDP02"]},
+    {"from": "P10", "to": ["VDP03"]},
+    {"from": "P11", "to": ["VDP05"]},
+    {"from": "P12", "to": ["VDP03"], "note": "ownership and burden questions merged into the readiness prompt and VDR10"},
+    {"from": "P13", "to": ["VDP06"]},
+    {"from": "new", "to": ["VDP04"], "note": "plan revision prompt"}
+  ],
+  "behaviors": [
+    {"from": "B46", "to": ["VDB01"]}, {"from": "B47", "to": ["VDB02"]}, {"from": "B48", "to": ["VDB03"]},
+    {"from": "B49", "to": ["VDB04"]}, {"from": "B50", "to": ["VDB05"]}, {"from": "B51", "to": ["VDB06"]},
+    {"from": "B52", "to": ["VDB07"]}, {"from": "B53", "to": ["VDB08"]}, {"from": "B54", "to": ["VDB09"]},
+    {"from": "B55", "to": ["VDB10"]}, {"from": "B56", "to": ["VDB11"]}, {"from": "B57", "to": ["VDB12"]},
+    {"from": "B58", "to": ["VDB13"], "note": "invalidation goes through the base correction path"},
+    {"from": "B59", "to": ["VDB14"], "note": "reworded: the annex cannot be approved in this release"},
+    {"from": "B60", "to": ["VDB15"]}, {"from": "B61", "to": ["VDB16"]}, {"from": "B62", "to": ["VDB17"]},
+    {"from": "B63", "to": ["VDB18"]}, {"from": "B64", "to": ["VDB19"]}, {"from": "B65", "to": ["VDB20"]},
+    {"from": "B66", "to": ["VDB21"]}, {"from": "B67", "to": ["VDB22"]}, {"from": "B68", "to": ["VDB23"]},
+    {"from": "B69", "to": ["VDB24"]}, {"from": "B70", "to": ["VDB25"]}, {"from": "B71", "to": ["VDB26"]},
+    {"from": "B72", "to": ["VDB27"]}, {"from": "B73", "to": ["VDB28"]}, {"from": "B74", "to": ["VDB29"]},
+    {"from": "B75", "to": ["VDB30"], "note": "reworded: the base does not see companion records"},
+    {"from": "B76", "to": ["VDB31"]}, {"from": "B77", "to": ["VDB32"]},
+    {"from": "new", "to": ["VDB33", "VDB34", "VDB35", "VDB36", "VDB37"], "note": "cancellation, non-additive views, unknown owners, unestimated work, role substitution"}
+  ],
+  "cases": [
+    {"from": "IP-C01", "to": ["VDC01"], "note": "helper-backed: dated_year_one_effect"},
+    {"from": "IP-C02", "to": ["VDC02"], "note": "guidance-only hand arithmetic"},
+    {"from": "IP-C03", "to": ["VDC03"], "note": "helper-backed: workload_plan and capacity_gaps"},
+    {"from": "IP-C04", "to": ["VDC04"], "note": "helper-backed: effect_portfolio"},
+    {"from": "IP-C05", "to": ["VDC05"], "note": "guidance-only hand arithmetic"},
+    {"from": "IP-C06", "to": ["VDC06"], "note": "helper-backed: bom_rollup"},
+    {"from": "IP-C07", "to": ["VDC07"], "note": "helper-backed: observed_effect"},
+    {"from": "IP-C08", "to": ["VDC08"], "note": "guidance-only hand arithmetic"},
+    {"from": "handoff:synthetic/SYN_VD01.json", "to": ["SYN-VD01"], "note": "copied unchanged as cases/SYN-VD01.json; sha256 pinned in metadata"}
+  ],
+  "sources": [
+    {"from": "OPS01", "to": ["OPS01"]},
+    {"from": "OPS02", "to": ["OPS02"]},
+    {"from": "OPS03", "to": ["OPS03"]},
+    {"from": "OPS04", "to": ["base:CV03"], "note": "same GAO-20-195G publication as the base entry; deduplicated, not counted twice. Candidate scope was the overview/highlights only, as is the base entry."},
+    {"from": "OPS05", "to": ["OPS05"]},
+    {"from": "OPS06", "to": ["OPS06"]},
+    {"from": "OPS07", "to": ["OPS07"]},
+    {"from": "OPS08", "to": ["OPS08"]},
+    {"from": "EXT03", "to": ["OPS06"], "note": "handoff recheck of the same chapter on 2026-10-12; recorded as an alias"},
+    {"from": "EXT04", "to": ["OPS05"], "note": "handoff recheck of the same overview on 2026-10-12; recorded as an alias"},
+    {"from": "EXT01", "to": [], "note": "not imported: vendor product page used as market context for product sessions, not a method source"},
+    {"from": "EXT02", "to": [], "note": "not imported: vendor documentation used as market context for product sessions, not a method source"}
+  ],
+  "functions": [
+    {"from": "purchasing:price_effect", "to": ["price_measure"], "note": "re-implemented with explicit kind and sign"},
+    {"from": "purchasing:separate_price_views", "to": ["separate_price_views", "combine_measures", "convert_sign"], "note": "re-implemented; 'January price' naming replaced by declared annual reference price"},
+    {"from": "purchasing:period_views", "to": ["observed_effect"], "note": "re-implemented as evidence classes; orders and forecasts never count as actuals"},
+    {"from": "purchasing:owner_control", "to": ["owner_coverage"], "note": "re-implemented"},
+    {"from": "purchasing:snapshot_delta", "to": ["snapshot_delta"], "note": "re-implemented"},
+    {"from": "purchasing:legacy_zero_changeover_capacity", "to": [], "note": "excluded pending review: narrow historical diagnostic, not a capacity model"},
+    {"from": "portfolio:workload", "to": ["workload_plan"], "note": "re-implemented with unestimated and unscheduled lists and exact Once conservation"},
+    {"from": "portfolio:capacity_deviation", "to": ["capacity_gaps"], "note": "re-implemented by role and project pool"},
+    {"from": "portfolio:milestone_portfolio", "to": ["milestone_views"], "note": "re-implemented with the new cancellation policy"},
+    {"from": "portfolio:action_state", "to": ["action_state"], "note": "re-implemented with a separate accepted state"},
+    {"from": "portfolio:decode_legacy_markers", "to": [], "note": "excluded pending review: tied to a historical workbook format"},
+    {"from": "industrial:reference arithmetic", "to": ["dated_year_one_effect", "bom_rollup", "effect_portfolio", "observed_effect"], "note": "case arithmetic reproduced by original helpers; guidance cases checked inline"}
+  ],
+  "superseded": [
+    {"file": "industrial:INTEGRATION_PLAN.md", "note": "superseded by this companion; its append instructions are not reproduced"},
+    {"file": "industrial:fragments/70-evaluation-addendum.md", "note": "content migrated to 70-evaluation; append instruction dropped"},
+    {"file": "industrial:fragments/80-templates-addendum.md", "note": "content migrated to 80-templates-and-prompts; append instruction dropped"},
+    {"file": "industrial:fragments/80-prompts-addendum.md", "note": "content migrated to 80-templates-and-prompts; append instruction dropped"},
+    {"file": "industrial:COMPATIBILITY.json", "note": "replaced by REQUIRES.json against Cost & Value Engineering 0.3.3"},
+    {"file": "purchasing:*.xlsx and portfolio:*.xlsx", "note": "not opened and not included"}
+  ],
+  "expected_from": {
+    "recipes": ["M16", "M17", "M18", "M19", "M20", "M21", "M22", "M23"],
+    "templates": ["T10", "T11", "T12", "T13", "T14", "T15", "T16", "T17", "T18", "T19"],
+    "prompts": ["P08", "P09", "P10", "P11", "P12", "P13"],
+    "behaviors": ["B46", "B47", "B48", "B49", "B50", "B51", "B52", "B53", "B54", "B55", "B56", "B57", "B58", "B59", "B60", "B61", "B62", "B63", "B64", "B65", "B66", "B67", "B68", "B69", "B70", "B71", "B72", "B73", "B74", "B75", "B76", "B77"],
+    "cases": ["IP-C01", "IP-C02", "IP-C03", "IP-C04", "IP-C05", "IP-C06", "IP-C07", "IP-C08"],
+    "sources": ["OPS01", "OPS02", "OPS03", "OPS04", "OPS05", "OPS06", "OPS07", "OPS08", "EXT01", "EXT02", "EXT03", "EXT04"]
+  }
+}

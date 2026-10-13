@@ -44,6 +44,14 @@ REQUIRED_PATHS = [
     'topics/cost-value-engineering/SOURCE_REGISTER.md',
     'topics/cost-value-engineering/cursor-project/.cursor/rules/20-costvalue-method.mdc',
     'topics/cost-value-engineering/portable-project/AGENTS.md',
+    'topics/cost-improvement-delivery/README.md',
+    'topics/cost-improvement-delivery/QUICKSTART.md',
+    'topics/cost-improvement-delivery/VALIDATION.md',
+    'topics/cost-improvement-delivery/ATTRIBUTION.md',
+    'topics/cost-improvement-delivery/SOURCE_REGISTER.md',
+    'topics/cost-improvement-delivery/MIGRATION.md',
+    'topics/cost-improvement-delivery/cursor-project/.cursor/rules/30-valuedelivery-method.mdc',
+    'topics/cost-improvement-delivery/portable-project/AGENTS.valuedelivery.md',
 ]
 
 # Mandatory attribution content in the root policy and README.
@@ -60,6 +68,8 @@ REQUIRED_CONTENT = {
         'SupChains',
         'Cost & Value Engineering',
         'topics/cost-value-engineering',
+        'topics/cost-improvement-delivery',
+        'not a fourth standalone pack',
         'not measured team-productivity claims',
         'specifications',
     ],

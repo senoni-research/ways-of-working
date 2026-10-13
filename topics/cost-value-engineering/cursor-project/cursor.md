@@ -1,6 +1,6 @@
 # Cost & Value Engineering — Cursor handbook
 
-Version 0.3.2 · 9 October 2026 · Focused prototype-method release
+Version 0.3.3 · 13 October 2026 · Focused prototype-method release
 
 This complete reference is not an auto-loading rule. For an actual project, merge the Cursor pack's `.costvalue/` directory and `.cursor/rules/20-costvalue-method.mdc`. Preserve existing instructions. The small loader explicitly routes relevant tasks to the modules; do not paste this full book into every chat. Verify rule activation and actual file reading in a fresh session. See HOST01 in the source register for the inspected official integration documentation.
 
@@ -75,6 +75,7 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Review a sourcing-event snapshot | [55-buyer-decision-and-handoff](#mod-55-buyer-decision-and-handoff), [M13](#m13) | Eligibility, comparability and preference separated; infeasible aggregates rejected. |
 | Process a buyer correction and return a decision | [M14](#m14), [55-buyer-decision-and-handoff](#mod-55-buyer-decision-and-handoff) | Typed correction, new packet revision, invalidated stale approval, idempotent handoff. |
 | Evaluate incremental value alongside an existing process | [M15](#m15), [70-evaluation](#mod-70-evaluation) | Current process versus current process plus this contribution; effort by role, decision quality, reliability. |
+| Deliver an accepted change or claim its realised value | The separately installed companion `.valuedelivery/00-activation-and-boundary.md`, if present; otherwise say this pack does not cover it | Activation decision; companion records kept outside this pack's decision basis and approval ([55-buyer-decision-and-handoff](#mod-55-buyer-decision-and-handoff)). |
 | Preserve a correction or evaluate the assistant | [M08](#m08), [60-memory](#mod-60-memory), [70-evaluation](#mod-70-evaluation) | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop
@@ -506,6 +507,8 @@ Rules the harness enforces on the synthetic fixture and a real adapter must pres
 Start with a JSON replay and a mock destination. No real connector, supplier outreach or purchase-order creation is needed to validate the method. Ordinary failures to design for: the same request arriving twice; a quote expiring after review; the requester changing the specification; two reviewers correcting the same version; an order request timing out after acceptance.
 
 Routing is a gate inside the case file, not a label on the log: a request with a missing decision-critical field or a category that needs engineering review produces a pending packet that cannot be approved or handed off until the route is cleared by a recorded clarification or review; a requested exception stays pending until an authorized approver's record is present; an approved existing route produces a confirmation packet with no sourcing event and no quote economics, and is rechecked at the action date before handoff. A missing order quantity is pending information, never zero and never the annual forecast; the requester supplies it in a new source revision, not through an evaluation-quantity correction. The reference supports one requisition line per case file, priced per `piece`, and rejects a line in another unit, or an event or technical context that does not refer to the same request revision, item and required revision.
+
+**Extension point for companions.** A separately installed companion may keep its own records about delivering or realising an accepted recommendation, for example the draft annex of Cost Improvement Delivery & Value Realisation. Such a record refers to a packet by ID, revision and input fingerprint. It is not part of the decision basis, the input fingerprint, the accepted approval or the handoff payload, and no correction type can target it, so it can neither authorise nor block a handoff here. If a later release accepts an annex, it must become a registered component of the decision basis with its own correction targets and tests; until then, a companion must not describe its checks as enforced by this engine.
 
 Separate four kinds of claim when you read this module: the **documented method** (everything above), the **implemented subset** (what `reference/workflow.py` enforces), the **recorded demonstration** (fixture R01 and its scenarios, exportable with the state after each step by `reference/export_replay.py`) and the **deferred integration** (any real connector, authority service or destination). Only the second and third are tested; the tests show self-consistency on synthetic input, not live behavior.
 

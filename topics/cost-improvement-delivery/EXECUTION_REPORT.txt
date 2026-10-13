@@ -1,0 +1,57 @@
+COST IMPROVEMENT DELIVERY & VALUE REALISATION — EXECUTION REPORT
+================================================================================
+v0.1.0 COMPANION REVIEW DRAFT — 13 October 2026
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: local main at 67b9d02, uncommitted; nothing committed, pushed,
+  opened as a PR or published. Base: Cost & Value Engineering 0.3.3 at
+  ../cost-value-engineering (bumped in the same working tree).
+No network, connector, supplier contact, deployment, customer data or paid
+  service was used.
+
+Candidates (read-only extract outside the repository; suites run from a
+  temporary writable copy, removed afterwards). Archive hashes, dates and
+  reported results are kept as recorded in canonical/migration_map.json.
+  Purchasing Review:   python3 -B -m unittest test_review_controls   -> Ran 39 tests, OK
+  Portfolio Workload:  python3 -B -m unittest test_portfolio_workload -> Ran 47 tests, OK
+  Industrial:          python3 -B -m unittest discover -s reference   -> Ran 12 tests, OK
+                       python3 -B tools/validate_candidate.py .       -> CANDIDATE VALIDATION PASSED
+                       python3 -B tools/test_validate_candidate.py    -> Ran 8 tests, OK
+  No candidate code or workbook was copied into this pack; historical
+  workbooks and reports were not opened.
+
+Companion commands and observed results (from this pack directory):
+  python3 -B -m unittest discover -s reference -p 'test_*.py'
+      reference/                                 -> Ran 50 tests, OK (0 skipped)
+      cursor-project/.valuedelivery/reference    -> Ran 50 tests, OK (skipped=1: no base core beside the tree)
+      portable-project/.valuedelivery/reference  -> Ran 50 tests, OK (skipped=1)
+  python3 -B tools/build_pack.py .              -> Built 94 generated artifacts
+  python3 -B tools/build_pack.py .  (again)     -> Built 94 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .           -> STATIC VALIDATION PASSED (94 canonical artifacts, ...)
+  python3 -B tools/test_validate_pack.py .      -> ALL 37 CORRUPTION REGRESSIONS AND 12 INSTALL,
+                                                   READ-ONLY AND IDEMPOTENCE CHECKS PASSED; positive control passed.
+  Manifest: 142 files. REQUIRES.json: 17 base files pinned by SHA-256.
+  Inventories: 13 modules, 10 recipes, 7 sources (+ base CV03 reused), 8 cases
+    + SYN-VD01 fixture, 37 behaviours, 30 acceptance scenarios (26 unit-tested,
+    1 base-tested, 1 not-implemented, 1 out-of-scope, 1 process-check),
+    12 templates, 6 prompts.
+
+Library checks (from the repository root unless noted):
+  Cost & Value Engineering 0.3.3: build --check, validate, 18 corruption
+    regressions, 191 reference tests in the source and both trees -> pass.
+  Carey Chou:   python3 -B carey-chou/tools/validate_pack.py    -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py . (in pack)   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py                  -> PASSED
+                git diff --check                                -> clean
+  Carey and Vandeput packs: no tracked or untracked change.
+  python3 -B ../cost-value-engineering/tools/scan_publication.py <scope> --terms-file <private-outside-repo>
+      scope this pack            -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+      scope base pack            -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+      scope repository tree      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Not run or not shown: any assistant session in Cursor, Cline or OpenCode
+  (VDB01-VDB37 are specifications); any real plan, capacity, observation or
+  finance review; the website (VD28); an executable annex (VD24). Licensing
+  review of the candidate material and owner review of the cancellation
+  policy and closing categories are pending.

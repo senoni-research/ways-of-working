@@ -1,0 +1,12 @@
+---
+description: Delivery readiness and value realisation for Cost & Value Engineering recommendations
+alwaysApply: true
+---
+
+# Cost Improvement Delivery & Value Realisation — scoped entry
+
+Use this companion only when a Cost & Value Engineering recommendation depends on an implementation change (a supplier, route, revision, qualification, stock or delivery arrangement, or the team's ability to carry it out) or when someone later wants to claim its value. It requires Cost & Value Engineering 0.3.3 installed as `.costvalue/`. The base rules on economics, evidence, approval, typed corrections and handoff stay authoritative; this companion adds no requisition route, approval or handoff of its own. An approved repeat purchase or a one-line quotation task does not activate it.
+
+For a relevant task, read the base entry first (`.costvalue/00-operating-contract.md` and `.costvalue/10-workflow.md`), then `.valuedelivery/00-activation-and-boundary.md`, and only the modules or recipes it selects. The guidance chapters numbered 60 to 68 are read only when the option touches that area. Mentioning a file does not load it.
+
+Keep baselines, measures and signs explicit. Never add two views of one effect. Keep unestimated and unscheduled work visible and the original plan stored. A target, a completed action and a finance-reviewed calculation are not measured or causal value. The draft annex is not accepted, fingerprinted or enforced by the base engine. This is guidance and synthetic reference arithmetic, not a scheduler, optimiser, ledger, approval service or authority to contact suppliers or change systems. State what was implemented, tested and proposed, and confirm loading in a fresh session.

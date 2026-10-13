@@ -1,0 +1,712 @@
+{
+  "counts": {
+    "acceptance": 30,
+    "behaviors": 37,
+    "cases": 8,
+    "fixtures": 1,
+    "modules": 13,
+    "prompts": 6,
+    "recipes": 10,
+    "sources": 7,
+    "templates": 12
+  },
+  "date": "2026-10-13",
+  "files": {
+    "ATTRIBUTION.md": {
+      "bytes": 3019,
+      "sha256": "294c59f3ff7fbc3bae76cebfd6e044630c3a474e0dc900ca82776e193b575694",
+      "words": 432
+    },
+    "CHANGELOG.md": {
+      "bytes": 1295,
+      "sha256": "2de6e1b7d24760f216680aa5417146a3fee8f7923ae9888076ee9d9a7307ca7d",
+      "words": 183
+    },
+    "LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "MIGRATION.md": {
+      "bytes": 8985,
+      "sha256": "435aabefb25be2f9f4c7984683f9148049ffe9c7f9e27a6d57266e0bfcbef76d",
+      "words": 1440
+    },
+    "QUICKSTART.md": {
+      "bytes": 2980,
+      "sha256": "5d70b2d2606d822f3111c135865c30afe9403673129b4881b62ef69843550f94",
+      "words": 432
+    },
+    "README.md": {
+      "bytes": 4819,
+      "sha256": "784bc9673f3f6ce9af56509cd70e52ca81372a0d865123a8b338d53aaae54d78",
+      "words": 639
+    },
+    "REQUIRES.json": {
+      "bytes": 2461,
+      "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
+    },
+    "ROADMAP.md": {
+      "bytes": 1653,
+      "sha256": "c455265e8f185f0380dce22950553b0e7f8adf19ac89c16262ef98316d5469d9",
+      "words": 242
+    },
+    "SOURCE_REGISTER.json": {
+      "bytes": 6003,
+      "sha256": "731c510d6043406b8c4488c51fcc142e7cb3941e2d63fd998e0b5418692f70eb"
+    },
+    "SOURCE_REGISTER.md": {
+      "bytes": 4968,
+      "sha256": "6cf4505bd8b5f1684fc5f060bbcf524be54add459e526875b0da86fe9bb99aea",
+      "words": 546
+    },
+    "VALIDATION.md": {
+      "bytes": 3780,
+      "sha256": "5d8a2c234ba70368d501a579f9040b52e3a32ebc84d5db6be5fae3f879a81856",
+      "words": 582
+    },
+    "VERSION": {
+      "bytes": 6,
+      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67"
+    },
+    "canonical/cases/README.md": {
+      "bytes": 861,
+      "sha256": "5955b93ce5503b5a0c8a7631b629135c9a4937e2467b60d4a89041240281e7a6",
+      "words": 133
+    },
+    "canonical/cases/SYN-VD01.json": {
+      "bytes": 2692,
+      "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
+    },
+    "canonical/cases/cases.json": {
+      "bytes": 6520,
+      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+    },
+    "canonical/loader.md": {
+      "bytes": 1584,
+      "sha256": "2309ca9ef2c9853e5de3c03fc7c0239375df9351f81a657f0ff1afd47ca3b39b",
+      "words": 233
+    },
+    "canonical/metadata.json": {
+      "bytes": 3153,
+      "sha256": "985152ddc3e3d2e979c9b887ffebb446841f9f22dc77f85239d518cc9b44c559"
+    },
+    "canonical/migration_map.json": {
+      "bytes": 12799,
+      "sha256": "e27772245fc12b7cc16d0bf7d383844d43eebc61a91af9be353e6a8c4a506baf"
+    },
+    "canonical/modules/00-activation-and-boundary.md": {
+      "bytes": 5778,
+      "sha256": "2ff45a14d0cbb1fa4f267d3f807588023eae0f957b4a149839ea25547d5a3a9e",
+      "words": 795
+    },
+    "canonical/modules/10-benefit-baseline-and-effects.md": {
+      "bytes": 6109,
+      "sha256": "18301df5cd2ffc4820c556089c01dd4b7230891520b6e83636009e1d7a873683",
+      "words": 911
+    },
+    "canonical/modules/20-implementation-readiness.md": {
+      "bytes": 5615,
+      "sha256": "3f3bcbbfb5c8e923dd25aa5300756a9ec90a41bb0a2070ae4c4d24caa08c8405",
+      "words": 875
+    },
+    "canonical/modules/30-plan-revisions-and-events.md": {
+      "bytes": 5099,
+      "sha256": "00779a9682b76388bda00b7158c140fe535242413d939df72ee1bbdbde6e4227",
+      "words": 758
+    },
+    "canonical/modules/40-outcome-reconciliation.md": {
+      "bytes": 4988,
+      "sha256": "0324b4a5521c62a543e89de8cc4a47133424bb6828ed19dade80b270b4566725",
+      "words": 705
+    },
+    "canonical/modules/50-annex-contract.md": {
+      "bytes": 3604,
+      "sha256": "f7a1ebdbaef0acb9ffed1f7e94136476131eec95637c11b3aa7cf16225f5b990",
+      "words": 524
+    },
+    "canonical/modules/60-guide-operating-scope-and-flow.md": {
+      "bytes": 2736,
+      "sha256": "704de9c2c3ecad1946de1930b941d2637e4b44c6e900e55bddc248da979346c4",
+      "words": 404
+    },
+    "canonical/modules/62-guide-physical-capacity.md": {
+      "bytes": 2664,
+      "sha256": "888dcb794e87490f3fd2e2a7ff15e8bf9583030ea61c1b114d2a2308bd584d57",
+      "words": 392
+    },
+    "canonical/modules/64-guide-industrialisation-and-change.md": {
+      "bytes": 2805,
+      "sha256": "7a4e95bad1de3811baf39a6bc80000e4e601ee971642785987280cb4523d4b9c",
+      "words": 379
+    },
+    "canonical/modules/66-guide-inbound-flow-and-inventory.md": {
+      "bytes": 2880,
+      "sha256": "29a0ced4ee51bc6d02fb2fb5005aa35aa420a786470cc1a0ffae89ad01d3d5ef",
+      "words": 409
+    },
+    "canonical/modules/68-guide-capability-transfer.md": {
+      "bytes": 2456,
+      "sha256": "50973abd48e75622ec7a0c520ad57aab410c28683ba738709a49288105d3d8b8",
+      "words": 355
+    },
+    "canonical/modules/70-evaluation.md": {
+      "bytes": 11330,
+      "sha256": "201f233c011585a9da7839cc1ea46a38cddd4f26e6164f578dcfbeb141757fc4",
+      "words": 1873
+    },
+    "canonical/modules/80-templates-and-prompts.md": {
+      "bytes": 9279,
+      "sha256": "2ee012a97dd4de997a8aa83b83120d24d8d0e36b8d056cc7aba6b49353c02177",
+      "words": 1269
+    },
+    "canonical/pages/ATTRIBUTION.md": {
+      "bytes": 3019,
+      "sha256": "294c59f3ff7fbc3bae76cebfd6e044630c3a474e0dc900ca82776e193b575694",
+      "words": 432
+    },
+    "canonical/pages/CHANGELOG.md": {
+      "bytes": 1295,
+      "sha256": "2de6e1b7d24760f216680aa5417146a3fee8f7923ae9888076ee9d9a7307ca7d",
+      "words": 183
+    },
+    "canonical/pages/QUICKSTART.md": {
+      "bytes": 2980,
+      "sha256": "5d70b2d2606d822f3111c135865c30afe9403673129b4881b62ef69843550f94",
+      "words": 432
+    },
+    "canonical/pages/README.md": {
+      "bytes": 4819,
+      "sha256": "784bc9673f3f6ce9af56509cd70e52ca81372a0d865123a8b338d53aaae54d78",
+      "words": 639
+    },
+    "canonical/pages/ROADMAP.md": {
+      "bytes": 1653,
+      "sha256": "c455265e8f185f0380dce22950553b0e7f8adf19ac89c16262ef98316d5469d9",
+      "words": 242
+    },
+    "canonical/pages/VALIDATION.md": {
+      "bytes": 3780,
+      "sha256": "5d8a2c234ba70368d501a579f9040b52e3a32ebc84d5db6be5fae3f879a81856",
+      "words": 582
+    },
+    "canonical/prefaces/cursor.md": {
+      "bytes": 1003,
+      "sha256": "b58689d9e0a14d47134f2fbe70e40bd950be64e4c03a99930dc9243aaedbcef4",
+      "words": 136
+    },
+    "canonical/prefaces/portable.md": {
+      "bytes": 1124,
+      "sha256": "0d357ce86093bacf9af72d300658bc38e81180e7ca1f486899b801bc2a9719ed",
+      "words": 161
+    },
+    "canonical/recipes/VDR01-scope-the-change.md": {
+      "bytes": 1645,
+      "sha256": "8ed807bc7705ceb1a5355f7ef3e0724bb66316d9299eeaf93637265860f8e8b8",
+      "words": 217
+    },
+    "canonical/recipes/VDR02-build-and-challenge-the-baseline.md": {
+      "bytes": 1571,
+      "sha256": "a3929b84a39836e4a1fcf8654ddf1fbcdf80a79b5e4bceabe167203d69079e77",
+      "words": 211
+    },
+    "canonical/recipes/VDR03-build-a-non-overlapping-effect-register.md": {
+      "bytes": 1575,
+      "sha256": "9c4123a793b39bcebda03ff02d10359ffa2da2105d9287b14fb2d869c2f846fe",
+      "words": 201
+    },
+    "canonical/recipes/VDR04-plan-implementation-work-and-readiness.md": {
+      "bytes": 1602,
+      "sha256": "4c6eff398632d5e71baa089609b8303ea045457156191bab7ff8a6ac17d79466",
+      "words": 231
+    },
+    "canonical/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
+      "bytes": 1604,
+      "sha256": "db0f536416060cabf5f099b7cccb875c6bca448d2ce0c1bcb07b146c9f581f1f",
+      "words": 234
+    },
+    "canonical/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
+      "bytes": 1548,
+      "sha256": "2ebda52193bfe00483364328af28e82c5bdabd5ab39864f573fdf8b3f451e8db",
+      "words": 211
+    },
+    "canonical/recipes/VDR07-check-supplier-physical-capacity.md": {
+      "bytes": 1320,
+      "sha256": "ae420d711f71818c92f3f687ee8954bf586c32af82267ccc8733991024b0a53d",
+      "words": 183
+    },
+    "canonical/recipes/VDR08-prepare-a-controlled-transition.md": {
+      "bytes": 1296,
+      "sha256": "e9c124cdedb7c174e44a50d6eb34502545992541bc5c0392790eccd049c03ce7",
+      "words": 171
+    },
+    "canonical/recipes/VDR09-test-an-inbound-flow-alternative.md": {
+      "bytes": 1338,
+      "sha256": "96afb8690a7c73bfeacbaeaa4bcb517dc71d72b8a6034da8be359b2d9c95c2a2",
+      "words": 175
+    },
+    "canonical/recipes/VDR10-transfer-capability.md": {
+      "bytes": 1302,
+      "sha256": "9dd0f78c219f46c6f45b004b5cfd3f82cc65c0f55e68af73a79624e6e86cfd6c",
+      "words": 185
+    },
+    "canonical/sources.json": {
+      "bytes": 5895,
+      "sha256": "db4438b33376930df0cb8d9823d57d8fea5d8d406a16dbf16cd83692457cb5a2"
+    },
+    "cases/README.md": {
+      "bytes": 861,
+      "sha256": "5955b93ce5503b5a0c8a7631b629135c9a4937e2467b60d4a89041240281e7a6",
+      "words": 133
+    },
+    "cases/SYN-VD01.json": {
+      "bytes": 2692,
+      "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
+    },
+    "cases/cases.json": {
+      "bytes": 6520,
+      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+    },
+    "cursor-project/.cursor/rules/30-valuedelivery-method.mdc": {
+      "bytes": 1710,
+      "sha256": "77a8182a6c81f968aa8cef70b8b99a2f174fa7f2d6d27921d116dba71d8cc35c",
+      "words": 249
+    },
+    "cursor-project/.valuedelivery/00-activation-and-boundary.md": {
+      "bytes": 6794,
+      "sha256": "024e194267d1ca207c88df6319e8ad573fffa96118a6dfba816b7906c5fa407a",
+      "words": 795
+    },
+    "cursor-project/.valuedelivery/10-benefit-baseline-and-effects.md": {
+      "bytes": 6144,
+      "sha256": "bc79dc5cc9550ab5de03107ead7977e8826f89020878e73ca878759111211a37",
+      "words": 913
+    },
+    "cursor-project/.valuedelivery/20-implementation-readiness.md": {
+      "bytes": 5708,
+      "sha256": "affa112876b60c17dcc33e0351024f6f49663b173bb293aaa54cbb3b4cfb607d",
+      "words": 875
+    },
+    "cursor-project/.valuedelivery/30-plan-revisions-and-events.md": {
+      "bytes": 5150,
+      "sha256": "537d21cffd6028049fec5054ec355ddcb0cc91dc56e3caa40347d2c7b09424e0",
+      "words": 758
+    },
+    "cursor-project/.valuedelivery/40-outcome-reconciliation.md": {
+      "bytes": 5131,
+      "sha256": "22878f98d612d85ca54953093e15f56ff4ea6f01e2a0b0b52868a3dbba9b1123",
+      "words": 705
+    },
+    "cursor-project/.valuedelivery/50-annex-contract.md": {
+      "bytes": 3662,
+      "sha256": "6c4ff77a67830f1793fff3d90ee3a6cfd35ea209629ea6eb397deca3607b8077",
+      "words": 524
+    },
+    "cursor-project/.valuedelivery/60-guide-operating-scope-and-flow.md": {
+      "bytes": 2755,
+      "sha256": "06a48dcc87d050f1a919e0d3f00b0a463bc677e026a65cda912680bbbf7639bc",
+      "words": 404
+    },
+    "cursor-project/.valuedelivery/62-guide-physical-capacity.md": {
+      "bytes": 2713,
+      "sha256": "bb8e184b838ed4f9c65e3fda5ee927bbbffed0308a194ee19b6e16963b30a0da",
+      "words": 392
+    },
+    "cursor-project/.valuedelivery/64-guide-industrialisation-and-change.md": {
+      "bytes": 2913,
+      "sha256": "61b13c9c4330486641f38ae3163df40217a0ca4fb3a065592d3ea73cc7ae0006",
+      "words": 379
+    },
+    "cursor-project/.valuedelivery/66-guide-inbound-flow-and-inventory.md": {
+      "bytes": 2927,
+      "sha256": "73c4850c144a9df7031bc3df8715ba0c155bb8faea80b00ea20b31d93ac4eb77",
+      "words": 409
+    },
+    "cursor-project/.valuedelivery/68-guide-capability-transfer.md": {
+      "bytes": 2503,
+      "sha256": "2e558157e7c9398a04d47942f96d6feb19be846f8ae8387bc9b06022eb9e55e8",
+      "words": 355
+    },
+    "cursor-project/.valuedelivery/70-evaluation.md": {
+      "bytes": 13210,
+      "sha256": "e695a481d7692ac3cb1b63df335ee7e1a47e1565ed3e9e66f1faf28a8eb6ae73",
+      "words": 1873
+    },
+    "cursor-project/.valuedelivery/80-templates-and-prompts.md": {
+      "bytes": 9706,
+      "sha256": "d8863da2c1632eea64ad403678c18f713c9db8ba86c45499d7653ad73fbeb2b2",
+      "words": 1269
+    },
+    "cursor-project/.valuedelivery/90-sources.md": {
+      "bytes": 4968,
+      "sha256": "6cf4505bd8b5f1684fc5f060bbcf524be54add459e526875b0da86fe9bb99aea",
+      "words": 546
+    },
+    "cursor-project/.valuedelivery/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "cursor-project/.valuedelivery/README.md": {
+      "bytes": 539,
+      "sha256": "06eb53c89330507216b08e38b870146a2617ab5cb6baf4c8e06c5b2bfea848e6",
+      "words": 68
+    },
+    "cursor-project/.valuedelivery/REQUIRES.json": {
+      "bytes": 2461,
+      "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
+    },
+    "cursor-project/.valuedelivery/cases/README.md": {
+      "bytes": 861,
+      "sha256": "5955b93ce5503b5a0c8a7631b629135c9a4937e2467b60d4a89041240281e7a6",
+      "words": 133
+    },
+    "cursor-project/.valuedelivery/cases/SYN-VD01.json": {
+      "bytes": 2692,
+      "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
+    },
+    "cursor-project/.valuedelivery/cases/cases.json": {
+      "bytes": 6520,
+      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+    },
+    "cursor-project/.valuedelivery/check_install.py": {
+      "bytes": 2544,
+      "sha256": "ab53a95561c08067b1eaed991ce28421ea727a746a5b42bd924246d9a57ba1dc"
+    },
+    "cursor-project/.valuedelivery/recipes/VDR01-scope-the-change.md": {
+      "bytes": 1730,
+      "sha256": "34442aae0eff1316d8b57cf53101d4326f47c621e378dff7855257a7e991c271",
+      "words": 217
+    },
+    "cursor-project/.valuedelivery/recipes/VDR02-build-and-challenge-the-baseline.md": {
+      "bytes": 1615,
+      "sha256": "6e3bb36b86b56921dc808b7ef4cb5512e5b0f13722765ece9357eb9e5dc2f50c",
+      "words": 211
+    },
+    "cursor-project/.valuedelivery/recipes/VDR03-build-a-non-overlapping-effect-register.md": {
+      "bytes": 1633,
+      "sha256": "19368c7cafc60573f8f20c116838e7262f49b3741426195a57c5c1ad08e802b2",
+      "words": 201
+    },
+    "cursor-project/.valuedelivery/recipes/VDR04-plan-implementation-work-and-readiness.md": {
+      "bytes": 1667,
+      "sha256": "7afa6a2cc859582f8247790ae81a4a833e0dc140d31431e152b9e0ccc7fe9545",
+      "words": 231
+    },
+    "cursor-project/.valuedelivery/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
+      "bytes": 1689,
+      "sha256": "0310b7a0a4dcb4f0d2874d9ab03e622e648cd2a3d211659867b6e3bcc74407ae",
+      "words": 234
+    },
+    "cursor-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
+      "bytes": 1612,
+      "sha256": "2ecec240c4739b78d5629b0ed2187e622e0dcd25f44b38e7bd110096a2720b52",
+      "words": 211
+    },
+    "cursor-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
+      "bytes": 1352,
+      "sha256": "5252f0d022814c632a85081113b1ea81b7e29233825fe95720540effc8fafeb6",
+      "words": 183
+    },
+    "cursor-project/.valuedelivery/recipes/VDR08-prepare-a-controlled-transition.md": {
+      "bytes": 1339,
+      "sha256": "155d2a93d3538ed0129f2b5ffe31cdd3cd36a4a8744d15ef6a9e2e380bc4cebc",
+      "words": 171
+    },
+    "cursor-project/.valuedelivery/recipes/VDR09-test-an-inbound-flow-alternative.md": {
+      "bytes": 1379,
+      "sha256": "eb83ed4b678c47d08cc9650c1c184779005b2e04fb1450acc9eaf303299b8cb6",
+      "words": 175
+    },
+    "cursor-project/.valuedelivery/recipes/VDR10-transfer-capability.md": {
+      "bytes": 1336,
+      "sha256": "a8843a1444688f06033161f4ae99d6c9ea016677e409941992cfc41584290fa9",
+      "words": 185
+    },
+    "cursor-project/.valuedelivery/reference/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cursor-project/.valuedelivery/reference/export_example.py": {
+      "bytes": 4517,
+      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+    },
+    "cursor-project/.valuedelivery/reference/test_value_delivery.py": {
+      "bytes": 42469,
+      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+    },
+    "cursor-project/.valuedelivery/reference/value_delivery.py": {
+      "bytes": 46144,
+      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+    },
+    "cursor-project/VALUEDELIVERY-INSTALL.md": {
+      "bytes": 791,
+      "sha256": "065ad629340eb6d6c4daa674429baa05da3fdcefd72133fb00b67409f07a8af1",
+      "words": 86
+    },
+    "cursor-project/valuedelivery-cursor.md": {
+      "bytes": 89086,
+      "sha256": "9552180993758047f108834e5ace5585e1769aca2d18bd31e8441b73c6809916",
+      "words": 12422
+    },
+    "cursor.md": {
+      "bytes": 89086,
+      "sha256": "9552180993758047f108834e5ace5585e1769aca2d18bd31e8441b73c6809916",
+      "words": 12422
+    },
+    "memory.md": {
+      "bytes": 89207,
+      "sha256": "3717de91831bfe48e1d966e3bc53d92785be8665e520d9a8440217964e71d860",
+      "words": 12447
+    },
+    "portable-project/.valuedelivery/00-activation-and-boundary.md": {
+      "bytes": 6794,
+      "sha256": "024e194267d1ca207c88df6319e8ad573fffa96118a6dfba816b7906c5fa407a",
+      "words": 795
+    },
+    "portable-project/.valuedelivery/10-benefit-baseline-and-effects.md": {
+      "bytes": 6144,
+      "sha256": "bc79dc5cc9550ab5de03107ead7977e8826f89020878e73ca878759111211a37",
+      "words": 913
+    },
+    "portable-project/.valuedelivery/20-implementation-readiness.md": {
+      "bytes": 5708,
+      "sha256": "affa112876b60c17dcc33e0351024f6f49663b173bb293aaa54cbb3b4cfb607d",
+      "words": 875
+    },
+    "portable-project/.valuedelivery/30-plan-revisions-and-events.md": {
+      "bytes": 5150,
+      "sha256": "537d21cffd6028049fec5054ec355ddcb0cc91dc56e3caa40347d2c7b09424e0",
+      "words": 758
+    },
+    "portable-project/.valuedelivery/40-outcome-reconciliation.md": {
+      "bytes": 5131,
+      "sha256": "22878f98d612d85ca54953093e15f56ff4ea6f01e2a0b0b52868a3dbba9b1123",
+      "words": 705
+    },
+    "portable-project/.valuedelivery/50-annex-contract.md": {
+      "bytes": 3662,
+      "sha256": "6c4ff77a67830f1793fff3d90ee3a6cfd35ea209629ea6eb397deca3607b8077",
+      "words": 524
+    },
+    "portable-project/.valuedelivery/60-guide-operating-scope-and-flow.md": {
+      "bytes": 2755,
+      "sha256": "06a48dcc87d050f1a919e0d3f00b0a463bc677e026a65cda912680bbbf7639bc",
+      "words": 404
+    },
+    "portable-project/.valuedelivery/62-guide-physical-capacity.md": {
+      "bytes": 2713,
+      "sha256": "bb8e184b838ed4f9c65e3fda5ee927bbbffed0308a194ee19b6e16963b30a0da",
+      "words": 392
+    },
+    "portable-project/.valuedelivery/64-guide-industrialisation-and-change.md": {
+      "bytes": 2913,
+      "sha256": "61b13c9c4330486641f38ae3163df40217a0ca4fb3a065592d3ea73cc7ae0006",
+      "words": 379
+    },
+    "portable-project/.valuedelivery/66-guide-inbound-flow-and-inventory.md": {
+      "bytes": 2927,
+      "sha256": "73c4850c144a9df7031bc3df8715ba0c155bb8faea80b00ea20b31d93ac4eb77",
+      "words": 409
+    },
+    "portable-project/.valuedelivery/68-guide-capability-transfer.md": {
+      "bytes": 2503,
+      "sha256": "2e558157e7c9398a04d47942f96d6feb19be846f8ae8387bc9b06022eb9e55e8",
+      "words": 355
+    },
+    "portable-project/.valuedelivery/70-evaluation.md": {
+      "bytes": 13210,
+      "sha256": "e695a481d7692ac3cb1b63df335ee7e1a47e1565ed3e9e66f1faf28a8eb6ae73",
+      "words": 1873
+    },
+    "portable-project/.valuedelivery/80-templates-and-prompts.md": {
+      "bytes": 9706,
+      "sha256": "d8863da2c1632eea64ad403678c18f713c9db8ba86c45499d7653ad73fbeb2b2",
+      "words": 1269
+    },
+    "portable-project/.valuedelivery/90-sources.md": {
+      "bytes": 4968,
+      "sha256": "6cf4505bd8b5f1684fc5f060bbcf524be54add459e526875b0da86fe9bb99aea",
+      "words": 546
+    },
+    "portable-project/.valuedelivery/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "portable-project/.valuedelivery/README.md": {
+      "bytes": 539,
+      "sha256": "06eb53c89330507216b08e38b870146a2617ab5cb6baf4c8e06c5b2bfea848e6",
+      "words": 68
+    },
+    "portable-project/.valuedelivery/REQUIRES.json": {
+      "bytes": 2461,
+      "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
+    },
+    "portable-project/.valuedelivery/cases/README.md": {
+      "bytes": 861,
+      "sha256": "5955b93ce5503b5a0c8a7631b629135c9a4937e2467b60d4a89041240281e7a6",
+      "words": 133
+    },
+    "portable-project/.valuedelivery/cases/SYN-VD01.json": {
+      "bytes": 2692,
+      "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
+    },
+    "portable-project/.valuedelivery/cases/cases.json": {
+      "bytes": 6520,
+      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+    },
+    "portable-project/.valuedelivery/check_install.py": {
+      "bytes": 2544,
+      "sha256": "ab53a95561c08067b1eaed991ce28421ea727a746a5b42bd924246d9a57ba1dc"
+    },
+    "portable-project/.valuedelivery/recipes/VDR01-scope-the-change.md": {
+      "bytes": 1730,
+      "sha256": "34442aae0eff1316d8b57cf53101d4326f47c621e378dff7855257a7e991c271",
+      "words": 217
+    },
+    "portable-project/.valuedelivery/recipes/VDR02-build-and-challenge-the-baseline.md": {
+      "bytes": 1615,
+      "sha256": "6e3bb36b86b56921dc808b7ef4cb5512e5b0f13722765ece9357eb9e5dc2f50c",
+      "words": 211
+    },
+    "portable-project/.valuedelivery/recipes/VDR03-build-a-non-overlapping-effect-register.md": {
+      "bytes": 1633,
+      "sha256": "19368c7cafc60573f8f20c116838e7262f49b3741426195a57c5c1ad08e802b2",
+      "words": 201
+    },
+    "portable-project/.valuedelivery/recipes/VDR04-plan-implementation-work-and-readiness.md": {
+      "bytes": 1667,
+      "sha256": "7afa6a2cc859582f8247790ae81a4a833e0dc140d31431e152b9e0ccc7fe9545",
+      "words": 231
+    },
+    "portable-project/.valuedelivery/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
+      "bytes": 1689,
+      "sha256": "0310b7a0a4dcb4f0d2874d9ab03e622e648cd2a3d211659867b6e3bcc74407ae",
+      "words": 234
+    },
+    "portable-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
+      "bytes": 1612,
+      "sha256": "2ecec240c4739b78d5629b0ed2187e622e0dcd25f44b38e7bd110096a2720b52",
+      "words": 211
+    },
+    "portable-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
+      "bytes": 1352,
+      "sha256": "5252f0d022814c632a85081113b1ea81b7e29233825fe95720540effc8fafeb6",
+      "words": 183
+    },
+    "portable-project/.valuedelivery/recipes/VDR08-prepare-a-controlled-transition.md": {
+      "bytes": 1339,
+      "sha256": "155d2a93d3538ed0129f2b5ffe31cdd3cd36a4a8744d15ef6a9e2e380bc4cebc",
+      "words": 171
+    },
+    "portable-project/.valuedelivery/recipes/VDR09-test-an-inbound-flow-alternative.md": {
+      "bytes": 1379,
+      "sha256": "eb83ed4b678c47d08cc9650c1c184779005b2e04fb1450acc9eaf303299b8cb6",
+      "words": 175
+    },
+    "portable-project/.valuedelivery/recipes/VDR10-transfer-capability.md": {
+      "bytes": 1336,
+      "sha256": "a8843a1444688f06033161f4ae99d6c9ea016677e409941992cfc41584290fa9",
+      "words": 185
+    },
+    "portable-project/.valuedelivery/reference/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "portable-project/.valuedelivery/reference/export_example.py": {
+      "bytes": 4517,
+      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+    },
+    "portable-project/.valuedelivery/reference/test_value_delivery.py": {
+      "bytes": 42469,
+      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+    },
+    "portable-project/.valuedelivery/reference/value_delivery.py": {
+      "bytes": 46144,
+      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+    },
+    "portable-project/AGENTS.valuedelivery.md": {
+      "bytes": 1641,
+      "sha256": "20a977866680fa0cc15336c6832397a8597dbd60a575cca710ad33ce2916bd48",
+      "words": 241
+    },
+    "portable-project/VALUEDELIVERY-INSTALL.md": {
+      "bytes": 897,
+      "sha256": "d3603d37988dee9e09992543ecdfbffb9ecb67224e50592a95ab1ea41ec24f61",
+      "words": 110
+    },
+    "portable-project/optional-adapters/.clinerules/30-valuedelivery.md": {
+      "bytes": 1584,
+      "sha256": "2309ca9ef2c9853e5de3c03fc7c0239375df9351f81a657f0ff1afd47ca3b39b",
+      "words": 233
+    },
+    "portable-project/optional-adapters/VALUEDELIVERY-ADAPTERS.md": {
+      "bytes": 252,
+      "sha256": "9a6088f36c37a2f96630e964cc491ecf00fbe9b3c5343800059d2494b4e2d56d",
+      "words": 34
+    },
+    "portable-project/valuedelivery-memory.md": {
+      "bytes": 89207,
+      "sha256": "3717de91831bfe48e1d966e3bc53d92785be8665e520d9a8440217964e71d860",
+      "words": 12447
+    },
+    "reference/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reference/export_example.py": {
+      "bytes": 4517,
+      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+    },
+    "reference/test_value_delivery.py": {
+      "bytes": 42469,
+      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+    },
+    "reference/value_delivery.py": {
+      "bytes": 46144,
+      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+    },
+    "tools/README.md": {
+      "bytes": 3042,
+      "sha256": "4736d1eaa7d4d4c5383ac09b68de5bd69e05247c40f844bec6ed31efc84d9a25",
+      "words": 471
+    },
+    "tools/build_pack.py": {
+      "bytes": 22426,
+      "sha256": "e8ec287cc4666f11c581721284a76f171ca71d2fd5971e1534ef1329c7f9d34a"
+    },
+    "tools/check_install.py": {
+      "bytes": 2544,
+      "sha256": "ab53a95561c08067b1eaed991ce28421ea727a746a5b42bd924246d9a57ba1dc"
+    },
+    "tools/test_validate_pack.py": {
+      "bytes": 17234,
+      "sha256": "f2c8d5268f8404692c96089ca89a958fd909cf7927cdf0ff8f3d6951d3ed07f0"
+    },
+    "tools/validate_pack.py": {
+      "bytes": 6008,
+      "sha256": "ee3bfcf70d68261c0252c4e6c1741b3adb1302ac126bde4090f28855d2fc0386"
+    }
+  },
+  "requires": {
+    "files": {
+      ".costvalue/00-operating-contract.md": "f6d4387279b1268ccf4781af7f9caeeb0ab9809c394dcf0bba96afd8c3e64cde",
+      ".costvalue/10-workflow.md": "67013ec3f90c38fc95193c99515e2c0277cf4133a62bbcd656fb08213503c7e9",
+      ".costvalue/15-requisition-routing.md": "1440eb4961911b5c7322498ab3cfe4d60e4f8f38bf1aa24317e6a926f1b3920a",
+      ".costvalue/20-evidence-and-drawings.md": "5c890810b63279f9bcdbbae98633a1af61061abaad2ad821d48d12c0cae56761",
+      ".costvalue/30-economic-contract.md": "bc3371e6db7b8cac55319d8a89ab624213034ab316da041d78f5fc59c6f8af1d",
+      ".costvalue/35-cost-breakdown-and-levers.md": "661904033c4debbf97b99cdb94f99bac07e32b7b2b9a869af2986c53baa01038",
+      ".costvalue/40-calculation-and-value.md": "25484055629503dec1c4c15ad318d0fd5368855e1e2d36283e1faa64401d393b",
+      ".costvalue/50-supplier-dialogue.md": "d0bab395094cf3ef76013ac29c1021a113805d108645ffab985bdae658a52599",
+      ".costvalue/55-buyer-decision-and-handoff.md": "b802e717f2b7ce3213678d2148e0f7e25414eda252b68e03835ad3f65193e09f",
+      ".costvalue/60-memory.md": "2f6998b856653198f884a01041db93cefff3ec5c50db54938e4631d14270feb5",
+      ".costvalue/70-evaluation.md": "e10fb279f1f549491afce2e89d640c256242a6896f7c2e8bd2b0916b0d0b69a3",
+      ".costvalue/80-templates-and-prompts.md": "7e746c076cbe1780e67d90ac90ef20c354ffe3b0f20d065ce4fdad5fcd1e1975",
+      ".costvalue/90-sources.md": "1edb76d44d0ecda6be36d4bb90fdf6d8cd932d523b7f74bb9bd8b424ef70c19e",
+      ".costvalue/recipes/M14-buyer-correction-and-handoff.md": "6856c3408e00dc57ae543c0ef7148926c3340fef11b649c1b8f6dfe4cad7f46b",
+      ".costvalue/recipes/M15-incremental-value.md": "dbef52282fad001d07136221bfdbb522713898fdf8018dd0c61040ec09d77255",
+      ".costvalue/reference/core.py": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56",
+      ".costvalue/reference/workflow.py": "8c439d2168534c1f0c1c75dce136eb94ccfaaf782d4fb5f9c39d0f5a73a9c16f"
+    },
+    "version": "0.3.3"
+  },
+  "version": "0.1.0"
+}

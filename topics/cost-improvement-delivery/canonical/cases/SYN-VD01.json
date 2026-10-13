@@ -1,0 +1,70 @@
+{
+  "schema": "value_delivery_illustration/0.1",
+  "case_id": "SYN-VD01",
+  "synthetic": true,
+  "purpose": "Original illustrative arithmetic for a proposed capability; not an implemented approval or scheduling workflow.",
+  "information_date": "2030-04-01",
+  "currency": "GBP",
+  "unit": "piece",
+  "annual_units": 30000,
+  "baseline_unit_price": "24.00",
+  "alternative_unit_price": "22.40",
+  "annual_incremental_recurring_cost": "12000.00",
+  "year_one_implementation_spend": "15000.00",
+  "assumptions": [
+    "Same reviewed specification and commercial cost boundary; all values invented.",
+    "Uniform annual quantity over 12 equal months.",
+    "New unit price and additional recurring operating cost apply only after go-live.",
+    "All stated one-time implementation spend occurs in year one in either scenario.",
+    "Dates are input scenarios, not inferred from role capacity or an optimiser.",
+    "No tax, discounting, working-capital timing, production scheduling or stochastic ramp model.",
+    "Modeled economic effects, not complete cash-flow or accounting results.",
+    "Resource availability is already net of existing commitments; do not subtract BAU again.",
+    "The original plan remains stored when the current scenario changes."
+  ],
+  "plans": {
+    "original": {
+      "baseline_id": "BASE-SYN-001",
+      "version": 1,
+      "go_live_month": 7,
+      "label": "Original July plan"
+    },
+    "revised": {
+      "version": 2,
+      "go_live_month": 10,
+      "label": "Supplied October scenario; not a computed schedule"
+    }
+  },
+  "resources": {
+    "period": "2030-06",
+    "engineering_days_required": "9",
+    "engineering_days_available": "6",
+    "quality_days_spare": "10",
+    "substitution_authorised": false
+  },
+  "actual_observations": [],
+  "financially_measured_savings": null,
+  "finance_review": "not_reviewed",
+  "expected": {
+    "gross_annual_price_opportunity": "48000.00",
+    "net_annual_operating_run_rate": "36000.00",
+    "original": {
+      "active_months": 6,
+      "eligible_units": 15000,
+      "gross_price_effect": "24000.00",
+      "recurring_cost": "6000.00",
+      "year_one_effect_after_one_off": "3000.00"
+    },
+    "revised": {
+      "active_months": 3,
+      "eligible_units": 7500,
+      "gross_price_effect": "12000.00",
+      "recurring_cost": "3000.00",
+      "year_one_effect_after_one_off": "-6000.00"
+    },
+    "revised_minus_original": "-9000.00",
+    "engineering_shortfall_days": "3",
+    "financially_measured_savings": null
+  },
+  "evaluation_boundary": "Expected answers are public. This is not a blind test. A private application must separately implement input contracts, authority and data handling."
+}

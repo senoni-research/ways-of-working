@@ -19,6 +19,7 @@ Inspect the current repository, existing rules, available tests and the authoriz
 | Review a sourcing-event snapshot | [55-buyer-decision-and-handoff](55-buyer-decision-and-handoff.md), [M13](recipes/M13-event-snapshot.md) | Eligibility, comparability and preference separated; infeasible aggregates rejected. |
 | Process a buyer correction and return a decision | [M14](recipes/M14-buyer-correction-and-handoff.md), [55-buyer-decision-and-handoff](55-buyer-decision-and-handoff.md) | Typed correction, new packet revision, invalidated stale approval, idempotent handoff. |
 | Evaluate incremental value alongside an existing process | [M15](recipes/M15-incremental-value.md), [70-evaluation](70-evaluation.md) | Current process versus current process plus this contribution; effort by role, decision quality, reliability. |
+| Deliver an accepted change or claim its realised value | The separately installed companion `.valuedelivery/00-activation-and-boundary.md`, if present; otherwise say this pack does not cover it | Activation decision; companion records kept outside this pack's decision basis and approval ([55-buyer-decision-and-handoff](55-buyer-decision-and-handoff.md)). |
 | Preserve a correction or evaluate the assistant | [M08](recipes/M08-memory-and-learning.md), [60-memory](60-memory.md), [70-evaluation](70-evaluation.md) | Scoped record or independently scored test result. |
 
 ## From blank project to first useful loop

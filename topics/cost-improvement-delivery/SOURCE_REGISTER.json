@@ -1,0 +1,139 @@
+[
+  {
+    "aliases": [],
+    "authors": [
+      "Lean Enterprise Institute"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": null,
+    "id": "OPS01",
+    "inspected_on": "2026-10-11",
+    "inspection": "public lexicon page",
+    "note": "No diagrams or templates reproduced.",
+    "rechecked_on": null,
+    "redistributed_original": false,
+    "role": "Current and future material and information flow in the operating-scope guidance; not the archetype table or this companion's gates.",
+    "scope": "Public lexicon page: definition and current/future-state distinction.",
+    "source_execution": "none",
+    "title": "Value Stream Mapping",
+    "url": "https://www.lean.org/lexicon-terms/value-stream-mapping/"
+  },
+  {
+    "aliases": [],
+    "authors": [
+      "Lean Enterprise Institute"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": null,
+    "id": "OPS02",
+    "inspected_on": "2026-10-11",
+    "inspection": "public lexicon page",
+    "note": "Knowledge-work adaptation and arithmetic are original; no certification claim.",
+    "rechecked_on": null,
+    "redistributed_original": false,
+    "role": "Questions for inspecting a supplier's physical capacity constraint.",
+    "scope": "Public lexicon page: production standard-work elements and process-capacity-sheet description.",
+    "source_execution": "none",
+    "title": "Standardized Work",
+    "url": "https://www.lean.org/lexicon-terms/standardized-work/"
+  },
+  {
+    "aliases": [],
+    "authors": [
+      "Patricia Panchak / Lean Enterprise Institute"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": "2022-07-06",
+    "id": "OPS03",
+    "inspected_on": "2026-10-11",
+    "inspection": "article body",
+    "note": "No source template, illustration or exercise redistributed; the records and transfer tests are this companion's choice.",
+    "rechecked_on": null,
+    "redistributed_original": false,
+    "role": "Learning through structured problem-solving in the capability-transfer guidance.",
+    "scope": "Article body, excluding reader comments; especially problem-solving dialogue and coaching.",
+    "source_execution": "none",
+    "title": "Understanding the Many Facets of the A3",
+    "url": "https://www.lean.org/the-lean-post/articles/understanding-the-many-facets-of-the-a3/"
+  },
+  {
+    "aliases": [
+      "EXT04"
+    ],
+    "authors": [
+      "U.S. Government Accountability Office"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": "2015-12-22",
+    "id": "OPS05",
+    "inspected_on": "2026-10-11",
+    "inspection": "official overview",
+    "note": "No scheduling algorithm or schedule-audit standard implemented here.",
+    "rechecked_on": "2026-10-12",
+    "redistributed_original": false,
+    "role": "Relating schedule credibility to cost effects when a qualification or transition moves the benefit date.",
+    "scope": "Published overview/highlights for GAO-16-89G, not the full 240-page guide.",
+    "source_execution": "none",
+    "title": "GAO Schedule Assessment Guide: Best Practices for Project Schedules",
+    "url": "https://www.gao.gov/products/gao-16-89g"
+  },
+  {
+    "aliases": [
+      "EXT03"
+    ],
+    "authors": [
+      "UK Government Project Delivery"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": "Published 29 July 2024; modified 1 July 2026 (as recorded on the 12 October 2026 recheck)",
+    "id": "OPS06",
+    "inspected_on": "2026-10-11",
+    "inspection": "public chapter",
+    "note": "Public-sector guidance adapted as general practice, not a legal, accounting or private-industry compliance claim; the record design is an adaptation.",
+    "rechecked_on": "2026-10-12",
+    "redistributed_original": false,
+    "role": "Continued benefit ownership and verification beyond delivery in outcome reconciliation.",
+    "scope": "Public chapter: accountability, benefit ownership, framework, planning and lifecycle review.",
+    "source_execution": "none",
+    "title": "Teal Book, Chapter 19: Benefits management",
+    "url": "https://projectdelivery.gov.uk/teal-book/home/part-e-planning-and-control/chapter-19-benefits-management/"
+  },
+  {
+    "aliases": [],
+    "authors": [
+      "Toyota Motor Corporation"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": null,
+    "id": "OPS07",
+    "inspected_on": "2026-10-11",
+    "inspection": "official overview",
+    "note": "Not a reproduction of Toyota's operating system or proof that any site applies it.",
+    "rechecked_on": null,
+    "redistributed_original": false,
+    "role": "Synchronised flow and deliberately held replenishment stock in the inbound-flow guidance.",
+    "scope": "Official overview sections on jidoka, Just-in-Time and human development.",
+    "source_execution": "none",
+    "title": "Toyota Production System",
+    "url": "https://global.toyota/en/company/vision-and-philosophy/production-system/"
+  },
+  {
+    "aliases": [],
+    "authors": [
+      "Department of Finance, Northern Ireland"
+    ],
+    "candidate_register": "Industrial Performance & Value Realisation candidate 0.1.0",
+    "date": null,
+    "id": "OPS08",
+    "inspected_on": "2026-10-11",
+    "inspection": "public page",
+    "note": "No professional financial, tax or employment advice; role and hour controls are this companion's designs.",
+    "rechecked_on": null,
+    "redistributed_original": false,
+    "role": "Operational ownership, transition and sustainment after a project closes.",
+    "scope": "Public page: benefits plans, ownership, reviews, post-project governance and transition.",
+    "source_execution": "none",
+    "title": "Programme and project benefits realisation",
+    "url": "https://www.finance-ni.gov.uk/articles/programme-and-project-benefits-realisation"
+  }
+]
