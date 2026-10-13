@@ -15,9 +15,9 @@
       "sha256": "31c892fe3efa826672bbee23adade9dce3cd86068901dd923bfb83af665cfe3e"
     },
     "ATTRIBUTION.md": {
-      "bytes": 3527,
-      "sha256": "5958aa9111e38c67eb29c073d7e9c76851b0701575f8e16e2664d6ede6c1adcd",
-      "words": 457
+      "bytes": 3597,
+      "sha256": "7039e69653c739e884a9a61724bf3b9985ad5fa5e83f70df77b0408259c40684",
+      "words": 469
     },
     "CHANGELOG.md": {
       "bytes": 12318,
@@ -34,9 +34,9 @@
       "words": 336
     },
     "README.md": {
-      "bytes": 8796,
-      "sha256": "ae6ce20e43ddc4efb7225f14e5fe1132aa1dc5958620cde14e1c2a0883267212",
-      "words": 1180
+      "bytes": 8842,
+      "sha256": "e56915c3a6430b07e7f361a72868a12a3fd3adfda23928e005d39366f9206191",
+      "words": 1190
     },
     "ROADMAP.md": {
       "bytes": 4354,
@@ -187,9 +187,9 @@
       "words": 1447
     },
     "canonical/pages/ATTRIBUTION.md": {
-      "bytes": 3527,
-      "sha256": "5958aa9111e38c67eb29c073d7e9c76851b0701575f8e16e2664d6ede6c1adcd",
-      "words": 457
+      "bytes": 3597,
+      "sha256": "7039e69653c739e884a9a61724bf3b9985ad5fa5e83f70df77b0408259c40684",
+      "words": 469
     },
     "canonical/pages/CHANGELOG.md": {
       "bytes": 12318,
@@ -202,9 +202,9 @@
       "words": 336
     },
     "canonical/pages/README.md": {
-      "bytes": 8796,
-      "sha256": "ae6ce20e43ddc4efb7225f14e5fe1132aa1dc5958620cde14e1c2a0883267212",
-      "words": 1180
+      "bytes": 8842,
+      "sha256": "e56915c3a6430b07e7f361a72868a12a3fd3adfda23928e005d39366f9206191",
+      "words": 1190
     },
     "canonical/pages/ROADMAP.md": {
       "bytes": 4354,

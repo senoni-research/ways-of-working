@@ -2,7 +2,7 @@
 
 **Focused WoW pack · v0.3.3 · 13 October 2026**
 
-A source-attributed working method for practitioners and AI coding assistants reviewing part specifications, cost assumptions, supplier quotes and cost breakdowns, and handling the buyer's decision inside an existing procurement workflow. This topic-led edition supports the Axiocost prototype, but its guidance is reusable outside that product.
+A source-attributed working method for practitioners and AI coding assistants reviewing part specifications, cost assumptions, supplier quotes and cost breakdowns, and handling the buyer's decision inside an existing procurement workflow. This topic-led edition is independent of any software product: separately developed tools may apply it, and its guidance does not depend on any of them.
 
 The purpose is a decision that can be inspected: what is comparable, what drives a result, what is unknown and what must be reviewed. This is not automated negotiation or a system that knows a supplier's true cost. It does not imitate an author or claim an endorsement.
 
