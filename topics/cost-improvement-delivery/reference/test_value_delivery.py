@@ -2,9 +2,11 @@
 import copy
 import importlib.util
 import json
+import subprocess
 import sys
+import tempfile
 import unittest
-from decimal import ROUND_DOWN, Context, Decimal, localcontext
+from decimal import ROUND_CEILING, ROUND_DOWN, ROUND_HALF_UP, Context, Decimal, Inexact, Rounded, getcontext, localcontext
 from pathlib import Path
 
 sys.dont_write_bytecode = True
@@ -69,6 +71,28 @@ class NumberPolicyTests(unittest.TestCase):
                               quantity_basis='q', information_date='2030-01-01'), 'numeric_range')
         self.assertEqual(vd.number(0, 'x'), 0)
 
+    def test_range_check_does_not_round_an_above_limit_value_into_range(self):
+        """VD22: 1E20 plus a 41st significant digit is above the limit even though rounding to 40 digits gives 1E20."""
+        just_above = '1' + '0' * 20 + '.' + '0' * 19 + '1'
+        for value in (just_above, '-' + just_above):
+            with self.subTest(value=value):
+                self.assertEqual(_err(vd.number, value, 'x'), 'numeric_range')
+        self.assertEqual(vd.number('1' + '0' * 20, 'x'), D('1E20'))
+        many = '12345678901234567890.12345678901234567891'
+        self.assertEqual(str(vd.number(many, 'x')), many)
+
+    def test_exact_text_keeps_every_digit_without_context(self):
+        """VD22: display and identity text never rounds, uses no exponent and has no negative zero."""
+        with localcontext(Context(prec=2, rounding=ROUND_DOWN, traps=[])):
+            for value, text in ((D('123.4567'), '123.4567'), (D('-123.4567'), '-123.4567'), (D('-0.00'), '0'),
+                                (D('1E+3'), '1000'), (D('2.500'), '2.5'), (D('-0.0012'), '-0.0012'), (D('100'), '100'),
+                                (D('12345678901234567890.12345678901234567891'), '12345678901234567890.12345678901234567891')):
+                with self.subTest(value=value):
+                    self.assertEqual(vd.exact_text(value), text)
+        for bad in (D('NaN'), D('Infinity'), 1.5, '1'):
+            with self.subTest(bad=bad):
+                self.assertEqual(_err(vd.exact_text, bad), 'invalid_number')
+
     def test_floats_booleans_and_blanks_are_refused(self):
         """VD22: binary floats, booleans and blanks are not numbers; blank is not zero."""
         for bad in (1.5, True, False, '', ' 1', '1e3', 'NaN', 'Infinity', [1], D('NaN')):
@@ -117,6 +141,48 @@ class MeasureTests(unittest.TestCase):
         self.assertEqual(_err(vd.convert_sign, benefit, 'benefit'), 'sign_conversion')
         self.assertEqual(vd.convert_sign(benefit, 'deviation')['amount'], D('-500.00'))
         self.assertEqual(self.views('benefit')['views'][0]['amount'], D('500.00'))
+
+    def measure(self, reference_price, new_price):
+        return vd.price_measure(measure_id='m', effect_id='E', kind='annual_reference_effect', sign='deviation',
+                                quantity='1', reference_price=reference_price, new_price=new_price, currency='GBP',
+                                unit='piece', quantity_basis='q', information_date='2030-01-01')
+
+    def test_sign_conversion_keeps_the_magnitude_under_any_caller_context(self):
+        """VD02/VD22: positive, negative and zero amounts convert exactly; input and caller context are untouched."""
+        cases = ((self.measure('123.4567', '0'), '-123.4567', '123.4567'),
+                 (self.measure('0', '5.5'), '5.5', '-5.5'),
+                 (self.measure('7.25', '7.25'), '0.00', '0.00'),
+                 (dict(self.measure('1', '1'), amount=D('-0.00')), '-0.00', '0.00'),
+                 (dict(self.measure('1', '1'), amount=D('-12345678901234567890.12345678901234567891')),
+                  '-12345678901234567890.12345678901234567891', '12345678901234567890.12345678901234567891'))
+        contexts = (Context(prec=4, rounding=ROUND_HALF_UP, traps=[]),
+                    Context(prec=2, rounding=ROUND_DOWN, traps=[Inexact, Rounded]),
+                    Context(prec=1, rounding=ROUND_CEILING))
+        for m, deviation, benefit in cases:
+            self.assertEqual(str(m['amount']), deviation)
+            before = copy.deepcopy(m)
+            for ctx in contexts:
+                with self.subTest(amount=deviation, prec=ctx.prec), localcontext(ctx):
+                    b = vd.convert_sign(m, 'benefit')
+                    self.assertEqual((str(b['amount']), b['sign'], b['converted_from']), (benefit, 'benefit', 'deviation'))
+                    self.assertEqual(str(vd.convert_sign(b, 'deviation')['amount']), '0.00' if benefit == '0.00' else deviation)
+                    self.assertEqual((getcontext().prec, getcontext().rounding), (ctx.prec, ctx.rounding))
+                    self.assertEqual(getcontext().traps[Inexact], ctx.traps[Inexact])
+            self.assertEqual(m, before)
+
+    def test_sign_conversion_validates_the_amount(self):
+        """VD02/VD22/VD29: an unsupported, non-finite, locale or out-of-range amount is refused, not negated."""
+        m = self.measure('10', '9')
+        for bad, code in ((1.5, 'invalid_number'), (True, 'invalid_number'), ('NaN', 'invalid_number'),
+                          (D('NaN'), 'invalid_number'), (D('-Infinity'), 'invalid_number'), ('1,5', 'unsupported_number_format'),
+                          (None, 'missing_input'), ('1' + '0' * 21, 'numeric_range'),
+                          ('-1' + '0' * 20 + '.' + '0' * 19 + '1', 'numeric_range')):
+            with self.subTest(amount=bad):
+                self.assertEqual(_err(vd.convert_sign, dict(m, amount=bad), 'benefit'), code)
+        self.assertEqual(str(vd.convert_sign(dict(m, amount='-1.10'), 'benefit')['amount']), '1.10')
+        self.assertEqual(_err(vd.convert_sign, dict(m, sign='gain'), 'benefit'), 'invalid_sign')
+        self.assertEqual(_err(vd.convert_sign, m, 'gain'), 'invalid_sign')
+        self.assertEqual(_err(vd.convert_sign, [m], 'benefit'), 'invalid_measure')
 
     def test_incompatible_bases_are_rejected(self):
         """VD04: different currency, unit, sign or quantity basis cannot be aggregated."""
@@ -314,6 +380,16 @@ class WorkloadTests(unittest.TestCase):
         self.assertEqual(len(g['availability_missing']), 2)
         self.assertEqual(g['shortfalls'], [])
 
+    def test_out_of_range_fte_is_a_structured_error(self):
+        """VD22: an FTE or allocation outside the numeric range gives numeric_range, not a raw decimal exception."""
+        tiny = '0.' + '0' * 17 + '1'
+        items = [_item('w1', recurrence='regular', quantity='1', low='1' + '0' * 19, high='1' + '0' * 19)]
+        self.assertEqual(_err(vd.workload_plan, items, period_capacity={'P1': '1'}, annual_capacity=tiny,
+                              effort_unit='days'), 'numeric_range')
+        once = [_item('w1', low='1' + '0' * 19, high='1' + '0' * 19, periods=('P1', 'P2'))]
+        self.assertEqual(_err(vd.workload_plan, once, period_capacity={'P1': tiny, 'P2': tiny}, annual_capacity='1',
+                              effort_unit='days'), 'numeric_range')
+
     def test_invalid_items_are_refused(self):
         """VD05: malformed recurrence, periods and scenario order are errors, not defaults."""
         self.assertEqual(_err(self.plan, [_item('w1', recurrence='weekly')]), 'invalid_recurrence')
@@ -354,6 +430,22 @@ class ReadinessTests(unittest.TestCase):
         v['conditions'][0]['effective'] = 'met'
         self.assertEqual(conds, before)
         self.assertEqual((v['advisory_only'], v['enforced_by_base_engine']), (True, False))
+
+    def test_a_missing_requirement_set_is_not_an_empty_approved_one(self):
+        """VD33: an absent set is refused; an empty or optional-only set is not ready; completeness is never claimed."""
+        self.assertEqual(_err(self.view, None), 'missing_input')
+        for bad in ('Q1', self.cond(), [self.cond(), 'Q2']):
+            with self.subTest(conditions=bad):
+                self.assertEqual(_err(self.view, bad), 'invalid_condition')
+        for conds in ([], [self.cond(required=False)]):
+            with self.subTest(conditions=conds):
+                v = self.view(conds)
+                self.assertEqual((v['scope_ready'], v['required_conditions_supplied']), (False, 0))
+        v = self.view([self.cond()])
+        self.assertEqual((v['scope_ready'], v['requirement_set_completeness']), (True, 'not_checked'))
+        for ref in (True, 1, '   ', ['EV-1']):
+            with self.subTest(evidence_ref=ref):
+                self.assertEqual(self.view([self.cond(evidence_ref=ref)])['conditions'][0]['reason'], 'missing_evidence')
 
 
 def _opp(oid, value, status='not_started', baseline=None, latest=None, done=None):
@@ -407,6 +499,18 @@ class PlanAndMilestoneTests(unittest.TestCase):
         self.assertEqual(r['implementation_marker_targets'][-1], D('30'))
         self.assertTrue(any('O3' in w for w in r['warnings']))
 
+    def test_cancellation_with_missing_dates_invents_nothing_and_keeps_past_markers(self):
+        """VD14: no baseline month is not backfilled; an implementation recorded before cancellation stays a past fact."""
+        items = [_opp('C1', '10', 'cancelled'), _opp('C2', '20', 'cancelled', done=1), _opp('C3', '5', 'cancelled', latest=2)]
+        r = vd.milestone_views(items, horizon_months=2, currency='GBP')
+        self.assertEqual((r['baseline_target_value'], r['unscheduled_target_value']), (0, 0))
+        self.assertEqual(r['current_schedule_targets'], [0, 0])
+        self.assertEqual(r['implementation_marker_targets'], [D('20'), D('20')])
+        self.assertEqual(r['cancelled_target_value'], D('35'))
+        self.assertEqual([(c['opportunity_id'], c['in_frozen_baseline'], c['implementation_recorded']) for c in r['cancelled']],
+                         [('C1', False, False), ('C2', False, True), ('C3', False, False)])
+        self.assertEqual(len([w for w in r['warnings'] if 'C2' in w and 'disposition' in w]), 1)
+
     def test_unscheduled_value_is_visible_and_targets_are_not_evidence(self):
         """VD09/VD13: unscheduled target value stays visible; no measured saving is inferred from markers."""
         r = vd.milestone_views([_opp('O1', '50', baseline=1), _opp('O2', '20', 'done')], horizon_months=2, currency='GBP')
@@ -420,11 +524,24 @@ class PlanAndMilestoneTests(unittest.TestCase):
 class ActionAndOutcomeTests(unittest.TestCase):
     acc = {'reviewer_role': 'quality-lead', 'date': '2030-05-02', 'evidence_ref': 'EV-9'}
 
-    def observed(self, rows):
+    as_of = '2030-04-30'
+
+    def observed(self, rows, **kw):
         c = VDC['VDC07']['inputs']
-        return vd.observed_effect(rows, comparator_id='BASE-1', comparator_unit_price=c['comparator_unit_price'],
-                                  currency=c['currency'], unit=c['unit'], window_start=c['window'][0],
-                                  window_end=c['window'][1], incremental_operating_expense=c['incremental_operating_expense'])
+        args = dict(comparator_id='BASE-1', comparator_unit_price=c['comparator_unit_price'], currency=c['currency'],
+                    unit=c['unit'], window_start=c['window'][0], window_end=c['window'][1],
+                    incremental_operating_expense=c['incremental_operating_expense'], expense_evidence=c['expense_evidence'])
+        return vd.observed_effect(rows, **dict(args, **kw))
+
+    def review(self, status, observed, **kw):
+        if status == 'not_reviewed':
+            return {'status': status}
+        return dict({'status': status, 'reviewer_role': 'finance-controller', 'reviewed_on': '2030-04-15',
+                     'basis_digest': observed['basis_digest']}, **kw)
+
+    def finding(self, observed, review='accepted_within_scope', guardrail='met', state='accepted', as_of=None):
+        return vd.outcome_finding(implementation_state=state, observed=observed, finance_review=self.review(review, observed),
+                                  service_guardrail=guardrail, as_of=as_of or self.as_of)
 
     def rows(self):
         c = VDC['VDC07']['inputs']
@@ -448,8 +565,7 @@ class ActionAndOutcomeTests(unittest.TestCase):
 
     def test_done_without_acceptance_keeps_the_financial_result_null(self):
         """VD18: implementation unconfirmed; financially measured savings stay null."""
-        f = vd.outcome_finding(implementation_state='completed_unaccepted', observed=self.observed(self.rows()),
-                               finance_review='accepted_within_scope', service_guardrail='met')
+        f = self.finding(self.observed(self.rows()), state='completed_unaccepted')
         self.assertEqual(f['finding'], 'implementation_unconfirmed')
         self.assertIsNone(f['financially_measured_savings'])
 
@@ -472,43 +588,148 @@ class ActionAndOutcomeTests(unittest.TestCase):
         late = dict(self.rows()[1], obs_id='i2', date='2030-04-01')
         self.assertEqual(self.observed(self.rows() + [late])['counted'], ['i1'])
 
+    def test_a_deducted_expense_needs_actual_evidence_and_the_net_scope_is_stated(self):
+        """VDC07, VD03, VD21: a nonzero expense without receipt, invoice or payment evidence is refused; gross and net stay separate."""
+        for ev in (None, 'forecast', 'order', 'estimate', ''):
+            with self.subTest(expense_evidence=ev):
+                self.assertEqual(_err(self.observed, self.rows(), expense_evidence=ev), 'non_actual_expense')
+        r = self.observed(self.rows(), incremental_operating_expense='0', expense_evidence=None)
+        self.assertEqual((r['gross_effect'], r['net_effect']), (D('3600'), D('3600')))
+        r = self.observed(self.rows())
+        self.assertEqual((r['gross_effect'], r['net_effect'], r['incremental_operating_expense'], r['expense_evidence']),
+                         (D('3600'), D('3300'), D('300'), 'invoice'))
+        self.assertIn('not cash', r['net_effect_scope'])
+
+    def test_basis_digest_identifies_the_exact_calculation(self):
+        """VD31/VD22: the digest ignores caller context and number spelling but changes with any counted input, however small."""
+        r = self.observed(self.rows())
+        self.assertRegex(r['basis_digest'], r'\A[0-9a-f]{64}\Z')
+        with localcontext(Context(prec=3, rounding=ROUND_DOWN, traps=[])):
+            self.assertEqual(self.observed(self.rows())['basis_digest'], r['basis_digest'])
+        self.assertEqual(self.observed(self.rows(), incremental_operating_expense='300.00')['basis_digest'], r['basis_digest'])
+        tiny = dict(self.rows()[1], unit_price='18.' + '0' * 39 + '1')
+        for label, other in (('quantity', self.observed([self.rows()[0], dict(self.rows()[1], quantity=1799)])),
+                             ('42nd digit', self.observed([self.rows()[0], tiny])),
+                             ('expense', self.observed(self.rows(), incremental_operating_expense='301')),
+                             ('window', self.observed(self.rows(), window_end='2030-03-30'))):
+            with self.subTest(changed=label):
+                self.assertNotEqual(other['basis_digest'], r['basis_digest'])
+
+    def test_finance_review_counts_only_for_the_calculation_it_names(self):
+        """VD31: an acceptance recorded for different content stays visible but does not count for this calculation."""
+        reviewed = self.observed(self.rows())
+        review = self.review('accepted_within_scope', reviewed)
+        now = self.observed([self.rows()[0], dict(self.rows()[1], quantity=2000)])
+        f = vd.outcome_finding(implementation_state='accepted', observed=now, finance_review=review,
+                               service_guardrail='met', as_of=self.as_of)
+        self.assertEqual((f['finding'], f['financially_measured_savings']), ('calculated_pending_finance_review', None))
+        r = f['finance_review']
+        self.assertEqual((r['recorded_status'], r['matches_this_calculation'], r['effective_status'], r['reviewed_basis_digest']),
+                         ('accepted_within_scope', False, 'not_reviewed', reviewed['basis_digest']))
+        self.assertEqual(self.finding(reviewed)['financially_measured_savings'], D('3300'))
+        for bad, code in (('accepted_within_scope', 'invalid_finance_review'), ({'status': 'approved'}, 'invalid_finance_review'),
+                          (dict(review, reviewer_role=''), 'invalid_text'), (dict(review, basis_digest='x'), 'invalid_finance_review'),
+                          (dict(review, basis_digest=None), 'invalid_finance_review'), (dict(review, reviewed_on=None), 'invalid_date')):
+            with self.subTest(review=bad):
+                self.assertEqual(_err(vd.outcome_finding, implementation_state='accepted', observed=reviewed, finance_review=bad,
+                                      service_guardrail='met', as_of=self.as_of), code)
+        self.assertEqual(_err(vd.outcome_finding, implementation_state='accepted', observed={'net_effect': D('1')},
+                              finance_review={'status': 'not_reviewed'}, service_guardrail='met', as_of=self.as_of),
+                         'invalid_observation')
+
+    def test_later_dates_do_not_rewrite_an_earlier_view(self):
+        """VD32: a review or observation window dated after as_of is refused; an earlier view is a separate record."""
+        obs = self.observed(self.rows())
+        self.assertEqual(_err(self.finding, obs, as_of='2030-04-14'), 'future_event')
+        self.assertEqual(_err(self.finding, obs, review='not_reviewed', as_of='2030-03-30'), 'future_event')
+        earlier = self.finding(obs, review='not_reviewed', as_of='2030-04-01')
+        kept = copy.deepcopy(earlier)
+        later = self.finding(obs, as_of='2030-04-15')
+        self.assertEqual((earlier['finding'], earlier['as_of']), ('calculated_pending_finance_review', '2030-04-01'))
+        self.assertEqual((later['finding'], later['as_of']), ('measured_and_accepted_within_scope', '2030-04-15'))
+        self.assertEqual(earlier, kept)
+
     def test_implemented_without_transactions_is_unmeasured(self):
         """VD19: accepted implementation plus no actual data is unmeasured value, not realised savings."""
-        f = vd.outcome_finding(implementation_state='accepted', observed=self.observed([]),
-                               finance_review='not_reviewed', service_guardrail='not_observed')
+        f = self.finding(self.observed([]), review='not_reviewed', guardrail='not_observed')
         self.assertEqual((f['finding'], f['financially_measured_savings']), ('implemented_unmeasured', None))
+        self.assertIn('not a finding that the benefit is zero', f['interpretation'])
 
     def test_price_gain_with_service_breach_reports_both(self):
         """VD20: a positive price effect and a service regression are both reported; not a success."""
-        f = vd.outcome_finding(implementation_state='accepted', observed=self.observed(self.rows()),
-                               finance_review='accepted_within_scope', service_guardrail='breached')
-        self.assertEqual(f['finding'], 'mixed_result_guardrail_breached')
+        f = self.finding(self.observed(self.rows()), guardrail='breached')
+        self.assertEqual((f['finding'], f['closing_category']), ('mixed_result_guardrail_breached', 'measured_but_qualified'))
         self.assertEqual(f['observed_net_effect'], D('3300'))
         self.assertIsNone(f['financially_measured_savings'])
+        self.assertIn('not a success', f['interpretation'])
 
     def test_finance_acceptance_within_scope_is_not_causal_proof(self):
-        """VD20: accepted within scope fills the measured field but never claims causality."""
-        f = vd.outcome_finding(implementation_state='accepted', observed=self.observed(self.rows()),
-                               finance_review='accepted_within_scope', service_guardrail='met')
+        """VD20: accepted within scope fills the measured field but never claims causality or authority."""
+        f = self.finding(self.observed(self.rows()))
         self.assertEqual((f['finding'], f['financially_measured_savings']), ('measured_and_accepted_within_scope', D('3300')))
         self.assertEqual(f['closing_category'], 'measured_and_accepted_within_scope')
         self.assertFalse(f['causal_attribution_established'])
+        self.assertIn('not an authenticated finance sign-off', f['authority'])
         for review, finding in (('not_reviewed', 'calculated_pending_finance_review'), ('rejected', 'finance_rejected'),
                                 ('qualified', 'finance_qualified')):
             with self.subTest(review=review):
-                g = vd.outcome_finding(implementation_state='accepted', observed=self.observed(self.rows()),
-                                       finance_review=review, service_guardrail='met')
+                g = self.finding(self.observed(self.rows()), review=review)
                 self.assertEqual((g['finding'], g['financially_measured_savings']), (finding, None))
 
     def test_negative_observed_effect_is_adverse_and_every_finding_has_a_closing_category(self):
         """VD20: an observed loss is an adverse outcome even after finance acceptance; findings map to five closing categories."""
         dear = [dict(self.rows()[1], unit_price='21')]
-        f = vd.outcome_finding(implementation_state='accepted', observed=self.observed(dear),
-                               finance_review='accepted_within_scope', service_guardrail='met')
+        f = self.finding(self.observed(dear))
         self.assertEqual((f['finding'], f['closing_category'], f['observed_net_effect']), ('adverse_outcome', 'adverse_outcome', D('-2100')))
         self.assertIsNone(f['financially_measured_savings'])
         self.assertEqual(set(vd.CLOSING_CATEGORIES.values()), {'measured_and_accepted_within_scope', 'measured_but_qualified',
                                                               'no_supported_benefit', 'adverse_outcome', 'insufficient_evidence'})
+        self.assertEqual(set(vd.CATEGORY_INTERPRETATIONS), set(vd.CLOSING_CATEGORIES.values()))
+
+    def test_closing_precedence_across_evidence_finance_and_guardrail_combinations(self):
+        """VD34: each combination gets one finding by the documented precedence, and every holding condition stays listed."""
+        base = self.rows()[1]
+        effects = {'missing': self.observed([]),
+                   'negative': self.observed([dict(base, unit_price='21')]),
+                   'zero': self.observed([dict(base, quantity=150)]),
+                   'positive': self.observed(self.rows())}
+
+        def expected(effect, review, guardrail):
+            if effect == 'missing':
+                return 'implemented_unmeasured'
+            if effect == 'negative':
+                return 'adverse_outcome'
+            if guardrail == 'breached':
+                return 'mixed_result_guardrail_breached'
+            return {'not_reviewed': 'calculated_pending_finance_review', 'rejected': 'finance_rejected',
+                    'qualified': 'finance_qualified'}.get(review) or (
+                'pending_guardrail_evidence' if guardrail == 'not_observed' else 'measured_and_accepted_within_scope')
+
+        for effect, obs in effects.items():
+            for review in vd.FINANCE_REVIEWS:
+                for guardrail in vd.SERVICE_GUARDRAILS:
+                    with self.subTest(effect=effect, review=review, guardrail=guardrail):
+                        f = self.finding(obs, review=review, guardrail=guardrail)
+                        self.assertEqual(f['finding'], expected(effect, review, guardrail))
+                        category = vd.CLOSING_CATEGORIES[f['finding']]
+                        self.assertEqual((f['closing_category'], f['interpretation']),
+                                         (category, vd.CATEGORY_INTERPRETATIONS[category]))
+                        self.assertEqual(f['finance_review']['effective_status'], review)
+                        self.assertEqual('finance_rejected' in f['conditions'], review == 'rejected')
+                        self.assertEqual('guardrail_breached' in f['conditions'], guardrail == 'breached')
+                        self.assertEqual('adverse_effect' in f['conditions'], effect == 'negative')
+                        self.assertEqual(f['observed_net_effect'], obs['net_effect'])
+                        accepted = f['finding'] == 'measured_and_accepted_within_scope'
+                        self.assertEqual(f['financially_measured_savings'], obs['net_effect'] if accepted else None)
+                        self.assertFalse(f['causal_attribution_established'])
+                        u = self.finding(obs, review=review, guardrail=guardrail, state='completed_unaccepted')
+                        self.assertEqual((u['finding'], u['financially_measured_savings']), ('implementation_unconfirmed', None))
+        rejected_loss = self.finding(effects['negative'], review='rejected')
+        self.assertEqual((rejected_loss['finding'], rejected_loss['finance_review']['effective_status']), ('adverse_outcome', 'rejected'))
+        self.assertEqual(rejected_loss['observed_net_effect'], D('-2100'))
+        zero = self.finding(effects['zero'])
+        self.assertEqual((zero['finding'], zero['financially_measured_savings']), ('measured_and_accepted_within_scope', D('0')))
+        self.assertIn('does not show the true benefit is zero', self.finding(effects['positive'], review='rejected')['interpretation'])
 
     def test_outcome_log_is_append_only_and_keeps_the_base_reference(self):
         """VD26: a later observation is a new dated record; earlier records and the base reference stay intact."""
@@ -629,7 +850,34 @@ class ExportTests(unittest.TestCase):
                           e['latest_minus_original']), ('3000', '-6000', '-9000'))
         self.assertEqual(e['capacity']['shortfalls'][0]['shortfall'], '3')
         self.assertIsNone(e['outcome']['financially_measured_savings'])
+        self.assertEqual((e['outcome']['finding'], e['outcome']['closing_category'], e['outcome']['finance_review']),
+                         ('implementation_unconfirmed', 'insufficient_evidence', 'not_reviewed'))
         self.assertIn('not a blind test', e['notice'])
+        with localcontext(Context(prec=2, rounding=ROUND_DOWN, traps=[])):
+            self.assertEqual(render(build_export(path)), text)
+
+    def test_export_command_reports_success_only_for_a_written_file(self):
+        """VD35: relative and absolute --out paths are written and read back; an unwritable path exits 1 and leaves no file."""
+        expected = render(build_export(CASES / 'SYN-VD01.json'))
+        script = [sys.executable, '-B', str(HERE / 'export_example.py')]
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp).resolve()
+            for label, out, cwd, target in (('relative', 'rel.json', tmp, tmp / 'rel.json'),
+                                            ('absolute', str(tmp / 'abs.json'), HERE, tmp / 'abs.json')):
+                with self.subTest(path=label):
+                    run = subprocess.run(script + ['--out', out], cwd=cwd, capture_output=True, text=True)
+                    self.assertEqual(run.returncode, 0, run.stderr)
+                    self.assertEqual(target.read_text(encoding='utf-8'), expected)
+                    self.assertIn(f'wrote {target} ', run.stderr)
+                    self.assertEqual(run.stdout, '')
+            missing = tmp / 'no-such-folder' / 'x.json'
+            run = subprocess.run(script + ['--out', str(missing)], cwd=tmp, capture_output=True, text=True)
+            self.assertEqual(run.returncode, 1)
+            self.assertIn('export failed: could not write', run.stderr)
+            self.assertEqual(run.stdout, '')
+            self.assertFalse(missing.exists())
+        run = subprocess.run(script, cwd=HERE, capture_output=True, text=True)
+        self.assertEqual((run.returncode, run.stdout), (0, expected))
 
 
 if __name__ == '__main__':

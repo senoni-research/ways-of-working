@@ -18,7 +18,7 @@ The base method answers a third question first: is the economic alternative defe
 | Operating contract, synthetic limits, evidence status | [[base:00-operating-contract]], [[base:20-evidence-and-drawings]] | Same labels and limits. Supplier-reported stays supplier-reported. |
 | Economic labels and cost conventions | [[base:30-economic-contract]], [[base:35-cost-breakdown-and-levers]], [[base:40-calculation-and-value]] | Price, target, gap, estimate and saving keep their base meaning. |
 | Four state families and the lever ladder | [[base:55-buyer-decision-and-handoff]] | Recommendation, reviewer decision, execution and observed outcome stay separate; identified to measured is unchanged. |
-| Approval, typed corrections and handoff | [[base:55-buyer-decision-and-handoff]], [[base:M14]] | The only approval engine. A decision-critical change is recorded there as a typed correction. |
+| Approval, typed corrections and handoff | [[base:55-buyer-decision-and-handoff]], [[base:M14]] | The only approval engine. A decision-critical change reaches it through a supported input or applied typed correction; otherwise the base decision is held. |
 | Memory and evaluation | [[base:60-memory]], [[base:70-evaluation]], [[base:M15]] | Same scoped-precedent and incremental-value rules. |
 
 ## What the companion adds: four active areas

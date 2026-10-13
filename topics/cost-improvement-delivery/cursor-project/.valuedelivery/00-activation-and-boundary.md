@@ -18,7 +18,7 @@ The base method answers a third question first: is the economic alternative defe
 | Operating contract, synthetic limits, evidence status | `.costvalue/00-operating-contract.md`, `.costvalue/20-evidence-and-drawings.md` | Same labels and limits. Supplier-reported stays supplier-reported. |
 | Economic labels and cost conventions | `.costvalue/30-economic-contract.md`, `.costvalue/35-cost-breakdown-and-levers.md`, `.costvalue/40-calculation-and-value.md` | Price, target, gap, estimate and saving keep their base meaning. |
 | Four state families and the lever ladder | `.costvalue/55-buyer-decision-and-handoff.md` | Recommendation, reviewer decision, execution and observed outcome stay separate; identified to measured is unchanged. |
-| Approval, typed corrections and handoff | `.costvalue/55-buyer-decision-and-handoff.md`, `.costvalue/recipes/M14-buyer-correction-and-handoff.md` | The only approval engine. A decision-critical change is recorded there as a typed correction. |
+| Approval, typed corrections and handoff | `.costvalue/55-buyer-decision-and-handoff.md`, `.costvalue/recipes/M14-buyer-correction-and-handoff.md` | The only approval engine. A decision-critical change reaches it through a supported input or applied typed correction; otherwise the base decision is held. |
 | Memory and evaluation | `.costvalue/60-memory.md`, `.costvalue/70-evaluation.md`, `.costvalue/recipes/M15-incremental-value.md` | Same scoped-precedent and incremental-value rules. |
 
 ## What the companion adds: four active areas

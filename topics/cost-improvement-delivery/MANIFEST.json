@@ -1,7 +1,7 @@
 {
   "counts": {
-    "acceptance": 30,
-    "behaviors": 37,
+    "acceptance": 36,
+    "behaviors": 41,
     "cases": 8,
     "fixtures": 1,
     "modules": 13,
@@ -13,23 +13,28 @@
   "date": "2026-10-13",
   "files": {
     "ATTRIBUTION.md": {
-      "bytes": 3019,
-      "sha256": "294c59f3ff7fbc3bae76cebfd6e044630c3a474e0dc900ca82776e193b575694",
-      "words": 432
+      "bytes": 6251,
+      "sha256": "168843cdbcbf2262d829b741a7595f3ba6ac2f5445fe6b4f01b4171e994a83f1",
+      "words": 899
     },
     "CHANGELOG.md": {
-      "bytes": 1295,
-      "sha256": "2de6e1b7d24760f216680aa5417146a3fee8f7923ae9888076ee9d9a7307ca7d",
-      "words": 183
+      "bytes": 4064,
+      "sha256": "78aabb2d0727bacf24016bfd8c149cdb4eadb1fd92095affa9969b64082c7bc2",
+      "words": 596
+    },
+    "COMPATIBILITY.md": {
+      "bytes": 5761,
+      "sha256": "cccf80c791a6c9ae6802769e97b6c1c769d4f02456bd97f2e82a1aa0249f07c0",
+      "words": 873
     },
     "LICENSE": {
       "bytes": 1072,
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "MIGRATION.md": {
-      "bytes": 8985,
-      "sha256": "435aabefb25be2f9f4c7984683f9148049ffe9c7f9e27a6d57266e0bfcbef76d",
-      "words": 1440
+      "bytes": 9155,
+      "sha256": "c803be5c074cde335b003f6a3a60a0d27849b09d31f3627a918865d56a70f73f",
+      "words": 1465
     },
     "QUICKSTART.md": {
       "bytes": 2980,
@@ -37,18 +42,18 @@
       "words": 432
     },
     "README.md": {
-      "bytes": 4819,
-      "sha256": "784bc9673f3f6ce9af56509cd70e52ca81372a0d865123a8b338d53aaae54d78",
-      "words": 639
+      "bytes": 5156,
+      "sha256": "270a0d5dec7c8cd000aee79ac956c62f4a4c871ce0252891e4f75d0d5765175e",
+      "words": 688
     },
     "REQUIRES.json": {
       "bytes": 2461,
       "sha256": "277baae95341ce71d97a3cc6a3f98621025e57ce2cdbd5b382a2615fc0ad056c"
     },
     "ROADMAP.md": {
-      "bytes": 1653,
-      "sha256": "c455265e8f185f0380dce22950553b0e7f8adf19ac89c16262ef98316d5469d9",
-      "words": 242
+      "bytes": 4190,
+      "sha256": "1864d40d1f813b7e9adf63a9ceeb55e9752c764e1aabfd29c06f24f6e69a1596",
+      "words": 617
     },
     "SOURCE_REGISTER.json": {
       "bytes": 6003,
@@ -60,9 +65,9 @@
       "words": 546
     },
     "VALIDATION.md": {
-      "bytes": 3780,
-      "sha256": "5d8a2c234ba70368d501a579f9040b52e3a32ebc84d5db6be5fae3f879a81856",
-      "words": 582
+      "bytes": 4589,
+      "sha256": "9de617f68ee1a81804d2e9a3f4d8ac6a621eadbd4d73846aa602adf5fe674867",
+      "words": 700
     },
     "VERSION": {
       "bytes": 6,
@@ -78,51 +83,51 @@
       "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
     },
     "canonical/cases/cases.json": {
-      "bytes": 6520,
-      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+      "bytes": 6557,
+      "sha256": "c6b7cb6e5feb62fe332d4a1d30253e29efbb0942dcda599938dbf3df34cf4db2"
     },
     "canonical/loader.md": {
-      "bytes": 1584,
-      "sha256": "2309ca9ef2c9853e5de3c03fc7c0239375df9351f81a657f0ff1afd47ca3b39b",
-      "words": 233
+      "bytes": 1655,
+      "sha256": "86b7ee9c142e38a0df14183162d11bc9605377bf234cdc15ebc2cac3ea4f98d8",
+      "words": 246
     },
     "canonical/metadata.json": {
-      "bytes": 3153,
-      "sha256": "985152ddc3e3d2e979c9b887ffebb446841f9f22dc77f85239d518cc9b44c559"
+      "bytes": 3277,
+      "sha256": "b92075a32db92fb4eb39253d7c24ae06908402bd4a6944aada4ff09bb21125db"
     },
     "canonical/migration_map.json": {
-      "bytes": 12799,
-      "sha256": "e27772245fc12b7cc16d0bf7d383844d43eebc61a91af9be353e6a8c4a506baf"
+      "bytes": 13006,
+      "sha256": "0ca743acb869da7fdab82eeacffce44e4b4c14e70c5393e7c5bada28d82fd140"
     },
     "canonical/modules/00-activation-and-boundary.md": {
-      "bytes": 5778,
-      "sha256": "2ff45a14d0cbb1fa4f267d3f807588023eae0f957b4a149839ea25547d5a3a9e",
-      "words": 795
+      "bytes": 5840,
+      "sha256": "0f4378239537e69b16e1d03b2b4758c988092e94f1a235951f7589f9c80023af",
+      "words": 804
     },
     "canonical/modules/10-benefit-baseline-and-effects.md": {
-      "bytes": 6109,
-      "sha256": "18301df5cd2ffc4820c556089c01dd4b7230891520b6e83636009e1d7a873683",
-      "words": 911
+      "bytes": 6544,
+      "sha256": "5b0c5465a94296040305c73065a017ab95b599cb6fa4334342a3179ef7c19b71",
+      "words": 978
     },
     "canonical/modules/20-implementation-readiness.md": {
-      "bytes": 5615,
-      "sha256": "3f3bcbbfb5c8e923dd25aa5300756a9ec90a41bb0a2070ae4c4d24caa08c8405",
-      "words": 875
+      "bytes": 6447,
+      "sha256": "3221faf4fbe9288084c4249324987ed3d69ea8bf5baab4812c7cc6cbeb9bdfa1",
+      "words": 1003
     },
     "canonical/modules/30-plan-revisions-and-events.md": {
-      "bytes": 5099,
-      "sha256": "00779a9682b76388bda00b7158c140fe535242413d939df72ee1bbdbde6e4227",
-      "words": 758
+      "bytes": 6216,
+      "sha256": "1d1e3d97eb5318d20d92b21ea5232e3229b28fb6fd455e68eb49b52156206782",
+      "words": 946
     },
     "canonical/modules/40-outcome-reconciliation.md": {
-      "bytes": 4988,
-      "sha256": "0324b4a5521c62a543e89de8cc4a47133424bb6828ed19dade80b270b4566725",
-      "words": 705
+      "bytes": 8881,
+      "sha256": "1fdb832ad8e247733454f4979514d1d2b824b972e0abc64af05bdbfcd921c0a1",
+      "words": 1315
     },
     "canonical/modules/50-annex-contract.md": {
-      "bytes": 3604,
-      "sha256": "f7a1ebdbaef0acb9ffed1f7e94136476131eec95637c11b3aa7cf16225f5b990",
-      "words": 524
+      "bytes": 4616,
+      "sha256": "e912986ac9c56449b6fcfa8ebf06213690116d7c38a570dcb3dba2a5197c1c17",
+      "words": 687
     },
     "canonical/modules/60-guide-operating-scope-and-flow.md": {
       "bytes": 2736,
@@ -150,24 +155,29 @@
       "words": 355
     },
     "canonical/modules/70-evaluation.md": {
-      "bytes": 11330,
-      "sha256": "201f233c011585a9da7839cc1ea46a38cddd4f26e6164f578dcfbeb141757fc4",
-      "words": 1873
+      "bytes": 13421,
+      "sha256": "d840bf2795f391737e3250bf2b3583c408d3e2105dcd1e5e78c0101570619a2c",
+      "words": 2233
     },
     "canonical/modules/80-templates-and-prompts.md": {
-      "bytes": 9279,
-      "sha256": "2ee012a97dd4de997a8aa83b83120d24d8d0e36b8d056cc7aba6b49353c02177",
-      "words": 1269
+      "bytes": 9916,
+      "sha256": "7270894e8e3c18debc8fd7e180bee621e78b807f44097af69c1f0f9c9e4a6818",
+      "words": 1369
     },
     "canonical/pages/ATTRIBUTION.md": {
-      "bytes": 3019,
-      "sha256": "294c59f3ff7fbc3bae76cebfd6e044630c3a474e0dc900ca82776e193b575694",
-      "words": 432
+      "bytes": 6251,
+      "sha256": "168843cdbcbf2262d829b741a7595f3ba6ac2f5445fe6b4f01b4171e994a83f1",
+      "words": 899
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 1295,
-      "sha256": "2de6e1b7d24760f216680aa5417146a3fee8f7923ae9888076ee9d9a7307ca7d",
-      "words": 183
+      "bytes": 4064,
+      "sha256": "78aabb2d0727bacf24016bfd8c149cdb4eadb1fd92095affa9969b64082c7bc2",
+      "words": 596
+    },
+    "canonical/pages/COMPATIBILITY.md": {
+      "bytes": 5761,
+      "sha256": "cccf80c791a6c9ae6802769e97b6c1c769d4f02456bd97f2e82a1aa0249f07c0",
+      "words": 873
     },
     "canonical/pages/QUICKSTART.md": {
       "bytes": 2980,
@@ -175,19 +185,19 @@
       "words": 432
     },
     "canonical/pages/README.md": {
-      "bytes": 4819,
-      "sha256": "784bc9673f3f6ce9af56509cd70e52ca81372a0d865123a8b338d53aaae54d78",
-      "words": 639
+      "bytes": 5156,
+      "sha256": "270a0d5dec7c8cd000aee79ac956c62f4a4c871ce0252891e4f75d0d5765175e",
+      "words": 688
     },
     "canonical/pages/ROADMAP.md": {
-      "bytes": 1653,
-      "sha256": "c455265e8f185f0380dce22950553b0e7f8adf19ac89c16262ef98316d5469d9",
-      "words": 242
+      "bytes": 4190,
+      "sha256": "1864d40d1f813b7e9adf63a9ceeb55e9752c764e1aabfd29c06f24f6e69a1596",
+      "words": 617
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 3780,
-      "sha256": "5d8a2c234ba70368d501a579f9040b52e3a32ebc84d5db6be5fae3f879a81856",
-      "words": 582
+      "bytes": 4589,
+      "sha256": "9de617f68ee1a81804d2e9a3f4d8ac6a621eadbd4d73846aa602adf5fe674867",
+      "words": 700
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 1003,
@@ -215,19 +225,19 @@
       "words": 201
     },
     "canonical/recipes/VDR04-plan-implementation-work-and-readiness.md": {
-      "bytes": 1602,
-      "sha256": "4c6eff398632d5e71baa089609b8303ea045457156191bab7ff8a6ac17d79466",
-      "words": 231
+      "bytes": 1919,
+      "sha256": "d023957980010bbe29fba78eeccd5e1d7e1e35681fe8bfb74135f658f6a4fc2e",
+      "words": 285
     },
     "canonical/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
-      "bytes": 1604,
-      "sha256": "db0f536416060cabf5f099b7cccb875c6bca448d2ce0c1bcb07b146c9f581f1f",
-      "words": 234
+      "bytes": 1961,
+      "sha256": "e150ca963ac8e9855e46f1757a4ef29aa43e56dd5b520553c5aa7caa19a5b3cd",
+      "words": 288
     },
     "canonical/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 1548,
-      "sha256": "2ebda52193bfe00483364328af28e82c5bdabd5ab39864f573fdf8b3f451e8db",
-      "words": 211
+      "bytes": 1998,
+      "sha256": "031f736d6ec18df4c662da2d43e31b3168a9d8975e2d785ac52268816076406a",
+      "words": 286
     },
     "canonical/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1320,
@@ -263,43 +273,43 @@
       "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
     },
     "cases/cases.json": {
-      "bytes": 6520,
-      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+      "bytes": 6557,
+      "sha256": "c6b7cb6e5feb62fe332d4a1d30253e29efbb0942dcda599938dbf3df34cf4db2"
     },
     "cursor-project/.cursor/rules/30-valuedelivery-method.mdc": {
-      "bytes": 1710,
-      "sha256": "77a8182a6c81f968aa8cef70b8b99a2f174fa7f2d6d27921d116dba71d8cc35c",
-      "words": 249
+      "bytes": 1781,
+      "sha256": "9300f1d5a2f5fd448515882e055026c2317148baa713ca9b2716a74693e873cb",
+      "words": 262
     },
     "cursor-project/.valuedelivery/00-activation-and-boundary.md": {
-      "bytes": 6794,
-      "sha256": "024e194267d1ca207c88df6319e8ad573fffa96118a6dfba816b7906c5fa407a",
-      "words": 795
+      "bytes": 6856,
+      "sha256": "edced662912653d6e9bdd636383c62be5af333116dae98fa8ccb273b85d35f8c",
+      "words": 804
     },
     "cursor-project/.valuedelivery/10-benefit-baseline-and-effects.md": {
-      "bytes": 6144,
-      "sha256": "bc79dc5cc9550ab5de03107ead7977e8826f89020878e73ca878759111211a37",
-      "words": 913
+      "bytes": 6579,
+      "sha256": "cfd5fbe47f36664eb1a2f3ee2d803cb423cabd60b56209fb8f8a8bbae3adfce4",
+      "words": 980
     },
     "cursor-project/.valuedelivery/20-implementation-readiness.md": {
-      "bytes": 5708,
-      "sha256": "affa112876b60c17dcc33e0351024f6f49663b173bb293aaa54cbb3b4cfb607d",
-      "words": 875
+      "bytes": 6540,
+      "sha256": "176466622e9f52ff5f91e184128e0998f4b78057d887d62a6b79c705a812737f",
+      "words": 1003
     },
     "cursor-project/.valuedelivery/30-plan-revisions-and-events.md": {
-      "bytes": 5150,
-      "sha256": "537d21cffd6028049fec5054ec355ddcb0cc91dc56e3caa40347d2c7b09424e0",
-      "words": 758
+      "bytes": 6267,
+      "sha256": "d56276f51bc9b514d41546effa15aead56d0f58131f132b00faf8611caba8597",
+      "words": 946
     },
     "cursor-project/.valuedelivery/40-outcome-reconciliation.md": {
-      "bytes": 5131,
-      "sha256": "22878f98d612d85ca54953093e15f56ff4ea6f01e2a0b0b52868a3dbba9b1123",
-      "words": 705
+      "bytes": 9056,
+      "sha256": "7796cdbc0e998845a62137971e0eacca59587db79ac45c0d77360bcc2648f1b3",
+      "words": 1315
     },
     "cursor-project/.valuedelivery/50-annex-contract.md": {
-      "bytes": 3662,
-      "sha256": "6c4ff77a67830f1793fff3d90ee3a6cfd35ea209629ea6eb397deca3607b8077",
-      "words": 524
+      "bytes": 4674,
+      "sha256": "31d1e7138d4941cb8b1f69c662f5432bb6f0c95efe33eec0dac7b3ca8cf72849",
+      "words": 687
     },
     "cursor-project/.valuedelivery/60-guide-operating-scope-and-flow.md": {
       "bytes": 2755,
@@ -327,14 +337,14 @@
       "words": 355
     },
     "cursor-project/.valuedelivery/70-evaluation.md": {
-      "bytes": 13210,
-      "sha256": "e695a481d7692ac3cb1b63df335ee7e1a47e1565ed3e9e66f1faf28a8eb6ae73",
-      "words": 1873
+      "bytes": 15518,
+      "sha256": "13c4a889bc3b6c4f161622a147a4056a467ed9a24b4a01c374473a3da25c29ed",
+      "words": 2233
     },
     "cursor-project/.valuedelivery/80-templates-and-prompts.md": {
-      "bytes": 9706,
-      "sha256": "d8863da2c1632eea64ad403678c18f713c9db8ba86c45499d7653ad73fbeb2b2",
-      "words": 1269
+      "bytes": 10343,
+      "sha256": "b3d231147f03d270ce245536b25e636b23f00eb47ba575568e1e2da9c3f5fdec",
+      "words": 1369
     },
     "cursor-project/.valuedelivery/90-sources.md": {
       "bytes": 4968,
@@ -364,8 +374,8 @@
       "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
     },
     "cursor-project/.valuedelivery/cases/cases.json": {
-      "bytes": 6520,
-      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+      "bytes": 6557,
+      "sha256": "c6b7cb6e5feb62fe332d4a1d30253e29efbb0942dcda599938dbf3df34cf4db2"
     },
     "cursor-project/.valuedelivery/check_install.py": {
       "bytes": 2544,
@@ -387,19 +397,19 @@
       "words": 201
     },
     "cursor-project/.valuedelivery/recipes/VDR04-plan-implementation-work-and-readiness.md": {
-      "bytes": 1667,
-      "sha256": "7afa6a2cc859582f8247790ae81a4a833e0dc140d31431e152b9e0ccc7fe9545",
-      "words": 231
+      "bytes": 1984,
+      "sha256": "a57a815bd3b1560becf66f22fe49b42bccb5e19b2b7fcab5e43cae386addb53d",
+      "words": 285
     },
     "cursor-project/.valuedelivery/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
-      "bytes": 1689,
-      "sha256": "0310b7a0a4dcb4f0d2874d9ab03e622e648cd2a3d211659867b6e3bcc74407ae",
-      "words": 234
+      "bytes": 2046,
+      "sha256": "8392c6bfb430ea84e9ea6a4f97a86452fc9a7061fc1adae79835db22aba71560",
+      "words": 288
     },
     "cursor-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 1612,
-      "sha256": "2ecec240c4739b78d5629b0ed2187e622e0dcd25f44b38e7bd110096a2720b52",
-      "words": 211
+      "bytes": 2062,
+      "sha256": "6538c243a9e899163f2e45fcd9e872bcf2ba5aa1a32d3f8d3a37b27f6e5df10f",
+      "words": 286
     },
     "cursor-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1352,
@@ -426,16 +436,16 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "cursor-project/.valuedelivery/reference/export_example.py": {
-      "bytes": 4517,
-      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+      "bytes": 5320,
+      "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "cursor-project/.valuedelivery/reference/test_value_delivery.py": {
-      "bytes": 42469,
-      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+      "bytes": 60744,
+      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
     },
     "cursor-project/.valuedelivery/reference/value_delivery.py": {
-      "bytes": 46144,
-      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+      "bytes": 54908,
+      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
     },
     "cursor-project/VALUEDELIVERY-INSTALL.md": {
       "bytes": 791,
@@ -443,49 +453,49 @@
       "words": 86
     },
     "cursor-project/valuedelivery-cursor.md": {
-      "bytes": 89086,
-      "sha256": "9552180993758047f108834e5ace5585e1769aca2d18bd31e8441b73c6809916",
-      "words": 12422
+      "bytes": 100349,
+      "sha256": "37b5a47e11b52aa5f61b39f40978eee5580703231cd6c17df2348fd17ccafa1e",
+      "words": 14230
     },
     "cursor.md": {
-      "bytes": 89086,
-      "sha256": "9552180993758047f108834e5ace5585e1769aca2d18bd31e8441b73c6809916",
-      "words": 12422
+      "bytes": 100349,
+      "sha256": "37b5a47e11b52aa5f61b39f40978eee5580703231cd6c17df2348fd17ccafa1e",
+      "words": 14230
     },
     "memory.md": {
-      "bytes": 89207,
-      "sha256": "3717de91831bfe48e1d966e3bc53d92785be8665e520d9a8440217964e71d860",
-      "words": 12447
+      "bytes": 100470,
+      "sha256": "9af687883d6643e6f383fdbf4f982891a6056cc87fe98ef9c28e36820129dcea",
+      "words": 14255
     },
     "portable-project/.valuedelivery/00-activation-and-boundary.md": {
-      "bytes": 6794,
-      "sha256": "024e194267d1ca207c88df6319e8ad573fffa96118a6dfba816b7906c5fa407a",
-      "words": 795
+      "bytes": 6856,
+      "sha256": "edced662912653d6e9bdd636383c62be5af333116dae98fa8ccb273b85d35f8c",
+      "words": 804
     },
     "portable-project/.valuedelivery/10-benefit-baseline-and-effects.md": {
-      "bytes": 6144,
-      "sha256": "bc79dc5cc9550ab5de03107ead7977e8826f89020878e73ca878759111211a37",
-      "words": 913
+      "bytes": 6579,
+      "sha256": "cfd5fbe47f36664eb1a2f3ee2d803cb423cabd60b56209fb8f8a8bbae3adfce4",
+      "words": 980
     },
     "portable-project/.valuedelivery/20-implementation-readiness.md": {
-      "bytes": 5708,
-      "sha256": "affa112876b60c17dcc33e0351024f6f49663b173bb293aaa54cbb3b4cfb607d",
-      "words": 875
+      "bytes": 6540,
+      "sha256": "176466622e9f52ff5f91e184128e0998f4b78057d887d62a6b79c705a812737f",
+      "words": 1003
     },
     "portable-project/.valuedelivery/30-plan-revisions-and-events.md": {
-      "bytes": 5150,
-      "sha256": "537d21cffd6028049fec5054ec355ddcb0cc91dc56e3caa40347d2c7b09424e0",
-      "words": 758
+      "bytes": 6267,
+      "sha256": "d56276f51bc9b514d41546effa15aead56d0f58131f132b00faf8611caba8597",
+      "words": 946
     },
     "portable-project/.valuedelivery/40-outcome-reconciliation.md": {
-      "bytes": 5131,
-      "sha256": "22878f98d612d85ca54953093e15f56ff4ea6f01e2a0b0b52868a3dbba9b1123",
-      "words": 705
+      "bytes": 9056,
+      "sha256": "7796cdbc0e998845a62137971e0eacca59587db79ac45c0d77360bcc2648f1b3",
+      "words": 1315
     },
     "portable-project/.valuedelivery/50-annex-contract.md": {
-      "bytes": 3662,
-      "sha256": "6c4ff77a67830f1793fff3d90ee3a6cfd35ea209629ea6eb397deca3607b8077",
-      "words": 524
+      "bytes": 4674,
+      "sha256": "31d1e7138d4941cb8b1f69c662f5432bb6f0c95efe33eec0dac7b3ca8cf72849",
+      "words": 687
     },
     "portable-project/.valuedelivery/60-guide-operating-scope-and-flow.md": {
       "bytes": 2755,
@@ -513,14 +523,14 @@
       "words": 355
     },
     "portable-project/.valuedelivery/70-evaluation.md": {
-      "bytes": 13210,
-      "sha256": "e695a481d7692ac3cb1b63df335ee7e1a47e1565ed3e9e66f1faf28a8eb6ae73",
-      "words": 1873
+      "bytes": 15518,
+      "sha256": "13c4a889bc3b6c4f161622a147a4056a467ed9a24b4a01c374473a3da25c29ed",
+      "words": 2233
     },
     "portable-project/.valuedelivery/80-templates-and-prompts.md": {
-      "bytes": 9706,
-      "sha256": "d8863da2c1632eea64ad403678c18f713c9db8ba86c45499d7653ad73fbeb2b2",
-      "words": 1269
+      "bytes": 10343,
+      "sha256": "b3d231147f03d270ce245536b25e636b23f00eb47ba575568e1e2da9c3f5fdec",
+      "words": 1369
     },
     "portable-project/.valuedelivery/90-sources.md": {
       "bytes": 4968,
@@ -550,8 +560,8 @@
       "sha256": "fe4077c8f2fec98a47d55c13fd10d3a5b13ba65b2c7fa461871cf7398cc33403"
     },
     "portable-project/.valuedelivery/cases/cases.json": {
-      "bytes": 6520,
-      "sha256": "bdad30e8c4d2d3aa2f1feea5b22d6e47da9d89e96e16d0fd3bdb490a04b1b729"
+      "bytes": 6557,
+      "sha256": "c6b7cb6e5feb62fe332d4a1d30253e29efbb0942dcda599938dbf3df34cf4db2"
     },
     "portable-project/.valuedelivery/check_install.py": {
       "bytes": 2544,
@@ -573,19 +583,19 @@
       "words": 201
     },
     "portable-project/.valuedelivery/recipes/VDR04-plan-implementation-work-and-readiness.md": {
-      "bytes": 1667,
-      "sha256": "7afa6a2cc859582f8247790ae81a4a833e0dc140d31431e152b9e0ccc7fe9545",
-      "words": 231
+      "bytes": 1984,
+      "sha256": "a57a815bd3b1560becf66f22fe49b42bccb5e19b2b7fcab5e43cae386addb53d",
+      "words": 285
     },
     "portable-project/.valuedelivery/recipes/VDR05-track-plan-revisions-and-execution-events.md": {
-      "bytes": 1689,
-      "sha256": "0310b7a0a4dcb4f0d2874d9ab03e622e648cd2a3d211659867b6e3bcc74407ae",
-      "words": 234
+      "bytes": 2046,
+      "sha256": "8392c6bfb430ea84e9ea6a4f97a86452fc9a7061fc1adae79835db22aba71560",
+      "words": 288
     },
     "portable-project/.valuedelivery/recipes/VDR06-reconcile-and-close-the-value-claim.md": {
-      "bytes": 1612,
-      "sha256": "2ecec240c4739b78d5629b0ed2187e622e0dcd25f44b38e7bd110096a2720b52",
-      "words": 211
+      "bytes": 2062,
+      "sha256": "6538c243a9e899163f2e45fcd9e872bcf2ba5aa1a32d3f8d3a37b27f6e5df10f",
+      "words": 286
     },
     "portable-project/.valuedelivery/recipes/VDR07-check-supplier-physical-capacity.md": {
       "bytes": 1352,
@@ -612,21 +622,21 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "portable-project/.valuedelivery/reference/export_example.py": {
-      "bytes": 4517,
-      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+      "bytes": 5320,
+      "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "portable-project/.valuedelivery/reference/test_value_delivery.py": {
-      "bytes": 42469,
-      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+      "bytes": 60744,
+      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
     },
     "portable-project/.valuedelivery/reference/value_delivery.py": {
-      "bytes": 46144,
-      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+      "bytes": 54908,
+      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
     },
     "portable-project/AGENTS.valuedelivery.md": {
-      "bytes": 1641,
-      "sha256": "20a977866680fa0cc15336c6832397a8597dbd60a575cca710ad33ce2916bd48",
-      "words": 241
+      "bytes": 1712,
+      "sha256": "ad908ee61ed8651d53d80fe07d6a2d141f99fd6ad25aed96dceda23feb0e66c0",
+      "words": 254
     },
     "portable-project/VALUEDELIVERY-INSTALL.md": {
       "bytes": 897,
@@ -634,9 +644,9 @@
       "words": 110
     },
     "portable-project/optional-adapters/.clinerules/30-valuedelivery.md": {
-      "bytes": 1584,
-      "sha256": "2309ca9ef2c9853e5de3c03fc7c0239375df9351f81a657f0ff1afd47ca3b39b",
-      "words": 233
+      "bytes": 1655,
+      "sha256": "86b7ee9c142e38a0df14183162d11bc9605377bf234cdc15ebc2cac3ea4f98d8",
+      "words": 246
     },
     "portable-project/optional-adapters/VALUEDELIVERY-ADAPTERS.md": {
       "bytes": 252,
@@ -644,25 +654,25 @@
       "words": 34
     },
     "portable-project/valuedelivery-memory.md": {
-      "bytes": 89207,
-      "sha256": "3717de91831bfe48e1d966e3bc53d92785be8665e520d9a8440217964e71d860",
-      "words": 12447
+      "bytes": 100470,
+      "sha256": "9af687883d6643e6f383fdbf4f982891a6056cc87fe98ef9c28e36820129dcea",
+      "words": 14255
     },
     "reference/__init__.py": {
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "reference/export_example.py": {
-      "bytes": 4517,
-      "sha256": "e4d16f06cd66038c6734befa4e1e94fc14e18670cc0e4646737c90f942a8669c"
+      "bytes": 5320,
+      "sha256": "c36996d809088aa2158457dd34df5d73edc224fc313fb83886bf7437e35ef9bc"
     },
     "reference/test_value_delivery.py": {
-      "bytes": 42469,
-      "sha256": "34377719d1557d8eae4c9468c2ef72a2e3207b4144d0f47c404119555cd9025a"
+      "bytes": 60744,
+      "sha256": "b3cce5fbc783427693f7110f7562847f6a5c480b3f63fa6528d6bb7913de94c7"
     },
     "reference/value_delivery.py": {
-      "bytes": 46144,
-      "sha256": "7ccbf5718e9f54e220408b514f048519506020c63d98ba93106dee0241de2ffa"
+      "bytes": 54908,
+      "sha256": "8a3273d20c8388f1fc0429d5045f4e70f3d2f67487286563b4e147796fb2fce7"
     },
     "tools/README.md": {
       "bytes": 3042,

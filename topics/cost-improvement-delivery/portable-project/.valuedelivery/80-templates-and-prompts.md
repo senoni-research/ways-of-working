@@ -24,7 +24,7 @@ One row per change mechanism: effect ID; effect group ID; initiative ID; scope k
 
 ## VDT04 Workload and readiness record
 
-**Work items:** item ID; project; role or skill; Once or Regular; quantity; low and high effort per unit; effort unit; selected periods; predecessor; elapsed-time dependency; estimate author. **Availability:** role; period; productive capacity per FTE; available effort net of routine work, leave, training and other commitments; convention owner. **Result:** unestimated and unscheduled items; gap per scenario, role and period; shared-pool conflicts; proposed response; resource owner's decision. **Conditions:** condition ID; required; status `met`, `not_met` or `unresolved`; evidence; scope; owner; evaluated date; expiry.
+**Work items:** item ID; project; role or skill; Once or Regular; quantity; low and high effort per unit; effort unit; selected periods; predecessor; elapsed-time dependency; estimate author. **Availability:** role; period; productive capacity per FTE; available effort net of routine work, leave, training and other commitments; convention owner. **Result:** unestimated and unscheduled items; gap per scenario, role and period; shared-pool conflicts; proposed response; resource owner's decision. **Requirement set:** source (owner, policy or decision, date); whether it is complete is a reviewer's statement, not a computed result. **Conditions:** condition ID; required; status `met`, `not_met` or `unresolved`; evidence reference; scope; owner; evaluated date; expiry.
 
 ## VDT05 Plan record and revision history
 
@@ -36,7 +36,7 @@ Original: baseline ID, version, go-live month or date, label, approver role, dat
 
 ## VDT07 Benefit and outcome ledger
 
-Effect ID; opportunity and base decision revision; category; owner; raw baseline and adjusted comparator; scope; observation window; required evidence class; eligible observed quantity; actual price source; gross and net effect; one-off spend by date; incremental recurring expense; inventory or cash movement (separate); avoided-cost claim (separate); released hours and destination; overlaps removed; volume, mix and timing adjustments; residual; service guardrail; finance review; implementation state; finding and closing category; sustainment review; limitations. Keep lever maturity, finance review and sustainment review as separate fields.
+Effect ID; opportunity and base decision revision; category; owner; raw baseline and adjusted comparator; scope; observation window; required evidence class; eligible observed quantity; actual price source; gross and net effect with the net scope stated; one-off spend by date; incremental recurring expense and its evidence class; inventory or cash movement (separate); avoided-cost claim (separate); released hours and destination; overlaps removed; volume, mix and timing adjustments; residual; calculation basis digest; service guardrail; finance review (status, reviewer role, review date, digest of the calculation reviewed); implementation state; as-of date and, where it matters, the date each fact became known; finding, closing category and the conditions behind it; sustainment review; limitations. Keep lever maturity, finance review and sustainment review as separate fields.
 
 ## VDT08 Draft annex to a base decision packet
 
@@ -68,11 +68,11 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 ## VDP03 Check implementation readiness
 
-"Use [VDR04](recipes/VDR04-plan-implementation-work-and-readiness.md) to draft VDT04. Separate Once and Regular work, give low and high estimates, and list unestimated and unscheduled work. Compare each scenario with the declared net availability by role and period. Report shortfalls and shared-pool conflicts without substituting roles. Mark readiness only for the stated scope and only where evidence is explicit and current."
+"Use [VDR04](recipes/VDR04-plan-implementation-work-and-readiness.md) to draft VDT04. Separate Once and Regular work, give low and high estimates, and list unestimated and unscheduled work. Compare each scenario with the declared net availability by role and period. Report shortfalls and shared-pool conflicts without substituting roles. Name the source of the requirement set; if none was supplied, say so instead of reporting ready. Mark readiness only for the stated scope and only where evidence is explicit and current."
 
 ## VDP04 Revise the plan
 
-"Use [VDR05](recipes/VDR05-track-plan-revisions-and-execution-events.md) to append the new plan revision without editing the original. Recompute the dated first-year effect for both plans under the stated convention. Say whether the change is decision-critical and, if so, which typed correction must be recorded in the base case. Keep cancelled items in the frozen baseline and show their disposition separately. No transaction, system change or supplier contact is authorised."
+"Use [VDR05](recipes/VDR05-track-plan-revisions-and-execution-events.md) to append the new plan revision without editing the original. Recompute the dated first-year effect for both plans under the stated convention. Say whether the change is decision-critical and, if so, which supported base input or applied correction carries it, or that the base decision must be held or escalated. Keep cancelled items in the frozen baseline and show their disposition separately. No transaction, system change or supplier contact is authorised."
 
 ## VDP05 Prepare a controlled transition
 
@@ -80,4 +80,4 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 ## VDP06 Reconcile and qualify the benefit claim
 
-"Use [VDR06](recipes/VDR06-reconcile-and-close-the-value-claim.md) to compare the implemented change with the frozen and adjusted baseline over the supplied window, counting only the declared actual evidence class. Separate price effect, recurring expense, one-off spend, stock and cash, avoided cost and hours. Report the service guardrail, finance review and implementation state separately, then propose a finding and closing category for the named reviewers. A forecast, agreement or completed change alone is not measured savings, and finance acceptance is not proof of causality."
+"Use [VDR06](recipes/VDR06-reconcile-and-close-the-value-claim.md) to compare the implemented change with the frozen and adjusted baseline over the supplied window, counting only the declared actual evidence class. Separate price effect, recurring expense, one-off spend, stock and cash, avoided cost and hours. Report the service guardrail, finance review and implementation state separately, and say which calculation the finance review saw. Then propose a finding and closing category for the named reviewers, keeping an adverse or rejected result visible. A forecast, agreement or completed change alone is not measured savings, and finance acceptance is not proof of causality."

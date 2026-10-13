@@ -16,12 +16,16 @@ dot-decimal text with no grouping, exponent or surrounding space. Binary floats 
 refused rather than converted. Text containing a comma is refused with
 ``unsupported_number_format``: a declared locale adapter must convert it before the
 value reaches a helper. Nonzero inputs or results above 1E20 in magnitude, or with an
-adjusted exponent beyond +/-20, raise ``numeric_range``.
+adjusted exponent beyond +/-20, raise ``numeric_range``. Validation, the range check, sign
+reversal and ``exact_text`` never round: an accepted value keeps every digit it was given,
+and only arithmetic results are rounded under the policy above.
 """
 from __future__ import annotations
 
 import copy
 import functools
+import hashlib
+import json
 import re
 from datetime import date
 from decimal import (
@@ -74,6 +78,25 @@ CLOSING_CATEGORIES = {
     "finance_rejected": "no_supported_benefit",
     "measured_and_accepted_within_scope": "measured_and_accepted_within_scope",
 }
+# Ordered: the first condition that holds names the finding; every holding condition is reported.
+FINDING_PRECEDENCE = (
+    ("implementation_unconfirmed", "implementation_unconfirmed"),
+    ("unmeasured", "implemented_unmeasured"),
+    ("adverse_effect", "adverse_outcome"),
+    ("guardrail_breached", "mixed_result_guardrail_breached"),
+    ("finance_review_pending", "calculated_pending_finance_review"),
+    ("finance_rejected", "finance_rejected"),
+    ("finance_qualified", "finance_qualified"),
+    ("guardrail_not_observed", "pending_guardrail_evidence"),
+)
+CATEGORY_INTERPRETATIONS = {
+    "insufficient_evidence": "The evidence does not yet support classifying the claim; this is not a finding that the benefit is zero.",
+    "adverse_outcome": "The calculated net effect in the window is negative against the declared comparator; it stays reported whatever the review status.",
+    "measured_but_qualified": "A calculated effect exists but a finance qualification or a breached guardrail limits it; this is not a success.",
+    "no_supported_benefit": "Finance rejected the claim for this calculation; the claim is unsupported as presented, which does not show the true benefit is zero.",
+    "measured_and_accepted_within_scope": "A recorded finance acceptance matches this calculation and the guardrail is met; limited to the window, scope and conventions, and not causal.",
+}
+OBSERVED_BASIS_SCHEMA = "valuedelivery_observed_basis/0.1"
 ANNEX_SCHEMA = "valuedelivery_annex/0.1-draft"
 SELF_DECLARED_AUTHORITY_FIELDS = (
     "approved", "approval", "approval_valid", "permissions", "action_permissions",
@@ -108,9 +131,49 @@ def _policy(fn):
 def _bounded(n: Decimal, name: str) -> Decimal:
     if n.is_zero():
         return n
-    if abs(n) > MAX_ABS_VALUE or abs(n.adjusted()) > MAX_ADJUSTED_EXPONENT:
+    # copy_abs, not abs(): abs() rounds to the context precision and could pull an
+    # above-limit value with many digits back to exactly the limit.
+    if n.copy_abs() > MAX_ABS_VALUE or abs(n.adjusted()) > MAX_ADJUSTED_EXPONENT:
         raise DeliveryError("numeric_range", f"{name}: value outside the supported numeric range for this reference.")
     return n
+
+
+def _negate(n: Decimal) -> Decimal:
+    """Reverse the sign exactly, independent of any context; a zero stays unsigned."""
+    return n.copy_abs() if n.is_zero() else n.copy_negate()
+
+
+def exact_text(value: Decimal) -> str:
+    """Plain decimal text with every digit kept: no context, rounding, exponent, trailing fractional zeros or negative zero."""
+    if not isinstance(value, Decimal) or not value.is_finite():
+        raise DeliveryError("invalid_number", "exact_text: a finite Decimal is required.")
+    sign, digits, exp = value.as_tuple()
+    if not any(digits):
+        return "0"
+    digits = list(digits)
+    while exp < 0 and digits[-1] == 0:
+        digits.pop()
+        exp += 1
+    text = "".join(map(str, digits)) + "0" * max(exp, 0)
+    if exp < 0:
+        text = text.rjust(1 - exp, "0")
+        text = f"{text[:exp]}.{text[exp:]}"
+    return ("-" if sign else "") + text
+
+
+def _identity_form(value: Any) -> Any:
+    if isinstance(value, Decimal):
+        return exact_text(value)
+    if isinstance(value, Mapping):
+        return {str(k): _identity_form(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_identity_form(v) for v in value]
+    return value
+
+
+def _digest(record: Mapping[str, Any]) -> str:
+    text = json.dumps(_identity_form(record), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 @_policy
@@ -201,7 +264,7 @@ def price_measure(*, measure_id: str, effect_id: str, kind: str, sign: str, quan
     return {
         "measure_id": _text(measure_id, "measure_id"), "effect_id": _text(effect_id, "effect_id"),
         "kind": kind, "sign": sign, "sign_convention": SIGNS[sign],
-        "amount": deviation if sign == "deviation" else -deviation,
+        "amount": deviation if sign == "deviation" else _negate(deviation),
         "currency": _text(currency, "currency"), "unit": _text(unit, "unit"),
         "quantity": q, "quantity_basis": _text(quantity_basis, "quantity_basis"),
         "reference_price": ref, "new_price": new,
@@ -209,14 +272,22 @@ def price_measure(*, measure_id: str, effect_id: str, kind: str, sign: str, quan
     }
 
 
+@_policy
 def convert_sign(measure: Mapping[str, Any], to: str) -> dict:
-    """Explicit sign conversion; converting to the sign already held is refused."""
+    """Explicit sign conversion that keeps the magnitude exactly; converting to the sign already held is refused.
+
+    The amount passes the same validation as any other input, so a float, text with a comma,
+    a non-finite or an out-of-range amount is refused rather than negated.
+    """
+    if not isinstance(measure, Mapping):
+        raise DeliveryError("invalid_measure", "measure: a measure record is required.")
     _choice(to, tuple(SIGNS), "to", "invalid_sign")
     if measure.get("sign") == to:
         raise DeliveryError("sign_conversion", f"{measure.get('measure_id')}: already in {to} sign; refusing a second reversal.")
     _choice(measure.get("sign"), tuple(SIGNS), "measure sign", "invalid_sign")
-    out = dict(measure)
-    out.update(amount=-measure["amount"], sign=to, sign_convention=SIGNS[to], converted_from=measure["sign"])
+    amount = number(measure.get("amount"), f"{measure.get('measure_id')}.amount")
+    out = copy.deepcopy(dict(measure))
+    out.update(amount=_negate(amount), sign=to, sign_convention=SIGNS[to], converted_from=measure["sign"])
     return out
 
 
@@ -440,13 +511,13 @@ def workload_plan(items: Sequence[Mapping[str, Any]], *, period_capacity: Mappin
         selected_capacity = sum((periods[x] for x in p["periods"]), Decimal(0))
         for s in SCENARIOS:
             total = p["effort"][s]
-            fte = total / selected_capacity if p["recurrence"] == "once" else total / annual
+            fte = _out(total / selected_capacity if p["recurrence"] == "once" else total / annual, "fte")
             alloc, running = {}, Decimal(0)
             for k, period in enumerate(p["periods"]):
                 if p["recurrence"] == "once" and k == len(p["periods"]) - 1:
                     alloc[period] = total - running
                 else:
-                    alloc[period] = (fte * periods[period]).quantize(ALLOCATION_QUANTUM)
+                    alloc[period] = _out(fte * periods[period], "allocation").quantize(ALLOCATION_QUANTUM)
                 running += alloc[period]
                 cell = required[s].setdefault(p["role"], {}).setdefault(period, {"effort": Decimal(0), "by_project": {}})
                 cell["effort"] += alloc[period]
@@ -478,7 +549,7 @@ def capacity_gaps(plan: Mapping[str, Any], available: Mapping[str, Mapping[str, 
                 gap = _out(cap - cell["effort"], "gap")
                 gaps[s].setdefault(role, {})[period] = gap
                 if gap < 0:
-                    shortfalls.append({"scenario": s, "role": role, "period": period, "shortfall": -gap,
+                    shortfalls.append({"scenario": s, "role": role, "period": period, "shortfall": _negate(gap),
                                        "demand_by_project": dict(sorted(cell["by_project"].items())),
                                        "shared_pool_conflict": len(cell["by_project"]) > 1})
     for role, cells in sorted(available.items()):
@@ -492,9 +563,18 @@ def capacity_gaps(plan: Mapping[str, Any], available: Mapping[str, Mapping[str, 
 
 
 def readiness_view(conditions: Sequence[Mapping[str, Any]], *, as_of: str, scope: str) -> dict:
-    """Advisory, scope-specific view: only an explicit, evidenced, unexpired `met` satisfies a required condition."""
+    """Advisory, scope-specific view of the supplied conditions: only an explicit, evidenced, unexpired `met` satisfies a required one.
+
+    An absent requirement set is refused, not read as an empty one. An empty or optional-only set
+    is never readiness. The helper has no policy registry, so it cannot check that the supplied
+    set is complete; it says so in ``requirement_set_completeness``.
+    """
     today = _date(as_of, "as_of")
     _text(scope, "scope")
+    if conditions is None:
+        raise DeliveryError("missing_input", "conditions: no requirement set supplied; an absent set is not an empty one.")
+    if not isinstance(conditions, (list, tuple)) or not all(isinstance(c, Mapping) for c in conditions):
+        raise DeliveryError("invalid_condition", "conditions: a list of condition records is required.")
     _unique([_text(c.get("condition_id"), "condition_id") for c in conditions], "duplicate_condition", "conditions")
     rows = []
     for c in conditions:
@@ -505,7 +585,7 @@ def readiness_view(conditions: Sequence[Mapping[str, Any]], *, as_of: str, scope
         effective, reason = status, None
         if c.get("scope") != scope:
             effective, reason = "unresolved", "different_scope"
-        elif status == "met" and not c.get("evidence_ref"):
+        elif status == "met" and not (isinstance(c.get("evidence_ref"), str) and c["evidence_ref"].strip()):
             effective, reason = "unresolved", "missing_evidence"
         elif status == "met" and c.get("expires") is not None and _date(c["expires"], f"{cid}.expires") < today:
             effective, reason = "unresolved", "expired"
@@ -513,8 +593,10 @@ def readiness_view(conditions: Sequence[Mapping[str, Any]], *, as_of: str, scope
                      "effective": effective, "reason": reason})
     required = [r for r in rows if r["required"]]
     return {"scope": scope, "as_of": today.isoformat(), "conditions": rows,
+            "required_conditions_supplied": len(required),
             "scope_ready": bool(required) and all(r["effective"] == "met" for r in required),
             "blocking": [r["condition_id"] for r in required if r["effective"] != "met"],
+            "requirement_set_completeness": "not_checked",
             "advisory_only": True, "enforced_by_base_engine": False}
 
 
@@ -697,16 +779,29 @@ def action_state(*, as_of: str, planned: str | None = None, completed: str | Non
 @_policy
 def observed_effect(observations: Sequence[Mapping[str, Any]], *, comparator_id: str, comparator_unit_price: Any,
                     currency: str, unit: str, window_start: str, window_end: str,
-                    required_evidence: str = "invoice", incremental_operating_expense: Any = "0") -> dict:
-    """Observed effect against a declared comparator, counting only the required evidence class."""
+                    required_evidence: str = "invoice", incremental_operating_expense: Any = "0",
+                    expense_evidence: str | None = None) -> dict:
+    """Observed effect against a declared comparator, counting only the required evidence class.
+
+    ``gross_effect`` is quantity times (comparator minus actual unit price). ``net_effect`` deducts
+    only the declared incremental operating expense for the same window; it is not cash, and
+    one-off spend, stock and avoided cost stay outside it. A nonzero expense needs actual
+    evidence (receipt, invoice or payment); a forecast expense belongs in a modelled view.
+    ``basis_digest`` identifies the exact inputs counted, so a finance review can name what it saw.
+    """
     _choice(required_evidence, ACTUAL_EVIDENCE_CLASSES, "required_evidence", "invalid_evidence_requirement")
     start, end = _date(window_start, "window_start"), _date(window_end, "window_end")
     if end < start:
         raise DeliveryError("invalid_window", "window_end precedes window_start.")
+    _text(currency, "currency")
+    _text(unit, "unit")
     comparator = number(comparator_unit_price, "comparator_unit_price", nonnegative=True)
     expense = number(incremental_operating_expense, "incremental_operating_expense", nonnegative=True)
+    if expense_evidence is not None or not expense.is_zero():
+        _choice(expense_evidence, ACTUAL_EVIDENCE_CLASSES, "expense_evidence", "non_actual_expense")
     _unique([_text(o.get("obs_id"), "obs_id") for o in observations], "duplicate_observation", "observations")
     counted, not_used, quantity, gross = [], [], Decimal(0), Decimal(0)
+    counted_rows = []
     for o in observations:
         oid = o["obs_id"]
         cls = _choice(o.get("evidence_class"), EVIDENCE_CLASSES, f"{oid}.evidence_class", "invalid_evidence_class")
@@ -721,51 +816,92 @@ def observed_effect(observations: Sequence[Mapping[str, Any]], *, comparator_id:
             not_used.append({"obs_id": oid, "reason": "outside the observation window"})
         else:
             counted.append(oid)
+            counted_rows.append({"obs_id": oid, "evidence_class": cls, "date": when.isoformat(),
+                                 "quantity": q, "unit_price": price})
             quantity += q
             gross += q * (comparator - price)
-    result = {"comparator_id": _text(comparator_id, "comparator_id"), "kind": "observed_effect", "sign": "benefit",
+    comparator_id = _text(comparator_id, "comparator_id")
+    basis = {"basis_schema": OBSERVED_BASIS_SCHEMA, "comparator_id": comparator_id,
+             "comparator_unit_price": comparator, "currency": currency, "unit": unit,
+             "window": [start.isoformat(), end.isoformat()], "required_evidence": required_evidence,
+             "counted": counted_rows, "incremental_operating_expense": expense,
+             "expense_evidence": expense_evidence}
+    result = {"comparator_id": comparator_id, "kind": "observed_effect", "sign": "benefit",
               "currency": currency, "unit": unit, "window": [start.isoformat(), end.isoformat()],
               "required_evidence": required_evidence, "counted": counted, "not_used_as_actual": not_used,
+              "incremental_operating_expense": expense, "expense_evidence": expense_evidence,
+              "net_effect_scope": "gross observed price effect less the declared incremental operating expense for the window; not cash, one-off spend, stock or avoided cost",
+              "basis": basis, "basis_digest": _digest(basis),
               "financially_measured_savings": None}
     if not counted:
         result.update(status="unmeasured", observed_quantity=None, gross_effect=None, net_effect=None)
     else:
         result.update(status="calculated_not_reviewed", observed_quantity=quantity,
-                      gross_effect=_out(gross, "gross_effect"), net_effect=_out(gross - expense, "net_effect"),
-                      incremental_operating_expense=expense)
+                      gross_effect=_out(gross, "gross_effect"), net_effect=_out(gross - expense, "net_effect"))
     return result
 
 
-def outcome_finding(*, implementation_state: str, observed: Mapping[str, Any], finance_review: str,
-                    service_guardrail: str) -> dict:
-    """Keep implementation, calculation, finance review and service evidence separate."""
+def _finance_review(review: Any, observed: Mapping[str, Any], today: date) -> dict:
+    if not isinstance(review, Mapping):
+        raise DeliveryError("invalid_finance_review", "finance_review: a record with a status is required, not a bare label.")
+    status = _choice(review.get("status"), FINANCE_REVIEWS, "finance_review.status", "invalid_finance_review")
+    out = {"recorded_status": status, "reviewer_role": None, "reviewed_on": None, "reviewed_basis_digest": None,
+           "matches_this_calculation": False, "effective_status": "not_reviewed"}
+    if status == "not_reviewed":
+        return out
+    out["reviewer_role"] = _text(review.get("reviewer_role"), "finance_review.reviewer_role")
+    reviewed_on = _date(review.get("reviewed_on"), "finance_review.reviewed_on")
+    if reviewed_on > today:
+        raise DeliveryError("future_event", "finance_review.reviewed_on is after as_of; a later review is not replayed into an earlier view.")
+    digest = review.get("basis_digest")
+    if not isinstance(digest, str) or not _FINGERPRINT.match(digest):
+        raise DeliveryError("invalid_finance_review", "finance_review.basis_digest: the 64-character digest of the reviewed calculation is required.")
+    out.update(reviewed_on=reviewed_on.isoformat(), reviewed_basis_digest=digest)
+    if digest == observed.get("basis_digest"):
+        out.update(matches_this_calculation=True, effective_status=status)
+    return out
+
+
+def outcome_finding(*, implementation_state: str, observed: Mapping[str, Any], finance_review: Mapping[str, Any],
+                    service_guardrail: str, as_of: str) -> dict:
+    """Conditional classification that keeps implementation, calculation, finance review and service evidence separate.
+
+    A finance review counts only when its ``basis_digest`` matches the observed calculation; a
+    review of different content is kept visible but treated as not reviewed. The result is a
+    label for named reviewers, not a finance sign-off, an approval or a causal test.
+    """
+    today = _date(as_of, "as_of")
     _choice(implementation_state, ACTION_STATES, "implementation_state", "invalid_action_state")
-    _choice(finance_review, FINANCE_REVIEWS, "finance_review", "invalid_finance_review")
     _choice(service_guardrail, SERVICE_GUARDRAILS, "service_guardrail", "invalid_guardrail")
-    if implementation_state != "accepted":
-        finding = "implementation_unconfirmed"
-    elif observed.get("status") != "calculated_not_reviewed":
-        finding = "implemented_unmeasured"
-    elif observed["net_effect"] < 0:
-        finding = "adverse_outcome"
-    elif service_guardrail == "breached":
-        finding = "mixed_result_guardrail_breached"
-    elif finance_review == "not_reviewed":
-        finding = "calculated_pending_finance_review"
-    elif finance_review == "rejected":
-        finding = "finance_rejected"
-    elif finance_review == "qualified":
-        finding = "finance_qualified"
-    elif service_guardrail == "not_observed":
-        finding = "pending_guardrail_evidence"
-    else:
-        finding = "measured_and_accepted_within_scope"
-    return {"finding": finding, "closing_category": CLOSING_CATEGORIES[finding],
-            "implementation_state": implementation_state,
-            "observed_net_effect": observed.get("net_effect"), "finance_review": finance_review,
-            "service_guardrail": service_guardrail,
-            "financially_measured_savings": observed.get("net_effect") if finding == "measured_and_accepted_within_scope" else None,
-            "causal_attribution_established": False}
+    if not isinstance(observed, Mapping) or observed.get("kind") != "observed_effect":
+        raise DeliveryError("invalid_observation", "observed: an observed_effect result is required.")
+    if _date(observed["window"][1], "observed.window_end") > today:
+        raise DeliveryError("future_event", "the observation window ends after as_of; this helper does not classify a partial window.")
+    review = _finance_review(finance_review, observed, today)
+    measured = observed.get("status") == "calculated_not_reviewed"
+    net = observed.get("net_effect") if measured else None
+    holds = {
+        "implementation_unconfirmed": implementation_state != "accepted",
+        "unmeasured": not measured,
+        "adverse_effect": measured and net < 0,
+        "guardrail_breached": service_guardrail == "breached",
+        "finance_review_pending": review["effective_status"] == "not_reviewed",
+        "finance_rejected": review["effective_status"] == "rejected",
+        "finance_qualified": review["effective_status"] == "qualified",
+        "guardrail_not_observed": service_guardrail == "not_observed",
+    }
+    conditions = [c for c, _ in FINDING_PRECEDENCE if holds[c]]
+    finding = dict(FINDING_PRECEDENCE)[conditions[0]] if conditions else "measured_and_accepted_within_scope"
+    category = CLOSING_CATEGORIES[finding]
+    return {"finding": finding, "closing_category": category,
+            "interpretation": CATEGORY_INTERPRETATIONS[category], "conditions": conditions,
+            "as_of": today.isoformat(), "implementation_state": implementation_state,
+            "observed_status": observed.get("status"), "observed_net_effect": net,
+            "observed_basis_digest": observed.get("basis_digest"),
+            "finance_review": review, "service_guardrail": service_guardrail,
+            "financially_measured_savings": net if finding == "measured_and_accepted_within_scope" else None,
+            "causal_attribution_established": False,
+            "authority": "declared synthetic inputs; not an authenticated finance sign-off, approval or causal test"}
 
 
 def append_outcome(log: Sequence[Mapping[str, Any]], record: Mapping[str, Any]) -> tuple:

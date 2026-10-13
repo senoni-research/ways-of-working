@@ -22,23 +22,44 @@ For a narrow, same-scope price claim:
 
 `net effect = gross effect − incremental recurring operating expense for the window`
 
-One-off spend and cash timing stay separately dated. Use observed eligible quantity, not the annual forecast. A new price agreement is not yet an observed invoice effect. In VDC07, 1800 invoiced pieces at 18 against a comparator of 20 give 3600 gross and 3300 net after 300 expense; the 2000-piece forecast is not used.
+Gross, net and cash are three different things. The net effect deducts only the declared incremental operating expense for the same window, and `observed_effect` deducts a nonzero expense only when it carries receipt, invoice or payment evidence (`expense_evidence`); a forecast expense stays in a modelled view. The result states this scope in `net_effect_scope`. One-off spend and cash timing stay separately dated. Use observed eligible quantity, not the annual forecast. A new price agreement is not yet an observed invoice effect. In VDC07, 1800 invoiced pieces at 18 against a comparator of 20 give 3600 gross and 3300 net after a 300 invoiced expense; the 2000-piece forecast is not used.
 
 Lower stock is not automatically cash: payment terms, returns, disposal and write-offs change the relationship, and a write-off reduces an asset without a receipt. Avoided future cost is not a reduction in current spend. Released hours remain capacity until they have a verified destination such as reduced overtime or an approved staffing change.
 
+## Bind the review to the calculation it saw
+
+Every observed result carries a `basis`: comparator, currency, unit, window, evidence rule, each counted row (date, evidence class, quantity, unit price) and the deducted expense with its evidence class, written as exact decimal text. `basis_digest` is the SHA-256 of that basis. Rows not counted are outside it because they do not change the calculation; they stay listed as not used.
+
+A finance review is a record, not a bare label: status, reviewer role, review date and the digest of the calculation reviewed. `outcome_finding` counts the review only when that digest matches the observation in front of it. A review of other content, for example before a late invoice arrived or a quantity was corrected, stays visible as `recorded_status` with `matches_this_calculation` false, and the claim is treated as not reviewed. The digest identifies content. It is not a signature, does not authenticate the reviewer and does not show that the reviewer may approve today; historical authorship is not current permission.
+
+## Keep the dates apart
+
+An observation has its event date, the calculation has its window, the review has its own date and the classification has `as_of`. `outcome_finding` refuses a review dated after `as_of` and an observation window that ends after it, rather than replaying later knowledge into an earlier view. Each call returns a separate result, so an earlier view stays as it was when a later review arrives. The helper does not record when each fact became known and keeps no history of views. Where that matters, record the known date on VDT07 and never backdate; replaying an earlier view with later corrections kept separate is a deferred requirement for an integrated application (VD36 in [[70-evaluation]]).
+
 ## Finance review and operational review are separate
 
-Record the finance review (`not_reviewed`, `accepted_within_scope`, `qualified`, `rejected`) apart from the operational service guardrail (`not_observed`, `met`, `breached`) and the implementation state from [[30-plan-revisions-and-events]]. `outcome_finding` combines them without hiding any of them:
+Record the finance review (`not_reviewed`, `accepted_within_scope`, `qualified`, `rejected`) apart from the operational service guardrail (`not_observed`, `met`, `breached`) and the implementation state from [[30-plan-revisions-and-events]]. `outcome_finding` checks the conditions below in order. The first that holds names the finding, and every condition that holds is listed in `conditions`, so a later one is never hidden behind an earlier one:
 
-| Finding | Closing category |
-|---|---|
-| implementation unconfirmed; implemented but unmeasured; calculated, finance review pending; guardrail evidence pending | insufficient evidence |
-| observed net effect below zero | adverse outcome |
-| guardrail breached; finance qualified | measured but qualified |
-| finance rejected | no supported benefit |
-| accepted implementation, observed effect, finance accepted within scope, guardrail met | measured and accepted within scope |
+| Order | Condition | Finding | Closing category |
+|---|---|---|---|
+| 1 | implementation not accepted | `implementation_unconfirmed` | insufficient evidence |
+| 2 | no qualifying observation | `implemented_unmeasured` | insufficient evidence |
+| 3 | calculated net effect below zero | `adverse_outcome` | adverse outcome |
+| 4 | service guardrail breached | `mixed_result_guardrail_breached` | measured but qualified |
+| 5 | no finance review matching this calculation | `calculated_pending_finance_review` | insufficient evidence |
+| 6 | finance rejected | `finance_rejected` | no supported benefit |
+| 7 | finance qualified | `finance_qualified` | measured but qualified |
+| 8 | guardrail not observed | `pending_guardrail_evidence` | insufficient evidence |
+| – | none of the above | `measured_and_accepted_within_scope` | measured and accepted within scope |
 
-`financially_measured_savings` is filled only in the last case. Even then, `causal_attribution_established` stays false: finance acceptance within scope does not prove causality or service success. A positive price effect alongside a service regression is reported as both; the change is not described as a success.
+The five categories are summary labels for the named reviewers. Implementation, finance review and service status stay separately visible on every result, and no category is a general "validated" flag. Each result carries an `interpretation` sentence and an `authority` note: it is a conditional classification of declared inputs, not a finance sign-off, an approval or a causal test.
+
+- Neither insufficient evidence nor no supported benefit means a measured zero, and neither shows that the true benefit is zero.
+- An adverse effect stays reported whatever finance or the guardrail say. A rejected claim stays visible with its rejection even when the arithmetic is negative: the finding is then `adverse_outcome` and `finance_rejected` remains in `conditions`. A zero net effect accepted within scope is reported as zero.
+- A positive price effect alongside a breached guardrail is reported as both and is measured but qualified; the change is not described as a success.
+- `financially_measured_savings` is filled only in the last row. Even then, `causal_attribution_established` stays false: finance acceptance within scope does not prove causality or service success.
+
+VD34 in [[70-evaluation]] tests every combination of missing, negative, zero and positive effects with each finance status and guardrail state. The owner accepted the categories, as summaries with this precedence and not as approval states, for this limited edition on 13 October 2026; the roadmap records the decision and its limits.
 
 Compare the result with the organisation's actual current workflow, including its automation and review effort, not with an imagined manual process ([[base:M15]]).
 

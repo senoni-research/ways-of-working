@@ -39,9 +39,11 @@ Small teams may combine roles but keep the decisions, competence and independenc
 
 ## Scoped readiness conditions
 
-A readiness condition has a stable ID, a required flag, a status of `met`, `not_met` or `unresolved`, an evidence reference, a scope and an expiry. Only an explicit, evidenced, unexpired `met` for the same scope satisfies a required condition. An omitted, expired, malformed or out-of-scope condition is not a pass. Removing a requirement needs its owner's decision and history. A booked audit is not a passed audit; a limited investigation or trial is not approval to change production.
+A readiness condition has a stable ID, a required flag, a status of `met`, `not_met` or `unresolved`, an evidence reference, a scope and an expiry. Only an explicit, evidenced, unexpired `met` for the same scope satisfies a required condition. An omitted, expired, malformed or out-of-scope condition is not a pass. The evidence reference is a nonempty text reference; a flag such as `true` is not evidence. Removing a requirement needs its owner's decision and history. A booked audit is not a passed audit. A limited investigation or trial is not approval to change production: its result supports the trial scope, and production readiness needs its own conditions and owner.
 
-`readiness_view` reports `scope_ready` only for the stated scope. There is no plant-wide green badge. The view is **advisory**: it is not read, fingerprinted or enforced by the base engine, and editing it changes nothing authoritative. When a readiness fact is decision-critical, it must enter the base decision through the base inputs or a typed correction ([[base:M14]]); see [[50-annex-contract]].
+Record where the requirement set came from: who set it, under which policy or decision, and when (VDT04). A missing set is not an empty approved policy. `readiness_view` refuses an absent set, and an empty or optional-only set is never ready. The helper has no policy registry, so it cannot tell whether the supplied set is complete; it reports `required_conditions_supplied` and `requirement_set_completeness: not_checked`. A ready result therefore means that the supplied required conditions are met for this scope, not that everything needed is in place.
+
+`readiness_view` reports `scope_ready` only for the stated scope. There is no plant-wide green badge. The view is **advisory**: it is not read, fingerprinted or enforced by the base engine, and editing it changes nothing authoritative. When a readiness fact is decision-critical, it reaches the base decision only through a supported base input or an applied typed correction ([[base:M14]]); where neither represents it, hold or escalate the base decision. See [[50-annex-contract]].
 
 ## Gate
 

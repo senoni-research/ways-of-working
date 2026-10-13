@@ -150,6 +150,7 @@
       "invoiced_units": 1800,
       "invoiced_unit_price": "18",
       "incremental_operating_expense": "300",
+      "expense_evidence": "invoice",
       "window": ["2030-01-01", "2030-03-31"]
     },
     "expected": {

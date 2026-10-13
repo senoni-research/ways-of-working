@@ -55,3 +55,155 @@ Not run or not shown: any assistant session in Cursor, Cline or OpenCode
   finance review; the website (VD28); an executable annex (VD24). Licensing
   review of the candidate material and owner review of the cancellation
   policy and closing categories are pending.
+
+================================================================================
+v0.1.0 REVIEW CORRECTIONS (PR #7 feedback) — 13 October 2026
+--------------------------------------------------------------------------------
+The record above is kept as observed. This section is appended.
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: branch topics-cost-improvement-delivery-v0.1.0 at 829ebbb
+  (equal to its remote), with these corrections uncommitted. Nothing new was
+  committed, pushed, added to the PR, merged or published. No CI exists; every
+  result below is a local run. Base unchanged (0 changed paths).
+
+Regression check of the new tests against the previous helpers (scratch copy
+  outside the repository with the 829ebbb helpers and the new tests):
+      Ran 63 tests -> FAILED (failures=14, errors=40, skipped=1). Among them:
+      convert_sign changed the magnitude at caller precision 4 and 1 and
+      negated float, boolean and non-finite amounts; 1E20 plus a 41st digit
+      passed the range check; an out-of-range FTE leaked a raw decimal error.
+
+Companion commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .              -> Built 95 generated artifacts
+  python3 -B tools/build_pack.py .  (again)     -> Built 95 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .           -> STATIC VALIDATION PASSED (95 canonical artifacts, ...)
+  python3 -B -m unittest discover -s <dir> -p 'test_*.py'
+      reference/                                 -> Ran 63 tests, OK (0 skipped)
+      cursor-project/.valuedelivery/reference    -> Ran 63 tests, OK (skipped=1: no base core beside the tree)
+      portable-project/.valuedelivery/reference  -> Ran 63 tests, OK (skipped=1)
+  python3 -B tools/test_validate_pack.py .      -> ALL 37 CORRUPTION REGRESSIONS AND 12 INSTALL,
+                                                   READ-ONLY AND IDEMPOTENCE CHECKS PASSED; positive control passed.
+  Composed installs (base 0.3.3 tree + companion tree in a temporary project):
+      Cursor rule        -> INSTALL CHECK PASSED (17 base files); Ran 63 tests, OK (0 skipped)
+      AGENTS.md section  -> INSTALL CHECK PASSED (17 base files); Ran 63 tests, OK (0 skipped)
+  Manifest: 144 files. REQUIRES.json: 17 base files pinned by SHA-256 (unchanged).
+  Inventories: 13 modules, 10 recipes, 7 sources (+ base CV03 reused), 8 cases
+    + SYN-VD01 fixture (hash unchanged), 41 behaviours, 36 acceptance scenarios
+    (31 unit-tested, 1 base-tested, 2 not-implemented, 1 out-of-scope,
+    1 process-check), 12 templates, 6 prompts.
+
+Library checks (from the repository root unless noted):
+  Cost & Value Engineering 0.3.3: build --check, validate, 18 corruption
+    regressions, 191 reference tests in the source and both trees -> pass.
+  Carey Chou:   python3 -B carey-chou/tools/validate_pack.py    -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py . (in pack)   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py                  -> PASSED
+                git diff --check                                -> clean (new untracked files checked separately: clean)
+  Carey, Vandeput and base packs: no tracked or untracked change.
+  python3 -B ../cost-value-engineering/tools/scan_publication.py <scope> --terms-file <private-outside-repo>
+      scope this pack            -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+      scope base pack            -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+      scope repository tree      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Not run or not shown: any assistant session (VDB01-VDB41 are specifications);
+  any real plan, capacity, observation or finance review; the website (VD28);
+  an executable annex (VD24); integrated-application controls (VD36). The
+  maintainer licensing conclusion and the owner's acceptance of the
+  cancellation policy and closing categories remain pending.
+
+================================================================================
+v0.1.0 REVIEWABLE SNAPSHOT (owner's message of 13 October 2026) — 13 October 2026
+--------------------------------------------------------------------------------
+The records above are kept as observed. This section is appended.
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: branch topics-cost-improvement-delivery-v0.1.0 at 829ebbb
+  (equal to its remote) plus the review corrections above and the changes
+  below, run on the final snapshot before the one corrective commit that
+  carries them. No CI exists; every result below is a local run. The
+  reviewer has read the closure summary only; nothing here shows that the
+  reviewer has inspected or run this code.
+
+Changes since the previous section:
+  - Roadmap and modules 30 and 40: the owner's acceptance, for this limited
+    edition only, of the cancellation policy and of the five closing
+    categories as summaries with the documented precedence. Not a licensing
+    clearance, product validation or earlier approval.
+  - Compatibility note rewritten from the private prototype's 0.2.0
+    documentation, its fixes marked as reported and pending independent code
+    re-review; three intended differences recorded (empty condition lists,
+    numeric input precision, observed measure). No private code imported;
+    REQUIRES.json unchanged.
+  - Roadmap: reproducible follow-up for the unchanged base range check.
+  - Wording: "measured zero" aligned with the owner's text; one cancellation
+    sentence rewritten in the pack's own words after the overlap check.
+
+Base range-check follow-up (from topics/cost-value-engineering; base unchanged):
+  python3 -B -c "import sys; sys.path.insert(0, 'reference'); import core; print(core.number('1' + '0' * 20 + '.' + '0' * 19 + '1', 'x'))"
+      -> printed 100000000000000000000.00000000000000000001 (accepted, not refused)
+
+Regression check of the new tests against the 829ebbb helpers (scratch copy
+  outside the repository): Ran 63 tests -> FAILED (failures=14, errors=40,
+  skipped=1), as in the previous section.
+
+Companion commands and observed results (from this pack directory):
+  python3 -B tools/build_pack.py .  (twice)     -> Built 95 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py . --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py .           -> STATIC VALIDATION PASSED (95 canonical artifacts, ...)
+  python3 -B -m unittest discover -s <dir> -p 'test_*.py'
+      reference/                                 -> Ran 63 tests, OK (0 skipped)
+      cursor-project/.valuedelivery/reference    -> Ran 63 tests, OK (skipped=1: no base core beside the tree)
+      portable-project/.valuedelivery/reference  -> Ran 63 tests, OK (skipped=1)
+  python3 -B tools/test_validate_pack.py .      -> ALL 37 CORRUPTION REGRESSIONS AND 12 INSTALL,
+                                                   READ-ONLY AND IDEMPOTENCE CHECKS PASSED; positive control passed.
+  Composed installs (base 0.3.3 tree + companion tree in a temporary project):
+      Cursor rule        -> INSTALL CHECK PASSED (17 base files); Ran 63 tests, OK (0 skipped)
+      AGENTS.md section  -> INSTALL CHECK PASSED (17 base files); Ran 63 tests, OK (0 skipped)
+  Manifest: 144 files. REQUIRES.json: 17 base files pinned by SHA-256 (unchanged).
+  Inventories unchanged: 41 behaviours, 36 acceptance scenarios (31
+    unit-tested, 1 base-tested, 2 not-implemented, 1 out-of-scope,
+    1 process-check).
+
+Library checks (from the repository root unless noted):
+  Cost & Value Engineering 0.3.3: build --check, validate, 18 corruption
+    regressions, 191 reference tests in the source and both trees -> pass.
+  Carey Chou, Vandeput: STATIC VALIDATION PASSED (unchanged).
+  Root: tools/check_docs.py -> PASSED; git diff --check -> clean.
+  Carey, Vandeput and base packs: 0 changed paths.
+
+Publication checks (before the push; aggregate results only):
+  scan_publication.py with the private terms file outside the repository:
+      this pack, base pack, repository tree -> IDENTIFIER SCAN PASSED (0 matching paths each)
+  Literal private markers (private product name, home, download or archive
+    paths) in the 71 changed or new files of this pack -> 0.
+  Verbatim overlap: 8-word sequences added since 829ebbb that also occur in a
+    comparison corpus and nowhere in the public repository at 829ebbb.
+    Counts include the three generated copies of each file.
+      private prototype value-delivery docs and code (28 files) -> 9: three
+          standard-library idioms (zero-safe negation, a decimal import)
+      PR #7 feedback bundle (7 files)           -> 4: the owner's accepted
+          cancellation wording (two copies) and the public branch name
+          (named in both sections of this report)
+      code-review bundle 0.1.0 (41 text files)  -> 0
+      code-review bundle 0.2.0 (65 text files)  -> 9: the same idioms
+      three-candidate delivery (160 text files) -> 0
+    A stricter 6-word pass found no overlap between the compatibility note
+    and the private documentation or code; the remaining short matches are
+    generic technical phrases, public names or the owner's wording.
+  Identifier-like names from the private corpus that are not already public:
+    27 occurrences of 5 names, all standard decimal-library names or one
+    generic error code, each counted in three copies.
+  A scan or an overlap count does not establish rights. No unresolved item
+    was found; the maintainer licensing conclusion remains pending.
+
+Untouched: the base engine and pinned base copies; the Carey and Vandeput
+  packs; the website repository (0 uncommitted paths); the private
+  prototype (read only, no writes from this session); .specstory/ (untracked,
+  not staged); all 9 remote branches, including the older ones, still
+  present.
+
+Not run or not shown: any assistant session (VDB01-VDB41 are specifications);
+  any real plan, capacity, observation or finance review; the website (VD28);
+  an executable annex (VD24); integrated-application controls (VD36); any
+  test against the private prototype; an independent review of the
+  corrected source. The maintainer licensing conclusion remains pending.

@@ -26,7 +26,9 @@ An amount without its identity is not comparable. Each measure carries a kind, a
 
 Two views of one price change can both be true and still must not be added. The helper `separate_price_views` returns both views with `additive: false`, and `combine_measures` refuses to sum different kinds (`non_additive_views`) or different currency, unit, sign or quantity basis (`incompatible_basis`). Partition or convert with a declared rule first.
 
-**Sign.** A deviation is new minus reference, so a positive value is adverse. A benefit is reference minus new, so a positive value is favourable. Convert explicitly with `convert_sign`, which records the original sign and refuses a second reversal. Do not let a display flip a sign silently.
+**Sign.** A deviation is new minus reference, so a positive value is adverse. A benefit is reference minus new, so a positive value is favourable. Convert explicitly with `convert_sign`, which validates the amount like any other input, keeps its magnitude exactly whatever the caller's decimal settings, records the original sign and refuses a second reversal. Do not let a display flip a sign silently.
+
+**Exact values.** Validation, the range check, sign conversion and the text used for identities keep every digit supplied; only arithmetic results are rounded, under the fixed policy. A display may round for reading. A stored amount, a comparison key or a digest may not inherit display rounding or the caller's precision.
 
 ## One effect, one identity
 

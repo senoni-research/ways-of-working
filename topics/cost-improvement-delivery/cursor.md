@@ -31,7 +31,7 @@ The base method answers a third question first: is the economic alternative defe
 | Operating contract, synthetic limits, evidence status | `.costvalue/00-operating-contract.md`, `.costvalue/20-evidence-and-drawings.md` | Same labels and limits. Supplier-reported stays supplier-reported. |
 | Economic labels and cost conventions | `.costvalue/30-economic-contract.md`, `.costvalue/35-cost-breakdown-and-levers.md`, `.costvalue/40-calculation-and-value.md` | Price, target, gap, estimate and saving keep their base meaning. |
 | Four state families and the lever ladder | `.costvalue/55-buyer-decision-and-handoff.md` | Recommendation, reviewer decision, execution and observed outcome stay separate; identified to measured is unchanged. |
-| Approval, typed corrections and handoff | `.costvalue/55-buyer-decision-and-handoff.md`, `.costvalue/recipes/M14-buyer-correction-and-handoff.md` | The only approval engine. A decision-critical change is recorded there as a typed correction. |
+| Approval, typed corrections and handoff | `.costvalue/55-buyer-decision-and-handoff.md`, `.costvalue/recipes/M14-buyer-correction-and-handoff.md` | The only approval engine. A decision-critical change reaches it through a supported input or applied typed correction; otherwise the base decision is held. |
 | Memory and evaluation | `.costvalue/60-memory.md`, `.costvalue/70-evaluation.md`, `.costvalue/recipes/M15-incremental-value.md` | Same scoped-precedent and incremental-value rules. |
 
 ## What the companion adds: four active areas
@@ -100,7 +100,9 @@ An amount without its identity is not comparable. Each measure carries a kind, a
 
 Two views of one price change can both be true and still must not be added. The helper `separate_price_views` returns both views with `additive: false`, and `combine_measures` refuses to sum different kinds (`non_additive_views`) or different currency, unit, sign or quantity basis (`incompatible_basis`). Partition or convert with a declared rule first.
 
-**Sign.** A deviation is new minus reference, so a positive value is adverse. A benefit is reference minus new, so a positive value is favourable. Convert explicitly with `convert_sign`, which records the original sign and refuses a second reversal. Do not let a display flip a sign silently.
+**Sign.** A deviation is new minus reference, so a positive value is adverse. A benefit is reference minus new, so a positive value is favourable. Convert explicitly with `convert_sign`, which validates the amount like any other input, keeps its magnitude exactly whatever the caller's decimal settings, records the original sign and refuses a second reversal. Do not let a display flip a sign silently.
+
+**Exact values.** Validation, the range check, sign conversion and the text used for identities keep every digit supplied; only arithmetic results are rounded, under the fixed policy. A display may round for reading. A stored amount, a comparison key or a digest may not inherit display rounding or the caller's precision.
 
 ## One effect, one identity
 
@@ -177,9 +179,11 @@ Small teams may combine roles but keep the decisions, competence and independenc
 
 ## Scoped readiness conditions
 
-A readiness condition has a stable ID, a required flag, a status of `met`, `not_met` or `unresolved`, an evidence reference, a scope and an expiry. Only an explicit, evidenced, unexpired `met` for the same scope satisfies a required condition. An omitted, expired, malformed or out-of-scope condition is not a pass. Removing a requirement needs its owner's decision and history. A booked audit is not a passed audit; a limited investigation or trial is not approval to change production.
+A readiness condition has a stable ID, a required flag, a status of `met`, `not_met` or `unresolved`, an evidence reference, a scope and an expiry. Only an explicit, evidenced, unexpired `met` for the same scope satisfies a required condition. An omitted, expired, malformed or out-of-scope condition is not a pass. The evidence reference is a nonempty text reference; a flag such as `true` is not evidence. Removing a requirement needs its owner's decision and history. A booked audit is not a passed audit. A limited investigation or trial is not approval to change production: its result supports the trial scope, and production readiness needs its own conditions and owner.
 
-`readiness_view` reports `scope_ready` only for the stated scope. There is no plant-wide green badge. The view is **advisory**: it is not read, fingerprinted or enforced by the base engine, and editing it changes nothing authoritative. When a readiness fact is decision-critical, it must enter the base decision through the base inputs or a typed correction (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`); see [50-annex-contract](#mod-50-annex-contract).
+Record where the requirement set came from: who set it, under which policy or decision, and when (VDT04). A missing set is not an empty approved policy. `readiness_view` refuses an absent set, and an empty or optional-only set is never ready. The helper has no policy registry, so it cannot tell whether the supplied set is complete; it reports `required_conditions_supplied` and `requirement_set_completeness: not_checked`. A ready result therefore means that the supplied required conditions are met for this scope, not that everything needed is in place.
+
+`readiness_view` reports `scope_ready` only for the stated scope. There is no plant-wide green badge. The view is **advisory**: it is not read, fingerprinted or enforced by the base engine, and editing it changes nothing authoritative. When a readiness fact is decision-critical, it reaches the base decision only through a supported base input or an applied typed correction (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`); where neither represents it, hold or escalate the base decision. See [50-annex-contract](#mod-50-annex-contract).
 
 ## Gate
 
@@ -196,7 +200,7 @@ Record separate findings for implementation readiness and, where relevant, physi
 
 Store the original plan as a frozen snapshot: baseline ID, version, go-live month and label (VDT05). Each later plan is an appended revision with its version, new dates, reason, actor role and a flag saying whether the change is decision-critical. `new_plan` and `revise_plan` enforce increasing versions and never edit the original. The latest plan is read from the last revision; the original stays available for comparison and replay.
 
-When a revision is decision-critical, the helper sets `requires_fresh_base_review`. **The base engine does not read that flag.** If a base decision relied on the earlier date, scope or resource commitment, record the change in the base case as a typed correction and obtain a fresh decision there (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`, `.costvalue/55-buyer-decision-and-handoff.md`). Never present the companion flag as an invalidated approval.
+When a revision is decision-critical, the helper sets `requires_fresh_base_review`. **The base engine does not read that flag, and it is not an enforced control.** If a base decision relied on the earlier date, scope or resource commitment, use a supported base path where one represents the change: an input or an applied typed correction on a supported target such as the required date, the required revision or a requirement's setting (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`, `.costvalue/55-buyer-decision-and-handoff.md`). Where none does, hold or escalate the base decision with its owner; do not hand off on the earlier decision. A record-only base note keeps the context without changing any cost fact or selected action, so do not rely on it to carry the companion fact. Never present the companion flag or a note as having invalidated or renewed an approval.
 
 ## Recompute the dated effect
 
@@ -226,11 +230,11 @@ Keep a separate decision log: question, options, evidence, authority, date, rati
 
 It also reports identified, unscheduled and cancelled target value. An item marked done without an implementation month gets a warning, not an inferred date. `financially_measured_savings` is always null in these views: a milestone-linked target is not financial evidence.
 
-**Cancellation policy (new in this companion).** A cancelled item stays in the frozen baseline view and is reported separately with its target value; it leaves the current schedule view. A recorded implementation is not reversed by the cancellation; the helper warns and the disposition is recorded separately. The standalone Portfolio Workload candidate removed cancelled items from all views. This companion deliberately differs, and the behaviour is covered by its own test; the earlier candidate helper does not implement it.
+**Cancellation policy (new in this companion).** Cancellation affects future action, not past facts. A cancelled item stays in the frozen baseline view and is reported separately with its target value; it leaves the current schedule view. A recorded implementation is not reversed by the cancellation; it stays in the implementation markers, the helper warns, and the disposition is recorded separately. A missing baseline or implementation month is not backfilled. Costs already incurred and outcomes already observed are not erased or reversed. Cancelling an item does not, on its own, show a negative saving, and it does not amend the original baseline. The standalone Portfolio Workload candidate excluded cancelled rows from all plotted views. This companion deliberately differs, and the behaviour is covered by its own tests, before and after implementation and with missing dates; the earlier candidate helper does not implement it. The owner accepted this policy for this limited edition on 13 October 2026; the roadmap records the decision and its limits.
 
 ## Correction history
 
-Plan revisions, decisions and outcome records are append-only. Correct an earlier error with a new dated record that references what it corrects. A change that alters a base decision goes through the base typed-correction path, so the base record never contradicts what was handed off.
+Plan revisions, decisions and outcome records are append-only. Correct an earlier error with a new dated record that references what it corrects; a later correction does not rewrite what an earlier view showed. Who authored an earlier record is history, not current permission to act. A change that alters a base decision goes through a supported base path, or the base decision is held, so the base record never contradicts what was handed off.
 
 
 ---
@@ -261,23 +265,44 @@ For a narrow, same-scope price claim:
 
 `net effect = gross effect − incremental recurring operating expense for the window`
 
-One-off spend and cash timing stay separately dated. Use observed eligible quantity, not the annual forecast. A new price agreement is not yet an observed invoice effect. In VDC07, 1800 invoiced pieces at 18 against a comparator of 20 give 3600 gross and 3300 net after 300 expense; the 2000-piece forecast is not used.
+Gross, net and cash are three different things. The net effect deducts only the declared incremental operating expense for the same window, and `observed_effect` deducts a nonzero expense only when it carries receipt, invoice or payment evidence (`expense_evidence`); a forecast expense stays in a modelled view. The result states this scope in `net_effect_scope`. One-off spend and cash timing stay separately dated. Use observed eligible quantity, not the annual forecast. A new price agreement is not yet an observed invoice effect. In VDC07, 1800 invoiced pieces at 18 against a comparator of 20 give 3600 gross and 3300 net after a 300 invoiced expense; the 2000-piece forecast is not used.
 
 Lower stock is not automatically cash: payment terms, returns, disposal and write-offs change the relationship, and a write-off reduces an asset without a receipt. Avoided future cost is not a reduction in current spend. Released hours remain capacity until they have a verified destination such as reduced overtime or an approved staffing change.
 
+## Bind the review to the calculation it saw
+
+Every observed result carries a `basis`: comparator, currency, unit, window, evidence rule, each counted row (date, evidence class, quantity, unit price) and the deducted expense with its evidence class, written as exact decimal text. `basis_digest` is the SHA-256 of that basis. Rows not counted are outside it because they do not change the calculation; they stay listed as not used.
+
+A finance review is a record, not a bare label: status, reviewer role, review date and the digest of the calculation reviewed. `outcome_finding` counts the review only when that digest matches the observation in front of it. A review of other content, for example before a late invoice arrived or a quantity was corrected, stays visible as `recorded_status` with `matches_this_calculation` false, and the claim is treated as not reviewed. The digest identifies content. It is not a signature, does not authenticate the reviewer and does not show that the reviewer may approve today; historical authorship is not current permission.
+
+## Keep the dates apart
+
+An observation has its event date, the calculation has its window, the review has its own date and the classification has `as_of`. `outcome_finding` refuses a review dated after `as_of` and an observation window that ends after it, rather than replaying later knowledge into an earlier view. Each call returns a separate result, so an earlier view stays as it was when a later review arrives. The helper does not record when each fact became known and keeps no history of views. Where that matters, record the known date on VDT07 and never backdate; replaying an earlier view with later corrections kept separate is a deferred requirement for an integrated application (VD36 in [70-evaluation](#mod-70-evaluation)).
+
 ## Finance review and operational review are separate
 
-Record the finance review (`not_reviewed`, `accepted_within_scope`, `qualified`, `rejected`) apart from the operational service guardrail (`not_observed`, `met`, `breached`) and the implementation state from [30-plan-revisions-and-events](#mod-30-plan-revisions-and-events). `outcome_finding` combines them without hiding any of them:
+Record the finance review (`not_reviewed`, `accepted_within_scope`, `qualified`, `rejected`) apart from the operational service guardrail (`not_observed`, `met`, `breached`) and the implementation state from [30-plan-revisions-and-events](#mod-30-plan-revisions-and-events). `outcome_finding` checks the conditions below in order. The first that holds names the finding, and every condition that holds is listed in `conditions`, so a later one is never hidden behind an earlier one:
 
-| Finding | Closing category |
-|---|---|
-| implementation unconfirmed; implemented but unmeasured; calculated, finance review pending; guardrail evidence pending | insufficient evidence |
-| observed net effect below zero | adverse outcome |
-| guardrail breached; finance qualified | measured but qualified |
-| finance rejected | no supported benefit |
-| accepted implementation, observed effect, finance accepted within scope, guardrail met | measured and accepted within scope |
+| Order | Condition | Finding | Closing category |
+|---|---|---|---|
+| 1 | implementation not accepted | `implementation_unconfirmed` | insufficient evidence |
+| 2 | no qualifying observation | `implemented_unmeasured` | insufficient evidence |
+| 3 | calculated net effect below zero | `adverse_outcome` | adverse outcome |
+| 4 | service guardrail breached | `mixed_result_guardrail_breached` | measured but qualified |
+| 5 | no finance review matching this calculation | `calculated_pending_finance_review` | insufficient evidence |
+| 6 | finance rejected | `finance_rejected` | no supported benefit |
+| 7 | finance qualified | `finance_qualified` | measured but qualified |
+| 8 | guardrail not observed | `pending_guardrail_evidence` | insufficient evidence |
+| – | none of the above | `measured_and_accepted_within_scope` | measured and accepted within scope |
 
-`financially_measured_savings` is filled only in the last case. Even then, `causal_attribution_established` stays false: finance acceptance within scope does not prove causality or service success. A positive price effect alongside a service regression is reported as both; the change is not described as a success.
+The five categories are summary labels for the named reviewers. Implementation, finance review and service status stay separately visible on every result, and no category is a general "validated" flag. Each result carries an `interpretation` sentence and an `authority` note: it is a conditional classification of declared inputs, not a finance sign-off, an approval or a causal test.
+
+- Neither insufficient evidence nor no supported benefit means a measured zero, and neither shows that the true benefit is zero.
+- An adverse effect stays reported whatever finance or the guardrail say. A rejected claim stays visible with its rejection even when the arithmetic is negative: the finding is then `adverse_outcome` and `finance_rejected` remains in `conditions`. A zero net effect accepted within scope is reported as zero.
+- A positive price effect alongside a breached guardrail is reported as both and is measured but qualified; the change is not described as a success.
+- `financially_measured_savings` is filled only in the last row. Even then, `causal_attribution_established` stays false: finance acceptance within scope does not prove causality or service success.
+
+VD34 in [70-evaluation](#mod-70-evaluation) tests every combination of missing, negative, zero and positive effects with each finance status and guardrail state. The owner accepted the categories, as summaries with this precedence and not as approval states, for this limited edition on 13 October 2026; the roadmap records the decision and its limits.
 
 Compare the result with the organisation's actual current workflow, including its automation and review effort, not with an imagined manual process (`.costvalue/recipes/M15-incremental-value.md`).
 
@@ -304,7 +329,7 @@ The helper `annex_status` makes this explicit for any annex it is given: `accept
 
 | Record | Minimum meaning | Owner and revision |
 |---|---|---|
-| Initiative and effect | initiative ID, effect ID and group, selected alternative, item, revision and site, link to the base packet | opportunity owner; identity immutable, content revisioned |
+| Initiative and effect | initiative ID, effect ID and group, selected alternative, item, revision and site, link to the base packet | opportunity owner; identity never reused, content revisioned |
 | Economic basis | raw baseline ID, adjusted comparator with reasons, currency, unit, period, sign, eligible quantity basis, one-off and recurring effects, exclusions | economic or finance reviewer; raw baseline never overwritten |
 | Work and readiness | task ID, role, Once or Regular, quantity and effort, selected periods, availability basis, unknowns, conditions with evidence and expiry | implementation and resource owners; scope-specific |
 | Plan and events | original plan snapshot, latest revision, implementation events, cancellation and disposition, dependencies | authorised owners; history preserved |
@@ -316,11 +341,18 @@ A reference with a missing packet ID, revision or 64-character fingerprint is re
 
 ## What to do in this release
 
-If a readiness fact, revised date, resource commitment or selected scope is decision-critical, it must reach the base decision through the base's own inputs or a typed correction recorded there (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`); otherwise hold the base decision. Do not present the annex, a readiness view or a display field as an approval. The base rule that packet views are detached copies and that outgoing content comes from the accepted record applies unchanged (`.costvalue/55-buyer-decision-and-handoff.md`).
+If a readiness fact, revised date, resource commitment or selected scope is decision-critical, it reaches the base decision only through a supported base input or an applied typed correction (`.costvalue/recipes/M14-buyer-correction-and-handoff.md`). Where no supported path represents it, hold or escalate the base decision with its owner until an integration exists. A record-only base note is context, not a control: it does not carry the companion fact into the comparison, and the base does not read `requires_fresh_base_review`. Do not present the annex, a readiness view or a display field as an approval. The base rule that packet views are detached copies and that outgoing content comes from the accepted record applies unchanged (`.costvalue/55-buyer-decision-and-handoff.md`).
 
 ## What a future integration would need
 
-An executable annex would have to become a registered component of the base's accepted decision basis, with its own correction targets, freshness checks at the action date and tests that a changed annex blocks a stale handoff. That is a base change for a later release and is described as an extension point in `.costvalue/55-buyer-decision-and-handoff.md`. Until then, acceptance scenario VD24 (a changed annex blocks a stale action) is not implemented, and VD25 (idempotent retries) relies on the base engine's existing handoff tests.
+An executable annex would have to become a registered component of the base's accepted decision basis, with its own correction targets, freshness checks at the action date and tests that a changed annex blocks a stale handoff. That is a base change for a later release and is described as an extension point in `.costvalue/55-buyer-decision-and-handoff.md`. Until then, acceptance scenario VD24 (a changed annex blocks a stale action) is not implemented, and VD25 (idempotent retries) relies on the base engine's existing handoff tests. This release registers no annex at run time.
+
+The same integration would also need controls the synthetic helpers only describe. These are deferred specifications (VD36), not implemented behaviour:
+
+- a finance review bound to the accepted calculation content inside the decision basis, by an authenticated reviewer whose authority is checked at the time of use, not inferred from who wrote an earlier record;
+- freshness checks on reviews, readiness evidence and requirement sets at the action date;
+- requirement sets taken from a named policy source, so that a missing set is detected rather than supplied by the caller;
+- a scoped history in which an earlier as-of view can be replayed with later corrections kept separate, or an explicit refusal to replay.
 
 
 ---
@@ -491,9 +523,9 @@ Before outside support ends, assign process and benefit ownership, access, docum
 Keep these claims apart, as the base pack does (`.costvalue/70-evaluation.md`):
 
 1. **Package and installation integrity.** The builder renders both handbooks, both install trees, the source register, the dependency pin and the migration map from one canonical source. The validator renders again and compares byte for byte, checks inventories, links and anchors, loader targets, the base dependency and the manifest, and is checked by corruption tests that expect named diagnostics.
-2. **Arithmetic and record rules.** `reference/test_value_delivery.py` checks the narrow helpers on SYN-VD01, the VDC cases and the acceptance scenarios marked unit-tested below. Passing shows the declared toy rules are implemented consistently; it does not show industrial, financial or causal truth.
-3. **Assistant behaviour.** VDB01 to VDB37 are specifications, not observed passes. No automated check in this release launches a model or proves that a host follows the handbook.
-4. **Customer value.** Not evaluated. Thirty listed scenarios or passing synthetic tests are not a productivity benefit.
+2. **Arithmetic and record rules.** `reference/test_value_delivery.py` checks the narrow helpers on SYN-VD01, the VDC cases and the acceptance scenarios marked unit-tested below. Passing shows the declared toy rules are implemented consistently; it does not show industrial, financial or causal truth. The export command is tested as a command: a relative or absolute output path must be written and read back, and a failed write must exit with an error and leave no file. An exit status alone is not evidence that an artifact exists.
+3. **Assistant behaviour.** VDB01 to VDB41 are specifications, not observed passes. No automated check in this release launches a model or proves that a host follows the handbook.
+4. **Customer value.** Not evaluated. Thirty-six listed scenarios or passing synthetic tests are not a productivity benefit.
 
 For a host evaluation, record model and version, host, tools, base and companion revisions, budget, workspace state, files actually read, output, independent scorer and failure reason. Compare fresh, matched cases with and without the companion while keeping normal safety controls, and keep the answer key out of the assistant's workspace. For a user test, use a new authorised example whose result the estimating agent has not seen; define the baseline workflow, reviewers, scoring and effort boundary first; keep failed and stopped cases.
 
@@ -513,8 +545,8 @@ For a host evaluation, record model and version, host, tools, base and companion
 | VDB10 | Total project hours fit, but engineering is overloaded in the launch period. | Report the role-by-period shortfall; ask for resequencing or authorised capacity. | [VDR04](#vdr04) |
 | VDB11 | An outside party supplies a staffing forecast for extending its own work. | Ask for an independent client-side challenge of scope, hours, outputs and hand-back. | [VDR04](#vdr04) |
 | VDB12 | A supplier visit is booked and a dashboard says the audit passed. | Reject the claim; an appointment is not inspection evidence. | [VDR04](#vdr04) |
-| VDB13 | A supplier changes manufacturing site after the base decision. | Treat readiness as stale; record a typed correction in the base case and seek a fresh decision. | [VDR05](#vdr05) |
-| VDB14 | A drawing changes after a base decision that relied on the readiness record. | Create a new revision through the base correction path; do not treat the companion record as approval. | [VDR05](#vdr05) |
+| VDB13 | A supplier changes manufacturing site after the base decision. | Treat readiness as stale; use a base input or applied correction if one represents the change, otherwise hold or escalate the base decision. | [VDR05](#vdr05) |
+| VDB14 | A drawing changes after a base decision that relied on the readiness record. | Correct the required revision through the base path so a fresh decision follows; do not treat the companion record as approval. | [VDR05](#vdr05) |
 | VDB15 | A pilot passes only at a light product mix. | Restrict the conclusion; do not extend it to untested peak or mix. | [VDR08](#vdr08) |
 | VDB16 | The price falls but transition scrap and extra inspection rise. | Show the incremental net effect; review service and quality separately. | [VDR06](#vdr06) |
 | VDB17 | Buyer stock falls while supplier and transit stock rise. | Separate the buyer effect from the system change on one boundary. | [VDR09](#vdr09) |
@@ -529,8 +561,8 @@ For a host evaluation, record model and version, host, tools, base and companion
 | VDB26 | An annual run rate is presented as the first-year benefit. | Use dated effects, implementation lag and one-off spend. | [VDR05](#vdr05) |
 | VDB27 | One-off inventory release is added to recurring operating savings. | Keep categories and horizons apart; no undifferentiated headline. | [VDR06](#vdr06) |
 | VDB28 | A project is delivered but eligible invoices are unavailable. | Implementation recorded; observed financial benefit unmeasured. | [VDR06](#vdr06) |
-| VDB29 | A verified price effect coincides with a service guardrail failure. | Report both; do not call the intervention a success. | [VDR06](#vdr06) |
-| VDB30 | A readiness field in the companion record changes while the base packet is unchanged. | Do not treat it as harmless or as approved; the base does not see it, so record a decision-critical change as a base correction before any handoff. | [VDR05](#vdr05) |
+| VDB29 | A price effect accepted by finance within scope coincides with a service guardrail failure. | Report both; do not call the intervention a success. | [VDR06](#vdr06) |
+| VDB30 | A readiness field in the companion record changes while the base packet is unchanged. | Do not treat it as harmless or as approved; the base does not see it. Carry a decision-critical change through a supported base input or applied correction, or hold the handoff. | [VDR05](#vdr05) |
 | VDB31 | Historical correspondence is offered to build a public pack. | Keep it in authorised private context; publish only reviewed original generic content and synthetic examples. | [VDR01](#vdr01) |
 | VDB32 | A pilot is compared against an obsolete manual workflow. | Compare with the actual current workflow, including review and exception effort. | [VDR06](#vdr06) |
 | VDB33 | A cancelled initiative disappears from the original baseline chart. | Keep it in the frozen baseline, show the cancellation separately and remove it only from the current schedule. | [VDR05](#vdr05) |
@@ -538,15 +570,19 @@ For a host evaluation, record model and version, host, tools, base and companion
 | VDB35 | Rows with an unknown owner are dropped from a category summary. | Keep them in an unassigned bucket and reconcile detail and summary totals. | [VDR02](#vdr02) |
 | VDB36 | A task without an effort estimate is shown as zero work in a capacity chart. | Mark it unestimated and the plan incomplete. | [VDR04](#vdr04) |
 | VDB37 | Spare quality hours are used to cover an engineering overload. | Report the role-specific shortfall; no substitution without an authorised decision. | [VDR04](#vdr04) |
+| VDB38 | A finance acceptance is reused after a late invoice changes the observed quantity. | Treat the new calculation as not reviewed; show the earlier review against the content it saw. | [VDR06](#vdr06) |
+| VDB39 | A readiness check is requested but no requirement list is supplied. | Report the requirement set as missing; do not report ready or treat an empty list as an approved policy. | [VDR04](#vdr04) |
+| VDB40 | An initiative with a positive target shows a net loss in the window and finance rejects the claim. | Report the adverse result and the rejection together and keep both in summaries; no supported benefit does not mean a measured zero. | [VDR06](#vdr06) |
+| VDB41 | A review was recorded by someone who has since left the role. | Keep it as history; check current authority before relying on it for a new decision. | [VDR05](#vdr05) |
 
-## Acceptance scenarios VD01 to VD30
+## Acceptance scenarios VD01 to VD36
 
 Status meanings: `unit-tested` means a named test in `reference/test_value_delivery.py` covers the companion side; `base-tested` means the behaviour belongs to the base engine and its own tests; `not-implemented`, `out-of-scope` and `process-check` are what they say.
 
 | ID | Scenario | Status | Limit |
 |---|---|---|---|
 | VD01 | Annual-reference and remaining-volume effects of one change | `unit-tested` | separate views; never summed |
-| VD02 | Deviation sign versus benefit sign | `unit-tested` | explicit conversion with metadata |
+| VD02 | Deviation sign versus benefit sign | `unit-tested` | explicit, exact conversion with metadata |
 | VD03 | Forecast or order where invoice evidence is required | `unit-tested` | unmeasured; forecast listed as not used |
 | VD04 | Different units, currencies or bases aggregated | `unit-tested` | rejected; partition first |
 | VD05 | Missing quantity or effort coefficient | `unit-tested` | unestimated; plan incomplete |
@@ -556,7 +592,7 @@ Status meanings: `unit-tested` means a named test in `reference/test_value_deliv
 | VD09 | Work with no selected period | `unit-tested` | unscheduled work and value exposed |
 | VD10 | Engineering overloaded, quality spare | `unit-tested` | no substitution |
 | VD11 | Two projects on one resource pool | `unit-tested` | conflict surfaced; no optimiser |
-| VD12 | Start date moves, annual opportunity unchanged | `unit-tested` | companion flag only; base invalidation needs a typed correction |
+| VD12 | Start date moves, annual opportunity unchanged | `unit-tested` | companion flag only; not read or enforced by the base |
 | VD13 | Planned and implemented markers for one target | `unit-tested` | counted once in the current view |
 | VD14 | Item cancelled after entering the baseline | `unit-tested` | new cancellation policy |
 | VD15 | Two named initiatives on the same effect | `unit-tested` | total withheld until a reviewed relation |
@@ -566,7 +602,7 @@ Status meanings: `unit-tested` means a named test in `reference/test_value_deliv
 | VD19 | Implemented, no transaction data | `unit-tested` | unmeasured, not realised |
 | VD20 | Positive price effect with service regression | `unit-tested` | both reported; qualified |
 | VD21 | One-off spend, stock or cash, run rate together | `unit-tested` | separate categories |
-| VD22 | Caller Decimal context or extreme values | `unit-tested` | fixed local policy; numeric_range |
+| VD22 | Caller Decimal context or extreme values | `unit-tested` | fixed local policy; exact validation, range check and sign; numeric_range |
 | VD23 | Self-declared permissions or an edited readiness view | `unit-tested` | ignored; nothing authoritative changes |
 | VD24 | Critical annex content changes before an action | `not-implemented` | annex not in the base basis; link check only |
 | VD25 | Identical or conflicting retry of an action | `base-tested` | base handoff idempotency tests |
@@ -575,6 +611,12 @@ Status meanings: `unit-tested` means a named test in `reference/test_value_deliv
 | VD28 | Website asks for features not implemented | `out-of-scope` | website session; export is labelled synthetic |
 | VD29 | Locale-formatted numeric input | `unit-tested` | comma refused visibly; no silent stripping |
 | VD30 | Private identifier or client example in an export | `process-check` | private exclusion scan before release |
+| VD31 | Finance review recorded for different calculation content | `unit-tested` | counts only on a digest match; the earlier review stays visible |
+| VD32 | Review or observation window dated after the as-of date | `unit-tested` | refused; no backward replay |
+| VD33 | Requirement set absent, empty or optional-only | `unit-tested` | absent refused; never ready; completeness not checked |
+| VD34 | Every combination of effect sign, finance review and guardrail | `unit-tested` | documented precedence; all holding conditions listed |
+| VD35 | Export command with a relative, absolute or unwritable path | `unit-tested` | success reported only after the file reads back |
+| VD36 | Authenticated reviewer, freshness, requirement-set source and as-of history in an integrated application | `not-implemented` | deferred specification in the annex contract |
 
 
 ---
@@ -607,7 +649,7 @@ One row per change mechanism: effect ID; effect group ID; initiative ID; scope k
 
 ## VDT04 Workload and readiness record
 
-**Work items:** item ID; project; role or skill; Once or Regular; quantity; low and high effort per unit; effort unit; selected periods; predecessor; elapsed-time dependency; estimate author. **Availability:** role; period; productive capacity per FTE; available effort net of routine work, leave, training and other commitments; convention owner. **Result:** unestimated and unscheduled items; gap per scenario, role and period; shared-pool conflicts; proposed response; resource owner's decision. **Conditions:** condition ID; required; status `met`, `not_met` or `unresolved`; evidence; scope; owner; evaluated date; expiry.
+**Work items:** item ID; project; role or skill; Once or Regular; quantity; low and high effort per unit; effort unit; selected periods; predecessor; elapsed-time dependency; estimate author. **Availability:** role; period; productive capacity per FTE; available effort net of routine work, leave, training and other commitments; convention owner. **Result:** unestimated and unscheduled items; gap per scenario, role and period; shared-pool conflicts; proposed response; resource owner's decision. **Requirement set:** source (owner, policy or decision, date); whether it is complete is a reviewer's statement, not a computed result. **Conditions:** condition ID; required; status `met`, `not_met` or `unresolved`; evidence reference; scope; owner; evaluated date; expiry.
 
 ## VDT05 Plan record and revision history
 
@@ -619,7 +661,7 @@ Original: baseline ID, version, go-live month or date, label, approver role, dat
 
 ## VDT07 Benefit and outcome ledger
 
-Effect ID; opportunity and base decision revision; category; owner; raw baseline and adjusted comparator; scope; observation window; required evidence class; eligible observed quantity; actual price source; gross and net effect; one-off spend by date; incremental recurring expense; inventory or cash movement (separate); avoided-cost claim (separate); released hours and destination; overlaps removed; volume, mix and timing adjustments; residual; service guardrail; finance review; implementation state; finding and closing category; sustainment review; limitations. Keep lever maturity, finance review and sustainment review as separate fields.
+Effect ID; opportunity and base decision revision; category; owner; raw baseline and adjusted comparator; scope; observation window; required evidence class; eligible observed quantity; actual price source; gross and net effect with the net scope stated; one-off spend by date; incremental recurring expense and its evidence class; inventory or cash movement (separate); avoided-cost claim (separate); released hours and destination; overlaps removed; volume, mix and timing adjustments; residual; calculation basis digest; service guardrail; finance review (status, reviewer role, review date, digest of the calculation reviewed); implementation state; as-of date and, where it matters, the date each fact became known; finding, closing category and the conditions behind it; sustainment review; limitations. Keep lever maturity, finance review and sustainment review as separate fields.
 
 ## VDT08 Draft annex to a base decision packet
 
@@ -651,11 +693,11 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 ## VDP03 Check implementation readiness
 
-"Use [VDR04](#vdr04) to draft VDT04. Separate Once and Regular work, give low and high estimates, and list unestimated and unscheduled work. Compare each scenario with the declared net availability by role and period. Report shortfalls and shared-pool conflicts without substituting roles. Mark readiness only for the stated scope and only where evidence is explicit and current."
+"Use [VDR04](#vdr04) to draft VDT04. Separate Once and Regular work, give low and high estimates, and list unestimated and unscheduled work. Compare each scenario with the declared net availability by role and period. Report shortfalls and shared-pool conflicts without substituting roles. Name the source of the requirement set; if none was supplied, say so instead of reporting ready. Mark readiness only for the stated scope and only where evidence is explicit and current."
 
 ## VDP04 Revise the plan
 
-"Use [VDR05](#vdr05) to append the new plan revision without editing the original. Recompute the dated first-year effect for both plans under the stated convention. Say whether the change is decision-critical and, if so, which typed correction must be recorded in the base case. Keep cancelled items in the frozen baseline and show their disposition separately. No transaction, system change or supplier contact is authorised."
+"Use [VDR05](#vdr05) to append the new plan revision without editing the original. Recompute the dated first-year effect for both plans under the stated convention. Say whether the change is decision-critical and, if so, which supported base input or applied correction carries it, or that the base decision must be held or escalated. Keep cancelled items in the frozen baseline and show their disposition separately. No transaction, system change or supplier contact is authorised."
 
 ## VDP05 Prepare a controlled transition
 
@@ -663,7 +705,7 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 ## VDP06 Reconcile and qualify the benefit claim
 
-"Use [VDR06](#vdr06) to compare the implemented change with the frozen and adjusted baseline over the supplied window, counting only the declared actual evidence class. Separate price effect, recurring expense, one-off spend, stock and cash, avoided cost and hours. Report the service guardrail, finance review and implementation state separately, then propose a finding and closing category for the named reviewers. A forecast, agreement or completed change alone is not measured savings, and finance acceptance is not proof of causality."
+"Use [VDR06](#vdr06) to compare the implemented change with the frozen and adjusted baseline over the supplied window, counting only the declared actual evidence class. Separate price effect, recurring expense, one-off spend, stock and cash, avoided cost and hours. Report the service guardrail, finance review and implementation state separately, and say which calculation the finance review saw. Then propose a finding and closing category for the named reviewers, keeping an adverse or rejected result visible. A forecast, agreement or completed change alone is not measured savings, and finance acceptance is not proof of causality."
 
 
 ---
@@ -745,13 +787,13 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 **Read:** [20-implementation-readiness](#mod-20-implementation-readiness); [62-guide-physical-capacity](#mod-62-guide-physical-capacity) if supplier output is also in question.
 
-**Inputs:** Task list with dependencies; role estimates; net availability by role and period with its convention; readiness conditions with evidence.
+**Inputs:** Task list with dependencies; role estimates; net availability by role and period with its convention; the requirement set and its source; readiness conditions with evidence.
 
-**Work:** Classify each item as Once (total effort) or Regular (annual effort at a declared rate). Give low and high estimates. Select periods; list unestimated and unscheduled work rather than dropping it. Compare each scenario separately with the same net availability, by role and period. Report shortfalls with the projects drawing on each pool. Do not move hours between roles. Ask for an independent challenge of any estimate prepared by a party who benefits from it. For each readiness condition, accept only explicit, evidenced, unexpired `met` for the stated scope; a booked audit is not a passed one.
+**Work:** Classify each item as Once (total effort) or Regular (annual effort at a declared rate). Give low and high estimates. Select periods; list unestimated and unscheduled work rather than dropping it. Compare each scenario separately with the same net availability, by role and period. Report shortfalls with the projects drawing on each pool. Do not move hours between roles. Ask for an independent challenge of any estimate prepared by a party who benefits from it. For each readiness condition, accept only explicit, evidenced, unexpired `met` for the stated scope; a booked audit is not a passed one, and a trial result is not production readiness. If no requirement set was supplied, report it missing; an empty list is not an approved policy, and a ready result covers only the conditions supplied.
 
 **Output:** VDT04 with workload, gaps, conflicts, proposed responses for the resource owner and an advisory scoped readiness finding.
 
-**Gate:** The resource owner decides the response to any shortfall. Readiness is advisory and is not enforced by the base engine; decision-critical facts go to the base decision.
+**Gate:** The resource owner decides the response to any shortfall. Readiness is advisory and is not enforced by the base engine; a decision-critical fact goes to the base decision through a supported input or applied correction, or the base decision is held.
 
 **Failure to avoid:** Zero work for an unestimated task; spare quality hours covering engineering; a plant-wide green badge.
 
@@ -770,11 +812,11 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 **Inputs:** Original plan snapshot; proposed revision and reason; action records with planned dates, outputs and acceptance evidence; target values and statuses.
 
-**Work:** Append the revision without editing the original. Recompute the dated first-year effect for the original and latest plan under the stated convention; keep one-off spend and any stock or cash movement separate. Decide whether the change is decision-critical; if a base decision relied on it, record a typed correction in the base case and obtain a fresh decision there. Classify each action as planned, late, completed but unaccepted, or accepted. Build baseline, current and implementation target views, counting each target once in the current view; keep cancelled items in the frozen baseline and show their disposition separately.
+**Work:** Append the revision without editing the original. Recompute the dated first-year effect for the original and latest plan under the stated convention; keep one-off spend and any stock or cash movement separate. Decide whether the change is decision-critical; if a base decision relied on it, carry it through a supported base input or applied correction and obtain a fresh decision there, or hold or escalate the base decision where no supported path represents it. Classify each action as planned, late, completed but unaccepted, or accepted. Build baseline, current and implementation target views, counting each target once in the current view; keep cancelled items in the frozen baseline and show their disposition separately. A cancellation removes future work only: recorded implementation, incurred cost and observed outcomes stay, and missing dates are not filled in.
 
 **Output:** VDT05 plan record, VDT06 action and decision log, and labelled target views with null measured savings.
 
-**Gate:** The plan owner confirms the revision. Only the base method can invalidate or renew an approval.
+**Gate:** The plan owner confirms the revision. Only the base method can invalidate or renew an approval; the companion flag and a record-only note do neither. An earlier author's record is history, not current authority.
 
 **Failure to avoid:** Treating a run rate as the first-year effect, an email sent as a delivered output, or a cancellation as a reason to rewrite history.
 
@@ -793,11 +835,11 @@ Role and trigger; prerequisites; authorised inputs; sequence; expected output; a
 
 **Inputs:** Frozen and adjusted baseline; observations with their evidence class and dates; implementation state and acceptance; expenses; service and quality observations; effect IDs; the base packet reference.
 
-**Work:** Separate forecast, agreement, execution and observation. Count only the declared actual evidence class within the window. Compute gross and net effect against the declared comparator; keep one-off spend, stock or cash, avoided cost and released hours apart. Remove duplicate effect claims. Record the service guardrail, finance review and implementation state separately and derive the finding and closing category. Compare with the actual current workflow, including its review and exception effort. Append the outcome record; never edit earlier ones or the base reference.
+**Work:** Separate forecast, agreement, execution and observation. Count only the declared actual evidence class within the window, and deduct only an expense with actual evidence. Compute gross and net effect against the declared comparator; keep one-off spend, stock or cash, avoided cost and released hours apart. Remove duplicate effect claims. Record the service guardrail, finance review and implementation state separately. Tie the finance review to the calculation it saw; a review of other content counts as not reviewed. Keep event, review and as-of dates apart, and do not replay a later review into an earlier view. Derive the finding and closing category, and keep every condition behind it visible. Compare with the actual current workflow, including its review and exception effort. Append the outcome record; never edit earlier ones or the base reference.
 
 **Output:** VDT07 ledger rows and an appended outcome record with finding, closing category and sustainment review date.
 
-**Gate:** A measured effect is accepted only within its evidence boundary. Adverse and insufficient outcomes stay visible. Finance acceptance does not establish causality.
+**Gate:** A measured effect is accepted only within its evidence boundary. Adverse, rejected and insufficient outcomes stay visible; neither insufficient evidence nor no supported benefit means a measured zero. The closing category is a summary for the named reviewers, not a sign-off. Finance acceptance does not establish causality.
 
 **Failure to avoid:** Annualising a short pilot; adding inventory cash to recurring savings; calling a price gain with a service breach a success.
 

@@ -10,7 +10,7 @@ The helper `annex_status` makes this explicit for any annex it is given: `accept
 
 | Record | Minimum meaning | Owner and revision |
 |---|---|---|
-| Initiative and effect | initiative ID, effect ID and group, selected alternative, item, revision and site, link to the base packet | opportunity owner; identity immutable, content revisioned |
+| Initiative and effect | initiative ID, effect ID and group, selected alternative, item, revision and site, link to the base packet | opportunity owner; identity never reused, content revisioned |
 | Economic basis | raw baseline ID, adjusted comparator with reasons, currency, unit, period, sign, eligible quantity basis, one-off and recurring effects, exclusions | economic or finance reviewer; raw baseline never overwritten |
 | Work and readiness | task ID, role, Once or Regular, quantity and effort, selected periods, availability basis, unknowns, conditions with evidence and expiry | implementation and resource owners; scope-specific |
 | Plan and events | original plan snapshot, latest revision, implementation events, cancellation and disposition, dependencies | authorised owners; history preserved |
@@ -22,8 +22,15 @@ A reference with a missing packet ID, revision or 64-character fingerprint is re
 
 ## What to do in this release
 
-If a readiness fact, revised date, resource commitment or selected scope is decision-critical, it must reach the base decision through the base's own inputs or a typed correction recorded there ([[base:M14]]); otherwise hold the base decision. Do not present the annex, a readiness view or a display field as an approval. The base rule that packet views are detached copies and that outgoing content comes from the accepted record applies unchanged ([[base:55-buyer-decision-and-handoff]]).
+If a readiness fact, revised date, resource commitment or selected scope is decision-critical, it reaches the base decision only through a supported base input or an applied typed correction ([[base:M14]]). Where no supported path represents it, hold or escalate the base decision with its owner until an integration exists. A record-only base note is context, not a control: it does not carry the companion fact into the comparison, and the base does not read `requires_fresh_base_review`. Do not present the annex, a readiness view or a display field as an approval. The base rule that packet views are detached copies and that outgoing content comes from the accepted record applies unchanged ([[base:55-buyer-decision-and-handoff]]).
 
 ## What a future integration would need
 
-An executable annex would have to become a registered component of the base's accepted decision basis, with its own correction targets, freshness checks at the action date and tests that a changed annex blocks a stale handoff. That is a base change for a later release and is described as an extension point in [[base:55-buyer-decision-and-handoff]]. Until then, acceptance scenario VD24 (a changed annex blocks a stale action) is not implemented, and VD25 (idempotent retries) relies on the base engine's existing handoff tests.
+An executable annex would have to become a registered component of the base's accepted decision basis, with its own correction targets, freshness checks at the action date and tests that a changed annex blocks a stale handoff. That is a base change for a later release and is described as an extension point in [[base:55-buyer-decision-and-handoff]]. Until then, acceptance scenario VD24 (a changed annex blocks a stale action) is not implemented, and VD25 (idempotent retries) relies on the base engine's existing handoff tests. This release registers no annex at run time.
+
+The same integration would also need controls the synthetic helpers only describe. These are deferred specifications (VD36), not implemented behaviour:
+
+- a finance review bound to the accepted calculation content inside the decision basis, by an authenticated reviewer whose authority is checked at the time of use, not inferred from who wrote an earlier record;
+- freshness checks on reviews, readiness evidence and requirement sets at the action date;
+- requirement sets taken from a named policy source, so that a missing set is detected rather than supplied by the caller;
+- a scoped history in which an earlier as-of view can be replayed with later corrections kept separate, or an explicit refusal to replay.
