@@ -1,0 +1,183 @@
+[
+  {
+    "case_id": "VDC01",
+    "migrated_from": "IP-C01",
+    "synthetic": true,
+    "area": "plan-revisions-and-events",
+    "supported_by": "dated_year_one_effect",
+    "title": "Favourable run rate, negative first-year effect",
+    "inputs": {
+      "currency": "GBP",
+      "unit": "piece; same reviewed revision and charging scope",
+      "annual_units": 24000,
+      "baseline_unit_price": "42.00",
+      "alternative_unit_price": "39.50",
+      "annual_incremental_recurring_cost": "18000",
+      "year_one_one_off_spend": "24000",
+      "go_live_month": 7,
+      "inventory_cash_movement": "55000"
+    },
+    "expected": {
+      "gross_annual_price_opportunity": "60000",
+      "net_annual_operating_run_rate": "42000",
+      "year_one_operating_effect_before_one_off": "21000",
+      "year_one_effect_after_one_off": "-3000",
+      "inventory_cash_movement_reported_separately": "55000"
+    },
+    "boundary": "Six active months under a uniform-volume convention. The possible inventory cash release is its own category and is not added. No tax, discounting, ramp or payment timing."
+  },
+  {
+    "case_id": "VDC02",
+    "migrated_from": "IP-C02",
+    "synthetic": true,
+    "area": "guidance:physical-capacity",
+    "supported_by": "guidance-only",
+    "title": "Supplier output falls short under a narrow declared model",
+    "inputs": {
+      "scheduled_hours": "160",
+      "planned_loss_hours": "16",
+      "setup_hours": "12",
+      "other_committed_hours": "72",
+      "seconds_per_started_unit": "40",
+      "yield": "0.96",
+      "required_good_units": 5500
+    },
+    "expected": {
+      "available_hours": "60",
+      "expected_good_units": "5184",
+      "good_unit_shortfall": "316"
+    },
+    "boundary": "Hand arithmetic for the guidance module only; no capacity helper is shipped. Not a supplier audit, schedule or stochastic service model."
+  },
+  {
+    "case_id": "VDC03",
+    "migrated_from": "IP-C03",
+    "synthetic": true,
+    "area": "implementation-readiness",
+    "supported_by": "workload_plan+capacity_gaps",
+    "title": "One role is overloaded while another has spare hours",
+    "inputs": {
+      "effort_unit": "hours",
+      "engineering_available": "80",
+      "project_a_engineering": "45",
+      "project_b_engineering": "40",
+      "quality_available": "50",
+      "project_a_quality": "20",
+      "project_b_quality": "20"
+    },
+    "expected": {
+      "engineering_required": "85",
+      "engineering_shortfall": "5",
+      "quality_required": "40",
+      "quality_margin": "10",
+      "shared_pool_conflict": true
+    },
+    "boundary": "Availability is already net of routine work, leave and other commitments. Quality hours do not cover engineering work without an authorised substitution, which the helper does not model."
+  },
+  {
+    "case_id": "VDC04",
+    "migrated_from": "IP-C04",
+    "synthetic": true,
+    "area": "benefit-baseline-and-effects",
+    "supported_by": "effect_portfolio",
+    "title": "Two exclusive alternatives are not one larger saving",
+    "inputs": {
+      "currency": "GBP",
+      "alternative_a_benefit": "60000",
+      "alternative_b_benefit": "50000",
+      "relation": "mutually_exclusive"
+    },
+    "expected": {
+      "total_without_selection": null,
+      "invalid_sum": "110000",
+      "separate_alternative_values": ["60000", "50000"]
+    },
+    "boundary": "The larger value does not win automatically; feasibility and complete incremental economics still need review."
+  },
+  {
+    "case_id": "VDC05",
+    "migrated_from": "IP-C05",
+    "synthetic": true,
+    "area": "guidance:inbound-flow-and-inventory",
+    "supported_by": "guidance-only",
+    "title": "A local stock reduction is not the system result",
+    "inputs": {
+      "currency": "GBP",
+      "buyer_inventory_change": "-70000",
+      "supplier_inventory_change": "50000",
+      "transit_inventory_change": "10000",
+      "valuation_basis": "one comparable cost basis; negative is a reduction"
+    },
+    "expected": {
+      "system_inventory_change": "-10000",
+      "buyer_inventory_reduction": "70000"
+    },
+    "boundary": "Hand arithmetic for the guidance module only. Neither movement is realised cash without ownership, payment and write-off evidence."
+  },
+  {
+    "case_id": "VDC06",
+    "migrated_from": "IP-C06",
+    "synthetic": true,
+    "area": "benefit-baseline-and-effects",
+    "supported_by": "bom_rollup",
+    "title": "A shared component effect rolled through demand once",
+    "inputs": {
+      "currency": "GBP",
+      "per_assembly_effect": "1.50",
+      "occurrences": [
+        {"product_id": "P1", "product_units": 800, "assemblies_per_product": 2},
+        {"product_id": "P2", "product_units": 1000, "assemblies_per_product": 3}
+      ]
+    },
+    "expected": {
+      "affected_assemblies": 4600,
+      "total_effect": "6900"
+    },
+    "boundary": "Showing 6900 at component, assembly and product level is one effect, not three. Volumes and applicability are declared synthetic facts."
+  },
+  {
+    "case_id": "VDC07",
+    "migrated_from": "IP-C07",
+    "synthetic": true,
+    "area": "outcome-reconciliation",
+    "supported_by": "observed_effect",
+    "title": "Observed eligible invoices replace the forecast",
+    "inputs": {
+      "currency": "GBP",
+      "unit": "piece",
+      "comparator_unit_price": "20",
+      "forecast_units": 2000,
+      "invoiced_units": 1800,
+      "invoiced_unit_price": "18",
+      "incremental_operating_expense": "300",
+      "expense_evidence": "invoice",
+      "window": ["2030-01-01", "2030-03-31"]
+    },
+    "expected": {
+      "forecast_gross_effect_not_used": "4000",
+      "observed_gross_effect": "3600",
+      "observed_net_effect": "3300",
+      "financially_measured_savings": null
+    },
+    "boundary": "A period-scoped calculation under declared conventions. Finance acceptance, service guardrails and causality are separate and not established here."
+  },
+  {
+    "case_id": "VDC08",
+    "migrated_from": "IP-C08",
+    "synthetic": true,
+    "area": "guidance:capability-transfer",
+    "supported_by": "guidance-only",
+    "title": "A buyer time saving that moves work elsewhere",
+    "inputs": {
+      "buyer_hours_saved": "2.5",
+      "extra_engineering_hours": "1.5",
+      "extra_finance_hours": "0.75",
+      "extra_supplier_hours": "1"
+    },
+    "expected": {
+      "internal_net_hours_saved": "0.25",
+      "including_supplier_net_hours_saved": "-0.75"
+    },
+    "boundary": "Hand arithmetic for the guidance module only. The boundary changes the conclusion; no payroll or productivity claim follows."
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "companion": "Cost Improvement Delivery & Value Realisation",
+  "companion_version": "0.1.0",
+  "files": {
+    ".costvalue/00-operating-contract.md": "f6d4387279b1268ccf4781af7f9caeeb0ab9809c394dcf0bba96afd8c3e64cde",
+    ".costvalue/10-workflow.md": "67013ec3f90c38fc95193c99515e2c0277cf4133a62bbcd656fb08213503c7e9",
+    ".costvalue/15-requisition-routing.md": "1440eb4961911b5c7322498ab3cfe4d60e4f8f38bf1aa24317e6a926f1b3920a",
+    ".costvalue/20-evidence-and-drawings.md": "5c890810b63279f9bcdbbae98633a1af61061abaad2ad821d48d12c0cae56761",
+    ".costvalue/30-economic-contract.md": "bc3371e6db7b8cac55319d8a89ab624213034ab316da041d78f5fc59c6f8af1d",
+    ".costvalue/35-cost-breakdown-and-levers.md": "661904033c4debbf97b99cdb94f99bac07e32b7b2b9a869af2986c53baa01038",
+    ".costvalue/40-calculation-and-value.md": "25484055629503dec1c4c15ad318d0fd5368855e1e2d36283e1faa64401d393b",
+    ".costvalue/50-supplier-dialogue.md": "d0bab395094cf3ef76013ac29c1021a113805d108645ffab985bdae658a52599",
+    ".costvalue/55-buyer-decision-and-handoff.md": "b802e717f2b7ce3213678d2148e0f7e25414eda252b68e03835ad3f65193e09f",
+    ".costvalue/60-memory.md": "2f6998b856653198f884a01041db93cefff3ec5c50db54938e4631d14270feb5",
+    ".costvalue/70-evaluation.md": "e10fb279f1f549491afce2e89d640c256242a6896f7c2e8bd2b0916b0d0b69a3",
+    ".costvalue/80-templates-and-prompts.md": "7e746c076cbe1780e67d90ac90ef20c354ffe3b0f20d065ce4fdad5fcd1e1975",
+    ".costvalue/90-sources.md": "1edb76d44d0ecda6be36d4bb90fdf6d8cd932d523b7f74bb9bd8b424ef70c19e",
+    ".costvalue/recipes/M14-buyer-correction-and-handoff.md": "6856c3408e00dc57ae543c0ef7148926c3340fef11b649c1b8f6dfe4cad7f46b",
+    ".costvalue/recipes/M15-incremental-value.md": "dbef52282fad001d07136221bfdbb522713898fdf8018dd0c61040ec09d77255",
+    ".costvalue/reference/core.py": "1862c7461067078512484e8636be8aa7fca8fbacd071212dae5c8652f2d14e56",
+    ".costvalue/reference/workflow.py": "8c439d2168534c1f0c1c75dce136eb94ccfaaf782d4fb5f9c39d0f5a73a9c16f"
+  },
+  "loaders": {
+    "cursor": ".cursor/rules/20-costvalue-method.mdc",
+    "portable": "AGENTS.md section <!-- BEGIN COSTVALUE -->"
+  },
+  "name": "Cost & Value Engineering",
+  "namespace": ".costvalue",
+  "note": "SHA-256 of the base release files this companion was built and tested against. A locally adapted base file fails check_install.py; review compatibility before relying on the companion.",
+  "pack": "cost-value-engineering",
+  "version": "0.3.3"
+}

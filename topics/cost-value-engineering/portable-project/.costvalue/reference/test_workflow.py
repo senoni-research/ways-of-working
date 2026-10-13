@@ -9,7 +9,7 @@ from decimal import Decimal
 from pathlib import Path
 from core import ModelError
 from export_replay import build_export, render
-from workflow import (CaseFile, MockDestination, SCENARIOS, check_allocation, check_unit, effort_ledger,
+from workflow import (CORRECTION_TARGETS, CaseFile, MockDestination, SCENARIOS, check_allocation, check_unit, effort_ledger,
                       evaluate_event, flag_untrusted_text, parse_declared_number, route_requisition, run_replay)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -693,6 +693,31 @@ class CommercialJudgmentTests(unittest.TestCase):
         self.assertEqual(p2['assumptions'][1], {'name': 'setup_hours_per_batch', 'value': 2, 'provenance': 'buyer assumption correction',
                                                 'scope': 'line L1', 'used_by_this_evaluation': False})
         self.assertIn('assumptions', p2['diff_from_previous']['changed'])
+
+
+# ----------------------------------------------------------------------------- v0.3.3 companion extension point
+
+class CompanionExtensionPointTests(unittest.TestCase):
+    """v0.3.3 extension point: a companion annex is outside the decision basis, fingerprint, payload and correction targets."""
+    ANNEX = {'schema': 'valuedelivery_annex/0.1-draft', 'ready': True, 'approved': True, 'readiness_conditions': [{'status': 'met'}]}
+    def test_annex_in_the_fixture_changes_neither_basis_nor_fingerprint(self):
+        plain = _approved_case(); f = copy.deepcopy(FIXTURE); f['valuedelivery_annex'] = copy.deepcopy(self.ANNEX); annexed = _approved_case(f)
+        self.assertEqual(annexed.current['decision_basis'], plain.current['decision_basis'])
+        self.assertEqual(annexed.current['input_fingerprint'], plain.current['input_fingerprint'])
+        self.assertNotIn('valuedelivery_annex', json.dumps(annexed.current['decision_basis']))
+    def test_annex_on_a_packet_view_is_not_retained_or_transmitted(self):
+        cf = _approved_case(); fp = cf.current['input_fingerprint']; view = cf.current; view['valuedelivery_annex'] = copy.deepcopy(self.ANNEX)
+        self.assertNotIn('valuedelivery_annex', cf.current); dest = CapturingDestination()
+        self.assertEqual(cf.request_handoff(dest, action_date='2026-10-15', actor_role='buyer')['execution_state'], 'acknowledged')
+        self.assertNotIn('valuedelivery_annex', json.dumps(dest.payloads[0], default=str)); self.assertEqual(dest.payloads[0]['input_fingerprint'], fp)
+    def test_no_correction_can_target_an_annex(self):
+        self.assertFalse(any('annex' in field for targets in CORRECTION_TARGETS.values() for field in targets))
+        cf = CaseFile(copy.deepcopy(FIXTURE)); cf.build_packet()
+        for ctype in ('data', 'policy_change'):
+            with self.subTest(type=ctype):
+                corr = _c(ctype, 'valuedelivery_annex', None, self.ANNEX, actor='buyer' if ctype == 'data' else 'procurement-policy-owner')
+                self.assertEqual(_err(lambda: cf.apply_correction(corr, expected_revision=1)), 'unsupported_correction_target')
+        self.assertEqual((len(cf.packets), len(cf.corrections)), (1, 0))
 
 
 class ExportTests(unittest.TestCase):

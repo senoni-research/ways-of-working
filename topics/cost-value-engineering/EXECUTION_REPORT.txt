@@ -931,3 +931,53 @@ Remaining limits: as in the record above. In addition, a commercial judgment
   chooses among offers already eligible and comparable; it cannot waive a
   requirement (that is a requirement correction by its owner). Live-agent
   behavior for B01–B45: UNRUN.
+
+--------------------------------------------------------------------------------
+v0.3.3 COMPANION EXTENSION POINT — 13 October 2026
+--------------------------------------------------------------------------------
+Environment: macOS (Darwin 25.6.0), Python 3.14.7, standard library only.
+Working tree: local main at 67b9d02 (PR #6 merged), uncommitted. Pack 0.3.2 ->
+  0.3.3; workflow schema 0.2.0, core schema 0.1.0, fixture R01, core.py and
+  workflow.py unchanged. No connector, supplier contact, deployment or
+  customer data.
+
+Trigger: the companion draft Cost Improvement Delivery & Value Realisation
+  (topics/cost-improvement-delivery/, .valuedelivery/) requires a base release
+  that names it and states, with a test, that its annex is outside the
+  approval engine.
+  Module 10: one task-table row pointing to the companion if installed.
+  Module 55: an extension-point paragraph (annex refers to a packet by ID,
+    revision and fingerprint; not in the decision basis, fingerprint,
+    accepted approval or payload; no correction target; accepting one later
+    needs a registered component, correction targets and tests).
+  README: one paragraph naming the companion and its boundary.
+  Tests: test_workflow.py 132 -> 135 (CompanionExtensionPointTests: annex in
+    the fixture leaves basis and fingerprint unchanged; annex on a packet view
+    is neither retained nor transmitted; data and policy corrections aimed at
+    an annex raise unsupported_correction_target). They pass against the
+    unchanged workflow.py: they pin an existing property, not a fix.
+Inventories unchanged: 12 modules, 15 recipes, 45 behaviors, 9 templates,
+  7 prompts, 18 sources, 6 cases (+1 replay fixture). Generated artifacts: 131.
+
+Commands and observed results (from this pack directory unless noted):
+  python3 -B tools/build_pack.py              -> Built 131 generated artifacts; 14 changed
+  python3 -B tools/build_pack.py  (again)     -> Built 131 generated artifacts; 0 changed
+  python3 -B tools/build_pack.py --check      -> BUILD CHECK PASSED
+  python3 -B tools/validate_pack.py           -> STATIC VALIDATION PASSED (131 artifacts)
+  python3 -B tools/test_validate_pack.py .    -> ALL 18 CORRUPTION REGRESSIONS PASSED
+  python3 -B -m unittest discover -p 'test_*.py'
+      reference/                              -> Ran 191 tests, OK (56 core + 135 workflow)
+      cursor-project/.costvalue/reference     -> Ran 191 tests, OK
+      portable-project/.costvalue/reference   -> Ran 191 tests, OK
+  Companion (../cost-improvement-delivery): build, validate and corruption
+      suite pass against this release; see its EXECUTION_REPORT.txt.
+  Carey Chou:   python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Vandeput:     python3 -B tools/validate_pack.py   -> STATIC VALIDATION PASSED (unchanged)
+  Root:         python3 -B tools/check_docs.py      -> PASSED
+                git diff --check                    -> clean
+  python3 -B tools/scan_publication.py <pack> --terms-file <private-outside-repo>
+      -> IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns)
+
+Remaining limits: as above. The extension point is a documented boundary,
+  not an accepted annex; VD24 in the companion stays not implemented.
+  Live-agent behavior for B01–B45: UNRUN.

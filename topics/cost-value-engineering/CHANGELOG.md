@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.3 — 13 October 2026
+
+Companion extension point. No new module, recipe, behavior, template, prompt, source, case or scenario; workflow schema 0.2.0, core arithmetic schema 0.1.0 and fixture R01 unchanged; `reference/workflow.py` and `reference/core.py` unchanged.
+
+- Module 10 task table: one discovery row for delivering an accepted change or claiming its realised value, pointing to the separately installed companion Cost Improvement Delivery & Value Realisation if present.
+- Module 55: an extension-point paragraph. A companion record refers to a packet by ID, revision and input fingerprint; it is not part of the decision basis, the fingerprint, the accepted approval or the handoff payload, and no correction type can target it. Accepting an annex later requires a registered component with its own correction targets and tests.
+- README: one paragraph naming the companion and its boundary.
+- Tests: `test_workflow.py` 132 → 135 (reference total 191). The new tests check that an annex in the fixture or on a packet view changes neither the decision basis nor the fingerprint, is not transmitted, and cannot be the target of a data or policy correction.
+
 ## 0.3.2 — 9 October 2026
 
 Reconciles a parallel safeguards branch, written against 0.3.0 at the same time as 0.3.1, onto 0.3.1. Where both versions addressed the same rule, 0.3.1's reviewed behavior is kept: pending packets rather than a hard stop for non-event routes, rejection of malformed eligibility statuses, the accepted-approval record and detached views, and idempotency keys with source identity. The branch's remaining safeguards are re-implemented on that design. Workflow schema stays 0.2.0 and fixture R01 is unchanged; core arithmetic schema 0.1.0. No new module, recipe, behavior, template, prompt, source, case or scenario.
