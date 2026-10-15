@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Root documentation check: verify README/ATTRIBUTION local links and pack entry points.
 
-Checks local Markdown links in the root documents resolve to existing local files,
+Checks local Markdown links in the root documents and the topics landing page
+resolve, each relative to its own directory, to existing files inside the repository,
 and that every mandatory pack entry point and attribution target exists.
 Mechanical presence checks only; semantic attribution review is recorded in
 ATTRIBUTION.md and the per-pack source registers, not proven here.
@@ -35,6 +36,7 @@ REQUIRED_PATHS = [
     'nicolas-vandeput/SOURCE_REGISTER.json',
     'nicolas-vandeput/cursor-project/.cursor/rules/10-vandeput-method.mdc',
     'nicolas-vandeput/portable-project/AGENTS.md',
+    'topics/README.md',
     'topics/cost-value-engineering/README.md',
     'topics/cost-value-engineering/QUICKSTART.md',
     'topics/cost-value-engineering/cursor.md',
@@ -108,13 +110,13 @@ def main() -> int:
             if needle not in text:
                 failures.append(f'{rel}: missing mandatory content: {needle!r}')
 
-    for rel in ('README.md', 'ATTRIBUTION.md'):
+    for rel in ('README.md', 'ATTRIBUTION.md', 'topics/README.md'):
         p = ROOT / rel
         if not p.is_file():
             continue
         text = p.read_text(encoding='utf-8')
         for link in extract_local_links(text):
-            target = (ROOT / link).resolve()
+            target = (p.parent / link).resolve()
             if not target.is_relative_to(ROOT):
                 failures.append(f'{rel}: link escapes repository: {link}')
             elif not target.exists():
