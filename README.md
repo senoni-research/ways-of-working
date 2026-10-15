@@ -28,7 +28,7 @@ New team members, data scientists, engineers, and reviewers who work with AI cod
 
 ## How to start
 
-1. Choose the pack that matches the task (forecasting/inventory work → Vandeput; AI-memory/judgment/automation design → Carey; quotation review, cost assumptions, or supplier-quote comparison → Cost & Value Engineering).
+1. Choose the pack that matches the task (forecasting/inventory work → Vandeput; AI-memory/judgment/automation design → Carey; quotation review, cost assumptions, or supplier-quote comparison → Cost & Value Engineering). The [topic-pack guide](topics/README.md) compares Cost & Value Engineering with its companion and includes a short synthetic exercise.
 2. Read that pack's README and quickstart.
 3. Merge the corresponding project pack into your working project — Cursor: the supplied `.mdc` rule under `.cursor/rules/` (carey: `00-carey-method.mdc`; vandeput: `10-vandeput-method.mdc`; cost-value: `20-costvalue-method.mdc`) plus the module directory (`.carey/`, `.vandeput/`, or `.costvalue/`). Portable agents: merge the supplied `AGENTS.md` content with your existing instructions, or use the documented Cline/OpenCode adapters as alternatives.
 4. Verify in a fresh session that the intended files actually loaded (each pack's README gives a verification prompt).
