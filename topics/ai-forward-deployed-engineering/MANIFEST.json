@@ -23,9 +23,9 @@
       "words": 936
     },
     "CHANGELOG.md": {
-      "bytes": 9495,
-      "sha256": "197c77abfc6c5597646ba5ab810c4313789e5c30fada31bb4112d792d18e70e1",
-      "words": 1479
+      "bytes": 9575,
+      "sha256": "a75c6c7804fb85e5d58500896cb5bdc02d10cb99083dc71884b5688c7a90e05e",
+      "words": 1489
     },
     "LICENSE": {
       "bytes": 1072,
@@ -42,9 +42,9 @@
       "words": 1172
     },
     "ROADMAP.md": {
-      "bytes": 3678,
-      "sha256": "963493689dd4e76a14b56f7c8990cfb2770cc1a8e348903d676b125651295de1",
-      "words": 589
+      "bytes": 3829,
+      "sha256": "0add701417a8aef04410a8abe6414d4246d1200ed577b7128940686471d8e581",
+      "words": 611
     },
     "SOURCE_REGISTER.json": {
       "bytes": 77631,
@@ -56,9 +56,9 @@
       "words": 8307
     },
     "VALIDATION.md": {
-      "bytes": 6835,
-      "sha256": "9cc0d99c7830e874a679498a6d38ecd4327a47e4730f939db4e8462b8d774f1a",
-      "words": 1137
+      "bytes": 8794,
+      "sha256": "0eeb79320028e9645096da55d589799faae6bafed0001223ea7c37cf1badab54",
+      "words": 1454
     },
     "VERSION": {
       "bytes": 6,
@@ -341,9 +341,9 @@
       "words": 936
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 9495,
-      "sha256": "197c77abfc6c5597646ba5ab810c4313789e5c30fada31bb4112d792d18e70e1",
-      "words": 1479
+      "bytes": 9575,
+      "sha256": "a75c6c7804fb85e5d58500896cb5bdc02d10cb99083dc71884b5688c7a90e05e",
+      "words": 1489
     },
     "canonical/pages/QUICKSTART.md": {
       "bytes": 4505,
@@ -356,14 +356,14 @@
       "words": 1172
     },
     "canonical/pages/ROADMAP.md": {
-      "bytes": 3678,
-      "sha256": "963493689dd4e76a14b56f7c8990cfb2770cc1a8e348903d676b125651295de1",
-      "words": 589
+      "bytes": 3829,
+      "sha256": "0add701417a8aef04410a8abe6414d4246d1200ed577b7128940686471d8e581",
+      "words": 611
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 6835,
-      "sha256": "9cc0d99c7830e874a679498a6d38ecd4327a47e4730f939db4e8462b8d774f1a",
-      "words": 1137
+      "bytes": 8794,
+      "sha256": "0eeb79320028e9645096da55d589799faae6bafed0001223ea7c37cf1badab54",
+      "words": 1454
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 949,

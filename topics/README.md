@@ -1,17 +1,18 @@
 # Topic packs
 
-Two topic-led packs live here. Each is a working method for practitioners and AI coding assistants, with small synthetic reference helpers and tests. Pick the one that matches your task; each pack's own README, quickstart and validation page are authoritative, and this page only points to them.
+Three topic-led packs live here. Each is a working method for practitioners and AI coding assistants, with small synthetic reference helpers and tests. Pick the one that matches your task; each pack's own README, quickstart and validation page are authoritative, and this page only points to them.
 
 | If your task is… | Use | Start with |
 |---|---|---|
 | Reviewing a part's scope or specification, a supplier quote, cost assumptions or a buyer's decision before handoff | **Cost & Value Engineering** 0.3.3 ([`cost-value-engineering/`](cost-value-engineering/README.md), namespace `.costvalue/`) | [QUICKSTART](cost-value-engineering/QUICKSTART.md) · [VALIDATION](cost-value-engineering/VALIDATION.md) |
 | After a recommendation: scoping the implementation work and its readiness, dating the change honestly, and checking what value was actually observed against a declared comparator | **Cost Improvement Delivery & Value Realisation**, companion review draft 0.1.0 ([`cost-improvement-delivery/`](cost-improvement-delivery/README.md), namespace `.valuedelivery/`). It requires Cost & Value Engineering 0.3.3 in the same project. | [QUICKSTART](cost-improvement-delivery/QUICKSTART.md) · [VALIDATION](cost-improvement-delivery/VALIDATION.md) |
+| Delivering an agentic AI system inside a customer's business with a coding assistant, from understanding the work to handover | **AI Forward Deployed Engineering** 0.3.0 ([`ai-forward-deployed-engineering/`](ai-forward-deployed-engineering/README.md), namespace `.fde/`). A working method with synthetic reference examples, not a production framework. | [QUICKSTART](ai-forward-deployed-engineering/QUICKSTART.md) · [VALIDATION](ai-forward-deployed-engineering/VALIDATION.md) |
 
 For forecasting, inventory or AI-memory work, see the person-inspired packs listed in the [repository README](../README.md).
 
 ## What these packs are not
 
-They are public methods and synthetic reference helpers. They are not a separately developed commercial application, and they connect to no real procurement, finance or planning system. Their cases are synthetic with published expected answers, so they are regressions, not blind tests. The companion's draft annex is not accepted by the base engine. Each pack's validation page says what its checks show and what they do not.
+They are public methods and synthetic reference helpers. They are not a separately developed commercial application, and they connect to no real procurement, finance or planning system, model provider or cloud account. Their cases are synthetic with published expected answers, so they are regressions, not blind tests. The companion's draft annex is not accepted by the base engine. Each pack's validation page says what its checks show and what they do not.
 
 ## Getting started
 
@@ -20,6 +21,7 @@ They are public methods and synthetic reference helpers. They are not a separate
 3. **Install only the rules you need into your working project, not into this library.** Do not overwrite existing rules or instructions.
    - Cost & Value Engineering, Cursor: merge `.costvalue/` and `.cursor/rules/20-costvalue-method.mdc` from `cost-value-engineering/cursor-project/`. Other agents: merge `.costvalue/` and the supplied `AGENTS.md` content from `cost-value-engineering/portable-project/`.
    - Companion, after the base: copy `.valuedelivery/` and `.cursor/rules/30-valuedelivery-method.mdc` from `cost-improvement-delivery/cursor-project/`, or `.valuedelivery/` plus `AGENTS.valuedelivery.md` appended to the existing `AGENTS.md`, from `cost-improvement-delivery/portable-project/`. Then run `python3 .valuedelivery/check_install.py` from the project root.
+   - AI Forward Deployed Engineering, Cursor: copy `.fde/` and `.cursor/rules/40-fde-method.mdc` from `ai-forward-deployed-engineering/cursor-project/`. Other agents: copy `.fde/` and append `AGENTS.fde.md` to the existing `AGENTS.md`, from `ai-forward-deployed-engineering/portable-project/`. Then run `python3 .fde/check_install.py` from the project root.
 4. **Run an example.** Each pack README lists its example and check commands, run from the pack directory. The exercise below needs no installation.
 5. **Read the limits** on the pack's validation page before relying on a result.
 
@@ -57,4 +59,4 @@ Pack changes are made in each pack's `canonical/`, `reference/` or `tools/` fold
 
 ## Credit and licence
 
-Each pack credits its sources in its own source register and attribution page ([Cost & Value Engineering](cost-value-engineering/ATTRIBUTION.md) · [companion](cost-improvement-delivery/ATTRIBUTION.md)); the library-wide policy is in [ATTRIBUTION.md](../ATTRIBUTION.md). The repository's MIT licence covers the original material Senoni Research can license, not external publications or third-party marks.
+Each pack credits its sources in its own source register and attribution page ([Cost & Value Engineering](cost-value-engineering/ATTRIBUTION.md) · [companion](cost-improvement-delivery/ATTRIBUTION.md) · [AI Forward Deployed Engineering](ai-forward-deployed-engineering/ATTRIBUTION.md)); the library-wide policy is in [ATTRIBUTION.md](../ATTRIBUTION.md). The repository's MIT licence covers the original material Senoni Research can license, not external publications or third-party marks.

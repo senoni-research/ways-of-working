@@ -9,12 +9,12 @@ The pack is built in phases. Each phase ends with a review before the next begin
 | 0.2.0 | Modules 40 (context, retrieval and memory), 45 (durable state and review), 50 (evaluation and observability) and 55 (concurrency and multiple agents), with five recipes, eleven more synthetic cases, 28 more behaviour specifications and their reference code |
 | 0.3.0 | Modules 10 (the engagement), 60 (security and guardrails), 70 (deployment and operations), 75 (customer data) and 80 (templates and prompts), with eight recipes including the go-live ones, seventeen more synthetic cases, 33 more behaviour specifications, nine templates, five prompts and their reference code |
 
-Registration in the repository's README, topics page and root documentation check is the last step, after the modules have been reviewed. 0.3.0 is not registered yet.
+Registration in the repository's README, topics page, attribution index and root documentation check is the last step, after the modules have been reviewed. 0.3.0 was registered on 21 October 2026, after its review.
 
 ## Open items
 
 - Add records for the host documentation the install instructions rely on (Cursor rules, OpenCode, Cline), after reading those pages.
-- Run the quickstart's two checks in a fresh session in Cursor and in a host that reads `AGENTS.md`, and record each host's own evidence of which rules loaded.
+- Run the quickstart's two checks in Cursor's editor, in Cline and in other hosts, and record each host's own evidence of which rules loaded. OpenCode and Cursor's command-line agent were checked on 21 October 2026, with one model each; see the validation page.
 - Check by hand the pages that blocked automated access: Articles 5 and 17 of the GDPR on EUR-Lex (FD24a, read on legislation.gov.uk and now cited in module 75), the cedarpy page on PyPI (H-Cedar) and the npm package in H-AgentCoreRuntime.
 - Re-read each documentation record's page before a module cites it, and record the inspected scope. The builder enforces this. Six were re-read for 0.1.0, six for 0.2.0 and sixteen for 0.3.0; the seven that remain are not cited.
 - The MCP record cites the 2025 revisions of the specification, and no module relies on its authorisation rules. Read the current revision, 2026-07-28, before one does.
