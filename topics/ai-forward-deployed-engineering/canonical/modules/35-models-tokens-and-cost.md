@@ -50,13 +50,15 @@ Compare candidate models on accuracy, cost per item and seconds per item togethe
 
 FC08 has three models, one dominated and no winner.
 
-## Keep spending under a limit the code can't exceed
+## Keep spending within limits you can show
 
-A budget in code is an estimate. The Claude Agent SDK's `max_budget_usd`, for example, stops a run when the client-side estimate reaches the value, and the estimate can pass it [[H-ClaudeAgentSDK]].
+A budget in code is an estimate. The Claude Agent SDK's `max_budget_usd`, for example, stops a run when the client-side estimate reaches the value, and the estimate can pass it [[H-ClaudeAgentSDK]]. A provider's limit can lag too. OpenAI says API access may not stop immediately when prepaid credits run out, that usage in the delay shows as a negative balance, and not to rely on the prepaid balance as an instantaneous spending cutoff; automatic recharge is on by default when prepaid billing is set up [[H-OpenAI]].
 
 Senoni practice:
 
-- Put the hard cap outside the code, at the provider or the account: a spending limit on the API key, or a prepaid balance. A bug, a loop or a leaked key then cannot spend beyond it.
+- Use the limit the provider documents, on the key or the account, as the outer one, and record how it is enforced: its delay, the requests already in flight, the recharge settings and the services it covers. A prepaid balance bounds spending only with automatic recharge off.
+- Layer it with what the code controls: bounded concurrency and calls per item, the in-code budget, and a key you can revoke.
+- Say how much overspend is still possible, rather than promising none.
 - Treat an alert as a warning, not a cap.
 - Set the alert on usage itself, so it fires even while credits or a free allowance cover the bill.
 
@@ -71,4 +73,4 @@ Cloud account budgets, and the cost of a session on a managed runtime, are in mo
 | FB28 | Two models are compared. | Report accuracy, cost and seconds together, and name a winner only if one is at least as good on all three and better on one. | `unit-tested` |
 | FB29 | A model's speed is quoted. | Give time to first token and decode speed measured from your own timestamps, and say where they were measured. | `unit-tested` |
 | FB30 | Results must be reproducible, or the customer's data terms limit providers. | Record the provider that served each call, and pin the provider with fallbacks disabled. | `review` |
-| FB31 | The system needs a spending limit. | Set the hard cap at the provider or account, outside the code; treat an in-code budget as an estimate and an alert as a warning. | `review` |
+| FB31 | The system needs a spending limit. | Use the provider's documented limit as the outer one and record its delay and coverage; layer bounded calls, the in-code budget and revocation; say how much overspend is still possible; treat an alert as a warning. | `review` |

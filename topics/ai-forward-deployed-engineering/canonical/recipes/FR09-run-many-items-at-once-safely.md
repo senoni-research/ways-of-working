@@ -6,7 +6,7 @@
 2. Size for the peak hour with Little's law: items in progress equal arrivals per second times seconds per item. Compute the use of every shared resource, find the bottleneck, and size it below a target such as 80%.
 3. Cap the items in progress at what the bottleneck allows, whatever the framework's default.
 4. Gather results by item id, in input order. A failing item is referred with its error; the others carry on.
-5. Classify each failed call. Retry, with jittered backoff and a bounded number of attempts, only a request that certainly wasn't sent, or one that carries an idempotency key. Report any other request that may have started as unknown, to be checked before resending. Don't retry a rejection.
+5. Classify each failed call. Retry, with jittered backoff and a bounded number of attempts, only a request that certainly wasn't sent, a failure the provider documents as retryable, such as throttling, or a request that carries an idempotency key the receiving service honours. Report any other request that may have started as unknown, to be checked before resending. Don't retry a validation or permission error.
 6. Retry at one layer only, and take a lock so the batch can't run twice.
 7. Record each item's start and finish, and report the wall time, the slowest item and the mean.
 

@@ -37,7 +37,8 @@ def alarm_state(points: list, threshold: float, comparison: str, datapoints_to_a
 
 
 def error_budget(slo: str, good: int, total: int) -> dict:
-    """The budget is the share of items the SLO lets fail. When it is spent, changes stop except fixes."""
+    """The budget is the share of items the SLO lets fail. When the failures go over it, changes stop except fixes;
+    exactly at the budget is still within it."""
     budget = (1 - Fraction(slo)) * total
     failed = total - good
     return {'budget': float(budget), 'failed': failed, 'spent': round(float(failed / budget), 4),

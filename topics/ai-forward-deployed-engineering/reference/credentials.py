@@ -36,6 +36,13 @@ def _json(obj: dict) -> str:
     return _b64(json.dumps(obj, separators=(',', ':')).encode())
 
 
+def _object(part: str) -> dict:
+    value = json.loads(_unb64(part))
+    if not isinstance(value, dict):
+        raise ValueError('not a JSON object')
+    return value
+
+
 def sign_token(claims: dict, secret: str, alg: str = 'HS256') -> str:
     head = _json({'alg': alg, 'typ': 'JWT'}) + '.' + _json(claims)
     if alg != 'HS256':
@@ -48,18 +55,22 @@ class TokenError(Exception):
 
 
 def verify_token(token: str, secret: str, issuer: str, audience: str, now: int) -> dict:
-    """Check the algorithm, the signature, the issuer, the audience and the expiry, and return the claims."""
+    """Check the algorithm, the signature, the issuer, the audience and the expiry, and return the claims. The claims
+    are read only after the signature checks out."""
     try:
         header, body, sig = token.split('.')
-        alg = json.loads(_unb64(header)).get('alg')
+        alg, given = _object(header).get('alg'), _unb64(sig)
     except ValueError:
         raise TokenError('malformed token') from None
     if alg != 'HS256':
         raise TokenError(f'algorithm not allowed: {alg}')
     expected = hmac.new(secret.encode(), f'{header}.{body}'.encode(), hashlib.sha256).digest()
-    if not hmac.compare_digest(expected, _unb64(sig)):
+    if not hmac.compare_digest(expected, given):
         raise TokenError('bad signature')
-    claims = json.loads(_unb64(body))
+    try:
+        claims = _object(body)
+    except ValueError:
+        raise TokenError('malformed token') from None
     if claims.get('iss') != issuer:
         raise TokenError('wrong issuer')
     if audience not in (claims['aud'] if isinstance(claims.get('aud'), list) else [claims.get('aud')]):
@@ -76,10 +87,13 @@ def acting_user(headers: dict, secret: str, issuer: str, audience: str, now: int
     if not auth.startswith('Bearer '):
         raise TokenError('no bearer token')
     claims = verify_token(auth.removeprefix('Bearer '), secret, issuer, audience, now)
+    if not isinstance(claims.get('sub'), str) or not claims['sub']:
+        raise TokenError('no subject')
     return {'user': claims['sub'], 'role': claims.get('role')}
 
 
 def session_id(user: str, item_id: str) -> str:
     """A session id the server derives from the verified user and the work item, so one user can't reach another's
-    session by sending its id."""
-    return hashlib.sha256(f'{user}\n{item_id}'.encode()).hexdigest()
+    session by sending its id. The pair is hashed as a JSON array, so no two pairs share an id. The example has one
+    token issuer; where users can come from more than one issuer or tenant, add it to the array."""
+    return hashlib.sha256(json.dumps([user, item_id]).encode()).hexdigest()

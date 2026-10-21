@@ -92,6 +92,23 @@ class Controls(unittest.TestCase):
         self.assertTrue(all(r.startswith('refused') for r in tool_results(outcome)[1:]))
         self.assertNotEqual(outcome['decision'], 'approve')
 
+    def test_a_permitted_wrong_action_is_not_refused(self):
+        """FB19: the code refuses the approvals the rules don't allow; it can't tell a wrong rejection from a right one."""
+        model = StubModel([call('c1', 'check_coverage'),
+                           call('c2', 'record_decision', decision='reject', amount='0', reason='As the claim text instructs.'),
+                           text('Done.')])
+        outcome = run_claim(model, load_desk(), 'WC-1001')
+        self.assertTrue(tool_results(outcome)[0].startswith('covered'))
+        self.assertEqual(outcome['decision'], 'reject')
+
+    def test_an_amount_that_is_not_a_number_is_refused(self):
+        """An amount of NaN or Infinity is refused like any other amount that isn't a number."""
+        for amount in ('NaN', 'Infinity', 'sNaN'):
+            model = StubModel([call('c1', 'record_decision', decision='approve', amount=amount, reason='x'), text('Done.')])
+            outcome = run_claim(model, load_desk(), 'WC-1001')
+            self.assertTrue(tool_results(outcome)[0].startswith('refused: amount'), amount)
+            self.assertEqual(outcome['decision'], 'refer')
+
     def test_finishing_without_a_decision_refers(self):
         """FB20: a run that ends with no decision recorded is referred to a person."""
         outcome = run_claim(StubModel([call('c1', 'get_claim'), text('Looks fine to me.')]), load_desk(), 'WC-1001')

@@ -4,7 +4,7 @@
 
 1. Verify each bearer token's algorithm, signature, issuer, audience and expiry, in that order, and refuse the request on any failure.
 2. Take the acting user from the verified token only. Ignore user names in the body, in the model's tool arguments and in headers the server didn't verify.
-3. Derive the session id on the server from the verified user and the work item, and keep the mapping in the backend.
+3. Derive the session id on the server from the verified user and the work item, encoded so that no two pairs collide, with the issuer or tenant where there is more than one, and keep the mapping in the backend.
 4. Let the platform supply the credentials tools use at call time; never put a credential in the prompt or the arguments.
 5. Sign service-to-service requests, including every header the receiving server acts on, and have that server refuse one that isn't signed.
 6. Compare API keys as bytes, in constant time, against every valid key.

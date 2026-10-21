@@ -22,14 +22,25 @@ class Erasure(unittest.TestCase):
     """FB87: erasure matches the exact customer id in every store and ends with a receipt and a recheck (FC35)."""
 
     def test_receipt(self):
-        after, receipt = erase(FC35['stores'], FC35['customer'])
+        after, receipt = erase(FC35['stores'], FC35['customer'], FC35['match'])
         self.assertEqual(receipt, FC35['expected']['receipt'])
         self.assertEqual({k: len(v) for k, v in after.items()}, FC35['expected']['kept'])
+        substring = sum('C1' in json.dumps(r) for records in FC35['stores'].values() for r in records)
+        self.assertEqual(substring, FC35['expected']['substring_matches'])
 
     def test_other_customers_survive(self):
-        after, _ = erase(FC35['stores'], 'C1')
+        after, _ = erase(FC35['stores'], 'C1', FC35['match'])
         self.assertEqual(sorted(r['customer'] for r in after['memory']), ['C10', 'C12'])
         self.assertEqual(len([r for r in after['logs'] if 'C1-B' in r['text']]), 1)
+        self.assertEqual([r['trace'] for r in after['traces']], ['t-02', 't-06'])
+
+    def test_the_customer_field_decides_a_structured_record(self):
+        after, receipt = erase({'rows': [{'customer': 'C1', 'text': 'repair details'}]}, 'C1', {'rows': 'field'})
+        self.assertEqual((after, receipt['complete']), ({'rows': []}, True))
+
+    def test_a_store_needs_a_declared_route(self):
+        with self.assertRaises(ValueError):
+            erase({'rows': [{'customer': 'C1'}], 'logs': []}, 'C1', {'rows': 'field'})
 
 
 class Masking(unittest.TestCase):

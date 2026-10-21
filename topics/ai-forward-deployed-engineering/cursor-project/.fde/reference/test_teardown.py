@@ -34,6 +34,10 @@ class Teardown(unittest.TestCase):
         for check, expected in zip(FC33['proofs'], FC33['expected']['proofs']):
             self.assertEqual(proven(check['leftovers'], check['hours'], check['cost']), expected, check['name'])
 
+    def test_a_number_that_is_not_finite_is_never_proof(self):
+        for hours, cost in ((float('nan'), 0), (26, float('nan')), (float('inf'), 0), (26, -1)):
+            self.assertFalse(proven([], hours, cost)['proven'], (hours, cost))
+
 
 if __name__ == '__main__':
     unittest.main()

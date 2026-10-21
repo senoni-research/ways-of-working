@@ -1,6 +1,6 @@
-AI Forward Deployed Engineering 0.3.0 (thirteen modules) - execution report
+AI Forward Deployed Engineering 0.3.0 (thirteen modules, with the review corrections) - execution report
 
-Run: 2026-10-21 17:22 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, uncommitted.
+Run: 2026-10-21 21:20 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, uncommitted.
 Interpreters: CPython 3.11.6 and 3.14.7, standard library only, run through uv without a project environment.
 
 Commands, from the pack root, on each interpreter:
@@ -9,40 +9,45 @@ Commands, from the pack root, on each interpreter:
   python3 tools/build_pack.py . --check
     BUILD CHECK PASSED
   python3 tools/validate_pack.py .
-    STATIC VALIDATION PASSED (279 canonical artifacts, links, loaders, spec trace, install paths, inventories and manifest).
+    STATIC VALIDATION PASSED (281 canonical artifacts, links, loaders, spec trace, install paths, inventories and manifest).
   python3 tools/test_validate_pack.py .
-    ALL 38 CORRUPTION REGRESSIONS AND 6 INSTALL CHECKS PASSED; positive control passed.
-  python3 -m unittest discover -s reference -p 'test_*.py'
-    Ran 108 tests. OK
+    ALL 38 CORRUPTION REGRESSIONS AND 10 INSTALL CHECKS PASSED; positive control passed.
+  python3 -m unittest discover -s reference -p 'test_*.py'   (on a temporary copy of reference/ and cases/)
+    Ran 120 tests. OK
   python3 tools/mutate_reference.py .
-    ALL 87 MUTANTS KILLED; the unmutated tests pass.
+    ALL 103 MUTANTS KILLED (97 assertion, 6 error); no import errors or timeouts; the unmutated tests pass.
+
+The reviewer's 27 boundary tests, held outside the repository, on each interpreter against a temporary copy of reference/ and cases/:
+
+    Ran 27 tests. OK
+  Run through a small adapter that gives the three erasure calls the match routes erase() now requires ({store: 'field'}); without it those three stop with a TypeError, by design.
 
 From inside each install tree (cursor-project, portable-project), on 3.11:
 
   python3 -m unittest discover -s .fde/reference -p 'test_*.py'
-    Ran 108 tests. OK
+    Ran 120 tests. OK
 
 In a temporary project holding a copy of the Cursor tree's .fde/ and .cursor/, and in another holding the portable tree's .fde/ with AGENTS.fde.md as its AGENTS.md, on 3.11:
 
   python3 .fde/check_install.py
-    INSTALL CHECK PASSED: .fde/ present; entry route: Cursor rule.
-    INSTALL CHECK PASSED: .fde/ present; entry route: AGENTS.md section.
+    INSTALL CHECK PASSED: .fde/ complete (110 files); entry route: Cursor rule.
+    INSTALL CHECK PASSED: .fde/ complete (110 files); entry route: AGENTS.md section.
 
 From the repository root, on each interpreter:
 
   python3 tools/check_docs.py
     ROOT DOCUMENTATION CHECK PASSED: entry points, attribution links and local targets resolve.
 
-On 3.11, with a private terms file held outside the repository and deleted afterwards:
+On each interpreter, with a private terms file held outside the repository and deleted afterwards:
 
   python3 tools/scan_publication.py . --terms-file <private file>
-    IDENTIFIER SCAN PASSED (0 matching paths; 303 privately supplied patterns).
+    IDENTIFIER SCAN PASSED (0 matching paths; 337 privately supplied patterns).
 
-Manifest counts: 13 modules of 13 planned, 16 recipes, 74 sources (7 link-checked only), 36 cases, 92 behaviours (60 unit-tested, 32 review), 9 templates, 5 prompts; 405 files.
+Manifest counts: 13 modules of 13 planned, 16 recipes, 74 sources (7 link-checked only), 36 cases, 92 behaviours (60 unit-tested, 32 review), 9 templates, 5 prompts.
 
 The reference tests use a scripted stub model where a model would decide, and no model elsewhere. The durable tests write to temporary SQLite files, and one starts two threads with separate connections to race for the run lock. The runtime test drives a scripted clock; the token, cost, alarm and teardown tests take their times as inputs. No test called a model, an API, a cloud account or the network.
 
 The collision check compared both install trees with those of carey-chou, nicolas-vandeput, cost-value-engineering and cost-improvement-delivery: no shared path.
 
-Not run: any Cursor, Cline or other agent session, including the quickstart's first prompt; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
-Network: none during these checks. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; see SOURCE_REGISTER.md.
+Not run: any Cursor, Cline or other agent session, including the quickstart's two checks; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
+Network: none during these checks. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.

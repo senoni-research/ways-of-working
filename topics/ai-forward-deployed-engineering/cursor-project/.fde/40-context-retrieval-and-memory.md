@@ -27,7 +27,7 @@ FC09 shows why the fourth step matters. On seven questions, plain keyword overla
 
 An enterprise context layer, in one vendor's description, turns an organisation's knowledge and norms into context an AI system can use [FD26](90-sources.md#fd26). The same page raises ownership, lineage and drift as questions to answer, without saying how [FD26](90-sources.md#fd26).
 
-Senoni practice: every governed file carries an owner and a review date. Every answer from the context layer names the file it came from, the owner and the review date. A file past its review date is still used, but the answer says it is stale, so the reader can weigh it and the owner can be asked. FC10 shows the desk's limit file, 414 days past review, flagged in the answer.
+Senoni practice: every governed file carries an owner and a review date. Every answer from the context layer names the file it came from, the owner and the review date. A file past its review date is still used, but the answer says it is stale, so the reader can weigh it and the owner can be asked. That is for answers a person reads. A check that decides on its own, such as an approval limit in code, takes its value from a current, authoritative source; if there is none, the item goes to a person. FC10 shows the desk's limit file, 414 days past review, flagged in the answer.
 
 ## Serve governed files over MCP, read-only
 
@@ -53,7 +53,7 @@ Store only what the task needs. The UK regulator's guidance on AI asks for the m
 | ID | Scenario | Required behaviour | Check |
 |---|---|---|---|
 | FB32 | The agent answers a question from the context layer. | Name the source file, its owner and its review date in the answer. | `unit-tested` |
-| FB33 | The best file for a question is past its review date. | Use it, and say in the answer that it is stale. | `unit-tested` |
+| FB33 | The best file for a question is past its review date. | Use it in an answer a person reads, and say in the answer that it is stale; a check that decides on its own needs a current, authoritative value. | `unit-tested` |
 | FB34 | A change to retrieval is proposed, such as adding embeddings. | Score each ranker on the same labelled questions, per question, with recall, precision and reciprocal rank, starting from keyword search and BM25. | `unit-tested` |
 | FB35 | The agent searches one customer's memory. | Use the customer's namespace with its trailing slash, keep only records with that exact namespace, and refuse ids that could widen it. | `unit-tested` |
 | FB36 | The agent is offered a fact the task doesn't need, such as a card number. | Don't store it. | `unit-tested` |

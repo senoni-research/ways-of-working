@@ -30,8 +30,10 @@ Retries are selfish: under overload they add load just when the system can least
 Senoni practice: classify each failure before retrying.
 
 1. The request certainly never left, such as a refused connection: retry, with jittered backoff, a bounded number of times.
-2. The request may have started, such as a timeout after sending: retry only if it carries an idempotency key. Otherwise report the item as unknown, to be checked before anything is sent again.
-3. The request was rejected: don't retry; the answer won't change.
+2. The request may have started, such as a timeout after sending: retry only if it carries an idempotency key that the receiving service honours. Otherwise report the item as unknown, to be checked before anything is sent again.
+3. The request was refused as invalid or not permitted, such as a validation or permission error: don't retry; the answer won't change.
+
+Throttling, or another failure the provider documents as retryable, is not a refusal: retry it as the provider documents, with backoff, a bounded number of times. In `reference/concurrency.py`, raise such a failure as `NotSent`.
 
 FC19 shows each of the three.
 
@@ -47,8 +49,8 @@ When a batch runs, measure from each item's own timestamps: the wall time, the s
 |---|---|---|---|
 | FB53 | A batch of items runs at once. | Never exceed the concurrency cap, and return the results by item in input order. | `unit-tested` |
 | FB54 | One item in a batch fails. | Refer that item with its error, and finish the others. | `unit-tested` |
-| FB55 | A call fails. | Retry with jittered backoff, a bounded number of times, only if the request certainly wasn't sent; don't retry a rejection. | `unit-tested` |
-| FB56 | A call times out after the request may have reached the server. | Retry only with an idempotency key; otherwise report the item as unknown, to be checked before resending. | `unit-tested` |
+| FB55 | A call fails. | Retry with jittered backoff, a bounded number of times, only if the request certainly wasn't sent or the provider documents the failure as retryable; don't retry a validation or permission error. | `unit-tested` |
+| FB56 | A call times out after the request may have reached the server. | Retry only with an idempotency key the receiving service honours; otherwise report the item as unknown, to be checked before resending. | `unit-tested` |
 | FB57 | The system is sized for peak load. | Compute items in progress with Little's law, each shared resource's use, the bottleneck, and the size it needs with headroom. | `unit-tested` |
 | FB58 | Splitting one task across several agents is proposed. | Name the reason, share full context, and measure the gain against one agent on the same cases. | `review` |
 | FB59 | A batch's speed is reported. | Report the wall time, the slowest item and the mean time per item, from each item's timestamps. | `unit-tested` |

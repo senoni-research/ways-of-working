@@ -6,7 +6,7 @@ import json
 import unittest
 from unittest import mock
 
-from credentials import TokenError, _json, acting_user, check_key, session_id, sign_token, stragglers
+from credentials import TokenError, _json, acting_user, check_key, session_id, sign_token, stragglers, verify_token
 from tool_loop import CASES
 
 CASE = {c['case_id']: c for c in json.loads((CASES / 'cases.json').read_text(encoding='utf-8'))}
@@ -79,6 +79,15 @@ class ActingUser(unittest.TestCase):
     def test_session_ids_are_derived_from_the_verified_user(self):
         self.assertEqual(session_id('h.ward', 'WC-1004'), session_id('h.ward', 'WC-1004'))
         self.assertNotEqual(session_id('h.ward', 'WC-1004'), session_id('a.osei', 'WC-1004'))
+        self.assertNotEqual(session_id('a\nb', 'c'), session_id('a', 'b\nc'))
+
+    def test_a_malformed_token_is_refused(self):
+        s = FC27['settings']
+        for text in ('W10.e30.', sign_token([], s['secret']), 'e30.e30.!!'):
+            with self.assertRaises(TokenError, msg=text):
+                verify_token(text, s['secret'], s['issuer'], s['audience'], s['now'])
+        no_subject = sign_token({'iss': s['issuer'], 'aud': s['audience'], 'exp': s['now'] + 60}, s['secret'])
+        self.assertEqual(outcome({'authorization': 'Bearer ' + no_subject}), 'no subject')
 
 
 if __name__ == '__main__':

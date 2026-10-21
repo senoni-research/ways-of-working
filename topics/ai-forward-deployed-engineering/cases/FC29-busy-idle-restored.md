@@ -8,8 +8,8 @@
 
 | Ping at | Status | time_of_last_update |
 |---|---|---|
-| 100 | Healthy | 100 |
-| 160 | Healthy | 100 |
+| 100 | Healthy | not sent |
+| 160 | Healthy | not sent |
 | 175 | HealthyBusy | 175 |
 | 235 | HealthyBusy | 175 |
 | 295 | HealthyBusy | 175 |
@@ -18,4 +18,4 @@
 
 The two copies return different request ids, task ids and retry delays.
 
-**What it shows.** The timestamp moves only when the status changes. If it moved on every ping, the runtime would never see the session go idle, and the session would run, and bill, to its maximum lifetime. HealthyBusy keeps a session alive while background work runs. The copies share everything made at startup, so each request draws its own values from the operating system: the documentation warns that `random` is seeded at startup and restored instances repeat the same values.
+**What it shows.** The timestamp moves only when the status changes. If it moved on every ping, the runtime would never see the session go idle, and the session would run, and bill, to its maximum lifetime. The contract makes the timestamp optional, so it isn't sent until the status first changes: a time taken at startup, or at a ping before the snapshot, would be reported by every restored instance. HealthyBusy keeps a session alive while background work runs. The copies share everything made at startup, so each request draws its own values from the operating system: the documentation warns that `random` is seeded at startup and restored instances repeat the same values.

@@ -1815,14 +1815,14 @@
     },
     "scenarios": [
       {
-        "signing": "host and x-amz-* only",
+        "signing": "the required headers",
         "extra": [],
         "change": null,
         "acted_on": [],
         "expected": "ok"
       },
       {
-        "signing": "host and x-amz-* only",
+        "signing": "the required headers",
         "extra": [],
         "change": {
           "header": [
@@ -1834,7 +1834,7 @@
         "expected": "ok"
       },
       {
-        "signing": "host and x-amz-* only",
+        "signing": "the required headers",
         "extra": [],
         "change": {
           "header": [
@@ -1848,7 +1848,7 @@
         "expected": "refused: unsigned header x-acting-user"
       },
       {
-        "signing": "host and x-amz-* only",
+        "signing": "the required headers",
         "extra": [],
         "change": {
           "body": "{\"decision\":\"approve\"}"
@@ -1888,7 +1888,7 @@
     ],
     "expected": {
       "authorization": {
-        "host and x-amz-* only": "AWS4-HMAC-SHA256 Credential=DESKBACKENDEXAMPLE/20261020/eu-west-2/execute-api/aws4_request, SignedHeaders=host;x-amz-date, Signature=32e3c3c489e099393d7e5d3aaef3000959dfcf498b725cc19b5f839b2e54d293",
+        "the required headers": "AWS4-HMAC-SHA256 Credential=DESKBACKENDEXAMPLE/20261020/eu-west-2/execute-api/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=03f236460fab144f0ffec6958cccc36da38ce53bc28a4b24eb89751fdedf7500",
         "every header acted on": "AWS4-HMAC-SHA256 Credential=DESKBACKENDEXAMPLE/20261020/eu-west-2/execute-api/aws4_request, SignedHeaders=content-type;host;x-acting-user;x-amz-date, Signature=051e16321f357e440f7019e15f1a5d73b53472c18f4ae07899b69859b3136a97"
       }
     }
@@ -2243,11 +2243,11 @@
       "pings": [
         [
           "Healthy",
-          100
+          null
         ],
         [
           "Healthy",
-          100
+          null
         ],
         [
           "HealthyBusy",
@@ -2591,8 +2591,8 @@
       {
         "name": "model provider",
         "purpose": "decide claims",
-        "retention": "the provider's terms",
-        "erasure": "nothing kept after the call, per the terms",
+        "retention": "abuse monitoring logs, which can hold prompts and responses, up to 30 days, per the terms",
+        "erasure": "none per customer on our side; the provider's logs expire within 30 days",
         "owner": "desk team",
         "third_party": "the model provider",
         "terms": "API data not used for training unless we opt in; abuse logs kept up to 30 days (read 20 October 2026)"
@@ -2627,6 +2627,12 @@
     "packet": "FC35-erasing-c1.md",
     "kind": "erasure",
     "customer": "C1",
+    "match": {
+      "memory": "field",
+      "checkpoints": "field",
+      "traces": "field",
+      "logs": "text"
+    },
     "stores": {
       "memory": [
         {
@@ -2672,6 +2678,16 @@
         {
           "customer": "C1",
           "trace": "t-04"
+        },
+        {
+          "customer": "C1",
+          "trace": "t-05",
+          "text": "battery swap approved"
+        },
+        {
+          "customer": "C10",
+          "trace": "t-06",
+          "text": "asked to add C1 as a second rider"
         }
       ],
       "logs": [
@@ -2698,24 +2714,24 @@
         "removed": {
           "memory": 2,
           "checkpoints": 1,
-          "traces": 3,
+          "traces": 4,
           "logs": 2
         },
         "recheck": {
           "memory": 0,
           "checkpoints": 0,
-          "traces": 0,
+          "traces": 1,
           "logs": 0
         },
-        "complete": true
+        "complete": false
       },
       "kept": {
         "memory": 2,
         "checkpoints": 1,
-        "traces": 1,
+        "traces": 2,
         "logs": 3
       },
-      "substring_matches": 15
+      "substring_matches": 17
     }
   },
   {

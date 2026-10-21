@@ -4,7 +4,7 @@
 
 1. List every tool one session holds, and mark which read private data, which read untrusted content and which can send data out. Count the customer's own text as untrusted.
 2. If one session holds all three, remove a leg. Prefer breaking the way out, for example fixed messages to the customer on file instead of free text to any address.
-3. Choose a design that keeps untrusted text from choosing actions, such as a fixed action set validated in code, and record it.
+3. Record the design that limits what untrusted text can make the agent do, such as a fixed action set validated in code. Name the wrong actions it still permits, such as a wrong choice among the permitted actions, and who or what catches each.
 4. Only then add a screen, as one more layer.
 5. Build a labelled set: attacks in every channel the agent reads, with several techniques each, and benign items from real traffic patterns.
 6. Report misses by channel and technique, and false alarms, each with its n and Wilson interval. Report the upper bound where there were no misses.

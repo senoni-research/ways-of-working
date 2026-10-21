@@ -5,7 +5,7 @@ import json
 import unittest
 from fractions import Fraction
 
-from evaluation import decide, judge, judge_agreement, paired, report, wilson
+from evaluation import decide, judge, judge_agreement, paired, report, shown, wilson
 from tool_loop import CASES
 
 CASE = {c['case_id']: c for c in json.loads((CASES / 'cases.json').read_text(encoding='utf-8'))}
@@ -58,7 +58,7 @@ class RepeatedRuns(unittest.TestCase):
         self.assertEqual(first, {k: Fraction(v) for k, v in case['expected']['first_run'].items()})
         self.assertEqual(overall, {k: Fraction(v) for k, v in case['expected']['all_runs'].items()})
         comparison = paired(a, b, case['runs'])
-        self.assertEqual(comparison, {k: case['expected'][k] for k in ('mean', 'low', 'high')})
+        self.assertEqual(shown(comparison), {k: case['expected'][k] for k in ('mean', 'low', 'high')})
         self.assertEqual(decide(comparison, case['threshold']), case['expected']['decision'])
 
     def test_the_decision_rule(self):
@@ -66,6 +66,17 @@ class RepeatedRuns(unittest.TestCase):
         self.assertEqual(decide({'mean': 0.08, 'low': 0.02, 'high': 0.14}, 0.05), 'keep')
         self.assertEqual(decide({'mean': 0.01, 'low': 0.005, 'high': 0.015}, 0.05), 'no clear difference')
         self.assertEqual(decide({'mean': -0.06, 'low': -0.1, 'high': -0.02}, 0.05), 'roll back')
+
+    def test_rounding_cannot_reach_the_threshold(self):
+        """FB50: the decision uses the exact mean, so 0.01996 doesn't reach 0.02 by rounding to it."""
+        comparison = paired([0, 0, 0], [499, 499, 499], 25000)
+        self.assertEqual(shown(comparison)['mean'], 0.02)
+        self.assertEqual(decide(comparison, 0.02), 'no clear difference')
+        self.assertEqual(decide(paired([0, 0, 0], [500, 500, 500], 25000), 0.02), 'keep')
+
+    def test_the_items_must_pair(self):
+        with self.assertRaises(ValueError):
+            paired([0, 0, 100], [100, 100], 100)
 
 
 class Judge(unittest.TestCase):

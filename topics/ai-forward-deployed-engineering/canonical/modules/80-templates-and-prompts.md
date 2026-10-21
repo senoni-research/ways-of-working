@@ -112,7 +112,7 @@ Every place a customer's data lives or goes (module [[75-customer-data]]).
 # Data map: <system>
 Updated <date> by <who>.
 
-| Store | Data held | Purpose | Retention | How erasure works | Owner | Third party and terms (date read) |
+| Store | Data held | Purpose | Retention | How erasure finds the customer (customer field or text) and works | Owner | Third party and terms (date read) |
 ```
 
 ## FT08 — Teardown checklist
@@ -122,9 +122,9 @@ Updated <date> by <who>.
 Resources, in deletion order (each before what it depends on):
 | Resource | Depends on | Deleted (date, by whom) |
 Shared resources left in place, and why: <for example the bootstrap stack>.
-Inventory of every page after deletion: <command, date, result>.
-Cost check, at least 24 hours later: <date, amount>.
-Proven: yes or no.
+Inventory of every page after deletion: <command, account, regions, resource types, date, result>.
+Cost check, at least 24 hours later: <date, period read, amount>.
+Proven: yes or no, for what the inventory and the cost check covered.
 ```
 
 ## FT09 — Go-live readiness
@@ -142,7 +142,8 @@ The tollgate from pilot to production, item by item (module [[10-engagement]]). 
 | Runbook with a named owner | | |
 | Cost estimate with its assumptions | | |
 | Teardown plan | | |
-Unmet items accepted by the customer, in writing: <who, date, which>.
+Criteria the customer revised in writing before the gate: <which, who, date, decision record>.
+Any unmet or missing item holds the gate.
 ```
 
 ## FP01 — Plan from a brief

@@ -76,16 +76,23 @@ def report(model: dict, baseline: dict, costs: dict, criteria: list[dict]) -> di
 
 
 def paired(a: list[int], b: list[int], runs: int) -> dict:
-    """Compare two versions on the same items. a and b count correct runs per item, out of `runs`; the interval is
-    for the mean per-item difference, b minus a."""
-    diffs = [(y - x) / runs for x, y in zip(a, b)]
-    mean, se = statistics.mean(diffs), statistics.stdev(diffs) / math.sqrt(len(diffs))
-    return {'mean': round(mean, 4), 'low': round(mean - 1.96 * se, 4), 'high': round(mean + 1.96 * se, 4)}
+    """Compare two versions on the same items, in the same order. a and b count correct runs per item, out of `runs`;
+    the interval is for the mean per-item difference, b minus a. The mean is exact and nothing is rounded: round only
+    to show the result, with shown()."""
+    if len(a) != len(b) or len(a) < 2:
+        raise ValueError(f'a and b must count the same items, at least two; got {len(a)} and {len(b)}')
+    diffs = [Fraction(y - x, runs) for x, y in zip(a, b)]
+    mean, se = sum(diffs) / len(diffs), statistics.stdev(diffs) / math.sqrt(len(diffs))
+    return {'mean': mean, 'low': float(mean) - 1.96 * se, 'high': float(mean) + 1.96 * se}
+
+
+def shown(comparison: dict) -> dict:
+    return {k: round(float(v), 4) for k, v in comparison.items()}
 
 
 def decide(comparison: dict, threshold: float) -> str:
     """Keep a change only if the whole interval is above zero and the gain reaches the threshold set beforehand."""
-    if comparison['low'] > 0 and comparison['mean'] >= threshold:
+    if comparison['low'] > 0 and comparison['mean'] >= Fraction(str(threshold)):
         return 'keep'
     if comparison['high'] < 0:
         return 'roll back'

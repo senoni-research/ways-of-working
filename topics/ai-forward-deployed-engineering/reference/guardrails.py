@@ -3,7 +3,8 @@ library only.
 
 The three legs are Simon Willison's: access to private data, exposure to untrusted content, and a way to send data
 out. Treating a send tool that carries no model-written text to no model-chosen recipient as no way out is a Senoni
-choice: it cannot carry what the model read.
+choice: it cannot carry what the model read. The check sees only the tools declared to it, with the legs declared for
+each; a way out left off the list isn't found.
 """
 from __future__ import annotations
 

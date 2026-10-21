@@ -26,6 +26,13 @@ class Autonomy(unittest.TestCase):
                     self.assertGreaterEqual(level, safer)
         self.assertEqual(autonomy({'consequence': 'high', 'reversible': False, 'verifiable': True}), 'person decides')
 
+    def test_an_unknown_value_is_refused(self):
+        for action in ({'consequence': 'HIGH', 'reversible': False, 'verifiable': True},
+                       {'consequence': 'high', 'reversible': 'false', 'verifiable': True},
+                       {'consequence': 'low', 'reversible': True, 'verifiable': 1}):
+            with self.assertRaises(ValueError, msg=action):
+                autonomy(action)
+
 
 class Tollgate(unittest.TestCase):
     """FB62: a phase passes its tollgate only when every item has evidence and is met (FC21)."""
@@ -35,8 +42,9 @@ class Tollgate(unittest.TestCase):
         self.assertEqual(tollgate(case['required'], case['evidence']), case['expected'])
 
     def test_a_claim_without_a_place_to_check_it_is_missing(self):
-        self.assertEqual(tollgate(['rollback tested'], {'rollback tested': {'met': True, 'where': ''}})['missing'],
-                         ['rollback tested'])
+        for where in ('', '  ', True, None):
+            self.assertEqual(tollgate(['rollback tested'], {'rollback tested': {'met': True, 'where': where}})['missing'],
+                             ['rollback tested'], where)
 
     def test_one_item_without_evidence_holds_the_gate(self):
         required = CASE['FC21']['required']

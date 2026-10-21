@@ -8,6 +8,8 @@ policies were validated or the caller reads the errors.
 
 A policy is {'id', 'effect': 'permit' | 'forbid', 'action', 'when': [condition, ...]}, and a condition is
 {'left': term, 'op': one of OPS, 'right': term}, where a term is {'attr': 'principal.limit'} or {'value': 500}.
+A policy set with a repeated id, an unknown effect or operator, or a malformed condition is refused as a whole,
+because a repeated id would let one policy's result replace another's.
 """
 from __future__ import annotations
 
@@ -15,10 +17,33 @@ import operator
 
 OPS = {'==': operator.eq, '!=': operator.ne, '<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge}
 TYPES = {bool: 'Bool', int: 'Long', str: 'String'}
+EFFECTS = ('permit', 'forbid')
 
 
 class PolicyError(Exception):
     pass
+
+
+def _is_term(term) -> bool:
+    return isinstance(term, dict) and ('value' in term or isinstance(term.get('attr'), str))
+
+
+def malformed(policies: list[dict]) -> list[str]:
+    """Problems with the policy set itself, whatever the schema: repeated ids, unknown effects or operators, and
+    conditions that aren't a term, an operator and a term."""
+    problems, seen = [], set()
+    for p in policies:
+        if p.get('id') in seen:
+            problems.append(f"{p.get('id')}: repeated id")
+        seen.add(p.get('id'))
+        if p.get('effect') not in EFFECTS:
+            problems.append(f"{p.get('id')}: unknown effect {p.get('effect')}")
+        for cond in p.get('when', []):
+            if not (isinstance(cond, dict) and _is_term(cond.get('left')) and _is_term(cond.get('right'))):
+                problems.append(f"{p.get('id')}: malformed condition")
+            elif cond.get('op') not in OPS:
+                problems.append(f"{p.get('id')}: unknown operator {cond.get('op')}")
+    return problems
 
 
 def _term(term: dict, request: dict):
@@ -43,7 +68,11 @@ def satisfied(policy: dict, request: dict) -> bool:
 
 
 def authorize(policies: list[dict], request: dict) -> dict:
-    """Cedar's rules: default deny, forbid overrides permit, skip a policy that errors."""
+    """Cedar's rules: default deny, forbid overrides permit, skip a policy that errors. A malformed policy set
+    raises PolicyError before anything is evaluated."""
+    problems = malformed(policies)
+    if problems:
+        raise PolicyError('malformed policy set: ' + '; '.join(problems))
     results, errors = {}, {}
     for p in policies:
         try:
@@ -58,8 +87,12 @@ def authorize(policies: list[dict], request: dict) -> dict:
 
 
 def decide(policies: list[dict], request: dict) -> dict:
-    """Fail closed: deny when a forbid policy for the action errored, whatever the others say."""
-    result = authorize(policies, request)
+    """Fail closed: deny when the policy set is malformed, or when a forbid policy for the action errored, whatever
+    the others say."""
+    try:
+        result = authorize(policies, request)
+    except PolicyError as e:
+        return {'decision': 'deny', 'reasons': [str(e)], 'errors': {}}
     erred = [p['id'] for p in policies if p['effect'] == 'forbid' and p['id'] in result['errors']]
     if erred:
         return {**result, 'decision': 'deny', 'reasons': ['errored: ' + pid for pid in erred]}
@@ -69,7 +102,9 @@ def decide(policies: list[dict], request: dict) -> dict:
 def validate(policies: list[dict], schema: dict) -> list[str]:
     """Problems that would make a policy error or never match, found before it is used. schema['actions'] maps each
     action to the attributes and types of its principal, resource and context."""
-    problems = []
+    problems = malformed(policies)
+    if problems:
+        return problems
     for p in policies:
         shapes = schema['actions'].get(p['action'])
         if shapes is None:

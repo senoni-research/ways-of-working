@@ -128,7 +128,7 @@ The levels are agreed with the person at the customer who owns each action, reco
 
 NIST's generative AI profile suggests minimum thresholds for go/no-go decisions at deployment [FD18b](#fd18b). Google's launch coordination teams keep a checklist of common questions to ask about a launch [FD19a](#fd19a).
 
-Senoni practice: each phase ends at a tollgate whose items are listed before the phase starts. An item passes only with evidence and a place to check it; a tick with nowhere to check it is missing. Missing and unmet items are listed apart: missing evidence is the team's to produce, and an unmet criterion is the customer's to accept or not, in writing. FC21 holds a gate for both reasons.
+Senoni practice: each phase ends at a tollgate whose items are listed before the phase starts. An item passes only with evidence and a place to check it; a tick with nowhere to check it is missing. Missing and unmet items are listed apart: missing evidence is the team's to produce, and an unmet criterion holds the gate. The gate stays shut until the criterion is met, or until the customer revises it in writing before the gate, in a decision record that says why; the revised criterion is then the one checked. Accepting an unmet criterion is not passing it. FC21 holds a gate for both reasons.
 
 The gate from pilot to production asks, at least: the success criteria met on the evaluation set (module [50-evaluation-and-observability](#mod-50-evaluation-and-observability)); a data map with no gaps (module [75-customer-data](#mod-75-customer-data)); a security review with the trifecta check and the red-team set (module [60-security-and-guardrails](#mod-60-security-and-guardrails)); a rehearsed rollback, alarms, a kill switch and a runbook with an owner, and a cost estimate (module [70-deployment-and-operations](#mod-70-deployment-and-operations)).
 
@@ -251,7 +251,7 @@ Guardrails work best as layers, and tools can be rated by risk [FD04](#fd04). Se
 - a second decision for the same claim is refused;
 - a model that stops without deciding, or hits the step cap, hands the claim to a person.
 
-FC03 is the test of this design: the stub model obeys an instruction planted in the claim, and nothing it does gets through.
+FC03 is the test of this design: the stub model obeys an instruction planted in the claim, and none of its approvals gets through. The controls bound what an approval can be; they don't stop a decision the rules allow, so a model steered into rejecting a covered claim would be recorded. Module [60-security-and-guardrails](#mod-60-security-and-guardrails) treats that as the risk that remains.
 
 ## Structured output that fails safe
 
@@ -288,7 +288,7 @@ Senoni practice: decide by where the side effects must run and who must control 
 | FB16 | The model proposes an approval above the automatic limit. | Record a referral in code, whatever the model proposed. | `unit-tested` |
 | FB17 | The model records a second decision for the same item. | Refuse it; the first decision stands. | `unit-tested` |
 | FB18 | The model proposes approving something the rules exclude. | Refuse with the reason and the decisions that are allowed. | `unit-tested` |
-| FB19 | The item's own text tells the agent to approve it. | Nothing the code controls changes; the outcome is decided by the rules. | `unit-tested` |
+| FB19 | The item's own text tells the agent to approve it. | The code refuses any approval the rules don't allow; a decision the rules permit, such as a wrong rejection, is not stopped by the code and needs another check. | `unit-tested` |
 | FB20 | The model stops without recording a decision. | Refer the item to a person. | `unit-tested` |
 | FB21 | The structured output is invalid. | Retry once with the error as feedback; after a second failure, refer. | `unit-tested` |
 | FB22 | The model refuses, or its output is cut off at the token limit. | Refer; never approve by default. | `unit-tested` |
@@ -353,13 +353,15 @@ Compare candidate models on accuracy, cost per item and seconds per item togethe
 
 FC08 has three models, one dominated and no winner.
 
-## Keep spending under a limit the code can't exceed
+## Keep spending within limits you can show
 
-A budget in code is an estimate. The Claude Agent SDK's `max_budget_usd`, for example, stops a run when the client-side estimate reaches the value, and the estimate can pass it [H-ClaudeAgentSDK](#h-claudeagentsdk).
+A budget in code is an estimate. The Claude Agent SDK's `max_budget_usd`, for example, stops a run when the client-side estimate reaches the value, and the estimate can pass it [H-ClaudeAgentSDK](#h-claudeagentsdk). A provider's limit can lag too. OpenAI says API access may not stop immediately when prepaid credits run out, that usage in the delay shows as a negative balance, and not to rely on the prepaid balance as an instantaneous spending cutoff; automatic recharge is on by default when prepaid billing is set up [H-OpenAI](#h-openai).
 
 Senoni practice:
 
-- Put the hard cap outside the code, at the provider or the account: a spending limit on the API key, or a prepaid balance. A bug, a loop or a leaked key then cannot spend beyond it.
+- Use the limit the provider documents, on the key or the account, as the outer one, and record how it is enforced: its delay, the requests already in flight, the recharge settings and the services it covers. A prepaid balance bounds spending only with automatic recharge off.
+- Layer it with what the code controls: bounded concurrency and calls per item, the in-code budget, and a key you can revoke.
+- Say how much overspend is still possible, rather than promising none.
 - Treat an alert as a warning, not a cap.
 - Set the alert on usage itself, so it fires even while credits or a free allowance cover the bill.
 
@@ -374,7 +376,7 @@ Cloud account budgets, and the cost of a session on a managed runtime, are in mo
 | FB28 | Two models are compared. | Report accuracy, cost and seconds together, and name a winner only if one is at least as good on all three and better on one. | `unit-tested` |
 | FB29 | A model's speed is quoted. | Give time to first token and decode speed measured from your own timestamps, and say where they were measured. | `unit-tested` |
 | FB30 | Results must be reproducible, or the customer's data terms limit providers. | Record the provider that served each call, and pin the provider with fallbacks disabled. | `review` |
-| FB31 | The system needs a spending limit. | Set the hard cap at the provider or account, outside the code; treat an in-code budget as an estimate and an alert as a warning. | `review` |
+| FB31 | The system needs a spending limit. | Use the provider's documented limit as the outer one and record its delay and coverage; layer bounded calls, the in-code budget and revocation; say how much overspend is still possible; treat an alert as a warning. | `review` |
 
 
 ---
@@ -410,7 +412,7 @@ FC09 shows why the fourth step matters. On seven questions, plain keyword overla
 
 An enterprise context layer, in one vendor's description, turns an organisation's knowledge and norms into context an AI system can use [FD26](#fd26). The same page raises ownership, lineage and drift as questions to answer, without saying how [FD26](#fd26).
 
-Senoni practice: every governed file carries an owner and a review date. Every answer from the context layer names the file it came from, the owner and the review date. A file past its review date is still used, but the answer says it is stale, so the reader can weigh it and the owner can be asked. FC10 shows the desk's limit file, 414 days past review, flagged in the answer.
+Senoni practice: every governed file carries an owner and a review date. Every answer from the context layer names the file it came from, the owner and the review date. A file past its review date is still used, but the answer says it is stale, so the reader can weigh it and the owner can be asked. That is for answers a person reads. A check that decides on its own, such as an approval limit in code, takes its value from a current, authoritative source; if there is none, the item goes to a person. FC10 shows the desk's limit file, 414 days past review, flagged in the answer.
 
 ## Serve governed files over MCP, read-only
 
@@ -436,7 +438,7 @@ Store only what the task needs. The UK regulator's guidance on AI asks for the m
 | ID | Scenario | Required behaviour | Check |
 |---|---|---|---|
 | FB32 | The agent answers a question from the context layer. | Name the source file, its owner and its review date in the answer. | `unit-tested` |
-| FB33 | The best file for a question is past its review date. | Use it, and say in the answer that it is stale. | `unit-tested` |
+| FB33 | The best file for a question is past its review date. | Use it in an answer a person reads, and say in the answer that it is stale; a check that decides on its own needs a current, authoritative value. | `unit-tested` |
 | FB34 | A change to retrieval is proposed, such as adding embeddings. | Score each ranker on the same labelled questions, per question, with recall, precision and reciprocal rank, starting from keyword search and BM25. | `unit-tested` |
 | FB35 | The agent searches one customer's memory. | Use the customer's namespace with its trailing slash, keep only records with that exact namespace, and refuse ids that could widen it. | `unit-tested` |
 | FB36 | The agent is offered a fact the task doesn't need, such as a card number. | Don't store it. | `unit-tested` |
@@ -607,8 +609,10 @@ Retries are selfish: under overload they add load just when the system can least
 Senoni practice: classify each failure before retrying.
 
 1. The request certainly never left, such as a refused connection: retry, with jittered backoff, a bounded number of times.
-2. The request may have started, such as a timeout after sending: retry only if it carries an idempotency key. Otherwise report the item as unknown, to be checked before anything is sent again.
-3. The request was rejected: don't retry; the answer won't change.
+2. The request may have started, such as a timeout after sending: retry only if it carries an idempotency key that the receiving service honours. Otherwise report the item as unknown, to be checked before anything is sent again.
+3. The request was refused as invalid or not permitted, such as a validation or permission error: don't retry; the answer won't change.
+
+Throttling, or another failure the provider documents as retryable, is not a refusal: retry it as the provider documents, with backoff, a bounded number of times. In `reference/concurrency.py`, raise such a failure as `NotSent`.
 
 FC19 shows each of the three.
 
@@ -624,8 +628,8 @@ When a batch runs, measure from each item's own timestamps: the wall time, the s
 |---|---|---|---|
 | FB53 | A batch of items runs at once. | Never exceed the concurrency cap, and return the results by item in input order. | `unit-tested` |
 | FB54 | One item in a batch fails. | Refer that item with its error, and finish the others. | `unit-tested` |
-| FB55 | A call fails. | Retry with jittered backoff, a bounded number of times, only if the request certainly wasn't sent; don't retry a rejection. | `unit-tested` |
-| FB56 | A call times out after the request may have reached the server. | Retry only with an idempotency key; otherwise report the item as unknown, to be checked before resending. | `unit-tested` |
+| FB55 | A call fails. | Retry with jittered backoff, a bounded number of times, only if the request certainly wasn't sent or the provider documents the failure as retryable; don't retry a validation or permission error. | `unit-tested` |
+| FB56 | A call times out after the request may have reached the server. | Retry only with an idempotency key the receiving service honours; otherwise report the item as unknown, to be checked before resending. | `unit-tested` |
 | FB57 | The system is sized for peak load. | Compute items in progress with Little's law, each shared resource's use, the bottleneck, and the size it needs with headroom. | `unit-tested` |
 | FB58 | Splitting one task across several agents is proposed. | Name the reason, share full context, and measure the gain against one agent on the same cases. | `review` |
 | FB59 | A batch's speed is reported. | Report the wall time, the slowest item and the mean time per item, from each item's timestamps. | `unit-tested` |
@@ -639,7 +643,7 @@ When a batch runs, measure from each item's own timestamps: the wall time, the s
 
 ## Purpose
 
-How to keep an agent that reads customers' text from being turned against the customer: the lethal trifecta, designs that keep untrusted text from choosing actions, measuring an injection screen, limits kept as policy outside the model, credentials, acting for the signed-in user, signed requests, and least privilege for the pipeline. The reference code in `reference/guardrails.py`, `policy.py`, `credentials.py`, `signing.py` and `iam_review.py` implements the practices, and cases FC22 to FC28 test them.
+How to keep an agent that reads customers' text from being turned against the customer: the lethal trifecta, designs that limit what untrusted text can make the agent do, measuring an injection screen, limits kept as policy outside the model, credentials, acting for the signed-in user, signed requests, and least privilege for the pipeline. The reference code in `reference/guardrails.py`, `policy.py`, `credentials.py`, `signing.py` and `iam_review.py` implements the practices, and cases FC22 to FC28 test them.
 
 ## The lethal trifecta
 
@@ -651,13 +655,13 @@ Senoni practice, in `reference/guardrails.py`:
 - a customer's own text, such as a claim description or an uploaded document, is untrusted content;
 - when all three legs are present, remove one rather than add a filter. A send tool that carries no text the model wrote, to no recipient the model chose, is not a way out; that is our choice, and a template with fields the model fills is a way out again.
 
-FC22 shows that removing web search leaves the trifecta in place, because the claim text is untrusted, while replacing free-text email with fixed messages breaks it.
+FC22 shows that removing web search leaves the trifecta in place, because the claim text is untrusted, while replacing free-text email with fixed messages breaks it. The check sees only the tools and channels declared to it; a way out left off the list isn't found.
 
-## Design so that injected text can't act
+## Limit what injected text can do
 
-Beurer-Kellner and colleagues describe six design patterns that isolate untrusted data from an agent's control flow, built on the principle that once an agent has read untrusted input, that input must not be able to trigger consequential actions; the patterns trade some utility for security [FD17](#fd17). OWASP's prevention list for prompt injection includes least-privilege access and human approval for high-risk actions, and says it is unclear whether fool-proof prevention exists [FD16](#fd16). NIST's generative AI profile lists indirect prompt injection, in which attackers with no direct interface exploit an application built on a language model, under information security risks [FD18b](#fd18b).
+Beurer-Kellner and colleagues describe six design patterns that isolate untrusted data from an agent's control flow, built on the principle that once an agent has read untrusted input, that input must not be able to trigger consequential actions; the patterns trade some utility for security [FD17](#fd17). In their action-selector pattern the agent only translates a request into predefined tool calls, and no feedback from those actions comes back to it [FD17](#fd17). OWASP's prevention list for prompt injection includes least-privilege access and human approval for high-risk actions, and says it is unclear whether fool-proof prevention exists [FD16](#fd16). NIST's generative AI profile lists indirect prompt injection, in which attackers with no direct interface exploit an application built on a language model, under information security risks [FD18b](#fd18b).
 
-Senoni practice: name the pattern in a decision record. For a claims agent, the common one is a fixed set of actions, chosen by the model and validated in code against the record, so injected text can at worst pick a wrong action that the code refuses (module [30-agent-design-and-tools](#mod-30-agent-design-and-tools)).
+Senoni practice: name the design in a decision record, with the wrong actions it still permits and who catches them. A fixed tool set with checks in code, as in module [30-agent-design-and-tools](#mod-30-agent-design-and-tools), limits which actions and amounts can run. It does not isolate the choice from injection: a model that has read the claim text chooses among the permitted actions, so injected text can still steer it to a wrong one the rules allow, such as rejecting a covered claim. The reference loop is not the action-selector pattern, because the claim text reaches the model and tool results come back to it. Where a permitted wrong action matters, add a pattern that isolates it, or a person or an independent rule that checks it.
 
 ## Measure the screen, and don't trust it
 
@@ -667,9 +671,9 @@ NIST suggests red-teaming generative AI systems for prompt injection [FD18b](#fd
 
 ## Limits as policy outside the model
 
-Cedar decides with three documented rules: nothing is allowed unless a permit policy is satisfied; a satisfied forbid overrides any permit; and a policy whose evaluation errors is skipped, with its id and the error in the diagnostics [H-Cedar](#h-cedar). Its designers considered denying whenever any policy errors and rejected it, because one faulty policy could suddenly deny every request; applications can read the diagnostics and decide differently [H-Cedar](#h-cedar). A policy with a misspelt attribute or a type error is ignored at evaluation, and validation against a schema finds it when the policy is written [H-Cedar](#h-cedar). In AgentCore, Cedar policies are enforced at the gateway, actions are named `<Target>___<Tool>`, and Cedar has no wildcard actions [H-AgentCorePolicy](#h-agentcorepolicy).
+Cedar decides with three documented rules: nothing is allowed unless a permit policy is satisfied; a satisfied forbid overrides any permit; and a policy whose evaluation errors is skipped, with its id and the error in the diagnostics [H-Cedar](#h-cedar). Its designers considered denying whenever any policy errors and rejected it, because one faulty policy could suddenly deny every request; applications can read the diagnostics and decide differently [H-Cedar](#h-cedar). A policy with a misspelt attribute or a type error is ignored at evaluation, and validation against a schema finds it when the policy is written [H-Cedar](#h-cedar). In AgentCore, Cedar policies are enforced at the gateway. Each action is named for its target: `<Target>___<Tool>` for an MCP target, while Runtime and HTTP targets use their own documented formats. Cedar has no wildcard actions; tools are grouped under a gateway target instead [H-AgentCorePolicy](#h-agentcorepolicy).
 
-Senoni practice, in `reference/policy.py`: validate every policy against the schema in the pipeline and refuse to deploy on any error. For consequential actions, deny when a forbid policy errored, accepting the outage Cedar's designers warn of, because a stopped desk is visible and a skipped limit isn't. FC24 shows a limit with a typo letting a £900 approval through under Cedar's rules, and both controls stopping it. The reference evaluator is a small model of Cedar's rules, not Cedar.
+Senoni practice, in `reference/policy.py`: validate every policy against the schema in the pipeline and refuse to deploy on any error. Refuse a policy set with a repeated id, an unknown effect or operator, or a malformed condition before anything is evaluated, because a repeated id would let one policy's result replace another's. For consequential actions, deny when a forbid policy errored, accepting the outage Cedar's designers warn of, because a stopped desk is visible and a skipped limit isn't. FC24 shows a limit with a typo letting a £900 approval through under Cedar's rules, and both controls stopping it. The reference evaluator is a small model of Cedar's rules, not Cedar.
 
 ## Credentials: compare, rotate, and keep them from the model
 
@@ -683,11 +687,11 @@ Senoni practice, in `reference/credentials.py`: compare keys as bytes against ev
 
 AgentCore Runtime's JWT path validates the token's issuer, signature and expiry, and checks its audience against those allowed. Its user-id header path doesn't verify the user, and the documentation says to derive the user id from the authenticated principal rather than accept a client-supplied value [H-AgentCoreRuntime](#h-agentcoreruntime). AgentCore doesn't enforce session-to-user mappings; the client backend must keep them [H-AgentCoreRuntime](#h-agentcoreruntime). OWASP's prevention list for excessive agency includes running extensions in the user's context [FD16](#fd16).
 
-Senoni practice, in `reference/credentials.py`: verify the algorithm, signature, issuer, audience and expiry; take the user from the verified token only, never from the request body, the model's arguments or an unverified header; derive the session id on the server from the user and the work item. FC27 shows seven tokens and two requests that try to name another user.
+Senoni practice, in `reference/credentials.py`: verify the algorithm, signature, issuer, audience and expiry; take the user from the verified token only, never from the request body, the model's arguments or an unverified header; refuse a token whose parts aren't JSON objects or that names no user; derive the session id on the server from the user and the work item, encoded so that no two pairs collide, and add the issuer or tenant where there is more than one. FC27 shows seven tokens and two requests that try to name another user.
 
 ## Sign what the server acts on
 
-SigV4 requires only the host header and any `x-amz-*` headers in the signature; AWS suggests considering other headers too, to prevent tampering, and leaving out hop-by-hop headers that are often changed in transit [H-SigV4](#h-sigv4). Senoni practice, in `reference/signing.py`: sign every header the server will act on, and have the server refuse a request where one isn't signed. FC26 shows an unsigned `x-acting-user` header changed in transit under a valid signature.
+AWS's signing page says the canonical headers must include the host, the `Content-Type` when the request has one, and any `x-amz-*` headers sent; a later note says only the host and `x-amz-*` headers are required, and suggests considering others to prevent tampering, while leaving out hop-by-hop headers that are often changed in transit [H-SigV4](#h-sigv4). Senoni practice, in `reference/signing.py`: in production, follow the service's documented signing requirements with a supported SDK. Sign every header the server will act on, and have the server refuse a request where one isn't signed. FC26 shows an unsigned `x-acting-user` header changed in transit under a valid signature.
 
 ## Least privilege for the pipeline
 
@@ -701,14 +705,14 @@ Senoni practice, in `reference/iam_review.py`: review the deploy role for action
 |---|---|---|---|
 | FB65 | An agent's tools are designed or changed. | List which tools supply private data, untrusted content and a way out across one session; if all three are present, remove a leg. | `unit-tested` |
 | FB66 | An injection screen is evaluated. | Report misses by channel and technique, and false alarms, each with its n and a 95% interval; never report no misses as no risk. | `unit-tested` |
-| FB67 | Policies are changed. | Validate them against the schema in the pipeline, and refuse to deploy on any error. | `unit-tested` |
-| FB68 | A forbid policy errors while a consequential action is decided. | Deny the action and report the error, rather than skip the policy. | `unit-tested` |
+| FB67 | Policies are changed. | Validate them in the pipeline against the schema and for repeated ids and unknown effects or operators, and refuse to deploy on any error. | `unit-tested` |
+| FB68 | A forbid policy errors, or the policy set is malformed, while a consequential action is decided. | Deny the action and report why, rather than skip the policy. | `unit-tested` |
 | FB69 | An API key is checked. | Compare it as bytes, in constant time, against every valid key. | `unit-tested` |
 | FB70 | A key is rotated. | Issue the new key beside the old, and revoke the old only once no caller has used it for the agreed quiet period, naming those that still do. | `unit-tested` |
 | FB71 | The agent acts for a user. | Take the user from a token verified for algorithm, signature, issuer, audience and expiry, never from the body, the model or an unverified header, and derive the session id on the server. | `unit-tested` |
 | FB72 | A request between services is signed. | Sign every header the server acts on, and have the server refuse a request that didn't. | `unit-tested` |
 | FB73 | A deploy role or its trust policy changes. | Review it for escalation actions, and for an audience and subject pinned to one repository and branch or environment. | `unit-tested` |
-| FB74 | An agent reads untrusted content and can take consequential actions. | Use a design that keeps untrusted text from choosing actions, such as a fixed action set validated in code, and record which. | `review` |
+| FB74 | An agent reads untrusted content and can take consequential actions. | Record the design that limits what the text can make it do, the wrong actions it still permits, and who or what catches each. | `review` |
 | FB75 | The prompt, tools or model change. | Run the red-team set and compare its misses with the last release before shipping. | `review` |
 
 
@@ -726,7 +730,7 @@ How to put an agent into production and keep it there: the managed runtime's con
 
 AgentCore Runtime runs an agent as an ARM64 container listening on port 8080, with `POST /invocations` for the work and `GET /ping` for health [H-AgentCoreRuntime](#h-agentcoreruntime). While `/ping` reports `HealthyBusy`, the session is active and kept alive; a session left `Healthy` and idle is ended, by default after 900 seconds, and a session's compute is ended at its maximum lifetime, by default 28,800 seconds, after which the next call gets a new instance [H-AgentCoreRuntime](#h-agentcoreruntime). The documentation warns against setting `time_of_last_update` to the current time on every ping: the idle timeout then never fires, and sessions persist until their maximum lifetime and can exhaust the session quota [H-AgentCoreRuntime](#h-agentcoreruntime). Each session gets its own microVM, whose memory is sanitised when it ends, and `StopRuntimeSession` ends one explicitly [H-AgentCoreRuntime](#h-agentcoreruntime).
 
-Senoni practice, in `reference/runtime_app.py`: report `HealthyBusy` only while registered background work runs, move the timestamp only when the status changes, and stop a session when its work is done rather than wait for the idle timeout. FC29 walks through the pings.
+Senoni practice, in `reference/runtime_app.py`: report `HealthyBusy` only while registered background work runs, move the timestamp only when the status changes, leave the optional timestamp out until the status first changes, so no time from before a snapshot is reported, and stop a session when its work is done rather than wait for the idle timeout. FC29 walks through the pings.
 
 ## Start once, then make everything per request
 
@@ -760,7 +764,7 @@ Google's SRE book defines a service level objective as a target for a service le
 
 A CloudWatch alarm evaluates the last N periods and goes to `ALARM` when M of them breach; its states are `OK`, `ALARM` and `INSUFFICIENT_DATA` [H-CloudWatch](#h-cloudwatch). Missing data can be treated as `notBreaching`, `breaching`, `ignore` or `missing`. The default is `missing`, under which an alarm whose every point is missing goes to `INSUFFICIENT_DATA`. AWS suggests treating missing data as breaching for an alarm on a metric that reports continually, because its absence may mean something is wrong [H-CloudWatch](#h-cloudwatch).
 
-Senoni practice, in `reference/operations.py`: agree the objectives and the error budget policy with the customer before go-live. Give every job and agent a heartbeat metric with an alarm that treats missing data as breaching (FC31). When the budget for the period is spent, changes stop except fixes (FC32).
+Senoni practice, in `reference/operations.py`: agree the objectives and the error budget policy with the customer before go-live. Give every job and agent a heartbeat metric with an alarm that treats missing data as breaching (FC31). When the period's failures go over the budget, changes stop except fixes; exactly at the budget is still within it (FC32).
 
 ## Stop: the kill switch
 
@@ -778,7 +782,7 @@ Senoni practice: the pipeline deploys with OIDC through a staging stage before p
 
 Resource Explorer's `ListResources` can return fewer results than the maximum while more remain, so the caller checks `NextToken` after every call [H-ResourceExplorer](#h-resourceexplorer). Without its service-linked role, Resource Explorer gives only partial results [H-ResourceExplorer](#h-resourceexplorer).
 
-Senoni practice, in `reference/teardown.py`: delete in dependency order, each resource before anything it depends on; list every page of what is left; and prove the teardown with two independent checks, an empty inventory and a cost check made at least 24 hours later, our margin over the budget update cadence. A shared bootstrap stack is left alone unless nothing else uses it. FC33 finds two leftovers on the second page, after an empty first page.
+Senoni practice, in `reference/teardown.py`: delete in dependency order, each resource before anything it depends on; list every page of what is left; and prove the teardown with two independent checks, an empty inventory and a cost check made at least 24 hours later, our chosen minimum over the budget update cadence. The proof covers only the account, regions and resource types the inventory searched and the period the cost check read; a number that isn't finite and non-negative proves nothing. A shared bootstrap stack is left alone unless nothing else uses it. FC33 finds two leftovers on the second page, after an empty first page.
 
 ## Checks
 
@@ -788,7 +792,7 @@ Senoni practice, in `reference/teardown.py`: delete in dependency order, each re
 | FB77 | The runtime may restore instances from a snapshot. | Make nothing random, unique, timed or credentialed at startup; draw such values per request from the operating system. | `unit-tested` |
 | FB78 | A cost estimate is made. | State every assumption, include the idle timeout, date the rates, and return the assumptions with the result. | `unit-tested` |
 | FB79 | A job or agent sends a heartbeat. | Alarm on it, treating missing data as breaching. | `unit-tested` |
-| FB80 | The error budget for the period is spent. | Freeze changes except fixes, as the error budget policy agreed in advance says. | `unit-tested` |
+| FB80 | The period's failures go over its error budget. | Freeze changes except fixes, as the error budget policy agreed in advance says. | `unit-tested` |
 | FB81 | A batch has side effects. | Read the kill switch before each side effect. | `unit-tested` |
 | FB82 | A release goes to production. | Route traffic through a named endpoint or alias pinned to an immutable version, and rehearse the rollback before go-live. | `review` |
 | FB83 | A deployment is torn down. | Delete in dependency order, list every page of what is left, and prove it with an empty inventory and a cost check made after the billing data has updated. | `unit-tested` |
@@ -804,13 +808,13 @@ Senoni practice, in `reference/teardown.py`: delete in dependency order, each re
 
 ## Purpose
 
-How to handle the personal data an agent touches: a map of where it lives, sending a model only what it needs, erasing a customer on request, and treating logs, traces and backups as customer data too. The reference code in `reference/customer_data.py` implements the practices, and cases FC34 to FC36 test them. Nothing here is legal advice; the customer's data protection officer decides what the law requires of them.
+How to handle the personal data an agent touches: a map of where it lives, sending a model only what it needs, erasing a customer on request, and treating logs, traces and backups as customer data too. The reference code in `reference/customer_data.py` implements the practices, and cases FC34 to FC36 test them. Nothing here is legal advice. The customer, as controller, decides what the law requires of it, advised by its data protection officer or lawyers.
 
 ## Map where the data lives
 
 The GDPR requires personal data to be limited to what is necessary for the purposes it is processed for, and kept in identifiable form no longer than those purposes need [FD24a](#fd24a). The UK regulator's guidance says to identify the minimum personal data the purpose needs and process only that, and expects most uses of AI to need a data protection impact assessment [FD24b](#fd24b).
 
-Senoni practice: a data map (FT07) lists every place a customer's data lives or goes, including the model provider, memory, checkpoints, traces, logs and backups. Each row gives the purpose, the retention, how erasure works and an owner, and a row that sends data to a third party records that party's terms. The map is written in discovery (module [10-engagement](#mod-10-engagement)), kept current with every change, and is an item at the tollgate to production. `reference/customer_data.py` lists its gaps; FC34 finds four.
+Senoni practice: a data map (FT07) lists every place a customer's data lives or goes, including the model provider, memory, checkpoints, traces, logs and backups. Each row gives the purpose, the retention, how erasure works and an owner, and a row that sends data to a third party records that party's terms. The map is written in discovery (module [10-engagement](#mod-10-engagement)), kept current with every change, and is an item at the tollgate to production. `reference/customer_data.py` lists its gaps, meaning fields left empty: it can't tell whether what a field says is true, current or consistent, so a person reads every row. FC34 finds four.
 
 ## Send a model only what it needs
 
@@ -820,9 +824,11 @@ Senoni practice: before a provider is used, record its data terms, with the date
 
 ## Erase on request, by exact id
 
-The GDPR gives a person the right to have their personal data erased without undue delay on the grounds it lists, with exceptions this pack doesn't analyse [FD24a](#fd24a). AgentCore Memory has operations to delete memory records in batches and to delete events [H-AgentCoreMemory](#h-agentcorememory); the per-customer namespace that makes them findable is in module [40-context-retrieval-and-memory](#mod-40-context-retrieval-and-memory).
+The GDPR gives a person the right to have their personal data erased without undue delay on the grounds it lists, with exceptions this pack doesn't analyse [FD24a](#fd24a). AgentCore Memory has operations to delete memory records in batches and to delete events [H-AgentCoreMemory](#h-agentcorememory); the per-customer namespace that makes them findable is in module [40-context-retrieval-and-memory](#mod-40-context-retrieval-and-memory). The UK regulator describes a data protection officer as someone who informs, advises and monitors compliance; the officer isn't personally liable, and compliance stays the controller's or processor's responsibility [FD24b](#fd24b).
 
-Senoni practice, in `reference/customer_data.py`: erase across every store in the data map, matching the exact customer id, never a substring, in structured fields and in log text alike. Return a receipt of what was removed from where, and run a recheck afterwards that must find nothing. FC35 erases C1 and leaves C10, C12 and the business account C1-B untouched, where a substring search would have deleted all fifteen records. Backups and third parties are erased through their own routes, recorded in the map.
+Senoni practice: the customer's controller-side owner confirms who is asking, what is in scope and whether to erase, taking the data protection officer's or legal advice, and records any exception, the retention that applies and the deletion permitted. This pack doesn't decide whether an exception applies.
+
+Senoni practice, in `reference/customer_data.py`: erase across every store in the data map, matching the exact customer id, never a substring. Each store declares how it identifies the customer: by the record's customer field, or by the id in a log line's text. Another customer's record that mentions the id is not deleted; a person decides what to redact. Return a receipt of what was removed from where, and run a recheck afterwards that searches every text value left; the erasure is complete only when it finds nothing, and only for the stores it was given. FC35 erases C1 and leaves C10, C12 and the business account C1-B untouched, where a substring search would have deleted all seventeen records; the recheck finds C1 named in a note on one of C10's traces, so the erasure isn't complete until a person redacts it. Backups and third parties are erased through their own routes, recorded in the map.
 
 ## Logs, traces and backups are customer data too
 
@@ -833,7 +839,7 @@ Senoni practice: a trace of an agent's run holds the claim text, the model's rea
 | ID | Scenario | Required behaviour | Check |
 |---|---|---|---|
 | FB86 | Customer data is stored or sent somewhere new. | Add it to the data map with its purpose, retention, erasure route and owner, and record a third party's terms. | `unit-tested` |
-| FB87 | A customer asks to be erased. | Erase by exact id across every store in the data map, return a receipt, and recheck that nothing is left. | `unit-tested` |
+| FB87 | A customer asks to be erased. | Erase by exact id across every store in the data map, each by the route it declares; return a receipt, recheck every text value left, and call the erasure complete only when the recheck finds nothing. | `unit-tested` |
 | FB88 | Text goes to a third-party model. | Mask what the purpose doesn't need, keep the mapping on the customer's side, and send only what the provider's recorded terms allow. | `unit-tested` |
 | FB89 | A model provider is chosen or changed. | Record its data terms, on training, retention and zero-retention options, with the date read, and have the customer's data owner accept them. | `review` |
 | FB90 | Logs or traces are set up. | Set their retention on purpose, mask or restrict customer text in them, and include them in erasure. | `review` |
@@ -957,7 +963,7 @@ Every place a customer's data lives or goes (module [75-customer-data](#mod-75-c
 # Data map: <system>
 Updated <date> by <who>.
 
-| Store | Data held | Purpose | Retention | How erasure works | Owner | Third party and terms (date read) |
+| Store | Data held | Purpose | Retention | How erasure finds the customer (customer field or text) and works | Owner | Third party and terms (date read) |
 ```
 
 ## FT08 — Teardown checklist
@@ -967,9 +973,9 @@ Updated <date> by <who>.
 Resources, in deletion order (each before what it depends on):
 | Resource | Depends on | Deleted (date, by whom) |
 Shared resources left in place, and why: <for example the bootstrap stack>.
-Inventory of every page after deletion: <command, date, result>.
-Cost check, at least 24 hours later: <date, amount>.
-Proven: yes or no.
+Inventory of every page after deletion: <command, account, regions, resource types, date, result>.
+Cost check, at least 24 hours later: <date, period read, amount>.
+Proven: yes or no, for what the inventory and the cost check covered.
 ```
 
 ## FT09 — Go-live readiness
@@ -987,7 +993,8 @@ The tollgate from pilot to production, item by item (module [10-engagement](#mod
 | Runbook with a named owner | | |
 | Cost estimate with its assumptions | | |
 | Teardown plan | | |
-Unmet items accepted by the customer, in writing: <who, date, which>.
+Criteria the customer revised in writing before the gate: <which, who, date, decision record>.
+Any unmet or missing item holds the gate.
 ```
 
 ## FP01 — Plan from a brief
@@ -1206,7 +1213,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 2. Size for the peak hour with Little's law: items in progress equal arrivals per second times seconds per item. Compute the use of every shared resource, find the bottleneck, and size it below a target such as 80%.
 3. Cap the items in progress at what the bottleneck allows, whatever the framework's default.
 4. Gather results by item id, in input order. A failing item is referred with its error; the others carry on.
-5. Classify each failed call. Retry, with jittered backoff and a bounded number of attempts, only a request that certainly wasn't sent, or one that carries an idempotency key. Report any other request that may have started as unknown, to be checked before resending. Don't retry a rejection.
+5. Classify each failed call. Retry, with jittered backoff and a bounded number of attempts, only a request that certainly wasn't sent, a failure the provider documents as retryable, such as throttling, or a request that carries an idempotency key the receiving service honours. Report any other request that may have started as unknown, to be checked before resending. Don't retry a validation or permission error.
 6. Retry at one layer only, and take a lock so the batch can't run twice.
 7. Record each item's start and finish, and report the wall time, the slowest item and the mean.
 
@@ -1223,7 +1230,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 
 1. List every tool one session holds, and mark which read private data, which read untrusted content and which can send data out. Count the customer's own text as untrusted.
 2. If one session holds all three, remove a leg. Prefer breaking the way out, for example fixed messages to the customer on file instead of free text to any address.
-3. Choose a design that keeps untrusted text from choosing actions, such as a fixed action set validated in code, and record it.
+3. Record the design that limits what untrusted text can make the agent do, such as a fixed action set validated in code. Name the wrong actions it still permits, such as a wrong choice among the permitted actions, and who or what catches each.
 4. Only then add a screen, as one more layer.
 5. Build a labelled set: attacks in every channel the agent reads, with several techniques each, and benign items from real traffic patterns.
 6. Report misses by channel and technique, and false alarms, each with its n and Wilson interval. Report the upper bound where there were no misses.
@@ -1242,7 +1249,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 
 1. Write the schema first: each action, and the attributes and types of its principal, resource and context.
 2. Write permit policies for what is allowed, and forbid policies for the limits that must never be crossed. Nothing else is allowed by default.
-3. On a gateway that names actions per tool, list each action explicitly; there are no wildcard actions.
+3. On a gateway that names actions per tool, list each action explicitly in the format its target type documents, or group tools under a gateway target; there are no wildcard actions.
 4. Validate every policy against the schema in the pipeline, and refuse to deploy on any error.
 5. In the application, read the errors in every decision. For a consequential action, deny when a forbid policy errored, and alert.
 6. Test each limit with requests just inside and just outside it, and with one that should be denied by default.
@@ -1280,7 +1287,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 
 1. Verify each bearer token's algorithm, signature, issuer, audience and expiry, in that order, and refuse the request on any failure.
 2. Take the acting user from the verified token only. Ignore user names in the body, in the model's tool arguments and in headers the server didn't verify.
-3. Derive the session id on the server from the verified user and the work item, and keep the mapping in the backend.
+3. Derive the session id on the server from the verified user and the work item, encoded so that no two pairs collide, with the issuer or tenant where there is more than one, and keep the mapping in the backend.
 4. Let the platform supply the credentials tools use at call time; never put a credential in the prompt or the arguments.
 5. Sign service-to-service requests, including every header the receiving server acts on, and have that server refuse one that isn't signed.
 6. Compare API keys as bytes, in constant time, against every valid key.
@@ -1297,7 +1304,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 
 **Use when:** taking a system that passed its tollgate into production. **Modules:** [70-deployment-and-operations](#mod-70-deployment-and-operations), [10-engagement](#mod-10-engagement). **Sources:** [FD18a](#fd18a), [FD19a](#fd19a), [FD19b](#fd19b), [H-AgentCoreRuntime](#h-agentcoreruntime), [H-Lambda](#h-lambda), [H-CloudWatch](#h-cloudwatch), [H-GitHubOIDC](#h-githuboidc); the heartbeat rule, the kill switch per side effect and the rehearsed rollback are Senoni practice. **Reference:** `reference/operations.py`, cases FC31 and FC32.
 
-1. Pass the go-live readiness tollgate (FT09), with unmet items accepted in writing.
+1. Pass the go-live readiness tollgate (FT09), with every item met and its evidence in place. A criterion the customer revised in writing before the gate, in a decision record (FT05), is checked in its revised form; an unmet item holds the gate.
 2. Deploy from the pipeline with short-lived OIDC credentials, through staging, with a person approving production.
 3. Publish an immutable version and point a named endpoint or alias at it. Rehearse the rollback by repointing to the previous version.
 4. Send a small share of traffic first, where the platform supports it, and watch the alarms before moving the rest.
@@ -1315,17 +1322,17 @@ Keep the instruction file short and pointing to these documents rather than repe
 
 # FR15 — Erase a customer
 
-**Use when:** a customer asks to have their personal data erased, or the customer's data protection officer asks you to erase it. **Modules:** [75-customer-data](#mod-75-customer-data). **Sources:** [FD24a](#fd24a), [FD24b](#fd24b), [H-AgentCoreMemory](#h-agentcorememory); exact-id matching, the receipt and the recheck are Senoni practice. **Reference:** `reference/customer_data.py`, case FC35.
+**Use when:** a customer asks to have their personal data erased, or the customer's controller-side owner asks you to erase it. **Modules:** [75-customer-data](#mod-75-customer-data). **Sources:** [FD24a](#fd24a), [FD24b](#fd24b), [H-AgentCoreMemory](#h-agentcorememory); the declared routes, exact-id matching, the receipt and the recheck are Senoni practice. **Reference:** `reference/customer_data.py`, case FC35.
 
-1. Confirm the request with the customer's data protection officer, who decides whether an exception applies. This pack doesn't analyse the exceptions.
+1. Have the customer's controller-side owner confirm who is asking, what is in scope and whether to erase, taking the data protection officer's or legal advice, and record any exception, the retention that applies and the deletion permitted. This pack doesn't decide whether an exception applies.
 2. Open the data map and list every store that holds the customer's data, including memory, checkpoints, traces, logs, backups and third parties.
-3. Find the customer's records by exact id, in fields and in free text. Never match a substring: C1 is not C10.
-4. Erase from each store through its own route, such as deleting memory records and events, deleting checkpoint threads and purging traces.
+3. For each store, declare how it identifies the customer: by the record's customer field, or by the id in the text of a log line. Match the exact id, never a substring: C1 is not C10.
+4. Erase from each store through its own route, such as deleting memory records and events, deleting checkpoint threads and purging traces. Don't delete another customer's record because it mentions the id; list it for a person to redact.
 5. Write a receipt: what was removed from each store, when and by whom.
-6. Run a recheck afterwards with the same exact-id search, and confirm it finds nothing.
+6. Run a recheck afterwards that searches every text value left in those stores. The erasure is complete only when it finds nothing, and only for the stores searched.
 7. For a store that can't be erased per customer, such as a backup, record when the data expires and that it won't be restored.
 
-**Output:** a receipt and a clean recheck, filed where the data protection officer can find them. **Checks:** FB87, FB90. **Do not use:** a substring or fuzzy search to find the records; it erases other customers.
+**Output:** a receipt and a clean recheck, filed where the customer's owner and data protection officer can find them. **Checks:** FB87, FB90. **Do not use:** a substring or fuzzy search to find the records; it erases other customers.
 
 
 ---
@@ -1342,7 +1349,7 @@ Keep the instruction file short and pointing to these documents rather than repe
 4. Leave shared resources, such as a bootstrap stack, unless nothing else uses them; don't delete and recreate a bootstrap stack.
 5. List what is left, following NextToken until there is none, even after an empty page. Make sure the listing service can see every resource.
 6. Wait at least 24 hours for billing data to update, then check the cost for the services the deployment used.
-7. Mark the teardown proven only when the inventory is empty and the cost check is clean.
+7. Mark the teardown proven only when the inventory is empty and the cost check is clean, and record what the proof covers: the account, regions and resource types the inventory searched, and the period the cost check read. A zero cost alone doesn't show that everything is gone.
 
 **Output:** a completed teardown checklist with both checks. **Checks:** FB83, FB85. **Do not use:** without the account owner's approval; deleting is as much a production change as deploying.
 
@@ -1550,7 +1557,7 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Publication/version:** 2025 (arXiv v1 10 June; v3 27 June).
 **Source:** [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837)
 **Inspected:** 2026-10-20, selected text. Abstract, sections 1–3, the introduction to section 4 and 4.1, section 5 and Appendix A in the arXiv HTML; case studies 4.2–4.10 searched, not read in full.
-**Use here:** Six patterns that isolate untrusted data from the agent's control flow (action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimisation), and the principle that untrusted input must not be able to trigger consequential actions.
+**Use here:** Six patterns that isolate untrusted data from the agent's control flow (action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimisation), and the principle that untrusted input must not be able to trigger consequential actions. The action-selector pattern prevents any feedback from the actions back into the agent (section 3.1, re-read 21 October 2026).
 **Limit:** A preprint. The authors say the patterns trade utility for security and that general-purpose agents can't yet be secured. Author order is alphabetical, so the short citation says nothing about who led the work.
 
 <a id="fd18a"></a>
@@ -1689,9 +1696,9 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Authors:** Information Commissioner's Office.
 **Publication/version:** Last updated 15 March 2023; marked under review.
 **Source:** [Guidance on AI and data protection](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/)
-**Inspected:** 2026-10-20, selected text. The overview, the security and data minimisation chapter (privacy-enhancing technique sections skimmed), and the impact-assessment section of the accountability chapter.
-**Use here:** Identify the minimum personal data the purpose needs; AI adds security complexity; AI processing usually needs a data protection impact assessment.
-**Limit:** UK regulator guidance, under review after the Data (Use and Access) Act. Its security content covers classic machine-learning attacks, not prompt injection or agents.
+**Inspected:** 2026-10-21, selected text. The overview, the security and data minimisation chapter (privacy-enhancing technique sections skimmed), and the impact-assessment section of the accountability chapter. Read in full on 21 October 2026: the ICO's page on data protection officers in its guide to accountability and governance (https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-officers/).
+**Use here:** Identify the minimum personal data the purpose needs; AI adds security complexity; AI processing usually needs a data protection impact assessment; a data protection officer informs, advises and monitors, while compliance stays the controller's or processor's responsibility.
+**Limit:** UK regulator guidance, under review after the Data (Use and Access) Act; both pages say so. Its security content covers classic machine-learning attacks, not prompt injection or agents.
 
 <a id="fd25"></a>
 ## FD25 — An Analysis and Survey of the Development of Mutation Testing
@@ -1774,13 +1781,13 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Limit:** Tool documentation that changes with each release. The gate set and its thresholds are Senoni choices.
 
 <a id="h-openai"></a>
-## H-OpenAI — OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, the Python library and tiktoken
+## H-OpenAI — OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, prepaid billing, the Python library and tiktoken
 
 **Authors:** OpenAI.
 **Publication/version:** not established.
-**Source:** [OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, the Python library and tiktoken](https://developers.openai.com/api/docs/guides/function-calling)
-**Inspected:** 2026-10-21, official documentation. Read in full text from the copy fetched on 20 October 2026 (the platform.openai.com addresses redirect to developers.openai.com): Function calling (the five-step flow, call identifiers, function output, best practices for defining functions, token usage); Structured model outputs (schema adherence against JSON mode, refusals, incomplete responses, key ordering, handling mistakes); Reasoning models (reasoning tokens billed as output, incomplete responses); Data controls in the OpenAI platform (training use, abuse monitoring logs, zero data retention and modified abuse monitoring). The openai-python and tiktoken repositories remain link and title checked; the help article on data use returned 403 and is not used.
-**Use here:** The tool loop's message order and tool_call_id; schema-constrained output; reasoning tokens on the bill; client retries; counting tokens; provider data-use terms.
+**Source:** [OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, prepaid billing, the Python library and tiktoken](https://developers.openai.com/api/docs/guides/function-calling)
+**Inspected:** 2026-10-21, official documentation. Read in full text from the copy fetched on 20 October 2026 (the platform.openai.com addresses redirect to developers.openai.com): Function calling (the five-step flow, call identifiers, function output, best practices for defining functions, token usage); Structured model outputs (schema adherence against JSON mode, refusals, incomplete responses, key ordering, handling mistakes); Reasoning models (reasoning tokens billed as output, incomplete responses); Data controls in the OpenAI platform (training use, abuse monitoring logs, zero data retention and modified abuse monitoring). Read in full on 21 October 2026: the help article Setting up and managing prepaid API billing (https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing), on automatic recharge, the delay before access stops and negative balances. The openai-python and tiktoken repositories remain link and title checked; the help article on data use returned 403 and is not used.
+**Use here:** The tool loop's message order and tool_call_id; schema-constrained output; reasoning tokens on the bill; client retries; counting tokens; provider data-use terms; a prepaid balance is not an instantaneous spending cutoff.
 **Limit:** Host documentation that changes without notice; model names in the examples date quickly. The design rules apply beyond OpenAI, but the field names are OpenAI's.
 
 <a id="h-anthropiccaching"></a>

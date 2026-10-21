@@ -199,7 +199,7 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Publication/version:** 2025 (arXiv v1 10 June; v3 27 June).
 **Source:** [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837)
 **Inspected:** 2026-10-20, selected text. Abstract, sections 1–3, the introduction to section 4 and 4.1, section 5 and Appendix A in the arXiv HTML; case studies 4.2–4.10 searched, not read in full.
-**Use here:** Six patterns that isolate untrusted data from the agent's control flow (action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimisation), and the principle that untrusted input must not be able to trigger consequential actions.
+**Use here:** Six patterns that isolate untrusted data from the agent's control flow (action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimisation), and the principle that untrusted input must not be able to trigger consequential actions. The action-selector pattern prevents any feedback from the actions back into the agent (section 3.1, re-read 21 October 2026).
 **Limit:** A preprint. The authors say the patterns trade utility for security and that general-purpose agents can't yet be secured. Author order is alphabetical, so the short citation says nothing about who led the work.
 
 <a id="fd18a"></a>
@@ -338,9 +338,9 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Authors:** Information Commissioner's Office.
 **Publication/version:** Last updated 15 March 2023; marked under review.
 **Source:** [Guidance on AI and data protection](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/)
-**Inspected:** 2026-10-20, selected text. The overview, the security and data minimisation chapter (privacy-enhancing technique sections skimmed), and the impact-assessment section of the accountability chapter.
-**Use here:** Identify the minimum personal data the purpose needs; AI adds security complexity; AI processing usually needs a data protection impact assessment.
-**Limit:** UK regulator guidance, under review after the Data (Use and Access) Act. Its security content covers classic machine-learning attacks, not prompt injection or agents.
+**Inspected:** 2026-10-21, selected text. The overview, the security and data minimisation chapter (privacy-enhancing technique sections skimmed), and the impact-assessment section of the accountability chapter. Read in full on 21 October 2026: the ICO's page on data protection officers in its guide to accountability and governance (https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-officers/).
+**Use here:** Identify the minimum personal data the purpose needs; AI adds security complexity; AI processing usually needs a data protection impact assessment; a data protection officer informs, advises and monitors, while compliance stays the controller's or processor's responsibility.
+**Limit:** UK regulator guidance, under review after the Data (Use and Access) Act; both pages say so. Its security content covers classic machine-learning attacks, not prompt injection or agents.
 
 <a id="fd25"></a>
 ## FD25 — An Analysis and Survey of the Development of Mutation Testing
@@ -423,13 +423,13 @@ Independently attributed sources, inspected 2026-10-20 to 2026-10-21. None is a 
 **Limit:** Tool documentation that changes with each release. The gate set and its thresholds are Senoni choices.
 
 <a id="h-openai"></a>
-## H-OpenAI — OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, the Python library and tiktoken
+## H-OpenAI — OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, prepaid billing, the Python library and tiktoken
 
 **Authors:** OpenAI.
 **Publication/version:** not established.
-**Source:** [OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, the Python library and tiktoken](https://developers.openai.com/api/docs/guides/function-calling)
-**Inspected:** 2026-10-21, official documentation. Read in full text from the copy fetched on 20 October 2026 (the platform.openai.com addresses redirect to developers.openai.com): Function calling (the five-step flow, call identifiers, function output, best practices for defining functions, token usage); Structured model outputs (schema adherence against JSON mode, refusals, incomplete responses, key ordering, handling mistakes); Reasoning models (reasoning tokens billed as output, incomplete responses); Data controls in the OpenAI platform (training use, abuse monitoring logs, zero data retention and modified abuse monitoring). The openai-python and tiktoken repositories remain link and title checked; the help article on data use returned 403 and is not used.
-**Use here:** The tool loop's message order and tool_call_id; schema-constrained output; reasoning tokens on the bill; client retries; counting tokens; provider data-use terms.
+**Source:** [OpenAI API documentation: function calling, structured outputs, reasoning models, data controls, prepaid billing, the Python library and tiktoken](https://developers.openai.com/api/docs/guides/function-calling)
+**Inspected:** 2026-10-21, official documentation. Read in full text from the copy fetched on 20 October 2026 (the platform.openai.com addresses redirect to developers.openai.com): Function calling (the five-step flow, call identifiers, function output, best practices for defining functions, token usage); Structured model outputs (schema adherence against JSON mode, refusals, incomplete responses, key ordering, handling mistakes); Reasoning models (reasoning tokens billed as output, incomplete responses); Data controls in the OpenAI platform (training use, abuse monitoring logs, zero data retention and modified abuse monitoring). Read in full on 21 October 2026: the help article Setting up and managing prepaid API billing (https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing), on automatic recharge, the delay before access stops and negative balances. The openai-python and tiktoken repositories remain link and title checked; the help article on data use returned 403 and is not used.
+**Use here:** The tool loop's message order and tool_call_id; schema-constrained output; reasoning tokens on the bill; client retries; counting tokens; provider data-use terms; a prepaid balance is not an instantaneous spending cutoff.
 **Limit:** Host documentation that changes without notice; model names in the examples date quickly. The design rules apply beyond OpenAI, but the field names are OpenAI's.
 
 <a id="h-anthropiccaching"></a>

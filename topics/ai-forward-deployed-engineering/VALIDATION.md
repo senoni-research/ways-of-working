@@ -19,6 +19,7 @@ The builder and validator are standard-library Python. The validator renders eve
 - every local link and anchor;
 - the exact file set of both install trees;
 - that each file the loaders name is installed, and that the loader's activation setting and section markers are present;
+- that each install tree's `.fde/INVENTORY.txt` lists exactly the files under `.fde/`, so `.fde/check_install.py` can require each to be present and not empty in a project;
 - that the pack isn't installed at the library root, and that none of its install paths matches a file in another pack's install tree in this repository;
 - the full release manifest: SHA-256, bytes and Markdown word counts.
 
@@ -28,7 +29,9 @@ The validator is read-only and never repairs a fixture. The corruption tests in 
 
 `reference/` holds standard-library code for the controls in ten modules: the autonomy levels and the tollgate check, the tool loop with its controls in the tools, structured output that fails safely, the cost and comparison arithmetic, retrieval scoring and answers that name their source, memory scoped to one customer, durable runs with idempotent side effects and a run lock in SQLite, the evaluation statistics, a capped batch with safe retries and a capacity sum, the lethal trifecta check and a screen's measured rates, a small policy evaluator, key rotation and the acting-user token check, request signing, a deploy-role review, a runtime app's health contract, the session cost, alarm, error budget and kill switch, teardown order and its proof, and the data map, erasure and masking. Its unit tests run the synthetic cases, with a scripted stub model where a model would decide, and compare each outcome with the answer published in `cases/cases.json`. No test calls a model or the network, or creates a cloud resource; the durable tests use temporary SQLite files.
 
-A passing test shows only that the test ran. `tools/mutate_reference.py` breaks one control at a time in a temporary copy, such as removing the step cap, dropping the trailing slash from a memory namespace or paying with a fresh key on every retry, and requires the tests to fail. A mutant that survives is a control the tests don't protect.
+A passing test shows only that the test ran. `tools/mutate_reference.py` breaks one control at a time in a temporary copy, such as removing the step cap, dropping the trailing slash from a memory namespace or paying with a fresh key on every retry, and requires the tests to fail. A mutant counts as caught only when a test fails by assertion or by an error raised inside a test. A mutant that survives is a control the tests don't protect, and one that stops the tests importing or running, or times out, is invalid; either fails the run.
+
+The reference code is a set of teaching examples, not a framework. Each control holds for the inputs its docstring and cases describe, and stops at the boundaries they state: the trifecta check sees only the tools declared to it, erasure finds a customer only by the route each store declares, and a teardown proof covers only what the inventory searched.
 
 ## What they don't show
 
@@ -37,6 +40,10 @@ A `review` specification is checked by a person reading the work, not by a scrip
 The collision check sees only the packs in this repository. The install check in `.fde/` sees only the project it is run in.
 
 A source record states what was inspected. Passing the checks shows the record is well formed, not that the source says what the pack attributes to it; that is a review task. Seven documentation records are still only link-checked, and no module or recipe cites them.
+
+## Independent review
+
+Before publication, an independent reviewer read the draft and ran 27 boundary tests of their own against the reference code. The corrections are listed in the changelog; each has a unit test and a mutant here, and the reviewer's tests pass against this build, with the erasure calls given the new declared match routes. The review didn't run an agent session, Windows, a real model or a cloud service, and its tests are not part of the pack. Two checks remain open: Articles 5 and 17 of the GDPR against EUR-Lex, and whether each host loads the rule, which the quickstart's second check shows in a fresh session.
 
 ## Publication scan
 

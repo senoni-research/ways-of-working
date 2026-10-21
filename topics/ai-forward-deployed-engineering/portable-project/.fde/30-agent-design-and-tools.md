@@ -40,7 +40,7 @@ Guardrails work best as layers, and tools can be rated by risk [FD04](90-sources
 - a second decision for the same claim is refused;
 - a model that stops without deciding, or hits the step cap, hands the claim to a person.
 
-FC03 is the test of this design: the stub model obeys an instruction planted in the claim, and nothing it does gets through.
+FC03 is the test of this design: the stub model obeys an instruction planted in the claim, and none of its approvals gets through. The controls bound what an approval can be; they don't stop a decision the rules allow, so a model steered into rejecting a covered claim would be recorded. Module [60-security-and-guardrails](60-security-and-guardrails.md) treats that as the risk that remains.
 
 ## Structured output that fails safe
 
@@ -77,7 +77,7 @@ Senoni practice: decide by where the side effects must run and who must control 
 | FB16 | The model proposes an approval above the automatic limit. | Record a referral in code, whatever the model proposed. | `unit-tested` |
 | FB17 | The model records a second decision for the same item. | Refuse it; the first decision stands. | `unit-tested` |
 | FB18 | The model proposes approving something the rules exclude. | Refuse with the reason and the decisions that are allowed. | `unit-tested` |
-| FB19 | The item's own text tells the agent to approve it. | Nothing the code controls changes; the outcome is decided by the rules. | `unit-tested` |
+| FB19 | The item's own text tells the agent to approve it. | The code refuses any approval the rules don't allow; a decision the rules permit, such as a wrong rejection, is not stopped by the code and needs another check. | `unit-tested` |
 | FB20 | The model stops without recording a decision. | Refer the item to a person. | `unit-tested` |
 | FB21 | The structured output is invalid. | Retry once with the error as feedback; after a second failure, refer. | `unit-tested` |
 | FB22 | The model refuses, or its output is cut off at the token limit. | Refer; never approve by default. | `unit-tested` |

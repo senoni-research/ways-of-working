@@ -31,7 +31,7 @@ class Contract(unittest.TestCase):
                 agent.finish_task(task)
             else:
                 status, body = agent.handle('GET', '/ping')
-                pings.append([body['status'], body['time_of_last_update']])
+                pings.append([body['status'], body.get('time_of_last_update')])
         self.assertEqual(pings, CASE['FC29']['expected']['pings'])
 
     def test_invocations_and_unknown_paths(self):
@@ -51,6 +51,16 @@ class Snapshot(unittest.TestCase):
                             b.handle('POST', '/invocations', {'claim_id': 'WC-1'})[1]['request_id'])
         self.assertNotEqual([a.jitter(1.0) for _ in range(5)], [b.jitter(1.0) for _ in range(5)])
         self.assertNotEqual(a.start_task(), b.start_task())
+
+    def test_a_restored_copy_reports_no_time_from_before_the_snapshot(self):
+        now = [100]
+        agent = Agent(stub_decide, clock=lambda: now[0])
+        agent.handle('GET', '/ping')
+        restored = copy.deepcopy(agent)
+        now[0] = 10_000
+        self.assertEqual(restored.handle('GET', '/ping')[1], {'status': 'Healthy'})
+        restored.start_task()
+        self.assertEqual(restored.handle('GET', '/ping')[1], {'status': 'HealthyBusy', 'time_of_last_update': 10_000})
 
 
 if __name__ == '__main__':

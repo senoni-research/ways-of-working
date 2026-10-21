@@ -2,7 +2,7 @@
 
 **Use when:** taking a system that passed its tollgate into production. **Modules:** [[70-deployment-and-operations]], [[10-engagement]]. **Sources:** [[FD18a]], [[FD19a]], [[FD19b]], [[H-AgentCoreRuntime]], [[H-Lambda]], [[H-CloudWatch]], [[H-GitHubOIDC]]; the heartbeat rule, the kill switch per side effect and the rehearsed rollback are Senoni practice. **Reference:** `reference/operations.py`, cases FC31 and FC32.
 
-1. Pass the go-live readiness tollgate (FT09), with unmet items accepted in writing.
+1. Pass the go-live readiness tollgate (FT09), with every item met and its evidence in place. A criterion the customer revised in writing before the gate, in a decision record (FT05), is checked in its revised form; an unmet item holds the gate.
 2. Deploy from the pipeline with short-lived OIDC credentials, through staging, with a person approving production.
 3. Publish an immutable version and point a named endpoint or alias at it. Rehearse the rollback by repointing to the previous version.
 4. Send a small share of traffic first, where the platform supports it, and watch the alarms before moving the rest.

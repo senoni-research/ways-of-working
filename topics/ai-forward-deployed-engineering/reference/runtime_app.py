@@ -3,7 +3,9 @@ the work and GET /ping reports Healthy, or HealthyBusy while background work run
 
 Two documented traps are built in as controls. time_of_last_update moves only when the status changes: if it moved on
 every ping, the session would never go idle and would run to its maximum lifetime. And nothing random, unique, timed
-or credentialed is made at startup, because instances restored from one snapshot share whatever startup made.
+or credentialed is made at startup, because instances restored from one snapshot share whatever startup made. The
+contract makes time_of_last_update optional, so it is left out until the status first changes; a time taken before
+the snapshot would otherwise be reported by every restored instance.
 """
 from __future__ import annotations
 
@@ -16,7 +18,7 @@ class Agent:
         self.decide, self.clock = decide, clock
         self.config = {'model': 'stub', 'tools': ('read_claim', 'decide')}
         self.tasks: set[str] = set()
-        self.status, self.changed = 'Healthy', int(clock())
+        self.status, self.changed = 'Healthy', None
 
     def handle(self, method: str, path: str, body: dict | None = None) -> tuple[int, dict]:
         if (method, path) == ('GET', '/ping'):
@@ -29,6 +31,8 @@ class Agent:
         status = 'HealthyBusy' if self.tasks else 'Healthy'
         if status != self.status:
             self.status, self.changed = status, int(self.clock())
+        if self.changed is None:
+            return {'status': status}
         return {'status': status, 'time_of_last_update': self.changed}
 
     def start_task(self) -> str:

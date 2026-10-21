@@ -8,6 +8,6 @@
 4. Leave shared resources, such as a bootstrap stack, unless nothing else uses them; don't delete and recreate a bootstrap stack.
 5. List what is left, following NextToken until there is none, even after an empty page. Make sure the listing service can see every resource.
 6. Wait at least 24 hours for billing data to update, then check the cost for the services the deployment used.
-7. Mark the teardown proven only when the inventory is empty and the cost check is clean.
+7. Mark the teardown proven only when the inventory is empty and the cost check is clean, and record what the proof covers: the account, regions and resource types the inventory searched, and the period the cost check read. A zero cost alone doesn't show that everything is gone.
 
 **Output:** a completed teardown checklist with both checks. **Checks:** FB83, FB85. **Do not use:** without the account owner's approval; deleting is as much a production change as deploying.

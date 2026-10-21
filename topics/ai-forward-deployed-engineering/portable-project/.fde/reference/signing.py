@@ -1,9 +1,9 @@
 """Signing a request between services with AWS Signature Version 4, and checking it on the server.
 
-Standard library only. It follows the steps AWS documents for SigV4, to show what is signed; use an AWS SDK to sign
-real requests. SigV4 requires only the host and x-amz-* headers in the signature; a header
-left out of the signature can be changed in transit without breaking it, so the server refuses a request unless every
-header it acts on is signed.
+Standard library only. It follows the steps AWS documents for SigV4, to show what is signed; use an AWS SDK and the
+service's documented signing requirements for real requests. The signature always covers the host, the Content-Type
+when the request has one, and every x-amz-* header. A header left out of the signature can be changed in transit
+without breaking it, so the server refuses a request unless every header it acts on is signed.
 """
 from __future__ import annotations
 
@@ -41,9 +41,9 @@ def signature(request: dict, secret: str, region: str, service: str, signed: lis
 
 
 def sign(request: dict, access_key: str, secret: str, region: str, service: str, extra: tuple = ()) -> dict:
-    """Return the request with an Authorization header. Host and every x-amz-* header are always signed; pass the
-    other headers the server acts on in extra."""
-    signed = sorted({'host', *(h.lower() for h in request['headers'] if h.lower().startswith('x-amz-')),
+    """Return the request with an Authorization header. Host, Content-Type when present and every x-amz-* header are
+    always signed; pass the other headers the server acts on in extra."""
+    signed = sorted({'host', *(h.lower() for h in request['headers'] if h.lower().startswith('x-amz-') or h.lower() == 'content-type'),
                      *(h.lower() for h in extra)})
     auth = (f'{ALGORITHM} Credential={access_key}/{_scope(request, region, service)}, '
             f"SignedHeaders={';'.join(signed)}, Signature={signature(request, secret, region, service, signed)}")

@@ -20,7 +20,7 @@ class Signing(unittest.TestCase):
     """FB72: every header the server acts on is signed, and the server refuses a request where one isn't (FC26)."""
 
     def test_signatures_are_stable(self):
-        self.assertEqual(signed([])['headers']['authorization'], FC26['expected']['authorization']['host and x-amz-* only'])
+        self.assertEqual(signed([])['headers']['authorization'], FC26['expected']['authorization']['the required headers'])
         self.assertEqual(signed(['x-acting-user', 'content-type'])['headers']['authorization'],
                          FC26['expected']['authorization']['every header acted on'])
 

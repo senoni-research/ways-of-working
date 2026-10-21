@@ -8,10 +8,28 @@ The last five planned modules. Not yet reviewed with a real customer or register
 - Templates FT01–FT09 (discovery note, success criteria, plan, status file, decision record, runbook, data map, teardown checklist, go-live readiness) and prompts FP01–FP05 (plan from a brief, review a plan, build one phase, compare with a reference implementation, explain this to me), in module 80.
 - Recipes: FR01 frame the engagement, FR10 screen for injection and measure it, FR11 put limits in policy, FR12 deploy to a managed runtime, FR13 act for the signed-in user, FR14 go live: ship, watch, stop, FR15 erase a customer, FR16 tear down and prove it.
 - Cases FC20–FC36, with a packet each.
-- Reference code: `engagement.py`, `guardrails.py`, `policy.py`, `credentials.py`, `signing.py`, `iam_review.py`, `runtime_app.py`, `operations.py`, `teardown.py` and `customer_data.py`, with 50 more unit tests, 108 in all. `tools/mutate_reference.py` now breaks 87 controls. The Wilson interval in `evaluation.py` is now held within 0 and 1.
+- Reference code: `engagement.py`, `guardrails.py`, `policy.py`, `credentials.py`, `signing.py`, `iam_review.py`, `runtime_app.py`, `operations.py`, `teardown.py` and `customer_data.py`, with 62 more unit tests, 120 in all. `tools/mutate_reference.py` now breaks 103 controls. The Wilson interval in `evaluation.py` is now held within 0 and 1.
 - Sixteen more documentation records re-read and recorded as official documentation: H-Cedar, H-AgentCorePolicy, H-PythonStdlib, H-SecretsManager, H-AWSIAM, H-SigV4, H-GitHubOIDC, H-Lambda, H-Supabase, H-AgentCorePricing, H-CloudWatch, H-AWSBudgets, H-CDK, H-ResourceExplorer, H-AgentCoreRuntime and H-AgentCoreIdentity. H-OpenAI and H-OpenRouter now include the providers' data pages. Seven remain link-checked only, and none is cited.
 - Module 00 routes to the new modules and says so when a task falls outside the pack; module 35 points to module 70 for cloud budgets and the cost of a runtime session.
 - Now that every planned module and FR01 exist, the corruption tests that used to add module 10 or recipe FR01 change an existing module or recipe instead. Each still makes one change and expects the same diagnostic.
+
+### Review corrections, before publication
+
+An independent review of the draft found contradictions and guarantees the code didn't keep. Each fix below has a unit test and a mutant; the counts of modules, specifications, sources and cases are unchanged.
+
+- Injection: module 60 and FR10 no longer say the controls stop injected instructions. The code refuses any action the rules don't allow; a decision the rules permit, such as a wrong rejection, is a residual risk that needs isolation, a person or an independent check, and a test pins it (FB19). Module 60 describes the action-selector pattern from FD17, and says the trifecta check sees only the tools and channels declared to it.
+- Policy: a malformed policy set, with a repeated id or an unknown effect, condition or operator, is refused and the request denied, so a repeated id can no longer hide a satisfied forbid (FB67, FB68).
+- Customer data: each store declares whether erasure finds the customer by the customer field or in the text. Another customer's record that mentions C1 is listed for review, not deleted, and the recheck searches every text value; FC35 adds two traces. The customer, as controller, decides, advised by its data protection officer (FD24b now includes the ICO's page on the role). FC34 records that a provider's abuse-monitoring logs can hold prompts and responses for up to 30 days.
+- Go-live: a failed criterion holds the gate until it is met or the customer revises it in writing before the gate, in a decision record (module 10, FR14, FT09).
+- Evaluation: the paired comparison requires paired items and decides on the exact mean, not a rounded one (FB50).
+- Credentials: every token part must be a JSON object, a token with no subject is refused, and the session id is encoded so no two pairs collide.
+- The tool loop refuses an amount that isn't a finite number. A teardown number that isn't finite and non-negative proves nothing, and the proof covers only what the inventory searched.
+- The runtime app leaves out the optional timestamp until the status first changes, so a restored copy reports no time from before the snapshot (FC29). Request signing always signs the host, content type and `x-amz-*` headers (FC26).
+- Retries are only for a request that certainly wasn't sent, a failure the provider documents as retryable, or an idempotency key the service honours (module 55, FR09). An error budget stops changes when the failures go over it; exactly at the budget is still within it.
+- Cost: module 35 says a prepaid balance is not an instantaneous spending cutoff, from OpenAI's prepaid billing article (H-OpenAI).
+- Install: `.fde/INVENTORY.txt` lists every installed file, and `.fde/check_install.py` requires each to be present and not empty, and the entry route to name the pack's files. Four more install checks, ten in all.
+- Mutation: a mutant counts as caught only when a test fails by assertion or by an error inside a test; one that stops the tests importing, or times out, fails the run.
+- Pages: the README follows an engagement through eight stages, from understanding the work to handover, with the modules, recipes, templates and output of each. The quickstart starts the first three, and splits its first check into one that the files can be read and one that the rule loads by itself. The attribution says how the course inspired the pack.
 
 ## 0.2.0 — 20 October 2026
 

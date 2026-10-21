@@ -71,6 +71,8 @@ class ClaimTools:
             return f'refused: decision must be one of {", ".join(DECISIONS)}'
         try:
             value = Decimal(amount)
+            if not value.is_finite():
+                raise InvalidOperation
         except InvalidOperation:
             return f'refused: amount {amount!r} is not a number'
         claimed = Decimal(self.claim['amount_claimed'])

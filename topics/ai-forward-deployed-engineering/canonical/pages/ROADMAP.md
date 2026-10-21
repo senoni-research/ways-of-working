@@ -14,6 +14,7 @@ Registration in the repository's README, topics page and root documentation chec
 ## Open items
 
 - Add records for the host documentation the install instructions rely on (Cursor rules, OpenCode, Cline), after reading those pages.
+- Run the quickstart's two checks in a fresh session in Cursor and in a host that reads `AGENTS.md`, and record each host's own evidence of which rules loaded.
 - Check by hand the pages that blocked automated access: Articles 5 and 17 of the GDPR on EUR-Lex (FD24a, read on legislation.gov.uk and now cited in module 75), the cedarpy page on PyPI (H-Cedar) and the npm package in H-AgentCoreRuntime.
 - Re-read each documentation record's page before a module cites it, and record the inspected scope. The builder enforces this. Six were re-read for 0.1.0, six for 0.2.0 and sixteen for 0.3.0; the seven that remain are not cited.
 - The MCP record cites the 2025 revisions of the specification, and no module relies on its authorisation rules. Read the current revision, 2026-07-28, before one does.

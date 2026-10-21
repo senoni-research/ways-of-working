@@ -8,7 +8,7 @@ How to put an agent into production and keep it there: the managed runtime's con
 
 AgentCore Runtime runs an agent as an ARM64 container listening on port 8080, with `POST /invocations` for the work and `GET /ping` for health [[H-AgentCoreRuntime]]. While `/ping` reports `HealthyBusy`, the session is active and kept alive; a session left `Healthy` and idle is ended, by default after 900 seconds, and a session's compute is ended at its maximum lifetime, by default 28,800 seconds, after which the next call gets a new instance [[H-AgentCoreRuntime]]. The documentation warns against setting `time_of_last_update` to the current time on every ping: the idle timeout then never fires, and sessions persist until their maximum lifetime and can exhaust the session quota [[H-AgentCoreRuntime]]. Each session gets its own microVM, whose memory is sanitised when it ends, and `StopRuntimeSession` ends one explicitly [[H-AgentCoreRuntime]].
 
-Senoni practice, in `reference/runtime_app.py`: report `HealthyBusy` only while registered background work runs, move the timestamp only when the status changes, and stop a session when its work is done rather than wait for the idle timeout. FC29 walks through the pings.
+Senoni practice, in `reference/runtime_app.py`: report `HealthyBusy` only while registered background work runs, move the timestamp only when the status changes, leave the optional timestamp out until the status first changes, so no time from before a snapshot is reported, and stop a session when its work is done rather than wait for the idle timeout. FC29 walks through the pings.
 
 ## Start once, then make everything per request
 
@@ -42,7 +42,7 @@ Google's SRE book defines a service level objective as a target for a service le
 
 A CloudWatch alarm evaluates the last N periods and goes to `ALARM` when M of them breach; its states are `OK`, `ALARM` and `INSUFFICIENT_DATA` [[H-CloudWatch]]. Missing data can be treated as `notBreaching`, `breaching`, `ignore` or `missing`. The default is `missing`, under which an alarm whose every point is missing goes to `INSUFFICIENT_DATA`. AWS suggests treating missing data as breaching for an alarm on a metric that reports continually, because its absence may mean something is wrong [[H-CloudWatch]].
 
-Senoni practice, in `reference/operations.py`: agree the objectives and the error budget policy with the customer before go-live. Give every job and agent a heartbeat metric with an alarm that treats missing data as breaching (FC31). When the budget for the period is spent, changes stop except fixes (FC32).
+Senoni practice, in `reference/operations.py`: agree the objectives and the error budget policy with the customer before go-live. Give every job and agent a heartbeat metric with an alarm that treats missing data as breaching (FC31). When the period's failures go over the budget, changes stop except fixes; exactly at the budget is still within it (FC32).
 
 ## Stop: the kill switch
 
@@ -60,7 +60,7 @@ Senoni practice: the pipeline deploys with OIDC through a staging stage before p
 
 Resource Explorer's `ListResources` can return fewer results than the maximum while more remain, so the caller checks `NextToken` after every call [[H-ResourceExplorer]]. Without its service-linked role, Resource Explorer gives only partial results [[H-ResourceExplorer]].
 
-Senoni practice, in `reference/teardown.py`: delete in dependency order, each resource before anything it depends on; list every page of what is left; and prove the teardown with two independent checks, an empty inventory and a cost check made at least 24 hours later, our margin over the budget update cadence. A shared bootstrap stack is left alone unless nothing else uses it. FC33 finds two leftovers on the second page, after an empty first page.
+Senoni practice, in `reference/teardown.py`: delete in dependency order, each resource before anything it depends on; list every page of what is left; and prove the teardown with two independent checks, an empty inventory and a cost check made at least 24 hours later, our chosen minimum over the budget update cadence. The proof covers only the account, regions and resource types the inventory searched and the period the cost check read; a number that isn't finite and non-negative proves nothing. A shared bootstrap stack is left alone unless nothing else uses it. FC33 finds two leftovers on the second page, after an empty first page.
 
 ## Checks
 
@@ -70,7 +70,7 @@ Senoni practice, in `reference/teardown.py`: delete in dependency order, each re
 | FB77 | The runtime may restore instances from a snapshot. | Make nothing random, unique, timed or credentialed at startup; draw such values per request from the operating system. | `unit-tested` |
 | FB78 | A cost estimate is made. | State every assumption, include the idle timeout, date the rates, and return the assumptions with the result. | `unit-tested` |
 | FB79 | A job or agent sends a heartbeat. | Alarm on it, treating missing data as breaching. | `unit-tested` |
-| FB80 | The error budget for the period is spent. | Freeze changes except fixes, as the error budget policy agreed in advance says. | `unit-tested` |
+| FB80 | The period's failures go over its error budget. | Freeze changes except fixes, as the error budget policy agreed in advance says. | `unit-tested` |
 | FB81 | A batch has side effects. | Read the kill switch before each side effect. | `unit-tested` |
 | FB82 | A release goes to production. | Route traffic through a named endpoint or alias pinned to an immutable version, and rehearse the rollback before go-live. | `review` |
 | FB83 | A deployment is torn down. | Delete in dependency order, list every page of what is left, and prove it with an empty inventory and a cost check made after the billing data has updated. | `unit-tested` |

@@ -4,7 +4,7 @@
 
 1. Write the schema first: each action, and the attributes and types of its principal, resource and context.
 2. Write permit policies for what is allowed, and forbid policies for the limits that must never be crossed. Nothing else is allowed by default.
-3. On a gateway that names actions per tool, list each action explicitly; there are no wildcard actions.
+3. On a gateway that names actions per tool, list each action explicitly in the format its target type documents, or group tools under a gateway target; there are no wildcard actions.
 4. Validate every policy against the schema in the pipeline, and refuse to deploy on any error.
 5. In the application, read the errors in every decision. For a consequential action, deny when a forbid policy errored, and alert.
 6. Test each limit with requests just inside and just outside it, and with one that should be denied by default.

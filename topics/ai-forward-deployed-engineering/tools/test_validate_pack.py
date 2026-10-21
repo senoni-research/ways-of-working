@@ -327,6 +327,22 @@ def run_install_checks(root: Path) -> int:
         none = Path(td) / 'no-route'
         shutil.copytree(root / 'portable-project/.fde', none / '.fde')
         expect(none, 'entry route not installed')
+        module = Path(td) / 'cursor-missing-module'
+        shutil.copytree(root / 'cursor-project', module)
+        (module / '.fde/30-agent-design-and-tools.md').unlink()
+        expect(module, 'missing .fde/30-agent-design-and-tools.md')
+        hollow = Path(td) / 'cursor-empty-module'
+        shutil.copytree(root / 'cursor-project', hollow)
+        write(hollow / '.fde/10-engagement.md', '')
+        expect(hollow, 'empty .fde/10-engagement.md')
+        blank = Path(td) / 'cursor-empty-rule'
+        shutil.copytree(root / 'cursor-project', blank)
+        write(blank / '.cursor/rules/40-fde-method.mdc', '')
+        expect(blank, 'Cursor rule names no .fde/ file')
+        sentinels = Path(td) / 'sentinels-only'
+        for rel in ('.fde/README.md', '.fde/90-sources.md', '.fde/LICENSE', '.fde/cases/README.md', '.cursor/rules/40-fde-method.mdc'):
+            write(sentinels / rel, '')
+        expect(sentinels, 'missing .fde/INVENTORY.txt')
     return cases
 
 
