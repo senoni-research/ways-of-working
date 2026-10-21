@@ -19,7 +19,7 @@ The builder and validator are standard-library Python. The validator renders eve
 - every local link and anchor;
 - the exact file set of both install trees;
 - that each file the loaders name is installed, and that the loader's activation setting and section markers are present;
-- that each install tree's `.fde/INVENTORY.txt` lists exactly the files under `.fde/` and ends with their count, so `.fde/check_install.py` can refuse an inventory that is empty or cut short and require each listed file to be present and not empty in a project;
+- that each install tree's `.fde/INVENTORY.txt` lists exactly the files under `.fde/`, itself last, so `.fde/check_install.py` can refuse an inventory that is empty or cut short and require each listed file to be present and not empty in a project;
 - that the pack isn't installed at the library root, and that none of its install paths matches a file in another pack's install tree in this repository;
 - the full release manifest: SHA-256, bytes and Markdown word counts.
 

@@ -1,8 +1,8 @@
 """Read-only check that a project has every AI Forward Deployed Engineering file and exactly one entry route.
 
 Run from the project root: python3 .fde/check_install.py [project_root]
-Standard library only. .fde/INVENTORY.txt must end with its own file count, every file it lists must be present and not
-empty, and the entry route must name the pack's files. It writes nothing and does not prove that a host actually loads
+Standard library only. .fde/INVENTORY.txt must list at least one file and then itself last, every file it lists must be
+present and not empty, and the entry route must name the pack's files. It writes nothing and does not prove that a host actually loads
 the rules.
 """
 from __future__ import annotations
@@ -15,7 +15,6 @@ sys.dont_write_bytecode = True
 
 NS = '.fde'
 INVENTORY = 'INVENTORY.txt'
-END = re.compile(r'# end of inventory: (\d+) files')
 ROUTES = (('Cursor rule', '.cursor/rules/40-fde-method.mdc'), ('Cline rule', '.clinerules/40-fde.md'))
 SECTION = ('<!-- BEGIN FDE -->', '<!-- END FDE -->')
 
@@ -24,11 +23,10 @@ def inventory(project: Path) -> tuple[list[str], list[str]]:
     path = project / NS / INVENTORY
     if not path.is_file():
         return [], [f'missing {NS}/{INVENTORY}; copy the whole {NS}/ directory']
-    lines = path.read_text(encoding='utf-8').splitlines()
-    end = END.fullmatch(lines[-1]) if lines else None
-    if not end or int(end[1]) != len(lines) - 1 or len(lines) < 2:
+    listed = path.read_text(encoding='utf-8').splitlines()
+    if len(listed) < 2 or listed[-1] != INVENTORY:
         return [], [f'{NS}/{INVENTORY} is empty or cut short; copy the whole {NS}/ directory again']
-    return lines[:-1], []
+    return listed, []
 
 
 def check(project: Path) -> tuple[list[str], list[str]]:
