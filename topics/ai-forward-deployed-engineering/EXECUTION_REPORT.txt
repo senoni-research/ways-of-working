@@ -1,0 +1,59 @@
+AI Forward Deployed Engineering 0.3.0 (thirteen modules, with the review and re-review corrections) - execution report
+
+Run: 2026-10-21 22:25 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, on top of b4b197b, uncommitted.
+Every command below was run by the maintainer's coding agent on this machine. The reviewers ran only their own boundary tests.
+Interpreters: CPython 3.11.6 and 3.14.7, standard library only, run through uv without a project environment.
+
+Commands, from the pack root, on each interpreter:
+
+  python3 tools/build_pack.py .   (twice; the second reported "0 changed")
+  python3 tools/build_pack.py . --check
+    BUILD CHECK PASSED
+  python3 tools/validate_pack.py .
+    STATIC VALIDATION PASSED (281 canonical artifacts, links, loaders, spec trace, install paths, inventories and manifest).
+  python3 tools/test_validate_pack.py .
+    ALL 38 CORRUPTION REGRESSIONS AND 12 INSTALL CHECKS PASSED; positive control passed.
+    The two newest install checks write an empty inventory and one cut in half; the checker at 80146b8 passed both,
+    reporting "complete (0 files)" and "complete (55 files)", and this one refuses both. Valid installs still pass.
+  python3 -m unittest discover -s reference -p 'test_*.py'   (on a temporary copy of reference/ and cases/)
+    Ran 120 tests. OK
+  python3 tools/mutate_reference.py .
+    ALL 103 MUTANTS KILLED (97 assertion, 6 error); no import errors or timeouts; the unmutated tests pass.
+
+The reviewers' tests, held outside the repository, on each interpreter against temporary copies of reference/, tools/ and cases/:
+
+  test_review_boundaries.py (the re-review's copy, whose three erasure calls pass the match routes erase() now requires)
+    Ran 27 tests. OK
+  test_closure_supplement.py (the re-review's eight further tests)
+    Ran 8 tests. OK
+  These 35 are the reviewers' tests, not part of the pack's 120. reference/ is unchanged since 80146b8.
+
+From inside each install tree (cursor-project, portable-project), on each interpreter:
+
+  python3 -m unittest discover -s .fde/reference -p 'test_*.py'
+    Ran 120 tests. OK
+
+In a temporary project holding a copy of the Cursor tree's .fde/ and .cursor/, and in another holding the portable tree's .fde/ with AGENTS.fde.md as its AGENTS.md, on each interpreter:
+
+  python3 .fde/check_install.py
+    INSTALL CHECK PASSED: .fde/ complete (111 files); entry route: Cursor rule.
+    INSTALL CHECK PASSED: .fde/ complete (111 files); entry route: AGENTS.md section.
+
+From the repository root, on each interpreter:
+
+  python3 tools/check_docs.py
+    ROOT DOCUMENTATION CHECK PASSED: entry points, attribution links and local targets resolve.
+
+On each interpreter, with a private terms file held outside the repository and deleted afterwards:
+
+  python3 tools/scan_publication.py . --terms-file <private file>
+    IDENTIFIER SCAN PASSED (0 matching paths; 337 privately supplied patterns).
+
+Manifest counts: 13 modules of 13 planned, 16 recipes, 74 sources (7 link-checked only), 36 cases, 92 behaviours (60 unit-tested, 32 review), 9 templates, 5 prompts.
+
+The reference tests use a scripted stub model where a model would decide, and no model elsewhere. The durable tests write to temporary SQLite files, and one starts two threads with separate connections to race for the run lock. The runtime test drives a scripted clock; the token, cost, alarm and teardown tests take their times as inputs. No test called a model, an API, a cloud account or the network.
+
+The collision check compared both install trees with those of carey-chou, nicolas-vandeput, cost-value-engineering and cost-improvement-delivery: no shared path.
+
+Not run: any Cursor, Cline or other agent session, including the quickstart's two checks; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
+Network: none during these checks. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.
