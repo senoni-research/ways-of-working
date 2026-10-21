@@ -54,6 +54,15 @@ REQUIRED_PATHS = [
     'topics/cost-improvement-delivery/MIGRATION.md',
     'topics/cost-improvement-delivery/cursor-project/.cursor/rules/30-valuedelivery-method.mdc',
     'topics/cost-improvement-delivery/portable-project/AGENTS.valuedelivery.md',
+    'topics/ai-forward-deployed-engineering/README.md',
+    'topics/ai-forward-deployed-engineering/QUICKSTART.md',
+    'topics/ai-forward-deployed-engineering/cursor.md',
+    'topics/ai-forward-deployed-engineering/memory.md',
+    'topics/ai-forward-deployed-engineering/VALIDATION.md',
+    'topics/ai-forward-deployed-engineering/ATTRIBUTION.md',
+    'topics/ai-forward-deployed-engineering/SOURCE_REGISTER.md',
+    'topics/ai-forward-deployed-engineering/cursor-project/.cursor/rules/40-fde-method.mdc',
+    'topics/ai-forward-deployed-engineering/portable-project/AGENTS.fde.md',
 ]
 
 # Mandatory attribution content in the root policy and README.
@@ -72,6 +81,8 @@ REQUIRED_CONTENT = {
         'topics/cost-value-engineering',
         'topics/cost-improvement-delivery',
         'not a fourth standalone pack',
+        'topics/ai-forward-deployed-engineering',
+        'not a production framework',
         'not measured team-productivity claims',
         'specifications',
     ],

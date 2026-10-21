@@ -55,5 +55,19 @@ The reference tests use a scripted stub model where a model would decide, and no
 
 The collision check compared both install trees with those of carey-chou, nicolas-vandeput, cost-value-engineering and cost-improvement-delivery: no shared path.
 
-Not run: any Cursor, Cline or other agent session, including the quickstart's two checks; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
-Network: none during these checks. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.
+Host checks, after the merge of PR #11 (main at 9618de6), in scratch projects under /tmp holding copies of the install trees:
+
+  OpenCode 1.18.34, default model opencode/big-pickle, each prompt in a fresh session with the read-only plan agent,
+  run with: opencode run --format json --agent plan --print-logs
+    Portable install (.fde/ and the AGENTS.md section), the quickstart's file check: passed. Read .fde/README.md, the
+      operating contract, module 30 and FR03; named version 0.3.0, the thirteen modules, module 30 and FR03.
+    Same install, the activation check, two sessions: OpenCode's log records .fde/README.md as the first file read,
+      before any listing of the project, in both. Both answers started from discovery.
+    Control (.fde/ without the AGENTS.md section), the activation check, one session: the log shows the agent listing
+      the project and its .fde/ folder before reading .fde/README.md. Its answer also started from discovery.
+  OpenCode's log doesn't record which instruction files it loaded: this is indirect evidence, from one model.
+  Cursor: not run. The Cursor command-line agent (2026.01.23) on this machine was not signed in ("Authentication
+  required"), and no IDE session was recorded.
+
+Not run: a Cursor, Cline or other agent session beyond the OpenCode checks above; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
+Network: none during the pack's checks; the OpenCode host checks called OpenCode's hosted model. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.

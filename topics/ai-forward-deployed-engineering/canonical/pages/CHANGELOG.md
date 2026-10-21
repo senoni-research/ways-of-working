@@ -2,7 +2,7 @@
 
 ## 0.3.0 — 21 October 2026
 
-The last five planned modules. Not yet reviewed with a real customer or registered in the repository.
+The last five planned modules. Not yet reviewed with a real customer. Registered in the repository's README, topics page, attribution index and documentation check after its review.
 
 - Modules: 10 the engagement, 60 security and guardrails, 70 deployment and operations, 75 customer data, 80 templates and prompts. Behaviour specifications FB60–FB92: 21 checked by unit tests and 12 by review. Of the 92 in all, 60 are checked by unit tests and 32 by review.
 - Templates FT01–FT09 (discovery note, success criteria, plan, status file, decision record, runbook, data map, teardown checklist, go-live readiness) and prompts FP01–FP05 (plan from a brief, review a plan, build one phase, compare with a reference implementation, explain this to me), in module 80.
