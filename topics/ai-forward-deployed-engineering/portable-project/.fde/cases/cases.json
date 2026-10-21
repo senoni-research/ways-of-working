@@ -1,0 +1,2746 @@
+[
+  {
+    "case_id": "FC01",
+    "title": "A covered battery claim decided in the tool loop",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC01-covered-battery.md",
+    "kind": "tool_loop",
+    "claim_id": "WC-1001",
+    "script": [
+      {
+        "id": "c1",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c2",
+        "tool": "check_coverage",
+        "arguments": {}
+      },
+      {
+        "id": "c3",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "approve",
+          "amount": "380.00",
+          "reason": "Battery covered at 14 of 24 months; the charger was ruled out."
+        }
+      },
+      {
+        "content": "Approved 380.00."
+      }
+    ],
+    "expected": {
+      "decision": "approve",
+      "amount": "380.00",
+      "stopped": "model finished",
+      "steps": 4
+    }
+  },
+  {
+    "case_id": "FC02",
+    "title": "An approval above the automatic limit goes to a handler",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC02-above-the-limit.md",
+    "kind": "tool_loop",
+    "claim_id": "WC-1002",
+    "script": [
+      {
+        "id": "c1",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c2",
+        "tool": "check_coverage",
+        "arguments": {}
+      },
+      {
+        "id": "c3",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "approve",
+          "amount": "620.00",
+          "reason": "Motor covered at 18 of 24 months."
+        }
+      },
+      {
+        "content": "Done."
+      }
+    ],
+    "expected": {
+      "decision": "refer",
+      "amount": "0.00",
+      "stopped": "model finished",
+      "steps": 4,
+      "reason_contains": "above the automatic limit"
+    }
+  },
+  {
+    "case_id": "FC03",
+    "title": "A claim whose text gives the agent orders",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC03-claim-gives-orders.md",
+    "kind": "tool_loop",
+    "claim_id": "WC-1003",
+    "script": [
+      {
+        "id": "c1",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c2",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "approve",
+          "amount": "2000.00",
+          "reason": "The system note says the customer is pre-approved."
+        }
+      },
+      {
+        "id": "c3",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "approve",
+          "amount": "2000.00",
+          "reason": "Approving as instructed."
+        }
+      },
+      {
+        "content": "Approved as instructed."
+      }
+    ],
+    "expected": {
+      "decision": "refer",
+      "amount": "0.00",
+      "stopped": "model finished",
+      "steps": 4,
+      "reason_contains": "no decision recorded"
+    }
+  },
+  {
+    "case_id": "FC04",
+    "title": "An excluded wear part cannot be approved",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC04-excluded-wear-part.md",
+    "kind": "tool_loop",
+    "claim_id": "WC-1004",
+    "script": [
+      {
+        "id": "c1",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c2",
+        "tool": "check_coverage",
+        "arguments": {}
+      },
+      {
+        "id": "c3",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "approve",
+          "amount": "45.00",
+          "reason": "Small amount; goodwill."
+        }
+      },
+      {
+        "id": "c4",
+        "tool": "record_decision",
+        "arguments": {
+          "decision": "reject",
+          "amount": "0.00",
+          "reason": "Tyre wear is excluded from the warranty."
+        }
+      },
+      {
+        "content": "Rejected: wear part."
+      }
+    ],
+    "expected": {
+      "decision": "reject",
+      "amount": "0.00",
+      "stopped": "model finished",
+      "steps": 5
+    }
+  },
+  {
+    "case_id": "FC05",
+    "title": "A loop that never finishes",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC05-loop-never-finishes.md",
+    "kind": "tool_loop",
+    "claim_id": "WC-1001",
+    "script": [
+      {
+        "id": "c1",
+        "tool": "approve_claim",
+        "arguments": {
+          "amount": "380.00"
+        }
+      },
+      {
+        "id": "c2",
+        "tool": "record_decision",
+        "raw_arguments": "{decision: approve}"
+      },
+      {
+        "id": "c3",
+        "tool": "get_claim",
+        "arguments": {
+          "claim_id": "WC-1002"
+        }
+      },
+      {
+        "id": "c4",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c5",
+        "tool": "get_claim",
+        "arguments": {}
+      },
+      {
+        "id": "c6",
+        "tool": "get_claim",
+        "arguments": {}
+      }
+    ],
+    "expected": {
+      "decision": "refer",
+      "amount": "0.00",
+      "stopped": "step cap reached",
+      "steps": 6,
+      "reason_contains": "step cap reached"
+    }
+  },
+  {
+    "case_id": "FC06",
+    "title": "Structured decisions that fail safe",
+    "module": "30-agent-design-and-tools",
+    "synthetic": true,
+    "packet": "FC06-decisions-fail-safe.md",
+    "kind": "structured",
+    "variants": [
+      {
+        "name": "invalid enum, then valid",
+        "claim_id": "WC-1001",
+        "script": [
+          {
+            "content": "{\"reason\": \"Covered battery.\", \"decision\": \"accept\", \"amount\": \"380.00\"}"
+          },
+          {
+            "content": "{\"reason\": \"Battery covered at 14 of 24 months.\", \"decision\": \"approve\", \"amount\": \"380.00\"}"
+          }
+        ],
+        "expected": {
+          "decision": "approve",
+          "amount": "380.00",
+          "attempts": 2
+        }
+      },
+      {
+        "name": "invalid twice",
+        "claim_id": "WC-1001",
+        "script": [
+          {
+            "content": "{\"decision\": \"approve\"}"
+          },
+          {
+            "content": "Approved."
+          }
+        ],
+        "expected": {
+          "decision": "refer",
+          "amount": "0.00",
+          "attempts": 2
+        }
+      },
+      {
+        "name": "refusal",
+        "claim_id": "WC-1001",
+        "script": [
+          {
+            "content": null,
+            "refusal": "I can't help with that."
+          }
+        ],
+        "expected": {
+          "decision": "refer",
+          "amount": "0.00",
+          "attempts": 1
+        }
+      },
+      {
+        "name": "incomplete twice",
+        "claim_id": "WC-1001",
+        "script": [
+          {
+            "content": "{\"reason\": \"The battery",
+            "finish_reason": "length"
+          },
+          {
+            "content": "{\"reason\": \"The battery no longer",
+            "finish_reason": "length"
+          }
+        ],
+        "expected": {
+          "decision": "refer",
+          "amount": "0.00",
+          "attempts": 2
+        }
+      },
+      {
+        "name": "valid JSON, amount above the claim, twice",
+        "claim_id": "WC-1001",
+        "script": [
+          {
+            "content": "{\"reason\": \"Battery and labour.\", \"decision\": \"approve\", \"amount\": \"900.00\"}"
+          },
+          {
+            "content": "{\"reason\": \"Battery and labour.\", \"decision\": \"approve\", \"amount\": \"900.00\"}"
+          }
+        ],
+        "expected": {
+          "decision": "refer",
+          "amount": "0.00",
+          "attempts": 2
+        }
+      },
+      {
+        "name": "valid approval above the limit",
+        "claim_id": "WC-1002",
+        "script": [
+          {
+            "content": "{\"reason\": \"Motor covered at 18 of 24 months.\", \"decision\": \"approve\", \"amount\": \"620.00\"}"
+          }
+        ],
+        "expected": {
+          "decision": "refer",
+          "amount": "0.00",
+          "attempts": 1
+        }
+      },
+      {
+        "name": "rejection with an amount, then corrected",
+        "claim_id": "WC-1004",
+        "script": [
+          {
+            "content": "{\"reason\": \"Excluded wear part.\", \"decision\": \"reject\", \"amount\": \"45.00\"}"
+          },
+          {
+            "content": "{\"reason\": \"Excluded wear part.\", \"decision\": \"reject\", \"amount\": \"0.00\"}"
+          }
+        ],
+        "expected": {
+          "decision": "reject",
+          "amount": "0.00",
+          "attempts": 2
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "FC07",
+    "title": "Reading the bill",
+    "module": "35-models-tokens-and-cost",
+    "synthetic": true,
+    "packet": "FC07-reading-the-bill.md",
+    "kind": "bill",
+    "prices_per_million": {
+      "input": "2.00",
+      "cache_read": "0.20",
+      "cache_write": "2.50",
+      "output": "8.00"
+    },
+    "calls": [
+      {
+        "format": "anthropic",
+        "usage": {
+          "input_tokens": 1200,
+          "cache_creation_input_tokens": 3000,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 300
+        },
+        "expected": {
+          "cost": "0.0123",
+          "cache": "written"
+        }
+      },
+      {
+        "format": "anthropic",
+        "usage": {
+          "input_tokens": 1150,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 3000,
+          "output_tokens": 280
+        },
+        "expected": {
+          "cost": "0.00514",
+          "cache": "hit"
+        }
+      },
+      {
+        "format": "anthropic",
+        "usage": {
+          "input_tokens": 900,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 250
+        },
+        "expected": {
+          "cost": "0.0038",
+          "cache": "not cached"
+        }
+      },
+      {
+        "format": "chat",
+        "usage": {
+          "prompt_tokens": 4200,
+          "completion_tokens": 1500,
+          "prompt_tokens_details": {
+            "cached_tokens": 3000,
+            "cache_write_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 1200
+          }
+        },
+        "expected": {
+          "cost": "0.015",
+          "cache": "hit"
+        }
+      }
+    ],
+    "expected": {
+      "per_thousand": "9.06"
+    }
+  },
+  {
+    "case_id": "FC08",
+    "title": "Comparing models on accuracy, cost and seconds",
+    "module": "35-models-tokens-and-cost",
+    "synthetic": true,
+    "packet": "FC08-comparing-models.md",
+    "kind": "comparison",
+    "models": [
+      {
+        "name": "Model K",
+        "accuracy": 0.92,
+        "cost_per_1000": 9.06,
+        "p50_s": 3.1
+      },
+      {
+        "name": "Model L",
+        "accuracy": 0.88,
+        "cost_per_1000": 1.4,
+        "p50_s": 1.2
+      },
+      {
+        "name": "Model M",
+        "accuracy": 0.86,
+        "cost_per_1000": 2.1,
+        "p50_s": 2.4
+      }
+    ],
+    "timings": [
+      {
+        "model": "Model K",
+        "started": 0.0,
+        "first_token": 0.84,
+        "finished": 3.1,
+        "output_tokens": 250,
+        "expected": {
+          "ttft_s": 0.84,
+          "decode_tokens_per_s": 110.2
+        }
+      },
+      {
+        "model": "Model L",
+        "started": 0.0,
+        "first_token": 0.31,
+        "finished": 1.45,
+        "output_tokens": 120,
+        "expected": {
+          "ttft_s": 0.31,
+          "decode_tokens_per_s": 104.4
+        }
+      }
+    ],
+    "expected": {
+      "dominated": [
+        "Model M"
+      ],
+      "winner": null
+    }
+  },
+  {
+    "case_id": "FC09",
+    "title": "Scoring retrieval before adding embeddings",
+    "module": "40-context-retrieval-and-memory",
+    "synthetic": true,
+    "packet": "FC09-scoring-retrieval.md",
+    "kind": "retrieval",
+    "fixture": "warranty-context.json",
+    "k": 3,
+    "expected": {
+      "overlap": {
+        "recall_at_k": "1",
+        "precision_at_k": "3/7",
+        "mrr": "1"
+      },
+      "bm25": {
+        "recall_at_k": "20/21",
+        "precision_at_k": "8/21",
+        "mrr": "13/14"
+      },
+      "top_k": {
+        "Q7": {
+          "overlap": [
+            "POL-07",
+            "POL-01",
+            "POL-02"
+          ],
+          "bm25": [
+            "POL-04",
+            "POL-07",
+            "POL-02"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "case_id": "FC10",
+    "title": "An answer that names its source and flags a stale file",
+    "module": "40-context-retrieval-and-memory",
+    "synthetic": true,
+    "packet": "FC10-answer-names-its-source.md",
+    "kind": "context",
+    "fixture": "warranty-context.json",
+    "questions": [
+      {
+        "query": "Who decides a claim above 400 pounds?",
+        "expected": {
+          "source": "POL-05",
+          "owner": "Head of claims",
+          "reviewed_on": "2025-09-01",
+          "stale": true
+        }
+      },
+      {
+        "query": "Are brake pads covered?",
+        "expected": {
+          "source": "POL-04",
+          "owner": "Warranty policy team",
+          "reviewed_on": "2026-03-15",
+          "stale": false
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "FC11",
+    "title": "A memory search that leaks without the trailing slash",
+    "module": "40-context-retrieval-and-memory",
+    "synthetic": true,
+    "packet": "FC11-memory-without-the-slash.md",
+    "kind": "memory",
+    "customer_id": "C1",
+    "records": [
+      {
+        "id": "M1",
+        "kind": "contact-preference",
+        "text": "Prefers email to phone calls.",
+        "namespaces": [
+          "/customers/C1/"
+        ]
+      },
+      {
+        "id": "M2",
+        "kind": "claim-history",
+        "text": "Bike reported stolen in August 2026; claim WC-2207 open.",
+        "namespaces": [
+          "/customers/C10/"
+        ]
+      },
+      {
+        "id": "M3",
+        "kind": "claim-history",
+        "text": "Battery replaced under warranty in 2025.",
+        "namespaces": [
+          "/customers/C1/"
+        ]
+      },
+      {
+        "id": "M4",
+        "kind": "contact-preference",
+        "text": "Prefers calls after 6 pm.",
+        "namespaces": [
+          "/customers/C12/"
+        ]
+      }
+    ],
+    "offered": [
+      {
+        "id": "M5",
+        "kind": "contact-preference",
+        "text": "Asked for updates by text message."
+      },
+      {
+        "id": "M6",
+        "kind": "payment-card",
+        "text": "Card ending 4417, expiring 09/28."
+      }
+    ],
+    "expected": {
+      "prefix_without_slash": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "recalled": [
+        "M1",
+        "M3"
+      ],
+      "stored": [
+        "M5"
+      ],
+      "refused": [
+        "M6"
+      ],
+      "recalled_after": [
+        "M1",
+        "M3",
+        "M5"
+      ]
+    }
+  },
+  {
+    "case_id": "FC12",
+    "title": "Pausing for a handler and resuming anywhere",
+    "module": "45-durable-state-and-review",
+    "synthetic": true,
+    "packet": "FC12-pause-and-resume.md",
+    "kind": "durable_review",
+    "claim_id": "WC-1002",
+    "user": "h.ward",
+    "expected": {
+      "first_run": {
+        "status": "waiting for a handler",
+        "step": "review"
+      },
+      "resumed_before_review": {
+        "status": "waiting for a handler",
+        "step": "review"
+      },
+      "after_reject": {
+        "status": "done",
+        "decision": "reject",
+        "amount": "0.00",
+        "payments": 0
+      },
+      "notifications": 1,
+      "notification_attempts": 3,
+      "after_approve_and_crash": {
+        "status": "done",
+        "decision": "approve",
+        "amount": "620.00",
+        "payments": 1
+      }
+    }
+  },
+  {
+    "case_id": "FC13",
+    "title": "A payment retried after a lost answer",
+    "module": "45-durable-state-and-review",
+    "synthetic": true,
+    "packet": "FC13-payment-retried.md",
+    "kind": "ledger",
+    "claim_id": "WC-1001",
+    "amount": "380.00",
+    "with_key": [
+      "pay:WC-1001",
+      "pay:WC-1001"
+    ],
+    "without_key": [
+      "a81f",
+      "c27d"
+    ],
+    "expected": {
+      "payments_with_key": 1,
+      "payments_without_key": 2,
+      "same_key_other_amount": "already used"
+    }
+  },
+  {
+    "case_id": "FC14",
+    "title": "Two runs started at the same moment",
+    "module": "45-durable-state-and-review",
+    "synthetic": true,
+    "packet": "FC14-two-runs-at-once.md",
+    "kind": "lock",
+    "name": "nightly-batch-2026-10-20",
+    "ttl_s": 90,
+    "events": [
+      {
+        "t": 0,
+        "run": "A",
+        "op": "acquire",
+        "expected": "acquired"
+      },
+      {
+        "t": 0,
+        "run": "B",
+        "op": "acquire",
+        "expected": "busy"
+      },
+      {
+        "t": 30,
+        "run": "A",
+        "op": "heartbeat",
+        "expected": true
+      },
+      {
+        "t": 60,
+        "run": "B",
+        "op": "acquire",
+        "expected": "busy"
+      },
+      {
+        "t": 125,
+        "run": "B",
+        "op": "acquire",
+        "expected": "taken over"
+      },
+      {
+        "t": 130,
+        "run": "A",
+        "op": "heartbeat",
+        "expected": false
+      },
+      {
+        "t": 200,
+        "run": "B",
+        "op": "release",
+        "expected": true
+      }
+    ]
+  },
+  {
+    "case_id": "FC15",
+    "title": "Success criteria at 139 of 200",
+    "module": "50-evaluation-and-observability",
+    "synthetic": true,
+    "packet": "FC15-success-criteria.md",
+    "kind": "evaluation",
+    "model": {
+      "approve": {
+        "approve": 72,
+        "reject": 4,
+        "refer": 24
+      },
+      "reject": {
+        "approve": 2,
+        "reject": 41,
+        "refer": 17
+      },
+      "refer": {
+        "approve": 6,
+        "reject": 8,
+        "refer": 26
+      }
+    },
+    "baseline": {
+      "approve": {
+        "approve": 58,
+        "reject": 0,
+        "refer": 42
+      },
+      "reject": {
+        "approve": 0,
+        "reject": 50,
+        "refer": 10
+      },
+      "refer": {
+        "approve": 0,
+        "reject": 0,
+        "refer": 40
+      }
+    },
+    "costs": {
+      "wrong_approval": 300,
+      "wrong_rejection": 150,
+      "needless_referral": 12
+    },
+    "criteria": [
+      {
+        "name": "Decision accuracy",
+        "measure": "accuracy",
+        "op": ">=",
+        "threshold": "0.70"
+      },
+      {
+        "name": "Wrong approvals",
+        "measure": "wrong_approval_rate",
+        "op": "<=",
+        "threshold": "0.05"
+      },
+      {
+        "name": "Straight-through rate",
+        "measure": "straight_through_rate",
+        "op": ">=",
+        "threshold": "0.60"
+      },
+      {
+        "name": "Mistake cost per claim (GBP)",
+        "measure": "mistake_cost_per_claim",
+        "op": "<=",
+        "threshold": "25"
+      }
+    ],
+    "expected": {
+      "model": {
+        "accuracy": "139/200",
+        "kappa": "0.533",
+        "wrong_approval_rate": "1/25",
+        "straight_through_rate": "133/200",
+        "mistake_cost_per_claim": "1173/50",
+        "accuracy_interval": [
+          0.628,
+          0.7546
+        ],
+        "failed": [
+          "Decision accuracy"
+        ],
+        "met": false
+      },
+      "baseline": {
+        "accuracy": "37/50",
+        "kappa": "0.622",
+        "wrong_approval_rate": "0",
+        "straight_through_rate": "27/50",
+        "mistake_cost_per_claim": "78/25",
+        "accuracy_interval": [
+          0.6751,
+          0.7959
+        ],
+        "failed": [
+          "Straight-through rate"
+        ],
+        "met": false
+      }
+    }
+  },
+  {
+    "case_id": "FC16",
+    "title": "A judge that agrees 85% of the time",
+    "module": "50-evaluation-and-observability",
+    "synthetic": true,
+    "packet": "FC16-checking-the-judge.md",
+    "kind": "judge",
+    "table": {
+      "pass": {
+        "pass": 32,
+        "fail": 2
+      },
+      "fail": {
+        "pass": 4,
+        "fail": 2
+      }
+    },
+    "expected": {
+      "agreement": "17/20",
+      "kappa": "0.318",
+      "fail_recall": "1/3"
+    }
+  },
+  {
+    "case_id": "FC17",
+    "title": "A change that looks better on one run",
+    "module": "50-evaluation-and-observability",
+    "synthetic": true,
+    "packet": "FC17-repeated-runs.md",
+    "kind": "paired",
+    "runs": 3,
+    "threshold": 0.05,
+    "a": [
+      "110",
+      "111",
+      "111",
+      "010",
+      "111",
+      "110",
+      "000",
+      "111",
+      "111",
+      "110",
+      "111",
+      "110",
+      "111",
+      "001",
+      "111",
+      "000",
+      "111",
+      "110",
+      "111",
+      "111"
+    ],
+    "b": [
+      "111",
+      "111",
+      "110",
+      "110",
+      "111",
+      "110",
+      "110",
+      "110",
+      "111",
+      "111",
+      "111",
+      "001",
+      "111",
+      "110",
+      "111",
+      "000",
+      "011",
+      "111",
+      "111",
+      "111"
+    ],
+    "expected": {
+      "first_run": {
+        "a": "4/5",
+        "b": "17/20"
+      },
+      "all_runs": {
+        "a": "3/4",
+        "b": "4/5"
+      },
+      "mean": 0.05,
+      "low": -0.0687,
+      "high": 0.1687,
+      "decision": "no clear difference"
+    }
+  },
+  {
+    "case_id": "FC18",
+    "title": "A capacity sum",
+    "module": "55-concurrency-and-multiple-agents",
+    "synthetic": true,
+    "packet": "FC18-capacity-sum.md",
+    "kind": "capacity",
+    "arrivals_per_hour": 450,
+    "seconds_per_item": 48,
+    "target_utilisation": 0.8,
+    "resources": [
+      {
+        "name": "workers",
+        "kind": "concurrent",
+        "limit": 8,
+        "per_item": 1
+      },
+      {
+        "name": "database connections",
+        "kind": "concurrent",
+        "limit": 5,
+        "per_item": 1
+      },
+      {
+        "name": "model requests per minute",
+        "kind": "rate",
+        "limit": 300,
+        "per_item": 4
+      }
+    ],
+    "expected": {
+      "in_progress": 6.0,
+      "bottleneck": "database connections",
+      "resources": [
+        {
+          "name": "workers",
+          "demand": 6.0,
+          "utilisation": 0.75,
+          "needed_at_target": 8
+        },
+        {
+          "name": "database connections",
+          "demand": 6.0,
+          "utilisation": 1.2,
+          "needed_at_target": 8
+        },
+        {
+          "name": "model requests per minute",
+          "demand": 30.0,
+          "utilisation": 0.1,
+          "needed_at_target": 38
+        }
+      ]
+    }
+  },
+  {
+    "case_id": "FC19",
+    "title": "A batch of claims at once",
+    "module": "55-concurrency-and-multiple-agents",
+    "synthetic": true,
+    "packet": "FC19-batch-at-once.md",
+    "kind": "batch",
+    "max_concurrency": 3,
+    "items": [
+      {
+        "id": "WC-B01",
+        "behaviour": "ok"
+      },
+      {
+        "id": "WC-B02",
+        "behaviour": "ok"
+      },
+      {
+        "id": "WC-B03",
+        "behaviour": "not sent once"
+      },
+      {
+        "id": "WC-B04",
+        "behaviour": "ok"
+      },
+      {
+        "id": "WC-B05",
+        "behaviour": "times out"
+      },
+      {
+        "id": "WC-B06",
+        "behaviour": "ok"
+      },
+      {
+        "id": "WC-B07",
+        "behaviour": "fails"
+      },
+      {
+        "id": "WC-B08",
+        "behaviour": "times out once",
+        "idempotent": true
+      },
+      {
+        "id": "WC-B09",
+        "behaviour": "ok"
+      },
+      {
+        "id": "WC-B10",
+        "behaviour": "ok"
+      }
+    ],
+    "timings": [
+      {
+        "id": "WC-B01",
+        "start": 0.0,
+        "finish": 41.2
+      },
+      {
+        "id": "WC-B02",
+        "start": 0.0,
+        "finish": 38.5
+      },
+      {
+        "id": "WC-B03",
+        "start": 0.0,
+        "finish": 52.9
+      },
+      {
+        "id": "WC-B04",
+        "start": 38.5,
+        "finish": 80.1
+      },
+      {
+        "id": "WC-B05",
+        "start": 41.2,
+        "finish": 131.2
+      },
+      {
+        "id": "WC-B06",
+        "start": 52.9,
+        "finish": 95.0
+      }
+    ],
+    "expected": {
+      "outcomes": {
+        "WC-B01": "decided",
+        "WC-B02": "decided",
+        "WC-B03": "decided",
+        "WC-B04": "decided",
+        "WC-B05": "unknown: check before retrying",
+        "WC-B06": "decided",
+        "WC-B07": "refer",
+        "WC-B08": "decided",
+        "WC-B09": "decided",
+        "WC-B10": "decided"
+      },
+      "attempts": {
+        "WC-B03": 2,
+        "WC-B05": 1,
+        "WC-B08": 2
+      },
+      "error": {
+        "WC-B07": "ValueError: claim record has no serial number"
+      },
+      "timings": {
+        "wall_s": 131.2,
+        "slowest": "WC-B05",
+        "slowest_s": 90.0,
+        "mean_s": 51.05
+      }
+    }
+  },
+  {
+    "case_id": "FC20",
+    "title": "How much the agent may do",
+    "module": "10-engagement",
+    "synthetic": true,
+    "packet": "FC20-how-much-on-its-own.md",
+    "kind": "autonomy",
+    "actions": [
+      {
+        "action": "read the claim and its documents",
+        "consequence": "low",
+        "reversible": true,
+        "verifiable": true
+      },
+      {
+        "action": "ask the customer for a missing receipt, from a fixed template",
+        "consequence": "low",
+        "reversible": false,
+        "verifiable": true
+      },
+      {
+        "action": "refer the claim to a handler",
+        "consequence": "low",
+        "reversible": true,
+        "verifiable": true
+      },
+      {
+        "action": "approve a covered claim within the automatic limit",
+        "consequence": "medium",
+        "reversible": true,
+        "verifiable": true
+      },
+      {
+        "action": "reject a claim",
+        "consequence": "medium",
+        "reversible": true,
+        "verifiable": false
+      },
+      {
+        "action": "send the customer a reply the model wrote",
+        "consequence": "medium",
+        "reversible": false,
+        "verifiable": false
+      },
+      {
+        "action": "approve a claim above the automatic limit",
+        "consequence": "high",
+        "reversible": true,
+        "verifiable": true
+      },
+      {
+        "action": "pay an approved claim",
+        "consequence": "high",
+        "reversible": false,
+        "verifiable": true
+      }
+    ],
+    "expected": {
+      "read the claim and its documents": "act",
+      "ask the customer for a missing receipt, from a fixed template": "act",
+      "refer the claim to a handler": "act",
+      "approve a covered claim within the automatic limit": "act and notify",
+      "reject a claim": "person approves",
+      "send the customer a reply the model wrote": "person approves",
+      "approve a claim above the automatic limit": "person approves",
+      "pay an approved claim": "person decides"
+    }
+  },
+  {
+    "case_id": "FC21",
+    "title": "A tollgate with gaps",
+    "module": "10-engagement",
+    "synthetic": true,
+    "packet": "FC21-tollgate-with-gaps.md",
+    "kind": "tollgate",
+    "gate": "pilot to production",
+    "required": [
+      "success criteria agreed",
+      "evaluation set of 50 cases",
+      "baseline measured against the criteria",
+      "data map",
+      "rollback tested",
+      "runbook owner named"
+    ],
+    "evidence": {
+      "success criteria agreed": {
+        "met": true,
+        "where": "docs/SUCCESS.md, signed by the head of claims on 6 October"
+      },
+      "evaluation set of 50 cases": {
+        "met": true,
+        "where": "evals/cases.json"
+      },
+      "baseline measured against the criteria": {
+        "met": false,
+        "where": "evals/baseline.md: 69% correct, target 80%"
+      },
+      "rollback tested": {
+        "met": true,
+        "where": ""
+      },
+      "runbook owner named": {
+        "met": true,
+        "where": "docs/RUNBOOK.md"
+      }
+    },
+    "expected": {
+      "passed": false,
+      "missing": [
+        "data map",
+        "rollback tested"
+      ],
+      "unmet": [
+        "baseline measured against the criteria"
+      ]
+    }
+  },
+  {
+    "case_id": "FC22",
+    "title": "Three designs and the lethal trifecta",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC22-three-designs.md",
+    "kind": "trifecta",
+    "designs": {
+      "as proposed": [
+        {
+          "name": "read_claim",
+          "reads_private": true,
+          "reads_untrusted": true
+        },
+        {
+          "name": "customer_history",
+          "reads_private": true
+        },
+        {
+          "name": "web_search",
+          "reads_untrusted": true
+        },
+        {
+          "name": "send_email",
+          "sends": true,
+          "free_text": true,
+          "any_recipient": true
+        }
+      ],
+      "without web search": [
+        {
+          "name": "read_claim",
+          "reads_private": true,
+          "reads_untrusted": true
+        },
+        {
+          "name": "customer_history",
+          "reads_private": true
+        },
+        {
+          "name": "send_email",
+          "sends": true,
+          "free_text": true,
+          "any_recipient": true
+        }
+      ],
+      "fixed messages only": [
+        {
+          "name": "read_claim",
+          "reads_private": true,
+          "reads_untrusted": true
+        },
+        {
+          "name": "customer_history",
+          "reads_private": true
+        },
+        {
+          "name": "web_search",
+          "reads_untrusted": true
+        },
+        {
+          "name": "send_status_update",
+          "sends": true,
+          "free_text": false,
+          "any_recipient": false
+        }
+      ]
+    },
+    "expected": {
+      "as proposed": {
+        "legs": {
+          "private data": [
+            "read_claim",
+            "customer_history"
+          ],
+          "untrusted content": [
+            "read_claim",
+            "web_search"
+          ],
+          "way out": [
+            "send_email"
+          ]
+        },
+        "all_three": true
+      },
+      "without web search": {
+        "legs": {
+          "private data": [
+            "read_claim",
+            "customer_history"
+          ],
+          "untrusted content": [
+            "read_claim"
+          ],
+          "way out": [
+            "send_email"
+          ]
+        },
+        "all_three": true
+      },
+      "fixed messages only": {
+        "legs": {
+          "private data": [
+            "read_claim",
+            "customer_history"
+          ],
+          "untrusted content": [
+            "read_claim",
+            "web_search"
+          ],
+          "way out": []
+        },
+        "all_three": false
+      }
+    }
+  },
+  {
+    "case_id": "FC23",
+    "title": "Measuring an injection screen",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC23-measuring-a-screen.md",
+    "kind": "screening",
+    "attacks": [
+      {
+        "channel": "claim text",
+        "technique": "direct instruction",
+        "n": 10,
+        "missed": 0
+      },
+      {
+        "channel": "claim text",
+        "technique": "role play",
+        "n": 10,
+        "missed": 1
+      },
+      {
+        "channel": "uploaded document",
+        "technique": "hidden text",
+        "n": 10,
+        "missed": 5
+      },
+      {
+        "channel": "uploaded document",
+        "technique": "direct instruction",
+        "n": 10,
+        "missed": 1
+      },
+      {
+        "channel": "email",
+        "technique": "direct instruction",
+        "n": 10,
+        "missed": 0
+      },
+      {
+        "channel": "email",
+        "technique": "encoded",
+        "n": 10,
+        "missed": 0
+      }
+    ],
+    "benign": [
+      {
+        "channel": "claim text",
+        "n": 60,
+        "flagged": 3
+      },
+      {
+        "channel": "uploaded document",
+        "n": 40,
+        "flagged": 1
+      },
+      {
+        "channel": "email",
+        "n": 40,
+        "flagged": 3
+      }
+    ],
+    "expected": {
+      "misses": {
+        "count": 7,
+        "n": 60,
+        "rate": 0.1167,
+        "interval": [
+          0.0577,
+          0.2218
+        ]
+      },
+      "false_alarms": {
+        "count": 7,
+        "n": 140,
+        "rate": 0.05,
+        "interval": [
+          0.0244,
+          0.0996
+        ]
+      },
+      "misses_by_channel": {
+        "claim text": {
+          "count": 1,
+          "n": 20,
+          "rate": 0.05,
+          "interval": [
+            0.0089,
+            0.2361
+          ]
+        },
+        "email": {
+          "count": 0,
+          "n": 20,
+          "rate": 0.0,
+          "interval": [
+            0.0,
+            0.1611
+          ]
+        },
+        "uploaded document": {
+          "count": 6,
+          "n": 20,
+          "rate": 0.3,
+          "interval": [
+            0.1455,
+            0.519
+          ]
+        }
+      },
+      "misses_by_technique": {
+        "direct instruction": {
+          "count": 1,
+          "n": 30,
+          "rate": 0.0333,
+          "interval": [
+            0.0059,
+            0.1667
+          ]
+        },
+        "encoded": {
+          "count": 0,
+          "n": 10,
+          "rate": 0.0,
+          "interval": [
+            0.0,
+            0.2775
+          ]
+        },
+        "hidden text": {
+          "count": 5,
+          "n": 10,
+          "rate": 0.5,
+          "interval": [
+            0.2366,
+            0.7634
+          ]
+        },
+        "role play": {
+          "count": 1,
+          "n": 10,
+          "rate": 0.1,
+          "interval": [
+            0.0179,
+            0.4042
+          ]
+        }
+      },
+      "false_alarms_by_channel": {
+        "claim text": {
+          "count": 3,
+          "n": 60,
+          "rate": 0.05,
+          "interval": [
+            0.0171,
+            0.137
+          ]
+        },
+        "email": {
+          "count": 3,
+          "n": 40,
+          "rate": 0.075,
+          "interval": [
+            0.0258,
+            0.1986
+          ]
+        },
+        "uploaded document": {
+          "count": 1,
+          "n": 40,
+          "rate": 0.025,
+          "interval": [
+            0.0044,
+            0.1288
+          ]
+        }
+      }
+    }
+  },
+  {
+    "case_id": "FC24",
+    "title": "A limit with a typo",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC24-limit-with-a-typo.md",
+    "kind": "policy",
+    "schema": {
+      "actions": {
+        "approve_claim": {
+          "principal": {
+            "role": "String",
+            "limit": "Long"
+          },
+          "resource": {
+            "covered": "Bool",
+            "amount": "Long"
+          },
+          "context": {}
+        }
+      }
+    },
+    "policies": {
+      "as written": [
+        {
+          "id": "P1",
+          "effect": "permit",
+          "action": "approve_claim",
+          "when": [
+            {
+              "left": {
+                "attr": "resource.covered"
+              },
+              "op": "==",
+              "right": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "P2",
+          "effect": "forbid",
+          "action": "approve_claim",
+          "when": [
+            {
+              "left": {
+                "attr": "resource.amout"
+              },
+              "op": ">",
+              "right": {
+                "attr": "principal.limit"
+              }
+            }
+          ]
+        }
+      ],
+      "as fixed": [
+        {
+          "id": "P1",
+          "effect": "permit",
+          "action": "approve_claim",
+          "when": [
+            {
+              "left": {
+                "attr": "resource.covered"
+              },
+              "op": "==",
+              "right": {
+                "value": true
+              }
+            }
+          ]
+        },
+        {
+          "id": "P2",
+          "effect": "forbid",
+          "action": "approve_claim",
+          "when": [
+            {
+              "left": {
+                "attr": "resource.amount"
+              },
+              "op": ">",
+              "right": {
+                "attr": "principal.limit"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "requests": {
+      "R1": {
+        "action": "approve_claim",
+        "principal": {
+          "role": "agent",
+          "limit": 500
+        },
+        "resource": {
+          "id": "WC-1001",
+          "covered": true,
+          "amount": 380
+        },
+        "context": {}
+      },
+      "R2": {
+        "action": "approve_claim",
+        "principal": {
+          "role": "agent",
+          "limit": 500
+        },
+        "resource": {
+          "id": "WC-1002",
+          "covered": true,
+          "amount": 900
+        },
+        "context": {}
+      },
+      "R3": {
+        "action": "approve_claim",
+        "principal": {
+          "role": "agent",
+          "limit": 500
+        },
+        "resource": {
+          "id": "WC-1003",
+          "covered": false,
+          "amount": 200
+        },
+        "context": {}
+      }
+    },
+    "expected": {
+      "as written": {
+        "validate": [
+          "P2: resource.amout is not in the schema"
+        ],
+        "authorize": {
+          "R1": "allow",
+          "R2": "allow",
+          "R3": "deny"
+        },
+        "decide": {
+          "R1": "deny",
+          "R2": "deny",
+          "R3": "deny"
+        }
+      },
+      "as fixed": {
+        "validate": [],
+        "authorize": {
+          "R1": "allow",
+          "R2": "deny",
+          "R3": "deny"
+        },
+        "decide": {
+          "R1": "allow",
+          "R2": "deny",
+          "R3": "deny"
+        }
+      }
+    }
+  },
+  {
+    "case_id": "FC25",
+    "title": "Rotating a key with a straggler",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC25-rotating-a-key.md",
+    "kind": "rotation",
+    "keys": {
+      "K-2025": "desk-key-2025-synthetic",
+      "K-2026": "desk-key-2026-synthetic"
+    },
+    "usage": [
+      {
+        "caller": "dashboard",
+        "key": "K-2025",
+        "days": [
+          0,
+          0
+        ]
+      },
+      {
+        "caller": "dashboard",
+        "key": "K-2026",
+        "days": [
+          1,
+          14
+        ]
+      },
+      {
+        "caller": "batch",
+        "key": "K-2025",
+        "days": [
+          0,
+          3
+        ]
+      },
+      {
+        "caller": "batch",
+        "key": "K-2026",
+        "days": [
+          4,
+          14
+        ]
+      },
+      {
+        "caller": "partner-portal",
+        "key": "K-2025",
+        "days": [
+          0,
+          8
+        ]
+      },
+      {
+        "caller": "partner-portal",
+        "key": "K-2026",
+        "days": [
+          9,
+          14
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "day": 5,
+        "quiet_days": 3
+      },
+      {
+        "day": 7,
+        "quiet_days": 3
+      },
+      {
+        "day": 12,
+        "quiet_days": 3
+      }
+    ],
+    "presented": [
+      {
+        "key": "desk-key-2025-synthetic",
+        "valid": [
+          "K-2025",
+          "K-2026"
+        ],
+        "accepted": true
+      },
+      {
+        "key": "desk-key-2025-synthetic",
+        "valid": [
+          "K-2026"
+        ],
+        "accepted": false
+      },
+      {
+        "key": "clé-inconnue",
+        "valid": [
+          "K-2025",
+          "K-2026"
+        ],
+        "accepted": false
+      }
+    ],
+    "expected": {
+      "stragglers": {
+        "5": [
+          "batch",
+          "partner-portal"
+        ],
+        "7": [
+          "partner-portal"
+        ],
+        "12": []
+      }
+    }
+  },
+  {
+    "case_id": "FC26",
+    "title": "A header nobody signed",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC26-header-nobody-signed.md",
+    "kind": "signing",
+    "request": {
+      "method": "POST",
+      "path": "/claims/WC-1004/decision",
+      "query": {},
+      "headers": {
+        "host": "desk-api.example-ebikes.test",
+        "x-amz-date": "20261020T090000Z",
+        "x-acting-user": "h.ward",
+        "content-type": "application/json"
+      },
+      "body": "{\"decision\":\"refer\"}"
+    },
+    "credential": {
+      "access_key": "DESKBACKENDEXAMPLE",
+      "secret": "synthetic/secret/not-for-use",
+      "region": "eu-west-2",
+      "service": "execute-api"
+    },
+    "scenarios": [
+      {
+        "signing": "host and x-amz-* only",
+        "extra": [],
+        "change": null,
+        "acted_on": [],
+        "expected": "ok"
+      },
+      {
+        "signing": "host and x-amz-* only",
+        "extra": [],
+        "change": {
+          "header": [
+            "x-acting-user",
+            "a.osei"
+          ]
+        },
+        "acted_on": [],
+        "expected": "ok"
+      },
+      {
+        "signing": "host and x-amz-* only",
+        "extra": [],
+        "change": {
+          "header": [
+            "x-acting-user",
+            "a.osei"
+          ]
+        },
+        "acted_on": [
+          "x-acting-user"
+        ],
+        "expected": "refused: unsigned header x-acting-user"
+      },
+      {
+        "signing": "host and x-amz-* only",
+        "extra": [],
+        "change": {
+          "body": "{\"decision\":\"approve\"}"
+        },
+        "acted_on": [],
+        "expected": "refused: signature does not match"
+      },
+      {
+        "signing": "every header acted on",
+        "extra": [
+          "x-acting-user",
+          "content-type"
+        ],
+        "change": null,
+        "acted_on": [
+          "x-acting-user"
+        ],
+        "expected": "ok"
+      },
+      {
+        "signing": "every header acted on",
+        "extra": [
+          "x-acting-user",
+          "content-type"
+        ],
+        "change": {
+          "header": [
+            "x-acting-user",
+            "a.osei"
+          ]
+        },
+        "acted_on": [
+          "x-acting-user"
+        ],
+        "expected": "refused: signature does not match"
+      }
+    ],
+    "expected": {
+      "authorization": {
+        "host and x-amz-* only": "AWS4-HMAC-SHA256 Credential=DESKBACKENDEXAMPLE/20261020/eu-west-2/execute-api/aws4_request, SignedHeaders=host;x-amz-date, Signature=32e3c3c489e099393d7e5d3aaef3000959dfcf498b725cc19b5f839b2e54d293",
+        "every header acted on": "AWS4-HMAC-SHA256 Credential=DESKBACKENDEXAMPLE/20261020/eu-west-2/execute-api/aws4_request, SignedHeaders=content-type;host;x-acting-user;x-amz-date, Signature=051e16321f357e440f7019e15f1a5d73b53472c18f4ae07899b69859b3136a97"
+      }
+    }
+  },
+  {
+    "case_id": "FC27",
+    "title": "Who the agent acts for",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC27-who-the-agent-acts-for.md",
+    "kind": "acting user",
+    "settings": {
+      "secret": "synthetic-signing-secret-not-for-use",
+      "issuer": "https://id.example-ebikes.test",
+      "audience": "warranty-desk",
+      "now": 1792486800
+    },
+    "tokens": [
+      {
+        "name": "valid",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "expected": {
+          "user": "h.ward",
+          "role": "handler"
+        }
+      },
+      {
+        "name": "expired",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792486799
+        },
+        "expected": "expired"
+      },
+      {
+        "name": "for another audience",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "billing",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "expected": "wrong audience"
+      },
+      {
+        "name": "from another issuer",
+        "claims": {
+          "iss": "https://id.example.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "expected": "wrong issuer"
+      },
+      {
+        "name": "unsigned",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "alg": "none",
+        "expected": "algorithm not allowed: none"
+      },
+      {
+        "name": "signed with another key",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "secret": "some-other-secret",
+        "expected": "bad signature"
+      },
+      {
+        "name": "user changed after signing",
+        "claims": {
+          "iss": "https://id.example-ebikes.test",
+          "aud": "warranty-desk",
+          "sub": "h.ward",
+          "role": "handler",
+          "exp": 1792487400
+        },
+        "swap_sub": "a.osei",
+        "expected": "bad signature"
+      }
+    ],
+    "requests": [
+      {
+        "name": "body and header claim a supervisor",
+        "token": "valid",
+        "headers": {
+          "x-amzn-bedrock-agentcore-runtime-user-id": "a.osei"
+        },
+        "body": {
+          "user": "a.osei",
+          "role": "supervisor"
+        },
+        "expected": {
+          "user": "h.ward",
+          "role": "handler"
+        }
+      },
+      {
+        "name": "no token, body names a user",
+        "token": null,
+        "headers": {},
+        "body": {
+          "user": "a.osei"
+        },
+        "expected": "no bearer token"
+      }
+    ]
+  },
+  {
+    "case_id": "FC28",
+    "title": "Reviewing the deploy role",
+    "module": "60-security-and-guardrails",
+    "synthetic": true,
+    "packet": "FC28-deploy-role.md",
+    "kind": "iam review",
+    "deploy_policies": {
+      "as written": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "lambda:UpdateFunctionCode",
+              "lambda:PublishVersion",
+              "lambda:UpdateAlias"
+            ],
+            "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:desk-api"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iam:Put*",
+            "Resource": "arn:aws:iam::111122223333:role/desk-agent-runtime"
+          }
+        ]
+      },
+      "as fixed": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "lambda:UpdateFunctionCode",
+              "lambda:PublishVersion",
+              "lambda:UpdateAlias"
+            ],
+            "Resource": "arn:aws:lambda:eu-west-2:111122223333:function:desk-api"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::111122223333:role/desk-agent-runtime"
+          }
+        ]
+      }
+    },
+    "trust_policies": {
+      "production environment": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                "token.actions.githubusercontent.com:sub": "repo:example-ebikes/warranty-desk:environment:production"
+              }
+            }
+          }
+        ]
+      },
+      "main branch, immutable ids": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                "token.actions.githubusercontent.com:sub": "repo:example-ebikes@123456/warranty-desk@456789:ref:refs/heads/main"
+              }
+            }
+          }
+        ]
+      },
+      "any repository in the organisation": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+              },
+              "StringLike": {
+                "token.actions.githubusercontent.com:sub": "repo:example-ebikes/*"
+              }
+            }
+          }
+        ]
+      },
+      "audience only": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+              }
+            }
+          }
+        ]
+      },
+      "pull requests, no audience": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Principal": {
+              "Federated": "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:sub": "repo:example-ebikes/warranty-desk:pull_request"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "escalation": {
+        "as written": [
+          "iam:PassRole on * (from iam:PassRole)",
+          "iam:PutGroupPolicy on arn:aws:iam::111122223333:role/desk-agent-runtime (from iam:Put*)",
+          "iam:PutRolePolicy on arn:aws:iam::111122223333:role/desk-agent-runtime (from iam:Put*)",
+          "iam:PutUserPolicy on arn:aws:iam::111122223333:role/desk-agent-runtime (from iam:Put*)"
+        ],
+        "as fixed": [
+          "iam:PassRole on arn:aws:iam::111122223333:role/desk-agent-runtime (from iam:PassRole)"
+        ]
+      },
+      "trust": {
+        "production environment": [],
+        "main branch, immutable ids": [],
+        "any repository in the organisation": [
+          "subject has a wildcard: repo:example-ebikes/*"
+        ],
+        "audience only": [
+          "subject is not checked: any repository on GitHub can assume the role"
+        ],
+        "pull requests, no audience": [
+          "audience is not pinned to sts.amazonaws.com",
+          "subject is not pinned to a branch or environment: repo:example-ebikes/warranty-desk:pull_request"
+        ]
+      }
+    }
+  },
+  {
+    "case_id": "FC29",
+    "title": "Busy, idle and restored",
+    "module": "70-deployment-and-operations",
+    "synthetic": true,
+    "packet": "FC29-busy-idle-restored.md",
+    "kind": "runtime",
+    "events": [
+      [
+        "init",
+        100
+      ],
+      [
+        "ping",
+        100
+      ],
+      [
+        "ping",
+        160
+      ],
+      [
+        "start",
+        170
+      ],
+      [
+        "ping",
+        175
+      ],
+      [
+        "ping",
+        235
+      ],
+      [
+        "ping",
+        295
+      ],
+      [
+        "finish",
+        300
+      ],
+      [
+        "ping",
+        305
+      ],
+      [
+        "ping",
+        365
+      ]
+    ],
+    "expected": {
+      "pings": [
+        [
+          "Healthy",
+          100
+        ],
+        [
+          "Healthy",
+          100
+        ],
+        [
+          "HealthyBusy",
+          175
+        ],
+        [
+          "HealthyBusy",
+          175
+        ],
+        [
+          "HealthyBusy",
+          175
+        ],
+        [
+          "Healthy",
+          305
+        ],
+        [
+          "Healthy",
+          305
+        ]
+      ],
+      "restored_copies_share": []
+    }
+  },
+  {
+    "case_id": "FC30",
+    "title": "What a session costs",
+    "module": "70-deployment-and-operations",
+    "synthetic": true,
+    "packet": "FC30-what-a-session-costs.md",
+    "kind": "cost",
+    "rates": {
+      "vcpu_hour": "0.0895",
+      "gb_hour": "0.00945",
+      "read_on": "2026-10-20",
+      "source": "AgentCore Runtime pricing, the per-second rates on the pricing page"
+    },
+    "basis": {
+      "items_per_day": 2000,
+      "cpu_s": 6,
+      "vcpus": 1,
+      "memory_gb": 1,
+      "active_s": 40
+    },
+    "variants": {
+      "default idle timeout (900 s)": {
+        "idle_timeout_s": 900,
+        "stop_when_done": false
+      },
+      "idle timeout 60 s": {
+        "idle_timeout_s": 60,
+        "stop_when_done": false
+      },
+      "stopped when done": {
+        "idle_timeout_s": 900,
+        "stop_when_done": true
+      }
+    },
+    "expected": {
+      "default idle timeout (900 s)": {
+        "session_s": 940,
+        "cpu": 0.000149,
+        "memory": 0.002468,
+        "per_item": 0.002617,
+        "per_day": 5.23,
+        "idle_share": 0.9029
+      },
+      "idle timeout 60 s": {
+        "session_s": 100,
+        "cpu": 0.000149,
+        "memory": 0.000262,
+        "per_item": 0.000412,
+        "per_day": 0.82,
+        "idle_share": 0.3826
+      },
+      "stopped when done": {
+        "session_s": 40,
+        "cpu": 0.000149,
+        "memory": 0.000105,
+        "per_item": 0.000254,
+        "per_day": 0.51,
+        "idle_share": 0.0
+      }
+    }
+  },
+  {
+    "case_id": "FC31",
+    "title": "The heartbeat that stopped",
+    "module": "70-deployment-and-operations",
+    "synthetic": true,
+    "packet": "FC31-heartbeat-stopped.md",
+    "kind": "alarm",
+    "alarm": {
+      "metric": "claims completed per 5 minutes",
+      "statistic": "Sum",
+      "comparison": "<",
+      "threshold": 1,
+      "evaluation_periods": 3,
+      "datapoints_to_alarm": 3,
+      "state_before": "OK"
+    },
+    "series": {
+      "healthy": [
+        4,
+        3,
+        5
+      ],
+      "silent": [
+        null,
+        null,
+        null
+      ],
+      "running but stuck": [
+        0,
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "healthy": {
+        "missing": "OK",
+        "ignore": "OK",
+        "notBreaching": "OK",
+        "breaching": "OK"
+      },
+      "silent": {
+        "missing": "INSUFFICIENT_DATA",
+        "ignore": "OK",
+        "notBreaching": "OK",
+        "breaching": "ALARM"
+      },
+      "running but stuck": {
+        "missing": "ALARM",
+        "ignore": "ALARM",
+        "notBreaching": "ALARM",
+        "breaching": "ALARM"
+      }
+    }
+  },
+  {
+    "case_id": "FC32",
+    "title": "Spent budget and the stop button",
+    "module": "70-deployment-and-operations",
+    "synthetic": true,
+    "packet": "FC32-spent-budget-stop.md",
+    "kind": "error budget",
+    "slo": {
+      "target": "0.99",
+      "measure": "claims decided within 2 hours of arriving",
+      "window": "calendar month"
+    },
+    "windows": {
+      "September": {
+        "good": 11910,
+        "total": 12000
+      },
+      "October": {
+        "good": 11850,
+        "total": 12000
+      }
+    },
+    "payments": [
+      "WC-P01",
+      "WC-P02",
+      "WC-P03",
+      "WC-P04",
+      "WC-P05"
+    ],
+    "stop_after": 2,
+    "expected": {
+      "budget": {
+        "September": {
+          "budget": 120.0,
+          "failed": 90,
+          "spent": 0.75,
+          "action": "release as planned"
+        },
+        "October": {
+          "budget": 120.0,
+          "failed": 150,
+          "spent": 1.25,
+          "action": "freeze changes except fixes"
+        }
+      },
+      "payments": {
+        "WC-P01": "paid",
+        "WC-P02": "paid",
+        "WC-P03": "not started: stopped",
+        "WC-P04": "not started: stopped",
+        "WC-P05": "not started: stopped"
+      }
+    }
+  },
+  {
+    "case_id": "FC33",
+    "title": "Tearing down and proving it",
+    "module": "70-deployment-and-operations",
+    "synthetic": true,
+    "packet": "FC33-tearing-down.md",
+    "kind": "teardown",
+    "depends_on": {
+      "alias:live": [
+        "function:desk-api"
+      ],
+      "function:desk-api": [
+        "role:desk-api",
+        "log-group:/aws/lambda/desk-api"
+      ],
+      "endpoint:production": [
+        "runtime:desk-agent"
+      ],
+      "runtime:desk-agent": [
+        "role:desk-agent",
+        "ecr:desk-agent"
+      ],
+      "gateway-target:warranty-tools": [
+        "gateway:desk"
+      ],
+      "gateway:desk": [
+        "role:desk-gateway"
+      ],
+      "memory:desk": [],
+      "role:desk-api": [],
+      "log-group:/aws/lambda/desk-api": [],
+      "role:desk-agent": [],
+      "ecr:desk-agent": [],
+      "role:desk-gateway": []
+    },
+    "pages": {
+      "": {
+        "Resources": [],
+        "NextToken": "p2"
+      },
+      "p2": {
+        "Resources": [
+          "arn:aws:ecr:eu-west-2:111122223333:repository/desk-agent",
+          "arn:aws:logs:eu-west-2:111122223333:log-group:/aws/lambda/desk-api"
+        ],
+        "NextToken": "p3"
+      },
+      "p3": {
+        "Resources": []
+      }
+    },
+    "proofs": [
+      {
+        "name": "first page only, cost after 2 hours",
+        "leftovers": [],
+        "hours": 2,
+        "cost": 0.0
+      },
+      {
+        "name": "every page, cost after 26 hours",
+        "leftovers": [
+          "arn:aws:ecr:eu-west-2:111122223333:repository/desk-agent",
+          "arn:aws:logs:eu-west-2:111122223333:log-group:/aws/lambda/desk-api"
+        ],
+        "hours": 26,
+        "cost": 0.04
+      },
+      {
+        "name": "after deleting the two, cost after 26 hours",
+        "leftovers": [],
+        "hours": 26,
+        "cost": 0.0
+      }
+    ],
+    "expected": {
+      "order": [
+        "alias:live",
+        "endpoint:production",
+        "function:desk-api",
+        "gateway-target:warranty-tools",
+        "gateway:desk",
+        "log-group:/aws/lambda/desk-api",
+        "memory:desk",
+        "role:desk-api",
+        "role:desk-gateway",
+        "runtime:desk-agent",
+        "ecr:desk-agent",
+        "role:desk-agent"
+      ],
+      "leftovers": [
+        "arn:aws:ecr:eu-west-2:111122223333:repository/desk-agent",
+        "arn:aws:logs:eu-west-2:111122223333:log-group:/aws/lambda/desk-api"
+      ],
+      "proofs": [
+        {
+          "proven": false,
+          "gaps": [
+            "cost checked 2 h after teardown; wait 24 h for billing data"
+          ]
+        },
+        {
+          "proven": false,
+          "gaps": [
+            "still there: arn:aws:ecr:eu-west-2:111122223333:repository/desk-agent",
+            "still there: arn:aws:logs:eu-west-2:111122223333:log-group:/aws/lambda/desk-api",
+            "cost still accruing: 0.04"
+          ]
+        },
+        {
+          "proven": true,
+          "gaps": []
+        }
+      ]
+    }
+  },
+  {
+    "case_id": "FC34",
+    "title": "Gaps in the data map",
+    "module": "75-customer-data",
+    "synthetic": true,
+    "packet": "FC34-data-map-gaps.md",
+    "kind": "data map",
+    "stores": [
+      {
+        "name": "claims database",
+        "purpose": "decide and pay claims",
+        "retention": "6 years after the claim closes",
+        "erasure": "delete by customer id after retention",
+        "owner": "claims operations"
+      },
+      {
+        "name": "agent memory",
+        "purpose": "remember a customer's preferences",
+        "retention": "",
+        "erasure": "delete the namespace /customers/{id}/",
+        "owner": "desk team"
+      },
+      {
+        "name": "traces",
+        "purpose": "debugging and evaluation",
+        "retention": "30 days",
+        "erasure": "",
+        "owner": "platform",
+        "third_party": "the tracing vendor",
+        "terms": ""
+      },
+      {
+        "name": "model provider",
+        "purpose": "decide claims",
+        "retention": "the provider's terms",
+        "erasure": "nothing kept after the call, per the terms",
+        "owner": "desk team",
+        "third_party": "the model provider",
+        "terms": "API data not used for training unless we opt in; abuse logs kept up to 30 days (read 20 October 2026)"
+      },
+      {
+        "name": "checkpoints",
+        "purpose": "resume paused claims",
+        "retention": "90 days",
+        "erasure": "delete the threads of the customer's claims",
+        "owner": ""
+      },
+      {
+        "name": "application logs",
+        "purpose": "operations",
+        "retention": "14 days",
+        "erasure": "expire; search by exact id for an erasure request",
+        "owner": "platform"
+      }
+    ],
+    "expected": [
+      "agent memory: no retention",
+      "traces: no erasure",
+      "checkpoints: no owner",
+      "traces: sends to the tracing vendor with no terms recorded"
+    ]
+  },
+  {
+    "case_id": "FC35",
+    "title": "Erasing C1, not C10",
+    "module": "75-customer-data",
+    "synthetic": true,
+    "packet": "FC35-erasing-c1.md",
+    "kind": "erasure",
+    "customer": "C1",
+    "stores": {
+      "memory": [
+        {
+          "customer": "C1",
+          "fact": "prefers email"
+        },
+        {
+          "customer": "C10",
+          "fact": "prefers phone"
+        },
+        {
+          "customer": "C1",
+          "fact": "commutes 12 km a day"
+        },
+        {
+          "customer": "C12",
+          "fact": "second bike"
+        }
+      ],
+      "checkpoints": [
+        {
+          "customer": "C1",
+          "thread": "WC-3001"
+        },
+        {
+          "customer": "C12",
+          "thread": "WC-3007"
+        }
+      ],
+      "traces": [
+        {
+          "customer": "C1",
+          "trace": "t-01"
+        },
+        {
+          "customer": "C10",
+          "trace": "t-02"
+        },
+        {
+          "customer": "C1",
+          "trace": "t-03"
+        },
+        {
+          "customer": "C1",
+          "trace": "t-04"
+        }
+      ],
+      "logs": [
+        {
+          "text": "2026-10-12 09:14 claim WC-3001 opened for C1"
+        },
+        {
+          "text": "2026-10-12 09:20 claim WC-3002 opened for C10"
+        },
+        {
+          "text": "2026-10-13 11:02 C12 asked for a status update"
+        },
+        {
+          "text": "2026-10-14 16:45 refund queued for C1."
+        },
+        {
+          "text": "2026-10-15 08:30 claim WC-3009 opened for C1-B, a business account"
+        }
+      ]
+    },
+    "expected": {
+      "receipt": {
+        "customer": "C1",
+        "removed": {
+          "memory": 2,
+          "checkpoints": 1,
+          "traces": 3,
+          "logs": 2
+        },
+        "recheck": {
+          "memory": 0,
+          "checkpoints": 0,
+          "traces": 0,
+          "logs": 0
+        },
+        "complete": true
+      },
+      "kept": {
+        "memory": 2,
+        "checkpoints": 1,
+        "traces": 1,
+        "logs": 3
+      },
+      "substring_matches": 15
+    }
+  },
+  {
+    "case_id": "FC36",
+    "title": "Masking before the model",
+    "module": "75-customer-data",
+    "synthetic": true,
+    "packet": "FC36-masking.md",
+    "kind": "masking",
+    "text": "Priya Shah here. My battery died on the canal path near LS6 2QT. Call me on 07700 900123 or email priya.shah@example.com. I paid with card 4111 1111 1111 1111. My friend Tom Reed saw it happen.",
+    "known": {
+      "NAME": "Priya Shah"
+    },
+    "expected": {
+      "masked": "[NAME-1] here. My battery died on the canal path near [POSTCODE-1]. Call me on [PHONE-1] or email [EMAIL-1]. I paid with card [CARD-1]. My friend Tom Reed saw it happen.",
+      "mapping": {
+        "[NAME-1]": "Priya Shah",
+        "[EMAIL-1]": "priya.shah@example.com",
+        "[CARD-1]": "4111 1111 1111 1111",
+        "[PHONE-1]": "07700 900123",
+        "[POSTCODE-1]": "LS6 2QT"
+      },
+      "not_masked": [
+        "Tom Reed"
+      ]
+    }
+  }
+]

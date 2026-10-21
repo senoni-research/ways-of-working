@@ -1,0 +1,1904 @@
+{
+  "counts": {
+    "behaviors": 92,
+    "cases": 36,
+    "link_only_sources": 7,
+    "modules": 13,
+    "planned_modules": 13,
+    "prompts": 5,
+    "recipes": 16,
+    "sources": 74,
+    "templates": 9,
+    "unit_tested_behaviors": 60
+  },
+  "date": "2026-10-21",
+  "files": {
+    ".gitignore": {
+      "bytes": 63,
+      "sha256": "31c892fe3efa826672bbee23adade9dce3cd86068901dd923bfb83af665cfe3e"
+    },
+    "ATTRIBUTION.md": {
+      "bytes": 6019,
+      "sha256": "05a0bc3838312ba39d17553b1a25ec8164f10e1d411ba01bfbf9e9537088debe",
+      "words": 887
+    },
+    "CHANGELOG.md": {
+      "bytes": 5796,
+      "sha256": "b049a7f8569a649d3768252a8c24719e69716da0959b38fb19a3b6f0cbec0a53",
+      "words": 855
+    },
+    "LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "QUICKSTART.md": {
+      "bytes": 2426,
+      "sha256": "1d0216b8fe456fecda9ffe2512e8286a53c0b0b0bbbc0affd0647bd725c14e9e",
+      "words": 381
+    },
+    "README.md": {
+      "bytes": 3684,
+      "sha256": "e8d3d2e50487a9ab7b2a82d4fb2b2e5e90f2b990541ab727f7c6cf3d625cc418",
+      "words": 517
+    },
+    "ROADMAP.md": {
+      "bytes": 3518,
+      "sha256": "aabd973b1cecf187f1843c6f795037b409b955f7e2d3f1cf02f2660fb21ca746",
+      "words": 560
+    },
+    "SOURCE_REGISTER.json": {
+      "bytes": 76743,
+      "sha256": "23df844e8fc75c2317a8c0f7dca687aabefd3b7e8ff81f4d66ea41b44a146125"
+    },
+    "SOURCE_REGISTER.md": {
+      "bytes": 65984,
+      "sha256": "3d8e47296a04efedba68c0a34578d8c5e841b692d2b83596ca38ab72b1ccc98c",
+      "words": 8204
+    },
+    "VALIDATION.md": {
+      "bytes": 5080,
+      "sha256": "5b01ca51a241c5bc9584ae7d05d7db27241ec3e5f76fef995f934a6e3729b205",
+      "words": 834
+    },
+    "VERSION": {
+      "bytes": 6,
+      "sha256": "d915cc95d6ca8f47ae297713ed46d4e5c5d99ddd29fc3c61e263bdf305f2b5b0"
+    },
+    "canonical/cases/FC01-covered-battery.md": {
+      "bytes": 1045,
+      "sha256": "727343b21c1c92bb3411a88d642d51cbb669501141b8c22f753cba30c18be579",
+      "words": 169
+    },
+    "canonical/cases/FC02-above-the-limit.md": {
+      "bytes": 1089,
+      "sha256": "681530f5611a81bf86ab14563d22b79b56cc061e15839219b008e4f66e4e73f0",
+      "words": 173
+    },
+    "canonical/cases/FC03-claim-gives-orders.md": {
+      "bytes": 1200,
+      "sha256": "e80c9648959bc9554d5e9a6a769d96649b9d3654ba9fd0f817e93c4e6c6d76c1",
+      "words": 189
+    },
+    "canonical/cases/FC04-excluded-wear-part.md": {
+      "bytes": 1015,
+      "sha256": "b3b6ccfd91b59eb6e35ef4d1c61b84f0c1a33fddb9047d9f229a02f027b5fec2",
+      "words": 161
+    },
+    "canonical/cases/FC05-loop-never-finishes.md": {
+      "bytes": 1120,
+      "sha256": "8bab30f81d51ff1ffeffc99601fac06bfd1728862272927381f18a6de831f641",
+      "words": 183
+    },
+    "canonical/cases/FC06-decisions-fail-safe.md": {
+      "bytes": 1384,
+      "sha256": "fd19dbe775930c81f2d29e41d0843e3c4c799b713b56c02dbe3b7e75d3b5b10b",
+      "words": 240
+    },
+    "canonical/cases/FC07-reading-the-bill.md": {
+      "bytes": 1487,
+      "sha256": "5f7a6f5320583378deab83f510cb381065326b85628ee74d1a56f620bb0b0140",
+      "words": 245
+    },
+    "canonical/cases/FC08-comparing-models.md": {
+      "bytes": 1267,
+      "sha256": "d35c7fe6d3a50468291ffb290f967af3f0bc9c1ddc7fb7e3f7d5da655ff64a71",
+      "words": 234
+    },
+    "canonical/cases/FC09-scoring-retrieval.md": {
+      "bytes": 1540,
+      "sha256": "e240ff24ff91ee2daaf76f413cd895743aa4b467d69f4d9d02c9622c71b2b6c4",
+      "words": 261
+    },
+    "canonical/cases/FC10-answer-names-its-source.md": {
+      "bytes": 1246,
+      "sha256": "d298018195884f573225ad347919e89d99d02ced49b83bf2f6f70bf6d53dfd18",
+      "words": 232
+    },
+    "canonical/cases/FC11-memory-without-the-slash.md": {
+      "bytes": 1456,
+      "sha256": "3fa0444014e72b8709965c275c3aec20142972a935dcfc8b14f606d129e283f1",
+      "words": 245
+    },
+    "canonical/cases/FC12-pause-and-resume.md": {
+      "bytes": 1582,
+      "sha256": "3843efb8281ca098d4856e8cf8a73af111f445b7245ad2c06ffd361175983716",
+      "words": 268
+    },
+    "canonical/cases/FC13-payment-retried.md": {
+      "bytes": 967,
+      "sha256": "a99a006662898d864d01d7832e24b1b037cd66b72b4cf2a16791a4c219beb020",
+      "words": 172
+    },
+    "canonical/cases/FC14-two-runs-at-once.md": {
+      "bytes": 1277,
+      "sha256": "65c953401c0e120a27baf7fe3f3aedff1ba30b071a409e6249f4574e87782d56",
+      "words": 255
+    },
+    "canonical/cases/FC15-success-criteria.md": {
+      "bytes": 1573,
+      "sha256": "9edbbc2ccdc02cfb4ed425a70b2e38a60589a9e82ec3d70b9bbd188352ec160e",
+      "words": 271
+    },
+    "canonical/cases/FC16-checking-the-judge.md": {
+      "bytes": 888,
+      "sha256": "ff509c5eaf71fe0f86066de0224d3daa73fa160959f603e4b62b928e52df2f37",
+      "words": 155
+    },
+    "canonical/cases/FC17-repeated-runs.md": {
+      "bytes": 1054,
+      "sha256": "547a73d07ebc35d46b7814dfabeea91b6119da68dd43436c382fe32cbce4bec7",
+      "words": 193
+    },
+    "canonical/cases/FC18-capacity-sum.md": {
+      "bytes": 1159,
+      "sha256": "b247d54e8123adcd55a0675f0f3dacd84238b16bf0601ff2aeec2ce9e18604bf",
+      "words": 208
+    },
+    "canonical/cases/FC19-batch-at-once.md": {
+      "bytes": 1420,
+      "sha256": "94811b1db7aeeebca4fe96dfa1093af018e1fac75ab8488178ce5e86cc7ddbe7",
+      "words": 260
+    },
+    "canonical/cases/FC20-how-much-on-its-own.md": {
+      "bytes": 1520,
+      "sha256": "4eb2c7c83828edfa96b958362ae209cfebeb5b9ca29e4b2c7fd2a338d2316bc0",
+      "words": 296
+    },
+    "canonical/cases/FC21-tollgate-with-gaps.md": {
+      "bytes": 1160,
+      "sha256": "6cd272432e7edb9ae4f55ced4522a4fe299829303dfd98346b6b386bf3010fe4",
+      "words": 205
+    },
+    "canonical/cases/FC22-three-designs.md": {
+      "bytes": 1407,
+      "sha256": "34cbaacb76a80b42d912cc46278819f1b9aafa71906c05863bb2d030cb9b6b50",
+      "words": 224
+    },
+    "canonical/cases/FC23-measuring-a-screen.md": {
+      "bytes": 1308,
+      "sha256": "66297d346f69206fde05aa7e097b92f79403a1f4538c361bcc85c5c2e137a4fa",
+      "words": 241
+    },
+    "canonical/cases/FC24-limit-with-a-typo.md": {
+      "bytes": 1605,
+      "sha256": "825cb555474ab91ca99fafdc03107cb7458cb587e56d34a09faea329eb6eb40b",
+      "words": 276
+    },
+    "canonical/cases/FC25-rotating-a-key.md": {
+      "bytes": 1113,
+      "sha256": "6aa9d601c1efdba68590025dbdf43f7fe3abcac01a8348ac157e8964554e556b",
+      "words": 196
+    },
+    "canonical/cases/FC26-header-nobody-signed.md": {
+      "bytes": 1490,
+      "sha256": "3365903bb8885624f42d56ca7e95bd55413cf6dfa4223d14feba1bca6ae4a3cd",
+      "words": 233
+    },
+    "canonical/cases/FC27-who-the-agent-acts-for.md": {
+      "bytes": 1507,
+      "sha256": "078eade6ea5c0263adb906ce935938feed463a8c0a4193b3cc688dbd8f36d44f",
+      "words": 257
+    },
+    "canonical/cases/FC28-deploy-role.md": {
+      "bytes": 1466,
+      "sha256": "a2f5e98f3587133675607fb46ed1456729807c8ef1a326a62b490b830e1d8660",
+      "words": 237
+    },
+    "canonical/cases/FC29-busy-idle-restored.md": {
+      "bytes": 1227,
+      "sha256": "447362c1740d6364e84c17a183aadd0f37f7b101cbb1ec692090c41d53025823",
+      "words": 214
+    },
+    "canonical/cases/FC30-what-a-session-costs.md": {
+      "bytes": 1278,
+      "sha256": "0faa99d4795f0c854376acd3c0a3ad2b4f3a3c23ea5687101cfbbd8f8eed4545",
+      "words": 231
+    },
+    "canonical/cases/FC31-heartbeat-stopped.md": {
+      "bytes": 1040,
+      "sha256": "364a1b5a78c7dc362194f46a364fae6db908106923172c43f831d52c8cec96c2",
+      "words": 186
+    },
+    "canonical/cases/FC32-spent-budget-stop.md": {
+      "bytes": 1020,
+      "sha256": "61d3f67ad67c393c1f46051c0978adc805ed303d6e6e66246c3302afe9635898",
+      "words": 174
+    },
+    "canonical/cases/FC33-tearing-down.md": {
+      "bytes": 1455,
+      "sha256": "97c941e831bd4e34c7a08383b7e138387c97cb2896e72d5c9a6c505473c45b6e",
+      "words": 225
+    },
+    "canonical/cases/FC34-data-map-gaps.md": {
+      "bytes": 908,
+      "sha256": "6021e908b2a3c0e873ef2e235285401eff510e394a6773f5b0189c8becee8113",
+      "words": 150
+    },
+    "canonical/cases/FC35-erasing-c1.md": {
+      "bytes": 991,
+      "sha256": "9f870f789ef2dc011584b994db6f8a9398901555e8630196ab9bdb265d774502",
+      "words": 185
+    },
+    "canonical/cases/FC36-masking.md": {
+      "bytes": 1014,
+      "sha256": "b8cfd700ee8a690f1a7919b84c32933396663cff1d419dde6e41359a3bf71eed",
+      "words": 165
+    },
+    "canonical/cases/README.md": {
+      "bytes": 4877,
+      "sha256": "bc301162b5ab531293aee835f1d8c8a1ec35433945b49ece525cb8a13a6a0a78",
+      "words": 777
+    },
+    "canonical/cases/cases.json": {
+      "bytes": 63836,
+      "sha256": "002be97c059a31c5ebc9594c5346f81a8150c17f0a59e1a78c907591c7ab5ee2"
+    },
+    "canonical/cases/warranty-context.json": {
+      "bytes": 3149,
+      "sha256": "03b25ffb77e1892dbcbff6cb496f113164fb583e263049d15917ba2ca5dea931"
+    },
+    "canonical/cases/warranty-desk.json": {
+      "bytes": 1772,
+      "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
+    },
+    "canonical/loader.md": {
+      "bytes": 1228,
+      "sha256": "624a5e5ade8bb17f22d728fc8810661bc29595707aaa45c6dd7e15805c5d8717",
+      "words": 194
+    },
+    "canonical/metadata.json": {
+      "bytes": 4375,
+      "sha256": "b093b2330594ff0160a66971f4461ab2a9e5b6c91255af84034e29139ffd5d2b"
+    },
+    "canonical/modules/00-operating-contract.md": {
+      "bytes": 6175,
+      "sha256": "459a5f5719881412d5c8e16209c8b40c5b6a7490e2400ae1dad6fc97b5da3920",
+      "words": 1030
+    },
+    "canonical/modules/10-engagement.md": {
+      "bytes": 7114,
+      "sha256": "125d9e091888b381cd918de2ce28225ef030788158c1912a0462bfb046d5a2b6",
+      "words": 1164
+    },
+    "canonical/modules/20-coding-agent.md": {
+      "bytes": 5506,
+      "sha256": "f20b0a91689496e1f608a58de8da1b4583a569c731bcadb06348fbc0f88e2ad8",
+      "words": 964
+    },
+    "canonical/modules/30-agent-design-and-tools.md": {
+      "bytes": 8243,
+      "sha256": "10deaa9dd59d04e22b85aa5d704a4917b85b13a8edec3e8becb071493270e455",
+      "words": 1417
+    },
+    "canonical/modules/35-models-tokens-and-cost.md": {
+      "bytes": 6027,
+      "sha256": "3f27f97c00f63f72d122364709f8dbe3497057757b28cd90c3c13f8cddbe6128",
+      "words": 1013
+    },
+    "canonical/modules/40-context-retrieval-and-memory.md": {
+      "bytes": 7327,
+      "sha256": "b2ec6c2391d8783ea76589edc2302513ae8523126401278fce230cd2f0d1b22a",
+      "words": 1218
+    },
+    "canonical/modules/45-durable-state-and-review.md": {
+      "bytes": 6546,
+      "sha256": "a5ffc937528c5d1c374e40553599aa635ed56e6cc0ebf0f4bbf95b14ffeb604d",
+      "words": 1122
+    },
+    "canonical/modules/50-evaluation-and-observability.md": {
+      "bytes": 6085,
+      "sha256": "f46e45f009c9e94e8aeb0c3747faed8651bb8371d7daf094e85f683beedfed4a",
+      "words": 1032
+    },
+    "canonical/modules/55-concurrency-and-multiple-agents.md": {
+      "bytes": 5243,
+      "sha256": "bb1586640390d37047dc8762a7e1b4e1fae77ae9635f596e74679712c86a347d",
+      "words": 905
+    },
+    "canonical/modules/60-security-and-guardrails.md": {
+      "bytes": 10328,
+      "sha256": "0cb6758f5afec385997950507405a57060f691fdf8b66bd662ee8e5ab15ce3fd",
+      "words": 1648
+    },
+    "canonical/modules/70-deployment-and-operations.md": {
+      "bytes": 9933,
+      "sha256": "e0b48fcf6f6902a8742b6856a02db2a8f1e742161fb2357791129420b06558b4",
+      "words": 1555
+    },
+    "canonical/modules/75-customer-data.md": {
+      "bytes": 4853,
+      "sha256": "855fea414f536bc76774c2d128f213698953a7421d405af021a018f3ba6acfe8",
+      "words": 816
+    },
+    "canonical/modules/80-templates-and-prompts.md": {
+      "bytes": 7123,
+      "sha256": "79c998ff4bda398241b82899b27bf743899c82995a8b59c6724704dd58f1c505",
+      "words": 1220
+    },
+    "canonical/pages/ATTRIBUTION.md": {
+      "bytes": 6019,
+      "sha256": "05a0bc3838312ba39d17553b1a25ec8164f10e1d411ba01bfbf9e9537088debe",
+      "words": 887
+    },
+    "canonical/pages/CHANGELOG.md": {
+      "bytes": 5796,
+      "sha256": "b049a7f8569a649d3768252a8c24719e69716da0959b38fb19a3b6f0cbec0a53",
+      "words": 855
+    },
+    "canonical/pages/QUICKSTART.md": {
+      "bytes": 2426,
+      "sha256": "1d0216b8fe456fecda9ffe2512e8286a53c0b0b0bbbc0affd0647bd725c14e9e",
+      "words": 381
+    },
+    "canonical/pages/README.md": {
+      "bytes": 3684,
+      "sha256": "e8d3d2e50487a9ab7b2a82d4fb2b2e5e90f2b990541ab727f7c6cf3d625cc418",
+      "words": 517
+    },
+    "canonical/pages/ROADMAP.md": {
+      "bytes": 3518,
+      "sha256": "aabd973b1cecf187f1843c6f795037b409b955f7e2d3f1cf02f2660fb21ca746",
+      "words": 560
+    },
+    "canonical/pages/VALIDATION.md": {
+      "bytes": 5080,
+      "sha256": "5b01ca51a241c5bc9584ae7d05d7db27241ec3e5f76fef995f934a6e3729b205",
+      "words": 834
+    },
+    "canonical/prefaces/cursor.md": {
+      "bytes": 949,
+      "sha256": "3de9ff21e402a87e1138fa430efa654ea37d922630e7dc754802ec7e5304c75f",
+      "words": 146
+    },
+    "canonical/prefaces/portable.md": {
+      "bytes": 845,
+      "sha256": "2cba07095ea5a3c1f46e9a3e5f3a2fa9eebaaa807e6d9291322743e7267a4111",
+      "words": 124
+    },
+    "canonical/recipes/FR01-frame-the-engagement.md": {
+      "bytes": 1706,
+      "sha256": "78ba74860edb5e080e686bd03bc72eb6b275c296fe92f1f8ddcdc740f58c9cc2",
+      "words": 270
+    },
+    "canonical/recipes/FR02-plan-and-build-with-a-coding-agent.md": {
+      "bytes": 1754,
+      "sha256": "32d0930c02d5f5e0f5c85de0b835fa6aea30d2ed485c7c7ec77efb3fad47aa53",
+      "words": 305
+    },
+    "canonical/recipes/FR03-build-the-tool-loop-with-controls-in-code.md": {
+      "bytes": 1778,
+      "sha256": "45f68513050c7bfb2c2b7496f07c2b56886f476d6ad11c090d25393a5d433fa0",
+      "words": 297
+    },
+    "canonical/recipes/FR04-make-structured-output-fail-safely.md": {
+      "bytes": 1556,
+      "sha256": "e38a91401219a81039b33560f219dcde8ff31eea68a67323a7ab4f62333d897b",
+      "words": 256
+    },
+    "canonical/recipes/FR05-evaluate-with-repeated-runs.md": {
+      "bytes": 1729,
+      "sha256": "b4e48a01b383fc6c0b40e000a4f09291712707ee0cec164512f8044f9cd12c0c",
+      "words": 286
+    },
+    "canonical/recipes/FR06-add-retrieval-and-measure-it.md": {
+      "bytes": 1568,
+      "sha256": "76ebe5f0073318438fb7b7005a03c105fa9db738298d53e09d25b2f5e3a7b3bb",
+      "words": 252
+    },
+    "canonical/recipes/FR07-add-memory-without-leaks.md": {
+      "bytes": 1418,
+      "sha256": "34d450f1cce3b235790ae6bac53a3dd987670f120541c13b16c7d5916708656f",
+      "words": 230
+    },
+    "canonical/recipes/FR08-pause-for-a-person-and-resume-anywhere.md": {
+      "bytes": 1767,
+      "sha256": "7be5cac99a9bfb2d011f6e7ed8f363829dfbffb6f5e89b99f18296e3093d7185",
+      "words": 293
+    },
+    "canonical/recipes/FR09-run-many-items-at-once-safely.md": {
+      "bytes": 1807,
+      "sha256": "7f04f0c1513e7dbf93e878a3ecfffe14a80debc12ec71e00e70c416ba93e2820",
+      "words": 291
+    },
+    "canonical/recipes/FR10-screen-for-injection-and-measure-it.md": {
+      "bytes": 1558,
+      "sha256": "c5e8f751ebf230162e4cddf48af494f27f33db1b2d6cdc99e187b0116d19417f",
+      "words": 256
+    },
+    "canonical/recipes/FR11-put-limits-in-policy.md": {
+      "bytes": 1480,
+      "sha256": "7cbd39d9abd90b39c44b51835ddd13cccde8dd5cdaabcaa339546738e6f67e90",
+      "words": 242
+    },
+    "canonical/recipes/FR12-deploy-to-a-managed-runtime.md": {
+      "bytes": 1561,
+      "sha256": "75d298c2281536a12a3635f1d3b5b23703ab94933672faf9ff0954dbb226457c",
+      "words": 228
+    },
+    "canonical/recipes/FR13-act-for-the-signed-in-user.md": {
+      "bytes": 1596,
+      "sha256": "60a21b013a62833897e046e972576e1ec9169213cae87959b728ad44030beac9",
+      "words": 248
+    },
+    "canonical/recipes/FR14-go-live-ship-watch-stop.md": {
+      "bytes": 1566,
+      "sha256": "bddeb5266c8f1e83d55ce74c012786a72d084d40393a52a098da63d04caa5795",
+      "words": 235
+    },
+    "canonical/recipes/FR15-erase-a-customer.md": {
+      "bytes": 1431,
+      "sha256": "e41a67390a6bbae44fd1cf9bb944527ced1180be87f2d8c80a6fd6e0c4e41fd5",
+      "words": 226
+    },
+    "canonical/recipes/FR16-tear-down-and-prove-it.md": {
+      "bytes": 1387,
+      "sha256": "fb48544cb55ad58b779bb61984bf9be2375a0be2b7483ad7281546dc430395a6",
+      "words": 216
+    },
+    "canonical/sources.json": {
+      "bytes": 76743,
+      "sha256": "e3e78476ea57a4021d01adbce4c4a7cdb85419a07db44f24b19242db43721d6a"
+    },
+    "cases/FC01-covered-battery.md": {
+      "bytes": 1045,
+      "sha256": "727343b21c1c92bb3411a88d642d51cbb669501141b8c22f753cba30c18be579",
+      "words": 169
+    },
+    "cases/FC02-above-the-limit.md": {
+      "bytes": 1089,
+      "sha256": "681530f5611a81bf86ab14563d22b79b56cc061e15839219b008e4f66e4e73f0",
+      "words": 173
+    },
+    "cases/FC03-claim-gives-orders.md": {
+      "bytes": 1200,
+      "sha256": "e80c9648959bc9554d5e9a6a769d96649b9d3654ba9fd0f817e93c4e6c6d76c1",
+      "words": 189
+    },
+    "cases/FC04-excluded-wear-part.md": {
+      "bytes": 1015,
+      "sha256": "b3b6ccfd91b59eb6e35ef4d1c61b84f0c1a33fddb9047d9f229a02f027b5fec2",
+      "words": 161
+    },
+    "cases/FC05-loop-never-finishes.md": {
+      "bytes": 1120,
+      "sha256": "8bab30f81d51ff1ffeffc99601fac06bfd1728862272927381f18a6de831f641",
+      "words": 183
+    },
+    "cases/FC06-decisions-fail-safe.md": {
+      "bytes": 1384,
+      "sha256": "fd19dbe775930c81f2d29e41d0843e3c4c799b713b56c02dbe3b7e75d3b5b10b",
+      "words": 240
+    },
+    "cases/FC07-reading-the-bill.md": {
+      "bytes": 1487,
+      "sha256": "5f7a6f5320583378deab83f510cb381065326b85628ee74d1a56f620bb0b0140",
+      "words": 245
+    },
+    "cases/FC08-comparing-models.md": {
+      "bytes": 1267,
+      "sha256": "d35c7fe6d3a50468291ffb290f967af3f0bc9c1ddc7fb7e3f7d5da655ff64a71",
+      "words": 234
+    },
+    "cases/FC09-scoring-retrieval.md": {
+      "bytes": 1540,
+      "sha256": "e240ff24ff91ee2daaf76f413cd895743aa4b467d69f4d9d02c9622c71b2b6c4",
+      "words": 261
+    },
+    "cases/FC10-answer-names-its-source.md": {
+      "bytes": 1246,
+      "sha256": "d298018195884f573225ad347919e89d99d02ced49b83bf2f6f70bf6d53dfd18",
+      "words": 232
+    },
+    "cases/FC11-memory-without-the-slash.md": {
+      "bytes": 1456,
+      "sha256": "3fa0444014e72b8709965c275c3aec20142972a935dcfc8b14f606d129e283f1",
+      "words": 245
+    },
+    "cases/FC12-pause-and-resume.md": {
+      "bytes": 1582,
+      "sha256": "3843efb8281ca098d4856e8cf8a73af111f445b7245ad2c06ffd361175983716",
+      "words": 268
+    },
+    "cases/FC13-payment-retried.md": {
+      "bytes": 967,
+      "sha256": "a99a006662898d864d01d7832e24b1b037cd66b72b4cf2a16791a4c219beb020",
+      "words": 172
+    },
+    "cases/FC14-two-runs-at-once.md": {
+      "bytes": 1277,
+      "sha256": "65c953401c0e120a27baf7fe3f3aedff1ba30b071a409e6249f4574e87782d56",
+      "words": 255
+    },
+    "cases/FC15-success-criteria.md": {
+      "bytes": 1573,
+      "sha256": "9edbbc2ccdc02cfb4ed425a70b2e38a60589a9e82ec3d70b9bbd188352ec160e",
+      "words": 271
+    },
+    "cases/FC16-checking-the-judge.md": {
+      "bytes": 888,
+      "sha256": "ff509c5eaf71fe0f86066de0224d3daa73fa160959f603e4b62b928e52df2f37",
+      "words": 155
+    },
+    "cases/FC17-repeated-runs.md": {
+      "bytes": 1054,
+      "sha256": "547a73d07ebc35d46b7814dfabeea91b6119da68dd43436c382fe32cbce4bec7",
+      "words": 193
+    },
+    "cases/FC18-capacity-sum.md": {
+      "bytes": 1159,
+      "sha256": "b247d54e8123adcd55a0675f0f3dacd84238b16bf0601ff2aeec2ce9e18604bf",
+      "words": 208
+    },
+    "cases/FC19-batch-at-once.md": {
+      "bytes": 1420,
+      "sha256": "94811b1db7aeeebca4fe96dfa1093af018e1fac75ab8488178ce5e86cc7ddbe7",
+      "words": 260
+    },
+    "cases/FC20-how-much-on-its-own.md": {
+      "bytes": 1520,
+      "sha256": "4eb2c7c83828edfa96b958362ae209cfebeb5b9ca29e4b2c7fd2a338d2316bc0",
+      "words": 296
+    },
+    "cases/FC21-tollgate-with-gaps.md": {
+      "bytes": 1160,
+      "sha256": "6cd272432e7edb9ae4f55ced4522a4fe299829303dfd98346b6b386bf3010fe4",
+      "words": 205
+    },
+    "cases/FC22-three-designs.md": {
+      "bytes": 1407,
+      "sha256": "34cbaacb76a80b42d912cc46278819f1b9aafa71906c05863bb2d030cb9b6b50",
+      "words": 224
+    },
+    "cases/FC23-measuring-a-screen.md": {
+      "bytes": 1308,
+      "sha256": "66297d346f69206fde05aa7e097b92f79403a1f4538c361bcc85c5c2e137a4fa",
+      "words": 241
+    },
+    "cases/FC24-limit-with-a-typo.md": {
+      "bytes": 1605,
+      "sha256": "825cb555474ab91ca99fafdc03107cb7458cb587e56d34a09faea329eb6eb40b",
+      "words": 276
+    },
+    "cases/FC25-rotating-a-key.md": {
+      "bytes": 1113,
+      "sha256": "6aa9d601c1efdba68590025dbdf43f7fe3abcac01a8348ac157e8964554e556b",
+      "words": 196
+    },
+    "cases/FC26-header-nobody-signed.md": {
+      "bytes": 1490,
+      "sha256": "3365903bb8885624f42d56ca7e95bd55413cf6dfa4223d14feba1bca6ae4a3cd",
+      "words": 233
+    },
+    "cases/FC27-who-the-agent-acts-for.md": {
+      "bytes": 1507,
+      "sha256": "078eade6ea5c0263adb906ce935938feed463a8c0a4193b3cc688dbd8f36d44f",
+      "words": 257
+    },
+    "cases/FC28-deploy-role.md": {
+      "bytes": 1466,
+      "sha256": "a2f5e98f3587133675607fb46ed1456729807c8ef1a326a62b490b830e1d8660",
+      "words": 237
+    },
+    "cases/FC29-busy-idle-restored.md": {
+      "bytes": 1227,
+      "sha256": "447362c1740d6364e84c17a183aadd0f37f7b101cbb1ec692090c41d53025823",
+      "words": 214
+    },
+    "cases/FC30-what-a-session-costs.md": {
+      "bytes": 1278,
+      "sha256": "0faa99d4795f0c854376acd3c0a3ad2b4f3a3c23ea5687101cfbbd8f8eed4545",
+      "words": 231
+    },
+    "cases/FC31-heartbeat-stopped.md": {
+      "bytes": 1040,
+      "sha256": "364a1b5a78c7dc362194f46a364fae6db908106923172c43f831d52c8cec96c2",
+      "words": 186
+    },
+    "cases/FC32-spent-budget-stop.md": {
+      "bytes": 1020,
+      "sha256": "61d3f67ad67c393c1f46051c0978adc805ed303d6e6e66246c3302afe9635898",
+      "words": 174
+    },
+    "cases/FC33-tearing-down.md": {
+      "bytes": 1455,
+      "sha256": "97c941e831bd4e34c7a08383b7e138387c97cb2896e72d5c9a6c505473c45b6e",
+      "words": 225
+    },
+    "cases/FC34-data-map-gaps.md": {
+      "bytes": 908,
+      "sha256": "6021e908b2a3c0e873ef2e235285401eff510e394a6773f5b0189c8becee8113",
+      "words": 150
+    },
+    "cases/FC35-erasing-c1.md": {
+      "bytes": 991,
+      "sha256": "9f870f789ef2dc011584b994db6f8a9398901555e8630196ab9bdb265d774502",
+      "words": 185
+    },
+    "cases/FC36-masking.md": {
+      "bytes": 1014,
+      "sha256": "b8cfd700ee8a690f1a7919b84c32933396663cff1d419dde6e41359a3bf71eed",
+      "words": 165
+    },
+    "cases/README.md": {
+      "bytes": 4877,
+      "sha256": "bc301162b5ab531293aee835f1d8c8a1ec35433945b49ece525cb8a13a6a0a78",
+      "words": 777
+    },
+    "cases/cases.json": {
+      "bytes": 63836,
+      "sha256": "002be97c059a31c5ebc9594c5346f81a8150c17f0a59e1a78c907591c7ab5ee2"
+    },
+    "cases/warranty-context.json": {
+      "bytes": 3149,
+      "sha256": "03b25ffb77e1892dbcbff6cb496f113164fb583e263049d15917ba2ca5dea931"
+    },
+    "cases/warranty-desk.json": {
+      "bytes": 1772,
+      "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
+    },
+    "cursor-project/.cursor/rules/40-fde-method.mdc": {
+      "bytes": 1334,
+      "sha256": "87cbebd83819739cd6edae25555b4177267d3b5cd42def2fa4c7e9d78074df3e",
+      "words": 209
+    },
+    "cursor-project/.fde/00-operating-contract.md": {
+      "bytes": 6672,
+      "sha256": "c6483dedc6120221997c5614114fc8d902e77a1d777811dc14662a03c26d659a",
+      "words": 1030
+    },
+    "cursor-project/.fde/10-engagement.md": {
+      "bytes": 7574,
+      "sha256": "be1d6b2dbd6ff80b9c179f09fa4dd34ad6dc17902e745bbffc2d698da7cb4f53",
+      "words": 1164
+    },
+    "cursor-project/.fde/20-coding-agent.md": {
+      "bytes": 5759,
+      "sha256": "3c8ada1e1a50f0c65192eb6247dfa0c1d44ae23084ef3b786a22e62bcb4b874a",
+      "words": 964
+    },
+    "cursor-project/.fde/30-agent-design-and-tools.md": {
+      "bytes": 8675,
+      "sha256": "1ff23c01bd39a777451f3fd83ea45dc16b50ec29140b2bae6b9e3a1847ad9bc8",
+      "words": 1417
+    },
+    "cursor-project/.fde/35-models-tokens-and-cost.md": {
+      "bytes": 6334,
+      "sha256": "006bfb1ff823bd63064f8484f9151aa995eaadf95bfdbe505c5c6a8fd876b2a6",
+      "words": 1013
+    },
+    "cursor-project/.fde/40-context-retrieval-and-memory.md": {
+      "bytes": 7731,
+      "sha256": "7e77dd5fd8941af38e60c0eb2db24ef475a6541727d405b9387975cfec4ca4ab",
+      "words": 1218
+    },
+    "cursor-project/.fde/45-durable-state-and-review.md": {
+      "bytes": 6849,
+      "sha256": "c24e829df3eeb70d24270b83c8ab2a40f8538e747a553c946f081b1fe5cfc072",
+      "words": 1122
+    },
+    "cursor-project/.fde/50-evaluation-and-observability.md": {
+      "bytes": 6395,
+      "sha256": "90b9204d3e5ab1fcef2c998cdd3840f0226a62020850fbba5ababd02258fe363",
+      "words": 1032
+    },
+    "cursor-project/.fde/55-concurrency-and-multiple-agents.md": {
+      "bytes": 5482,
+      "sha256": "9eee47cce3d2c2a5ae2005accce653210017badc9fb9e9e08a569a484b4f9346",
+      "words": 905
+    },
+    "cursor-project/.fde/60-security-and-guardrails.md": {
+      "bytes": 10865,
+      "sha256": "df5f8bfdbaa7053a2d650d8a18797cbfe11683728b580bf288d97b039797eadd",
+      "words": 1648
+    },
+    "cursor-project/.fde/70-deployment-and-operations.md": {
+      "bytes": 10639,
+      "sha256": "a70c9853e582042fee2eb885a31f7381960df4e21cfa0b6f2e231581e87744df",
+      "words": 1555
+    },
+    "cursor-project/.fde/75-customer-data.md": {
+      "bytes": 5039,
+      "sha256": "c1330678683b3af350880f1847c6a717df183a70b3c9f12330af5800391fe812",
+      "words": 816
+    },
+    "cursor-project/.fde/80-templates-and-prompts.md": {
+      "bytes": 7295,
+      "sha256": "97d7a924e393fc69046a24aa606d30ac218181d1d4bd6825db441d26e026af8c",
+      "words": 1220
+    },
+    "cursor-project/.fde/90-sources.md": {
+      "bytes": 65984,
+      "sha256": "3d8e47296a04efedba68c0a34578d8c5e841b692d2b83596ca38ab72b1ccc98c",
+      "words": 8204
+    },
+    "cursor-project/.fde/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "cursor-project/.fde/README.md": {
+      "bytes": 2810,
+      "sha256": "0a8d50113c6184c27117f84358b077224009546d05bcdaba6284ba2b628d72aa",
+      "words": 273
+    },
+    "cursor-project/.fde/cases/FC01-covered-battery.md": {
+      "bytes": 1045,
+      "sha256": "727343b21c1c92bb3411a88d642d51cbb669501141b8c22f753cba30c18be579",
+      "words": 169
+    },
+    "cursor-project/.fde/cases/FC02-above-the-limit.md": {
+      "bytes": 1089,
+      "sha256": "681530f5611a81bf86ab14563d22b79b56cc061e15839219b008e4f66e4e73f0",
+      "words": 173
+    },
+    "cursor-project/.fde/cases/FC03-claim-gives-orders.md": {
+      "bytes": 1200,
+      "sha256": "e80c9648959bc9554d5e9a6a769d96649b9d3654ba9fd0f817e93c4e6c6d76c1",
+      "words": 189
+    },
+    "cursor-project/.fde/cases/FC04-excluded-wear-part.md": {
+      "bytes": 1015,
+      "sha256": "b3b6ccfd91b59eb6e35ef4d1c61b84f0c1a33fddb9047d9f229a02f027b5fec2",
+      "words": 161
+    },
+    "cursor-project/.fde/cases/FC05-loop-never-finishes.md": {
+      "bytes": 1120,
+      "sha256": "8bab30f81d51ff1ffeffc99601fac06bfd1728862272927381f18a6de831f641",
+      "words": 183
+    },
+    "cursor-project/.fde/cases/FC06-decisions-fail-safe.md": {
+      "bytes": 1384,
+      "sha256": "fd19dbe775930c81f2d29e41d0843e3c4c799b713b56c02dbe3b7e75d3b5b10b",
+      "words": 240
+    },
+    "cursor-project/.fde/cases/FC07-reading-the-bill.md": {
+      "bytes": 1487,
+      "sha256": "5f7a6f5320583378deab83f510cb381065326b85628ee74d1a56f620bb0b0140",
+      "words": 245
+    },
+    "cursor-project/.fde/cases/FC08-comparing-models.md": {
+      "bytes": 1267,
+      "sha256": "d35c7fe6d3a50468291ffb290f967af3f0bc9c1ddc7fb7e3f7d5da655ff64a71",
+      "words": 234
+    },
+    "cursor-project/.fde/cases/FC09-scoring-retrieval.md": {
+      "bytes": 1540,
+      "sha256": "e240ff24ff91ee2daaf76f413cd895743aa4b467d69f4d9d02c9622c71b2b6c4",
+      "words": 261
+    },
+    "cursor-project/.fde/cases/FC10-answer-names-its-source.md": {
+      "bytes": 1246,
+      "sha256": "d298018195884f573225ad347919e89d99d02ced49b83bf2f6f70bf6d53dfd18",
+      "words": 232
+    },
+    "cursor-project/.fde/cases/FC11-memory-without-the-slash.md": {
+      "bytes": 1456,
+      "sha256": "3fa0444014e72b8709965c275c3aec20142972a935dcfc8b14f606d129e283f1",
+      "words": 245
+    },
+    "cursor-project/.fde/cases/FC12-pause-and-resume.md": {
+      "bytes": 1582,
+      "sha256": "3843efb8281ca098d4856e8cf8a73af111f445b7245ad2c06ffd361175983716",
+      "words": 268
+    },
+    "cursor-project/.fde/cases/FC13-payment-retried.md": {
+      "bytes": 967,
+      "sha256": "a99a006662898d864d01d7832e24b1b037cd66b72b4cf2a16791a4c219beb020",
+      "words": 172
+    },
+    "cursor-project/.fde/cases/FC14-two-runs-at-once.md": {
+      "bytes": 1277,
+      "sha256": "65c953401c0e120a27baf7fe3f3aedff1ba30b071a409e6249f4574e87782d56",
+      "words": 255
+    },
+    "cursor-project/.fde/cases/FC15-success-criteria.md": {
+      "bytes": 1573,
+      "sha256": "9edbbc2ccdc02cfb4ed425a70b2e38a60589a9e82ec3d70b9bbd188352ec160e",
+      "words": 271
+    },
+    "cursor-project/.fde/cases/FC16-checking-the-judge.md": {
+      "bytes": 888,
+      "sha256": "ff509c5eaf71fe0f86066de0224d3daa73fa160959f603e4b62b928e52df2f37",
+      "words": 155
+    },
+    "cursor-project/.fde/cases/FC17-repeated-runs.md": {
+      "bytes": 1054,
+      "sha256": "547a73d07ebc35d46b7814dfabeea91b6119da68dd43436c382fe32cbce4bec7",
+      "words": 193
+    },
+    "cursor-project/.fde/cases/FC18-capacity-sum.md": {
+      "bytes": 1159,
+      "sha256": "b247d54e8123adcd55a0675f0f3dacd84238b16bf0601ff2aeec2ce9e18604bf",
+      "words": 208
+    },
+    "cursor-project/.fde/cases/FC19-batch-at-once.md": {
+      "bytes": 1420,
+      "sha256": "94811b1db7aeeebca4fe96dfa1093af018e1fac75ab8488178ce5e86cc7ddbe7",
+      "words": 260
+    },
+    "cursor-project/.fde/cases/FC20-how-much-on-its-own.md": {
+      "bytes": 1520,
+      "sha256": "4eb2c7c83828edfa96b958362ae209cfebeb5b9ca29e4b2c7fd2a338d2316bc0",
+      "words": 296
+    },
+    "cursor-project/.fde/cases/FC21-tollgate-with-gaps.md": {
+      "bytes": 1160,
+      "sha256": "6cd272432e7edb9ae4f55ced4522a4fe299829303dfd98346b6b386bf3010fe4",
+      "words": 205
+    },
+    "cursor-project/.fde/cases/FC22-three-designs.md": {
+      "bytes": 1407,
+      "sha256": "34cbaacb76a80b42d912cc46278819f1b9aafa71906c05863bb2d030cb9b6b50",
+      "words": 224
+    },
+    "cursor-project/.fde/cases/FC23-measuring-a-screen.md": {
+      "bytes": 1308,
+      "sha256": "66297d346f69206fde05aa7e097b92f79403a1f4538c361bcc85c5c2e137a4fa",
+      "words": 241
+    },
+    "cursor-project/.fde/cases/FC24-limit-with-a-typo.md": {
+      "bytes": 1605,
+      "sha256": "825cb555474ab91ca99fafdc03107cb7458cb587e56d34a09faea329eb6eb40b",
+      "words": 276
+    },
+    "cursor-project/.fde/cases/FC25-rotating-a-key.md": {
+      "bytes": 1113,
+      "sha256": "6aa9d601c1efdba68590025dbdf43f7fe3abcac01a8348ac157e8964554e556b",
+      "words": 196
+    },
+    "cursor-project/.fde/cases/FC26-header-nobody-signed.md": {
+      "bytes": 1490,
+      "sha256": "3365903bb8885624f42d56ca7e95bd55413cf6dfa4223d14feba1bca6ae4a3cd",
+      "words": 233
+    },
+    "cursor-project/.fde/cases/FC27-who-the-agent-acts-for.md": {
+      "bytes": 1507,
+      "sha256": "078eade6ea5c0263adb906ce935938feed463a8c0a4193b3cc688dbd8f36d44f",
+      "words": 257
+    },
+    "cursor-project/.fde/cases/FC28-deploy-role.md": {
+      "bytes": 1466,
+      "sha256": "a2f5e98f3587133675607fb46ed1456729807c8ef1a326a62b490b830e1d8660",
+      "words": 237
+    },
+    "cursor-project/.fde/cases/FC29-busy-idle-restored.md": {
+      "bytes": 1227,
+      "sha256": "447362c1740d6364e84c17a183aadd0f37f7b101cbb1ec692090c41d53025823",
+      "words": 214
+    },
+    "cursor-project/.fde/cases/FC30-what-a-session-costs.md": {
+      "bytes": 1278,
+      "sha256": "0faa99d4795f0c854376acd3c0a3ad2b4f3a3c23ea5687101cfbbd8f8eed4545",
+      "words": 231
+    },
+    "cursor-project/.fde/cases/FC31-heartbeat-stopped.md": {
+      "bytes": 1040,
+      "sha256": "364a1b5a78c7dc362194f46a364fae6db908106923172c43f831d52c8cec96c2",
+      "words": 186
+    },
+    "cursor-project/.fde/cases/FC32-spent-budget-stop.md": {
+      "bytes": 1020,
+      "sha256": "61d3f67ad67c393c1f46051c0978adc805ed303d6e6e66246c3302afe9635898",
+      "words": 174
+    },
+    "cursor-project/.fde/cases/FC33-tearing-down.md": {
+      "bytes": 1455,
+      "sha256": "97c941e831bd4e34c7a08383b7e138387c97cb2896e72d5c9a6c505473c45b6e",
+      "words": 225
+    },
+    "cursor-project/.fde/cases/FC34-data-map-gaps.md": {
+      "bytes": 908,
+      "sha256": "6021e908b2a3c0e873ef2e235285401eff510e394a6773f5b0189c8becee8113",
+      "words": 150
+    },
+    "cursor-project/.fde/cases/FC35-erasing-c1.md": {
+      "bytes": 991,
+      "sha256": "9f870f789ef2dc011584b994db6f8a9398901555e8630196ab9bdb265d774502",
+      "words": 185
+    },
+    "cursor-project/.fde/cases/FC36-masking.md": {
+      "bytes": 1014,
+      "sha256": "b8cfd700ee8a690f1a7919b84c32933396663cff1d419dde6e41359a3bf71eed",
+      "words": 165
+    },
+    "cursor-project/.fde/cases/README.md": {
+      "bytes": 4877,
+      "sha256": "bc301162b5ab531293aee835f1d8c8a1ec35433945b49ece525cb8a13a6a0a78",
+      "words": 777
+    },
+    "cursor-project/.fde/cases/cases.json": {
+      "bytes": 63836,
+      "sha256": "002be97c059a31c5ebc9594c5346f81a8150c17f0a59e1a78c907591c7ab5ee2"
+    },
+    "cursor-project/.fde/cases/warranty-context.json": {
+      "bytes": 3149,
+      "sha256": "03b25ffb77e1892dbcbff6cb496f113164fb583e263049d15917ba2ca5dea931"
+    },
+    "cursor-project/.fde/cases/warranty-desk.json": {
+      "bytes": 1772,
+      "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
+    },
+    "cursor-project/.fde/check_install.py": {
+      "bytes": 2317,
+      "sha256": "4da82d38560df7868b6c892bd64286f133d68b04531f787c0506235b5d1b2ee0"
+    },
+    "cursor-project/.fde/recipes/FR01-frame-the-engagement.md": {
+      "bytes": 1884,
+      "sha256": "b5ec7023ec7d332a410e5a043d729487009697ddb25705b12594d161428fd506",
+      "words": 270
+    },
+    "cursor-project/.fde/recipes/FR02-plan-and-build-with-a-coding-agent.md": {
+      "bytes": 1888,
+      "sha256": "693899276259ec3bca6ee92eba09b16f756e661e6a2c4c1c6f95f6716d4b4fed",
+      "words": 305
+    },
+    "cursor-project/.fde/recipes/FR03-build-the-tool-loop-with-controls-in-code.md": {
+      "bytes": 1959,
+      "sha256": "668a70b26c2378c2885d2b677baec37d524e034e50eb9140236a0af6c7ab7f79",
+      "words": 297
+    },
+    "cursor-project/.fde/recipes/FR04-make-structured-output-fail-safely.md": {
+      "bytes": 1639,
+      "sha256": "1920dbcb4b89047424644b38002a69e1d36c55716680ffa3ea767d1292c964e8",
+      "words": 256
+    },
+    "cursor-project/.fde/recipes/FR05-evaluate-with-repeated-runs.md": {
+      "bytes": 1921,
+      "sha256": "7d8676a0ff27fd3bf8fd0e82b0448f658807aaf226f93d1067c5bc42ebb6906a",
+      "words": 286
+    },
+    "cursor-project/.fde/recipes/FR06-add-retrieval-and-measure-it.md": {
+      "bytes": 1712,
+      "sha256": "904b030b83af7a63a6a0002bc32b63d5055b9cc07f472e30253013c829228d80",
+      "words": 252
+    },
+    "cursor-project/.fde/recipes/FR07-add-memory-without-leaks.md": {
+      "bytes": 1511,
+      "sha256": "357d02497c3cfe8fd4db6b4acaa5de7872c2cd8497250b30278ce23c082eed92",
+      "words": 230
+    },
+    "cursor-project/.fde/recipes/FR08-pause-for-a-person-and-resume-anywhere.md": {
+      "bytes": 1922,
+      "sha256": "7cdc97ac272268f0e5c7b66fcb9c296b559470f87c0fc3825e35ff91d771ec0f",
+      "words": 293
+    },
+    "cursor-project/.fde/recipes/FR09-run-many-items-at-once-safely.md": {
+      "bytes": 2014,
+      "sha256": "68d99feef643c89c898f81ebed356dd0de07380144446bf372a460e10cc8dc8a",
+      "words": 291
+    },
+    "cursor-project/.fde/recipes/FR10-screen-for-injection-and-measure-it.md": {
+      "bytes": 1697,
+      "sha256": "be1f30c11e5f1e31d080a631a725fa83690a5878040f8f92e46d1682694bf621",
+      "words": 256
+    },
+    "cursor-project/.fde/recipes/FR11-put-limits-in-policy.md": {
+      "bytes": 1570,
+      "sha256": "1acb51e58d508472ad2fd61e9667a368c1a7bb3106fbbe2fa7275392881fa57e",
+      "words": 242
+    },
+    "cursor-project/.fde/recipes/FR12-deploy-to-a-managed-runtime.md": {
+      "bytes": 1717,
+      "sha256": "f08dbaa8f341847d911480c62235f06a762af2f86c1c64b9bf58713dac4ccb08",
+      "words": 228
+    },
+    "cursor-project/.fde/recipes/FR13-act-for-the-signed-in-user.md": {
+      "bytes": 1808,
+      "sha256": "0063ba3c0503781ce099687e7dafbc88fe2dd5b6fce2dca2646d5a882a09ba19",
+      "words": 248
+    },
+    "cursor-project/.fde/recipes/FR14-go-live-ship-watch-stop.md": {
+      "bytes": 1803,
+      "sha256": "8d1b686219c39c8109e0c3cbcca4a022df2b67832236655cce06d4f6e2c3ac03",
+      "words": 235
+    },
+    "cursor-project/.fde/recipes/FR15-erase-a-customer.md": {
+      "bytes": 1531,
+      "sha256": "860c1a7621531a25781e7afe62b70fdff59c60ef062ec2623ee09d38cd69be37",
+      "words": 226
+    },
+    "cursor-project/.fde/recipes/FR16-tear-down-and-prove-it.md": {
+      "bytes": 1507,
+      "sha256": "02de11c677e136cfcb622a53492f7be2032f3524d8517243e2ff6e52432456cc",
+      "words": 216
+    },
+    "cursor-project/.fde/reference/concurrency.py": {
+      "bytes": 3939,
+      "sha256": "eebaa0ff110f7ced812c0a5ea4929f7b14de250603c47b0eec45bfaac97d59d5"
+    },
+    "cursor-project/.fde/reference/cost.py": {
+      "bytes": 3273,
+      "sha256": "326631c6ed171200abd955eed86a6aa72a605fed919fbc560ee79f71035cfcdd"
+    },
+    "cursor-project/.fde/reference/credentials.py": {
+      "bytes": 3550,
+      "sha256": "c612bb76c102546813151b1a08578cbdd3f31da42c46a8ab6fd545b8ca380a00"
+    },
+    "cursor-project/.fde/reference/customer_data.py": {
+      "bytes": 3208,
+      "sha256": "8f02b18b698a666541d19e0bb9b13ff5b8374343c8398b522041315caae402d4"
+    },
+    "cursor-project/.fde/reference/durable.py": {
+      "bytes": 6860,
+      "sha256": "0f51373b4f939db46fb2ab68a324014ed3e3307a5f8ffe405d907cf93d37bb2a"
+    },
+    "cursor-project/.fde/reference/engagement.py": {
+      "bytes": 1568,
+      "sha256": "e67a139f44b2c325caf3e69fbdfb0f03e5b7a0a45a44ff30ba48ed8086e1043a"
+    },
+    "cursor-project/.fde/reference/evaluation.py": {
+      "bytes": 4551,
+      "sha256": "4a0e336740d072abc9557b4fc0611e38822704bc8723b0e4666da578b89a4541"
+    },
+    "cursor-project/.fde/reference/guardrails.py": {
+      "bytes": 2158,
+      "sha256": "571cd9310628917e30c7184f250bf64e9db26d12985d97d05c2668db5ec5f8ba"
+    },
+    "cursor-project/.fde/reference/iam_review.py": {
+      "bytes": 2908,
+      "sha256": "8218349d5e1dc4f37cffd0faec8479a7a200a7c6415da4e24d8e3f7e9b21bd27"
+    },
+    "cursor-project/.fde/reference/memory.py": {
+      "bytes": 1584,
+      "sha256": "f98af2599562b1c1b16492b98e14359477f039bead2061e3970b1549a564f437"
+    },
+    "cursor-project/.fde/reference/operations.py": {
+      "bytes": 3397,
+      "sha256": "2d2bce10b0e76a216ec39325888a3f9c58dd5da1ab5d4dc71fb45324785dd27a"
+    },
+    "cursor-project/.fde/reference/policy.py": {
+      "bytes": 4314,
+      "sha256": "b2f72c9520b025ebbd3b41071745ac97e6d28c7e2aad483dd8b576530d000797"
+    },
+    "cursor-project/.fde/reference/retrieval.py": {
+      "bytes": 3729,
+      "sha256": "f7fb8647ee5ca56bdb760b3598f6da92fa73f5f636213da248e390a3931e6492"
+    },
+    "cursor-project/.fde/reference/runtime_app.py": {
+      "bytes": 1938,
+      "sha256": "d43ed66370481a9ba635112e101919646548375c18957bbbdf93e4e34ce1f303"
+    },
+    "cursor-project/.fde/reference/signing.py": {
+      "bytes": 3493,
+      "sha256": "a5bac80d5e2880a8369e251d20460e7d1826c1cf1cb8cc024d279a6aaaa96d77"
+    },
+    "cursor-project/.fde/reference/structured.py": {
+      "bytes": 3860,
+      "sha256": "e335a72f30ad8e3459c9bf0cae12b180a30c75b3c7eca778b508f80dafb09a53"
+    },
+    "cursor-project/.fde/reference/stub_model.py": {
+      "bytes": 1561,
+      "sha256": "16e628ee9fcde5fe423c8a004c46a3f3a5ab8950bf0cdde9aab7f32b4fac1cbf"
+    },
+    "cursor-project/.fde/reference/teardown.py": {
+      "bytes": 1822,
+      "sha256": "a3340d353818f46541e9268a5bf04720b8a8eebc4a5e19b047cc4c8f61ab29bc"
+    },
+    "cursor-project/.fde/reference/test_concurrency.py": {
+      "bytes": 5263,
+      "sha256": "6924b1c0d96be10b3528349cfcb9cae033ee67a32b5a54ebcd5b74706ec6a996"
+    },
+    "cursor-project/.fde/reference/test_cost.py": {
+      "bytes": 3129,
+      "sha256": "d3aa347fbee47945977cb10a8c216b452e46a9a62d7974639797871c5d6aeb37"
+    },
+    "cursor-project/.fde/reference/test_credentials.py": {
+      "bytes": 3295,
+      "sha256": "9e8cadedf5527a63005daa2cf85ba4714d621698c343129b3ff660e1335d9414"
+    },
+    "cursor-project/.fde/reference/test_customer_data.py": {
+      "bytes": 2262,
+      "sha256": "b09289c3c51fe76ca33f23d3a7850762691b154072d2e9885c91eca94ecddd5b"
+    },
+    "cursor-project/.fde/reference/test_durable.py": {
+      "bytes": 7639,
+      "sha256": "77937693822ec0aa18ae0f8ab1469fc04a324114325d9ee1b9ebbf0352bb61ad"
+    },
+    "cursor-project/.fde/reference/test_engagement.py": {
+      "bytes": 2513,
+      "sha256": "328332cc52db2b6bc96c65be250a9f83329855c074b2d79e8f71bfc17907335b"
+    },
+    "cursor-project/.fde/reference/test_evaluation.py": {
+      "bytes": 4639,
+      "sha256": "b7917fc05fa9d1730b305c3501577a0abf253d40c91edde6fde4dcd8f0e982ca"
+    },
+    "cursor-project/.fde/reference/test_guardrails.py": {
+      "bytes": 2232,
+      "sha256": "d9b9acca01473df0bcda8f25f449b113a3102087c2bc21bee6395bcd19ee61eb"
+    },
+    "cursor-project/.fde/reference/test_iam_review.py": {
+      "bytes": 1419,
+      "sha256": "e212b17e65dfb3a05909f849a6d61b9e8b931d994626c3edf93335cac39d1864"
+    },
+    "cursor-project/.fde/reference/test_memory.py": {
+      "bytes": 2463,
+      "sha256": "8502ea915e0f9def01df56616a5cd7f8abc66a94c5c8f58ff481266b0b9b5118"
+    },
+    "cursor-project/.fde/reference/test_operations.py": {
+      "bytes": 3338,
+      "sha256": "264beef75ef67f481ce44a3a5617786e76b7fd53f58ba24ed2ba56c127d178b6"
+    },
+    "cursor-project/.fde/reference/test_policy.py": {
+      "bytes": 2384,
+      "sha256": "bc9868c13de725604afad7b10ef92506b0d492618418900b2a01cad7ed5512e6"
+    },
+    "cursor-project/.fde/reference/test_retrieval.py": {
+      "bytes": 2664,
+      "sha256": "2a90e5cae7ae740503e7f475f1af377e750d6680c276b17ab8305650efca9818"
+    },
+    "cursor-project/.fde/reference/test_runtime_app.py": {
+      "bytes": 2266,
+      "sha256": "d43fd87e1312f4ba1a735825f4386fa0df46022dfdb115798f89a974fd36439d"
+    },
+    "cursor-project/.fde/reference/test_signing.py": {
+      "bytes": 2069,
+      "sha256": "5b9a9dcb2db59a79ac903d605f558c0b20a452ddf2f9b50524afb326904753f2"
+    },
+    "cursor-project/.fde/reference/test_structured.py": {
+      "bytes": 3404,
+      "sha256": "f128a4f58fcc7354924bad2a975479342891d41a25bc9855c4056bb2ed1ef568"
+    },
+    "cursor-project/.fde/reference/test_teardown.py": {
+      "bytes": 1478,
+      "sha256": "36c5f7e39fc9be54533d5e0e9afe482352559783bf156aa5b1d104f351228748"
+    },
+    "cursor-project/.fde/reference/test_tool_loop.py": {
+      "bytes": 5317,
+      "sha256": "d78ab06ebe7b9581ecbad4f40e1b5aee474009cd1cddc40f3ad0296915ccf90a"
+    },
+    "cursor-project/.fde/reference/tool_loop.py": {
+      "bytes": 5851,
+      "sha256": "b26d027f6482eb41cae0479d49c29fc47b27012674024f59acfc8e59e1a8fb12"
+    },
+    "cursor-project/FDE-INSTALL.md": {
+      "bytes": 584,
+      "sha256": "9986c91b0daf972185cc21c533909eb113fc416dc8e16282ce6d225bb35da90a",
+      "words": 76
+    },
+    "cursor-project/fde-cursor.md": {
+      "bytes": 188010,
+      "sha256": "70c201bb2b8093e6ed17f4db904ebf66db7ea00be58831e3266f1554a40ba72b",
+      "words": 27673
+    },
+    "cursor.md": {
+      "bytes": 188010,
+      "sha256": "70c201bb2b8093e6ed17f4db904ebf66db7ea00be58831e3266f1554a40ba72b",
+      "words": 27673
+    },
+    "memory.md": {
+      "bytes": 187906,
+      "sha256": "c911b6a9527fbbd5ca187623b7281dab8b8d0d243050e924a6d50b472d2c91ac",
+      "words": 27651
+    },
+    "portable-project/.fde/00-operating-contract.md": {
+      "bytes": 6672,
+      "sha256": "c6483dedc6120221997c5614114fc8d902e77a1d777811dc14662a03c26d659a",
+      "words": 1030
+    },
+    "portable-project/.fde/10-engagement.md": {
+      "bytes": 7574,
+      "sha256": "be1d6b2dbd6ff80b9c179f09fa4dd34ad6dc17902e745bbffc2d698da7cb4f53",
+      "words": 1164
+    },
+    "portable-project/.fde/20-coding-agent.md": {
+      "bytes": 5759,
+      "sha256": "3c8ada1e1a50f0c65192eb6247dfa0c1d44ae23084ef3b786a22e62bcb4b874a",
+      "words": 964
+    },
+    "portable-project/.fde/30-agent-design-and-tools.md": {
+      "bytes": 8675,
+      "sha256": "1ff23c01bd39a777451f3fd83ea45dc16b50ec29140b2bae6b9e3a1847ad9bc8",
+      "words": 1417
+    },
+    "portable-project/.fde/35-models-tokens-and-cost.md": {
+      "bytes": 6334,
+      "sha256": "006bfb1ff823bd63064f8484f9151aa995eaadf95bfdbe505c5c6a8fd876b2a6",
+      "words": 1013
+    },
+    "portable-project/.fde/40-context-retrieval-and-memory.md": {
+      "bytes": 7731,
+      "sha256": "7e77dd5fd8941af38e60c0eb2db24ef475a6541727d405b9387975cfec4ca4ab",
+      "words": 1218
+    },
+    "portable-project/.fde/45-durable-state-and-review.md": {
+      "bytes": 6849,
+      "sha256": "c24e829df3eeb70d24270b83c8ab2a40f8538e747a553c946f081b1fe5cfc072",
+      "words": 1122
+    },
+    "portable-project/.fde/50-evaluation-and-observability.md": {
+      "bytes": 6395,
+      "sha256": "90b9204d3e5ab1fcef2c998cdd3840f0226a62020850fbba5ababd02258fe363",
+      "words": 1032
+    },
+    "portable-project/.fde/55-concurrency-and-multiple-agents.md": {
+      "bytes": 5482,
+      "sha256": "9eee47cce3d2c2a5ae2005accce653210017badc9fb9e9e08a569a484b4f9346",
+      "words": 905
+    },
+    "portable-project/.fde/60-security-and-guardrails.md": {
+      "bytes": 10865,
+      "sha256": "df5f8bfdbaa7053a2d650d8a18797cbfe11683728b580bf288d97b039797eadd",
+      "words": 1648
+    },
+    "portable-project/.fde/70-deployment-and-operations.md": {
+      "bytes": 10639,
+      "sha256": "a70c9853e582042fee2eb885a31f7381960df4e21cfa0b6f2e231581e87744df",
+      "words": 1555
+    },
+    "portable-project/.fde/75-customer-data.md": {
+      "bytes": 5039,
+      "sha256": "c1330678683b3af350880f1847c6a717df183a70b3c9f12330af5800391fe812",
+      "words": 816
+    },
+    "portable-project/.fde/80-templates-and-prompts.md": {
+      "bytes": 7295,
+      "sha256": "97d7a924e393fc69046a24aa606d30ac218181d1d4bd6825db441d26e026af8c",
+      "words": 1220
+    },
+    "portable-project/.fde/90-sources.md": {
+      "bytes": 65984,
+      "sha256": "3d8e47296a04efedba68c0a34578d8c5e841b692d2b83596ca38ab72b1ccc98c",
+      "words": 8204
+    },
+    "portable-project/.fde/LICENSE": {
+      "bytes": 1072,
+      "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
+    },
+    "portable-project/.fde/README.md": {
+      "bytes": 2810,
+      "sha256": "0a8d50113c6184c27117f84358b077224009546d05bcdaba6284ba2b628d72aa",
+      "words": 273
+    },
+    "portable-project/.fde/cases/FC01-covered-battery.md": {
+      "bytes": 1045,
+      "sha256": "727343b21c1c92bb3411a88d642d51cbb669501141b8c22f753cba30c18be579",
+      "words": 169
+    },
+    "portable-project/.fde/cases/FC02-above-the-limit.md": {
+      "bytes": 1089,
+      "sha256": "681530f5611a81bf86ab14563d22b79b56cc061e15839219b008e4f66e4e73f0",
+      "words": 173
+    },
+    "portable-project/.fde/cases/FC03-claim-gives-orders.md": {
+      "bytes": 1200,
+      "sha256": "e80c9648959bc9554d5e9a6a769d96649b9d3654ba9fd0f817e93c4e6c6d76c1",
+      "words": 189
+    },
+    "portable-project/.fde/cases/FC04-excluded-wear-part.md": {
+      "bytes": 1015,
+      "sha256": "b3b6ccfd91b59eb6e35ef4d1c61b84f0c1a33fddb9047d9f229a02f027b5fec2",
+      "words": 161
+    },
+    "portable-project/.fde/cases/FC05-loop-never-finishes.md": {
+      "bytes": 1120,
+      "sha256": "8bab30f81d51ff1ffeffc99601fac06bfd1728862272927381f18a6de831f641",
+      "words": 183
+    },
+    "portable-project/.fde/cases/FC06-decisions-fail-safe.md": {
+      "bytes": 1384,
+      "sha256": "fd19dbe775930c81f2d29e41d0843e3c4c799b713b56c02dbe3b7e75d3b5b10b",
+      "words": 240
+    },
+    "portable-project/.fde/cases/FC07-reading-the-bill.md": {
+      "bytes": 1487,
+      "sha256": "5f7a6f5320583378deab83f510cb381065326b85628ee74d1a56f620bb0b0140",
+      "words": 245
+    },
+    "portable-project/.fde/cases/FC08-comparing-models.md": {
+      "bytes": 1267,
+      "sha256": "d35c7fe6d3a50468291ffb290f967af3f0bc9c1ddc7fb7e3f7d5da655ff64a71",
+      "words": 234
+    },
+    "portable-project/.fde/cases/FC09-scoring-retrieval.md": {
+      "bytes": 1540,
+      "sha256": "e240ff24ff91ee2daaf76f413cd895743aa4b467d69f4d9d02c9622c71b2b6c4",
+      "words": 261
+    },
+    "portable-project/.fde/cases/FC10-answer-names-its-source.md": {
+      "bytes": 1246,
+      "sha256": "d298018195884f573225ad347919e89d99d02ced49b83bf2f6f70bf6d53dfd18",
+      "words": 232
+    },
+    "portable-project/.fde/cases/FC11-memory-without-the-slash.md": {
+      "bytes": 1456,
+      "sha256": "3fa0444014e72b8709965c275c3aec20142972a935dcfc8b14f606d129e283f1",
+      "words": 245
+    },
+    "portable-project/.fde/cases/FC12-pause-and-resume.md": {
+      "bytes": 1582,
+      "sha256": "3843efb8281ca098d4856e8cf8a73af111f445b7245ad2c06ffd361175983716",
+      "words": 268
+    },
+    "portable-project/.fde/cases/FC13-payment-retried.md": {
+      "bytes": 967,
+      "sha256": "a99a006662898d864d01d7832e24b1b037cd66b72b4cf2a16791a4c219beb020",
+      "words": 172
+    },
+    "portable-project/.fde/cases/FC14-two-runs-at-once.md": {
+      "bytes": 1277,
+      "sha256": "65c953401c0e120a27baf7fe3f3aedff1ba30b071a409e6249f4574e87782d56",
+      "words": 255
+    },
+    "portable-project/.fde/cases/FC15-success-criteria.md": {
+      "bytes": 1573,
+      "sha256": "9edbbc2ccdc02cfb4ed425a70b2e38a60589a9e82ec3d70b9bbd188352ec160e",
+      "words": 271
+    },
+    "portable-project/.fde/cases/FC16-checking-the-judge.md": {
+      "bytes": 888,
+      "sha256": "ff509c5eaf71fe0f86066de0224d3daa73fa160959f603e4b62b928e52df2f37",
+      "words": 155
+    },
+    "portable-project/.fde/cases/FC17-repeated-runs.md": {
+      "bytes": 1054,
+      "sha256": "547a73d07ebc35d46b7814dfabeea91b6119da68dd43436c382fe32cbce4bec7",
+      "words": 193
+    },
+    "portable-project/.fde/cases/FC18-capacity-sum.md": {
+      "bytes": 1159,
+      "sha256": "b247d54e8123adcd55a0675f0f3dacd84238b16bf0601ff2aeec2ce9e18604bf",
+      "words": 208
+    },
+    "portable-project/.fde/cases/FC19-batch-at-once.md": {
+      "bytes": 1420,
+      "sha256": "94811b1db7aeeebca4fe96dfa1093af018e1fac75ab8488178ce5e86cc7ddbe7",
+      "words": 260
+    },
+    "portable-project/.fde/cases/FC20-how-much-on-its-own.md": {
+      "bytes": 1520,
+      "sha256": "4eb2c7c83828edfa96b958362ae209cfebeb5b9ca29e4b2c7fd2a338d2316bc0",
+      "words": 296
+    },
+    "portable-project/.fde/cases/FC21-tollgate-with-gaps.md": {
+      "bytes": 1160,
+      "sha256": "6cd272432e7edb9ae4f55ced4522a4fe299829303dfd98346b6b386bf3010fe4",
+      "words": 205
+    },
+    "portable-project/.fde/cases/FC22-three-designs.md": {
+      "bytes": 1407,
+      "sha256": "34cbaacb76a80b42d912cc46278819f1b9aafa71906c05863bb2d030cb9b6b50",
+      "words": 224
+    },
+    "portable-project/.fde/cases/FC23-measuring-a-screen.md": {
+      "bytes": 1308,
+      "sha256": "66297d346f69206fde05aa7e097b92f79403a1f4538c361bcc85c5c2e137a4fa",
+      "words": 241
+    },
+    "portable-project/.fde/cases/FC24-limit-with-a-typo.md": {
+      "bytes": 1605,
+      "sha256": "825cb555474ab91ca99fafdc03107cb7458cb587e56d34a09faea329eb6eb40b",
+      "words": 276
+    },
+    "portable-project/.fde/cases/FC25-rotating-a-key.md": {
+      "bytes": 1113,
+      "sha256": "6aa9d601c1efdba68590025dbdf43f7fe3abcac01a8348ac157e8964554e556b",
+      "words": 196
+    },
+    "portable-project/.fde/cases/FC26-header-nobody-signed.md": {
+      "bytes": 1490,
+      "sha256": "3365903bb8885624f42d56ca7e95bd55413cf6dfa4223d14feba1bca6ae4a3cd",
+      "words": 233
+    },
+    "portable-project/.fde/cases/FC27-who-the-agent-acts-for.md": {
+      "bytes": 1507,
+      "sha256": "078eade6ea5c0263adb906ce935938feed463a8c0a4193b3cc688dbd8f36d44f",
+      "words": 257
+    },
+    "portable-project/.fde/cases/FC28-deploy-role.md": {
+      "bytes": 1466,
+      "sha256": "a2f5e98f3587133675607fb46ed1456729807c8ef1a326a62b490b830e1d8660",
+      "words": 237
+    },
+    "portable-project/.fde/cases/FC29-busy-idle-restored.md": {
+      "bytes": 1227,
+      "sha256": "447362c1740d6364e84c17a183aadd0f37f7b101cbb1ec692090c41d53025823",
+      "words": 214
+    },
+    "portable-project/.fde/cases/FC30-what-a-session-costs.md": {
+      "bytes": 1278,
+      "sha256": "0faa99d4795f0c854376acd3c0a3ad2b4f3a3c23ea5687101cfbbd8f8eed4545",
+      "words": 231
+    },
+    "portable-project/.fde/cases/FC31-heartbeat-stopped.md": {
+      "bytes": 1040,
+      "sha256": "364a1b5a78c7dc362194f46a364fae6db908106923172c43f831d52c8cec96c2",
+      "words": 186
+    },
+    "portable-project/.fde/cases/FC32-spent-budget-stop.md": {
+      "bytes": 1020,
+      "sha256": "61d3f67ad67c393c1f46051c0978adc805ed303d6e6e66246c3302afe9635898",
+      "words": 174
+    },
+    "portable-project/.fde/cases/FC33-tearing-down.md": {
+      "bytes": 1455,
+      "sha256": "97c941e831bd4e34c7a08383b7e138387c97cb2896e72d5c9a6c505473c45b6e",
+      "words": 225
+    },
+    "portable-project/.fde/cases/FC34-data-map-gaps.md": {
+      "bytes": 908,
+      "sha256": "6021e908b2a3c0e873ef2e235285401eff510e394a6773f5b0189c8becee8113",
+      "words": 150
+    },
+    "portable-project/.fde/cases/FC35-erasing-c1.md": {
+      "bytes": 991,
+      "sha256": "9f870f789ef2dc011584b994db6f8a9398901555e8630196ab9bdb265d774502",
+      "words": 185
+    },
+    "portable-project/.fde/cases/FC36-masking.md": {
+      "bytes": 1014,
+      "sha256": "b8cfd700ee8a690f1a7919b84c32933396663cff1d419dde6e41359a3bf71eed",
+      "words": 165
+    },
+    "portable-project/.fde/cases/README.md": {
+      "bytes": 4877,
+      "sha256": "bc301162b5ab531293aee835f1d8c8a1ec35433945b49ece525cb8a13a6a0a78",
+      "words": 777
+    },
+    "portable-project/.fde/cases/cases.json": {
+      "bytes": 63836,
+      "sha256": "002be97c059a31c5ebc9594c5346f81a8150c17f0a59e1a78c907591c7ab5ee2"
+    },
+    "portable-project/.fde/cases/warranty-context.json": {
+      "bytes": 3149,
+      "sha256": "03b25ffb77e1892dbcbff6cb496f113164fb583e263049d15917ba2ca5dea931"
+    },
+    "portable-project/.fde/cases/warranty-desk.json": {
+      "bytes": 1772,
+      "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
+    },
+    "portable-project/.fde/check_install.py": {
+      "bytes": 2317,
+      "sha256": "4da82d38560df7868b6c892bd64286f133d68b04531f787c0506235b5d1b2ee0"
+    },
+    "portable-project/.fde/recipes/FR01-frame-the-engagement.md": {
+      "bytes": 1884,
+      "sha256": "b5ec7023ec7d332a410e5a043d729487009697ddb25705b12594d161428fd506",
+      "words": 270
+    },
+    "portable-project/.fde/recipes/FR02-plan-and-build-with-a-coding-agent.md": {
+      "bytes": 1888,
+      "sha256": "693899276259ec3bca6ee92eba09b16f756e661e6a2c4c1c6f95f6716d4b4fed",
+      "words": 305
+    },
+    "portable-project/.fde/recipes/FR03-build-the-tool-loop-with-controls-in-code.md": {
+      "bytes": 1959,
+      "sha256": "668a70b26c2378c2885d2b677baec37d524e034e50eb9140236a0af6c7ab7f79",
+      "words": 297
+    },
+    "portable-project/.fde/recipes/FR04-make-structured-output-fail-safely.md": {
+      "bytes": 1639,
+      "sha256": "1920dbcb4b89047424644b38002a69e1d36c55716680ffa3ea767d1292c964e8",
+      "words": 256
+    },
+    "portable-project/.fde/recipes/FR05-evaluate-with-repeated-runs.md": {
+      "bytes": 1921,
+      "sha256": "7d8676a0ff27fd3bf8fd0e82b0448f658807aaf226f93d1067c5bc42ebb6906a",
+      "words": 286
+    },
+    "portable-project/.fde/recipes/FR06-add-retrieval-and-measure-it.md": {
+      "bytes": 1712,
+      "sha256": "904b030b83af7a63a6a0002bc32b63d5055b9cc07f472e30253013c829228d80",
+      "words": 252
+    },
+    "portable-project/.fde/recipes/FR07-add-memory-without-leaks.md": {
+      "bytes": 1511,
+      "sha256": "357d02497c3cfe8fd4db6b4acaa5de7872c2cd8497250b30278ce23c082eed92",
+      "words": 230
+    },
+    "portable-project/.fde/recipes/FR08-pause-for-a-person-and-resume-anywhere.md": {
+      "bytes": 1922,
+      "sha256": "7cdc97ac272268f0e5c7b66fcb9c296b559470f87c0fc3825e35ff91d771ec0f",
+      "words": 293
+    },
+    "portable-project/.fde/recipes/FR09-run-many-items-at-once-safely.md": {
+      "bytes": 2014,
+      "sha256": "68d99feef643c89c898f81ebed356dd0de07380144446bf372a460e10cc8dc8a",
+      "words": 291
+    },
+    "portable-project/.fde/recipes/FR10-screen-for-injection-and-measure-it.md": {
+      "bytes": 1697,
+      "sha256": "be1f30c11e5f1e31d080a631a725fa83690a5878040f8f92e46d1682694bf621",
+      "words": 256
+    },
+    "portable-project/.fde/recipes/FR11-put-limits-in-policy.md": {
+      "bytes": 1570,
+      "sha256": "1acb51e58d508472ad2fd61e9667a368c1a7bb3106fbbe2fa7275392881fa57e",
+      "words": 242
+    },
+    "portable-project/.fde/recipes/FR12-deploy-to-a-managed-runtime.md": {
+      "bytes": 1717,
+      "sha256": "f08dbaa8f341847d911480c62235f06a762af2f86c1c64b9bf58713dac4ccb08",
+      "words": 228
+    },
+    "portable-project/.fde/recipes/FR13-act-for-the-signed-in-user.md": {
+      "bytes": 1808,
+      "sha256": "0063ba3c0503781ce099687e7dafbc88fe2dd5b6fce2dca2646d5a882a09ba19",
+      "words": 248
+    },
+    "portable-project/.fde/recipes/FR14-go-live-ship-watch-stop.md": {
+      "bytes": 1803,
+      "sha256": "8d1b686219c39c8109e0c3cbcca4a022df2b67832236655cce06d4f6e2c3ac03",
+      "words": 235
+    },
+    "portable-project/.fde/recipes/FR15-erase-a-customer.md": {
+      "bytes": 1531,
+      "sha256": "860c1a7621531a25781e7afe62b70fdff59c60ef062ec2623ee09d38cd69be37",
+      "words": 226
+    },
+    "portable-project/.fde/recipes/FR16-tear-down-and-prove-it.md": {
+      "bytes": 1507,
+      "sha256": "02de11c677e136cfcb622a53492f7be2032f3524d8517243e2ff6e52432456cc",
+      "words": 216
+    },
+    "portable-project/.fde/reference/concurrency.py": {
+      "bytes": 3939,
+      "sha256": "eebaa0ff110f7ced812c0a5ea4929f7b14de250603c47b0eec45bfaac97d59d5"
+    },
+    "portable-project/.fde/reference/cost.py": {
+      "bytes": 3273,
+      "sha256": "326631c6ed171200abd955eed86a6aa72a605fed919fbc560ee79f71035cfcdd"
+    },
+    "portable-project/.fde/reference/credentials.py": {
+      "bytes": 3550,
+      "sha256": "c612bb76c102546813151b1a08578cbdd3f31da42c46a8ab6fd545b8ca380a00"
+    },
+    "portable-project/.fde/reference/customer_data.py": {
+      "bytes": 3208,
+      "sha256": "8f02b18b698a666541d19e0bb9b13ff5b8374343c8398b522041315caae402d4"
+    },
+    "portable-project/.fde/reference/durable.py": {
+      "bytes": 6860,
+      "sha256": "0f51373b4f939db46fb2ab68a324014ed3e3307a5f8ffe405d907cf93d37bb2a"
+    },
+    "portable-project/.fde/reference/engagement.py": {
+      "bytes": 1568,
+      "sha256": "e67a139f44b2c325caf3e69fbdfb0f03e5b7a0a45a44ff30ba48ed8086e1043a"
+    },
+    "portable-project/.fde/reference/evaluation.py": {
+      "bytes": 4551,
+      "sha256": "4a0e336740d072abc9557b4fc0611e38822704bc8723b0e4666da578b89a4541"
+    },
+    "portable-project/.fde/reference/guardrails.py": {
+      "bytes": 2158,
+      "sha256": "571cd9310628917e30c7184f250bf64e9db26d12985d97d05c2668db5ec5f8ba"
+    },
+    "portable-project/.fde/reference/iam_review.py": {
+      "bytes": 2908,
+      "sha256": "8218349d5e1dc4f37cffd0faec8479a7a200a7c6415da4e24d8e3f7e9b21bd27"
+    },
+    "portable-project/.fde/reference/memory.py": {
+      "bytes": 1584,
+      "sha256": "f98af2599562b1c1b16492b98e14359477f039bead2061e3970b1549a564f437"
+    },
+    "portable-project/.fde/reference/operations.py": {
+      "bytes": 3397,
+      "sha256": "2d2bce10b0e76a216ec39325888a3f9c58dd5da1ab5d4dc71fb45324785dd27a"
+    },
+    "portable-project/.fde/reference/policy.py": {
+      "bytes": 4314,
+      "sha256": "b2f72c9520b025ebbd3b41071745ac97e6d28c7e2aad483dd8b576530d000797"
+    },
+    "portable-project/.fde/reference/retrieval.py": {
+      "bytes": 3729,
+      "sha256": "f7fb8647ee5ca56bdb760b3598f6da92fa73f5f636213da248e390a3931e6492"
+    },
+    "portable-project/.fde/reference/runtime_app.py": {
+      "bytes": 1938,
+      "sha256": "d43ed66370481a9ba635112e101919646548375c18957bbbdf93e4e34ce1f303"
+    },
+    "portable-project/.fde/reference/signing.py": {
+      "bytes": 3493,
+      "sha256": "a5bac80d5e2880a8369e251d20460e7d1826c1cf1cb8cc024d279a6aaaa96d77"
+    },
+    "portable-project/.fde/reference/structured.py": {
+      "bytes": 3860,
+      "sha256": "e335a72f30ad8e3459c9bf0cae12b180a30c75b3c7eca778b508f80dafb09a53"
+    },
+    "portable-project/.fde/reference/stub_model.py": {
+      "bytes": 1561,
+      "sha256": "16e628ee9fcde5fe423c8a004c46a3f3a5ab8950bf0cdde9aab7f32b4fac1cbf"
+    },
+    "portable-project/.fde/reference/teardown.py": {
+      "bytes": 1822,
+      "sha256": "a3340d353818f46541e9268a5bf04720b8a8eebc4a5e19b047cc4c8f61ab29bc"
+    },
+    "portable-project/.fde/reference/test_concurrency.py": {
+      "bytes": 5263,
+      "sha256": "6924b1c0d96be10b3528349cfcb9cae033ee67a32b5a54ebcd5b74706ec6a996"
+    },
+    "portable-project/.fde/reference/test_cost.py": {
+      "bytes": 3129,
+      "sha256": "d3aa347fbee47945977cb10a8c216b452e46a9a62d7974639797871c5d6aeb37"
+    },
+    "portable-project/.fde/reference/test_credentials.py": {
+      "bytes": 3295,
+      "sha256": "9e8cadedf5527a63005daa2cf85ba4714d621698c343129b3ff660e1335d9414"
+    },
+    "portable-project/.fde/reference/test_customer_data.py": {
+      "bytes": 2262,
+      "sha256": "b09289c3c51fe76ca33f23d3a7850762691b154072d2e9885c91eca94ecddd5b"
+    },
+    "portable-project/.fde/reference/test_durable.py": {
+      "bytes": 7639,
+      "sha256": "77937693822ec0aa18ae0f8ab1469fc04a324114325d9ee1b9ebbf0352bb61ad"
+    },
+    "portable-project/.fde/reference/test_engagement.py": {
+      "bytes": 2513,
+      "sha256": "328332cc52db2b6bc96c65be250a9f83329855c074b2d79e8f71bfc17907335b"
+    },
+    "portable-project/.fde/reference/test_evaluation.py": {
+      "bytes": 4639,
+      "sha256": "b7917fc05fa9d1730b305c3501577a0abf253d40c91edde6fde4dcd8f0e982ca"
+    },
+    "portable-project/.fde/reference/test_guardrails.py": {
+      "bytes": 2232,
+      "sha256": "d9b9acca01473df0bcda8f25f449b113a3102087c2bc21bee6395bcd19ee61eb"
+    },
+    "portable-project/.fde/reference/test_iam_review.py": {
+      "bytes": 1419,
+      "sha256": "e212b17e65dfb3a05909f849a6d61b9e8b931d994626c3edf93335cac39d1864"
+    },
+    "portable-project/.fde/reference/test_memory.py": {
+      "bytes": 2463,
+      "sha256": "8502ea915e0f9def01df56616a5cd7f8abc66a94c5c8f58ff481266b0b9b5118"
+    },
+    "portable-project/.fde/reference/test_operations.py": {
+      "bytes": 3338,
+      "sha256": "264beef75ef67f481ce44a3a5617786e76b7fd53f58ba24ed2ba56c127d178b6"
+    },
+    "portable-project/.fde/reference/test_policy.py": {
+      "bytes": 2384,
+      "sha256": "bc9868c13de725604afad7b10ef92506b0d492618418900b2a01cad7ed5512e6"
+    },
+    "portable-project/.fde/reference/test_retrieval.py": {
+      "bytes": 2664,
+      "sha256": "2a90e5cae7ae740503e7f475f1af377e750d6680c276b17ab8305650efca9818"
+    },
+    "portable-project/.fde/reference/test_runtime_app.py": {
+      "bytes": 2266,
+      "sha256": "d43fd87e1312f4ba1a735825f4386fa0df46022dfdb115798f89a974fd36439d"
+    },
+    "portable-project/.fde/reference/test_signing.py": {
+      "bytes": 2069,
+      "sha256": "5b9a9dcb2db59a79ac903d605f558c0b20a452ddf2f9b50524afb326904753f2"
+    },
+    "portable-project/.fde/reference/test_structured.py": {
+      "bytes": 3404,
+      "sha256": "f128a4f58fcc7354924bad2a975479342891d41a25bc9855c4056bb2ed1ef568"
+    },
+    "portable-project/.fde/reference/test_teardown.py": {
+      "bytes": 1478,
+      "sha256": "36c5f7e39fc9be54533d5e0e9afe482352559783bf156aa5b1d104f351228748"
+    },
+    "portable-project/.fde/reference/test_tool_loop.py": {
+      "bytes": 5317,
+      "sha256": "d78ab06ebe7b9581ecbad4f40e1b5aee474009cd1cddc40f3ad0296915ccf90a"
+    },
+    "portable-project/.fde/reference/tool_loop.py": {
+      "bytes": 5851,
+      "sha256": "b26d027f6482eb41cae0479d49c29fc47b27012674024f59acfc8e59e1a8fb12"
+    },
+    "portable-project/AGENTS.fde.md": {
+      "bytes": 1265,
+      "sha256": "338dfc1282da2c5933b4c4d0724c758247981676d7a7dbcaf36d6c875ba207fe",
+      "words": 202
+    },
+    "portable-project/FDE-INSTALL.md": {
+      "bytes": 717,
+      "sha256": "42d82d558c67e4649c4c81cbb483fb480936fe600b5ea1e6040bd2cffd488886",
+      "words": 101
+    },
+    "portable-project/fde-memory.md": {
+      "bytes": 187906,
+      "sha256": "c911b6a9527fbbd5ca187623b7281dab8b8d0d243050e924a6d50b472d2c91ac",
+      "words": 27651
+    },
+    "portable-project/optional-adapters/.clinerules/40-fde.md": {
+      "bytes": 1228,
+      "sha256": "624a5e5ade8bb17f22d728fc8810661bc29595707aaa45c6dd7e15805c5d8717",
+      "words": 194
+    },
+    "portable-project/optional-adapters/FDE-ADAPTERS.md": {
+      "bytes": 199,
+      "sha256": "2bc7340e87a556072e59d0e08f5361b7cef77f1edb5ad020101c4fb47dfee270",
+      "words": 29
+    },
+    "reference/concurrency.py": {
+      "bytes": 3939,
+      "sha256": "eebaa0ff110f7ced812c0a5ea4929f7b14de250603c47b0eec45bfaac97d59d5"
+    },
+    "reference/cost.py": {
+      "bytes": 3273,
+      "sha256": "326631c6ed171200abd955eed86a6aa72a605fed919fbc560ee79f71035cfcdd"
+    },
+    "reference/credentials.py": {
+      "bytes": 3550,
+      "sha256": "c612bb76c102546813151b1a08578cbdd3f31da42c46a8ab6fd545b8ca380a00"
+    },
+    "reference/customer_data.py": {
+      "bytes": 3208,
+      "sha256": "8f02b18b698a666541d19e0bb9b13ff5b8374343c8398b522041315caae402d4"
+    },
+    "reference/durable.py": {
+      "bytes": 6860,
+      "sha256": "0f51373b4f939db46fb2ab68a324014ed3e3307a5f8ffe405d907cf93d37bb2a"
+    },
+    "reference/engagement.py": {
+      "bytes": 1568,
+      "sha256": "e67a139f44b2c325caf3e69fbdfb0f03e5b7a0a45a44ff30ba48ed8086e1043a"
+    },
+    "reference/evaluation.py": {
+      "bytes": 4551,
+      "sha256": "4a0e336740d072abc9557b4fc0611e38822704bc8723b0e4666da578b89a4541"
+    },
+    "reference/guardrails.py": {
+      "bytes": 2158,
+      "sha256": "571cd9310628917e30c7184f250bf64e9db26d12985d97d05c2668db5ec5f8ba"
+    },
+    "reference/iam_review.py": {
+      "bytes": 2908,
+      "sha256": "8218349d5e1dc4f37cffd0faec8479a7a200a7c6415da4e24d8e3f7e9b21bd27"
+    },
+    "reference/memory.py": {
+      "bytes": 1584,
+      "sha256": "f98af2599562b1c1b16492b98e14359477f039bead2061e3970b1549a564f437"
+    },
+    "reference/operations.py": {
+      "bytes": 3397,
+      "sha256": "2d2bce10b0e76a216ec39325888a3f9c58dd5da1ab5d4dc71fb45324785dd27a"
+    },
+    "reference/policy.py": {
+      "bytes": 4314,
+      "sha256": "b2f72c9520b025ebbd3b41071745ac97e6d28c7e2aad483dd8b576530d000797"
+    },
+    "reference/retrieval.py": {
+      "bytes": 3729,
+      "sha256": "f7fb8647ee5ca56bdb760b3598f6da92fa73f5f636213da248e390a3931e6492"
+    },
+    "reference/runtime_app.py": {
+      "bytes": 1938,
+      "sha256": "d43ed66370481a9ba635112e101919646548375c18957bbbdf93e4e34ce1f303"
+    },
+    "reference/signing.py": {
+      "bytes": 3493,
+      "sha256": "a5bac80d5e2880a8369e251d20460e7d1826c1cf1cb8cc024d279a6aaaa96d77"
+    },
+    "reference/structured.py": {
+      "bytes": 3860,
+      "sha256": "e335a72f30ad8e3459c9bf0cae12b180a30c75b3c7eca778b508f80dafb09a53"
+    },
+    "reference/stub_model.py": {
+      "bytes": 1561,
+      "sha256": "16e628ee9fcde5fe423c8a004c46a3f3a5ab8950bf0cdde9aab7f32b4fac1cbf"
+    },
+    "reference/teardown.py": {
+      "bytes": 1822,
+      "sha256": "a3340d353818f46541e9268a5bf04720b8a8eebc4a5e19b047cc4c8f61ab29bc"
+    },
+    "reference/test_concurrency.py": {
+      "bytes": 5263,
+      "sha256": "6924b1c0d96be10b3528349cfcb9cae033ee67a32b5a54ebcd5b74706ec6a996"
+    },
+    "reference/test_cost.py": {
+      "bytes": 3129,
+      "sha256": "d3aa347fbee47945977cb10a8c216b452e46a9a62d7974639797871c5d6aeb37"
+    },
+    "reference/test_credentials.py": {
+      "bytes": 3295,
+      "sha256": "9e8cadedf5527a63005daa2cf85ba4714d621698c343129b3ff660e1335d9414"
+    },
+    "reference/test_customer_data.py": {
+      "bytes": 2262,
+      "sha256": "b09289c3c51fe76ca33f23d3a7850762691b154072d2e9885c91eca94ecddd5b"
+    },
+    "reference/test_durable.py": {
+      "bytes": 7639,
+      "sha256": "77937693822ec0aa18ae0f8ab1469fc04a324114325d9ee1b9ebbf0352bb61ad"
+    },
+    "reference/test_engagement.py": {
+      "bytes": 2513,
+      "sha256": "328332cc52db2b6bc96c65be250a9f83329855c074b2d79e8f71bfc17907335b"
+    },
+    "reference/test_evaluation.py": {
+      "bytes": 4639,
+      "sha256": "b7917fc05fa9d1730b305c3501577a0abf253d40c91edde6fde4dcd8f0e982ca"
+    },
+    "reference/test_guardrails.py": {
+      "bytes": 2232,
+      "sha256": "d9b9acca01473df0bcda8f25f449b113a3102087c2bc21bee6395bcd19ee61eb"
+    },
+    "reference/test_iam_review.py": {
+      "bytes": 1419,
+      "sha256": "e212b17e65dfb3a05909f849a6d61b9e8b931d994626c3edf93335cac39d1864"
+    },
+    "reference/test_memory.py": {
+      "bytes": 2463,
+      "sha256": "8502ea915e0f9def01df56616a5cd7f8abc66a94c5c8f58ff481266b0b9b5118"
+    },
+    "reference/test_operations.py": {
+      "bytes": 3338,
+      "sha256": "264beef75ef67f481ce44a3a5617786e76b7fd53f58ba24ed2ba56c127d178b6"
+    },
+    "reference/test_policy.py": {
+      "bytes": 2384,
+      "sha256": "bc9868c13de725604afad7b10ef92506b0d492618418900b2a01cad7ed5512e6"
+    },
+    "reference/test_retrieval.py": {
+      "bytes": 2664,
+      "sha256": "2a90e5cae7ae740503e7f475f1af377e750d6680c276b17ab8305650efca9818"
+    },
+    "reference/test_runtime_app.py": {
+      "bytes": 2266,
+      "sha256": "d43fd87e1312f4ba1a735825f4386fa0df46022dfdb115798f89a974fd36439d"
+    },
+    "reference/test_signing.py": {
+      "bytes": 2069,
+      "sha256": "5b9a9dcb2db59a79ac903d605f558c0b20a452ddf2f9b50524afb326904753f2"
+    },
+    "reference/test_structured.py": {
+      "bytes": 3404,
+      "sha256": "f128a4f58fcc7354924bad2a975479342891d41a25bc9855c4056bb2ed1ef568"
+    },
+    "reference/test_teardown.py": {
+      "bytes": 1478,
+      "sha256": "36c5f7e39fc9be54533d5e0e9afe482352559783bf156aa5b1d104f351228748"
+    },
+    "reference/test_tool_loop.py": {
+      "bytes": 5317,
+      "sha256": "d78ab06ebe7b9581ecbad4f40e1b5aee474009cd1cddc40f3ad0296915ccf90a"
+    },
+    "reference/tool_loop.py": {
+      "bytes": 5851,
+      "sha256": "b26d027f6482eb41cae0479d49c29fc47b27012674024f59acfc8e59e1a8fb12"
+    },
+    "tools/README.md": {
+      "bytes": 2663,
+      "sha256": "3ad6a03e06c895b2b511504e0b589d51abb4b76a25af2f1e9ea95b6c13f38443",
+      "words": 390
+    },
+    "tools/build_pack.py": {
+      "bytes": 16097,
+      "sha256": "3192340e0260cddf0fa22fd6265e463ad74cb48c6737f8d1c133b5e3845f559f"
+    },
+    "tools/check_install.py": {
+      "bytes": 2317,
+      "sha256": "4da82d38560df7868b6c892bd64286f133d68b04531f787c0506235b5d1b2ee0"
+    },
+    "tools/mutate_reference.py": {
+      "bytes": 13636,
+      "sha256": "cc5259d756d8fc3ed8784b40be20badb1e24a212f4431e93f19ee8a35d8ac062"
+    },
+    "tools/scan_publication.py": {
+      "bytes": 1782,
+      "sha256": "72f9ab7c6c652a2ca1446d37dc7d6e096c816420bb41e33626550842db330304"
+    },
+    "tools/test_validate_pack.py": {
+      "bytes": 12961,
+      "sha256": "8483774ba7ded33ee79d12c4dab8dee67b92c61b2abfa9169fdeb44ff4ffdb24"
+    },
+    "tools/validate_pack.py": {
+      "bytes": 6086,
+      "sha256": "4bbdea754fda68da0822596037a5bf91ce1ae013617aba6c643e95fccd2f9da0"
+    }
+  },
+  "version": "0.3.0"
+}
