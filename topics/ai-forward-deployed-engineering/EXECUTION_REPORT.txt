@@ -66,8 +66,22 @@ Host checks, after the merge of PR #11 (main at 9618de6), in scratch projects un
     Control (.fde/ without the AGENTS.md section), the activation check, one session: the log shows the agent listing
       the project and its .fde/ folder before reading .fde/README.md. Its answer also started from discovery.
   OpenCode's log doesn't record which instruction files it loaded: this is indirect evidence, from one model.
-  Cursor: not run. The Cursor command-line agent (2026.01.23) on this machine was not signed in ("Authentication
-  required"), and no IDE session was recorded.
+  Cursor command-line agent 2026.01.23, model selection Auto (the chosen model isn't reported), each prompt in a fresh
+  session in read-only ask mode, run with: cursor-agent --print --output-format stream-json --mode ask --workspace <project>
+    Cursor install (.fde/ and .cursor/rules/40-fde-method.mdc), the quickstart's file check: passed. Read the same four
+      files and named version 0.3.0, the thirteen modules, module 30 and FR03.
+    Same install, the activation check, one session: the agent's first action was to read .fde/README.md. Its answer
+      started from discovery.
+    Control (.fde/ without the rule), the activation check, one session: the agent listed the project and read its
+      README before .fde/. Its answer also started from discovery.
+  Cursor's local session store holds the context sent to the model. In both sessions with the rule installed, it contains
+  the rule's text as an always-applied workspace rule from .cursor/rules/40-fde-method.mdc; in the control, it doesn't.
+  This is the host's own record that the rule loaded, from single sessions.
 
-Not run: a Cursor, Cline or other agent session beyond the OpenCode checks above; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
-Network: none during the pack's checks; the OpenCode host checks called OpenCode's hosted model. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.
+After the host checks were recorded, on branch register-ai-forward-deployed-engineering, the pack's commands above were
+rerun on each interpreter, with the same results: the build (twice), --check, validate, the corruption and install checks,
+the 120 reference tests (in a copy and inside both trees), check_install on both routes, the 103 mutants, check_docs and the
+publication scan. The reviewers' tests were not rerun; reference/ and cases/ have not changed since they last ran.
+
+Not run: a session in Cursor's editor, Cline or another host; any check on Windows; any evaluation with a real model; LangGraph, PostgreSQL, Langfuse, an MCP server, Cedar, an AWS SDK or any AWS service, which the modules describe from their documentation only. The GDPR text (FD24a) was read on legislation.gov.uk and is still to be checked against EUR-Lex by hand.
+Network: none during the pack's checks; the host checks called OpenCode's and Cursor's hosted models. The 28 documentation records re-read so far were read from copies fetched on 2026-10-20; OpenAI's prepaid billing article (H-OpenAI) and the ICO's page on data protection officers (FD24b) were read on 2026-10-21. See SOURCE_REGISTER.md.
