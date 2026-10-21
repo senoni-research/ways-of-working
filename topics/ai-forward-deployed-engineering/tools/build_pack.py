@@ -225,7 +225,8 @@ def render(root: Path) -> dict[str, bytes]:
             out[f'{prefix}{NS}/cases/{p.name}'] = p.read_bytes()
         for p in sorted((root / 'reference').glob('*.py')):
             out[f'{prefix}{NS}/reference/{p.name}'] = p.read_bytes()
-        put(f'{prefix}{NS}/INVENTORY.txt', '\n'.join(sorted(k[len(f'{prefix}{NS}/'):] for k in out if k.startswith(f'{prefix}{NS}/'))))
+        files = sorted(k[len(f'{prefix}{NS}/'):] for k in out if k.startswith(f'{prefix}{NS}/'))
+        put(f'{prefix}{NS}/INVENTORY.txt', '\n'.join(files + [f'# end of inventory: {len(files)} files']))
         steps = (f'copy `{NS}/` and `.cursor/rules/{RULE}` into the project'
                  if host == 'cursor' else
                  f'copy `{NS}/` into the project and append the whole of [AGENTS.fde.md](AGENTS.fde.md) to the existing '

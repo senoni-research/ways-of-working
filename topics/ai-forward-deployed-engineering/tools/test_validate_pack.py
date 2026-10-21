@@ -343,6 +343,15 @@ def run_install_checks(root: Path) -> int:
         for rel in ('.fde/README.md', '.fde/90-sources.md', '.fde/LICENSE', '.fde/cases/README.md', '.cursor/rules/40-fde-method.mdc'):
             write(sentinels / rel, '')
         expect(sentinels, 'missing .fde/INVENTORY.txt')
+        empty = Path(td) / 'inventory-empty'
+        shutil.copytree(root / 'cursor-project', empty)
+        write(empty / '.fde/INVENTORY.txt', '')
+        expect(empty, '.fde/INVENTORY.txt is empty or cut short')
+        cut = Path(td) / 'inventory-cut-short'
+        shutil.copytree(root / 'cursor-project', cut)
+        lines = (cut / '.fde/INVENTORY.txt').read_text(encoding='utf-8').splitlines()
+        write(cut / '.fde/INVENTORY.txt', '\n'.join(lines[:len(lines) // 2]))
+        expect(cut, '.fde/INVENTORY.txt is empty or cut short')
     return cases
 
 

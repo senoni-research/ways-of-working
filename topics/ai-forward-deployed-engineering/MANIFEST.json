@@ -23,18 +23,18 @@
       "words": 936
     },
     "CHANGELOG.md": {
-      "bytes": 9157,
-      "sha256": "81ac1a3dcdfa66a82a950d392412abe0cba9e54da32968c13d115a92d29455f0",
-      "words": 1423
+      "bytes": 9508,
+      "sha256": "cbbd8a700ba8e7df81671904de66c3199db90676ee4a158159ca62f3f2927bc0",
+      "words": 1482
     },
     "LICENSE": {
       "bytes": 1072,
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "QUICKSTART.md": {
-      "bytes": 4491,
-      "sha256": "66fe1adb367b2fdf52183e760341daa19f816b9f4450540ca7148bf34ba16a8b",
-      "words": 721
+      "bytes": 4505,
+      "sha256": "09e3d6a6d046f34a2d5d03881e9ec98cc4b482dfec19756b382dc29f8f950334",
+      "words": 724
     },
     "README.md": {
       "bytes": 7547,
@@ -56,9 +56,9 @@
       "words": 8307
     },
     "VALIDATION.md": {
-      "bytes": 6446,
-      "sha256": "e72aeae21cdfcfcbd3b3e19fe31cf94c78bee9e8e39177252ef2081a570d1c84",
-      "words": 1070
+      "bytes": 6848,
+      "sha256": "a75f4d1e60964bc9872ebfd69c4235f0a668c450b8fb7544db08bfb5a345446d",
+      "words": 1140
     },
     "VERSION": {
       "bytes": 6,
@@ -271,9 +271,9 @@
       "sha256": "b093b2330594ff0160a66971f4461ab2a9e5b6c91255af84034e29139ffd5d2b"
     },
     "canonical/modules/00-operating-contract.md": {
-      "bytes": 6175,
-      "sha256": "459a5f5719881412d5c8e16209c8b40c5b6a7490e2400ae1dad6fc97b5da3920",
-      "words": 1030
+      "bytes": 6316,
+      "sha256": "eb0fb2c5ffef33e29b42cc086894fa1ca098718926864583eeecc51ea142ebef",
+      "words": 1045
     },
     "canonical/modules/10-engagement.md": {
       "bytes": 7322,
@@ -341,14 +341,14 @@
       "words": 936
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 9157,
-      "sha256": "81ac1a3dcdfa66a82a950d392412abe0cba9e54da32968c13d115a92d29455f0",
-      "words": 1423
+      "bytes": 9508,
+      "sha256": "cbbd8a700ba8e7df81671904de66c3199db90676ee4a158159ca62f3f2927bc0",
+      "words": 1482
     },
     "canonical/pages/QUICKSTART.md": {
-      "bytes": 4491,
-      "sha256": "66fe1adb367b2fdf52183e760341daa19f816b9f4450540ca7148bf34ba16a8b",
-      "words": 721
+      "bytes": 4505,
+      "sha256": "09e3d6a6d046f34a2d5d03881e9ec98cc4b482dfec19756b382dc29f8f950334",
+      "words": 724
     },
     "canonical/pages/README.md": {
       "bytes": 7547,
@@ -361,9 +361,9 @@
       "words": 589
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 6446,
-      "sha256": "e72aeae21cdfcfcbd3b3e19fe31cf94c78bee9e8e39177252ef2081a570d1c84",
-      "words": 1070
+      "bytes": 6848,
+      "sha256": "a75f4d1e60964bc9872ebfd69c4235f0a668c450b8fb7544db08bfb5a345446d",
+      "words": 1140
     },
     "canonical/prefaces/cursor.md": {
       "bytes": 949,
@@ -662,9 +662,9 @@
       "words": 209
     },
     "cursor-project/.fde/00-operating-contract.md": {
-      "bytes": 6672,
-      "sha256": "c6483dedc6120221997c5614114fc8d902e77a1d777811dc14662a03c26d659a",
-      "words": 1030
+      "bytes": 6842,
+      "sha256": "4dacc7b326be27b3235a6beea23399834de7cceb7108781abca46d1bf9d5c3ca",
+      "words": 1045
     },
     "cursor-project/.fde/10-engagement.md": {
       "bytes": 7782,
@@ -732,8 +732,8 @@
       "words": 8307
     },
     "cursor-project/.fde/INVENTORY.txt": {
-      "bytes": 3286,
-      "sha256": "181e8fe0e024e2ff9b5be50fcc981350e0e9f92f46d1b8f104ca6b7d12f2f298"
+      "bytes": 3316,
+      "sha256": "6e8d72b284f0529251c83542c66d6d22c8702325c76edcbaa9ccad3be1d02d0c"
     },
     "cursor-project/.fde/LICENSE": {
       "bytes": 1072,
@@ -942,8 +942,8 @@
       "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
     },
     "cursor-project/.fde/check_install.py": {
-      "bytes": 2932,
-      "sha256": "1bff239667f9ef1f962ea7776423331ff4ef9951e18dc6563c0697eb343b2637"
+      "bytes": 3427,
+      "sha256": "0806c4dd78df4b960065298ed9482da84f4feb82b420417bbdf2a1a9b891c14a"
     },
     "cursor-project/.fde/recipes/FR01-frame-the-engagement.md": {
       "bytes": 1884,
@@ -1179,24 +1179,24 @@
       "words": 76
     },
     "cursor-project/fde-cursor.md": {
-      "bytes": 195377,
-      "sha256": "8d5b000704b6cdb75961cd5ef4fac377ddd60401f8df15925b6d90205efa3027",
-      "words": 28853
+      "bytes": 195549,
+      "sha256": "0920a9ee3742f4f31f7fe9a8153414e7e8021415b62e647a902aba3de257fc7e",
+      "words": 28868
     },
     "cursor.md": {
-      "bytes": 195377,
-      "sha256": "8d5b000704b6cdb75961cd5ef4fac377ddd60401f8df15925b6d90205efa3027",
-      "words": 28853
+      "bytes": 195549,
+      "sha256": "0920a9ee3742f4f31f7fe9a8153414e7e8021415b62e647a902aba3de257fc7e",
+      "words": 28868
     },
     "memory.md": {
-      "bytes": 195273,
-      "sha256": "281b282deba4ae16555284fe908db03b7ac66c33b78d501c0aa8a162685afe2f",
-      "words": 28831
+      "bytes": 195445,
+      "sha256": "0b5826625881a9ce95c2d0d18914a2e591aa64db7df8120ef97b4ee345d8a635",
+      "words": 28846
     },
     "portable-project/.fde/00-operating-contract.md": {
-      "bytes": 6672,
-      "sha256": "c6483dedc6120221997c5614114fc8d902e77a1d777811dc14662a03c26d659a",
-      "words": 1030
+      "bytes": 6842,
+      "sha256": "4dacc7b326be27b3235a6beea23399834de7cceb7108781abca46d1bf9d5c3ca",
+      "words": 1045
     },
     "portable-project/.fde/10-engagement.md": {
       "bytes": 7782,
@@ -1264,8 +1264,8 @@
       "words": 8307
     },
     "portable-project/.fde/INVENTORY.txt": {
-      "bytes": 3286,
-      "sha256": "181e8fe0e024e2ff9b5be50fcc981350e0e9f92f46d1b8f104ca6b7d12f2f298"
+      "bytes": 3316,
+      "sha256": "6e8d72b284f0529251c83542c66d6d22c8702325c76edcbaa9ccad3be1d02d0c"
     },
     "portable-project/.fde/LICENSE": {
       "bytes": 1072,
@@ -1474,8 +1474,8 @@
       "sha256": "b6196f8213e946c4e9f63b975e06e998ff6db20b14aa91870270df9c4ad6d709"
     },
     "portable-project/.fde/check_install.py": {
-      "bytes": 2932,
-      "sha256": "1bff239667f9ef1f962ea7776423331ff4ef9951e18dc6563c0697eb343b2637"
+      "bytes": 3427,
+      "sha256": "0806c4dd78df4b960065298ed9482da84f4feb82b420417bbdf2a1a9b891c14a"
     },
     "portable-project/.fde/recipes/FR01-frame-the-engagement.md": {
       "bytes": 1884,
@@ -1716,9 +1716,9 @@
       "words": 101
     },
     "portable-project/fde-memory.md": {
-      "bytes": 195273,
-      "sha256": "281b282deba4ae16555284fe908db03b7ac66c33b78d501c0aa8a162685afe2f",
-      "words": 28831
+      "bytes": 195445,
+      "sha256": "0b5826625881a9ce95c2d0d18914a2e591aa64db7df8120ef97b4ee345d8a635",
+      "words": 28846
     },
     "portable-project/optional-adapters/.clinerules/40-fde.md": {
       "bytes": 1228,
@@ -1884,12 +1884,12 @@
       "words": 390
     },
     "tools/build_pack.py": {
-      "bytes": 16233,
-      "sha256": "6b0ed139338689b4346ff2187c171561a86ee7715d627344f212825cf35146d2"
+      "bytes": 16301,
+      "sha256": "e32acb66aea5228a8fc725c78ddc64fb02216a71c031f5bdead2daa98a731c4d"
     },
     "tools/check_install.py": {
-      "bytes": 2932,
-      "sha256": "1bff239667f9ef1f962ea7776423331ff4ef9951e18dc6563c0697eb343b2637"
+      "bytes": 3427,
+      "sha256": "0806c4dd78df4b960065298ed9482da84f4feb82b420417bbdf2a1a9b891c14a"
     },
     "tools/mutate_reference.py": {
       "bytes": 17083,
@@ -1900,8 +1900,8 @@
       "sha256": "72f9ab7c6c652a2ca1446d37dc7d6e096c816420bb41e33626550842db330304"
     },
     "tools/test_validate_pack.py": {
-      "bytes": 13915,
-      "sha256": "33f2337cbae45690612a1cad08a60b3145562a1f69e124f30fe519d6ac1e14bb"
+      "bytes": 14459,
+      "sha256": "839326dd52695ff1ef3559ebb7b21da5cb83fc34c6c0191f5d8b6b9d5b65d57b"
     },
     "tools/validate_pack.py": {
       "bytes": 6086,

@@ -10,7 +10,7 @@ Then, from the project root:
 python3 .fde/check_install.py
 ```
 
-It checks that every file listed in `.fde/INVENTORY.txt` is present and not empty, that exactly one entry route is installed, and that the route names the pack's files and they exist. It does not prove that the host loads the rule.
+It checks that `.fde/INVENTORY.txt` is whole, that every file it lists is present and not empty, that exactly one entry route is installed, and that the route names the pack's files and they exist. It does not prove that the host loads the rule.
 
 The always-present rule is deliberately small. It sends relevant tasks to `.fde/README.md`, which lists the modules, and leaves unrelated work alone. A file the rule names is not loaded until the agent reads it.
 

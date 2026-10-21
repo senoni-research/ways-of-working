@@ -1,8 +1,9 @@
 """Read-only check that a project has every AI Forward Deployed Engineering file and exactly one entry route.
 
 Run from the project root: python3 .fde/check_install.py [project_root]
-Standard library only. Every file listed in .fde/INVENTORY.txt must be present and not empty, and the entry route must
-name the pack's files. It writes nothing and does not prove that a host actually loads the rules.
+Standard library only. .fde/INVENTORY.txt must end with its own file count, every file it lists must be present and not
+empty, and the entry route must name the pack's files. It writes nothing and does not prove that a host actually loads
+the rules.
 """
 from __future__ import annotations
 
@@ -14,14 +15,25 @@ sys.dont_write_bytecode = True
 
 NS = '.fde'
 INVENTORY = 'INVENTORY.txt'
+END = re.compile(r'# end of inventory: (\d+) files')
 ROUTES = (('Cursor rule', '.cursor/rules/40-fde-method.mdc'), ('Cline rule', '.clinerules/40-fde.md'))
 SECTION = ('<!-- BEGIN FDE -->', '<!-- END FDE -->')
 
 
+def inventory(project: Path) -> tuple[list[str], list[str]]:
+    path = project / NS / INVENTORY
+    if not path.is_file():
+        return [], [f'missing {NS}/{INVENTORY}; copy the whole {NS}/ directory']
+    lines = path.read_text(encoding='utf-8').splitlines()
+    end = END.fullmatch(lines[-1]) if lines else None
+    if not end or int(end[1]) != len(lines) - 1 or len(lines) < 2:
+        return [], [f'{NS}/{INVENTORY} is empty or cut short; copy the whole {NS}/ directory again']
+    return lines[:-1], []
+
+
 def check(project: Path) -> tuple[list[str], list[str]]:
-    inventory = project / NS / INVENTORY
-    listed = inventory.read_text(encoding='utf-8').splitlines() if inventory.is_file() else [INVENTORY]
-    errors = [f'missing {NS}/{rel}; copy the whole {NS}/ directory' for rel in listed if not (project / NS / rel).is_file()]
+    listed, errors = inventory(project)
+    errors += [f'missing {NS}/{rel}; copy the whole {NS}/ directory' for rel in listed if not (project / NS / rel).is_file()]
     errors += [f'empty {NS}/{rel}; copy the whole {NS}/ directory again' for rel in listed
                if (project / NS / rel).is_file() and (project / NS / rel).stat().st_size == 0]
     agents = project / 'AGENTS.md'

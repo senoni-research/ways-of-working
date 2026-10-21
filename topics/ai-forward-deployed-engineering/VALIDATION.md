@@ -19,7 +19,7 @@ The builder and validator are standard-library Python. The validator renders eve
 - every local link and anchor;
 - the exact file set of both install trees;
 - that each file the loaders name is installed, and that the loader's activation setting and section markers are present;
-- that each install tree's `.fde/INVENTORY.txt` lists exactly the files under `.fde/`, so `.fde/check_install.py` can require each to be present and not empty in a project;
+- that each install tree's `.fde/INVENTORY.txt` lists exactly the files under `.fde/` and ends with their count, so `.fde/check_install.py` can refuse an inventory that is empty or cut short and require each listed file to be present and not empty in a project;
 - that the pack isn't installed at the library root, and that none of its install paths matches a file in another pack's install tree in this repository;
 - the full release manifest: SHA-256, bytes and Markdown word counts.
 
@@ -43,7 +43,7 @@ A source record states what was inspected. Passing the checks shows the record i
 
 ## Independent review
 
-Before publication, an independent reviewer read the draft and ran 27 boundary tests of their own against the reference code. The corrections are listed in the changelog; each has a unit test and a mutant here, and the reviewer's tests pass against this build, with the erasure calls given the new declared match routes. The review didn't run an agent session, Windows, a real model or a cloud service, and its tests are not part of the pack. Two checks remain open: Articles 5 and 17 of the GDPR against EUR-Lex, and whether each host loads the rule, which the quickstart's second check shows in a fresh session.
+Before publication, an independent reviewer read the draft and ran 27 boundary tests of their own against the reference code. The corrections are listed in the changelog; each code correction has a unit test and a mutant, or an install check, here. A focused re-review of the corrected draft found the 27 tests passing, with only the three erasure calls adapted to the declared match routes, and eight more of its own tests passing; it asked for two last corrections, to the operating contract's claim about a fooled model and to the install check's handling of an empty inventory, which this build makes. The reviews didn't rerun the pack's own suites, an agent session, Windows, a real model or a cloud service, and their tests are not part of the pack. Two checks remain open: Articles 5 and 17 of the GDPR against EUR-Lex, and whether each host loads the rule, which the quickstart's second check shows in a fresh session.
 
 ## Publication scan
 

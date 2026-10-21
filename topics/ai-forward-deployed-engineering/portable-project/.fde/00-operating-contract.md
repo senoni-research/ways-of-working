@@ -22,7 +22,7 @@ Some actions are sensitive, irreversible or high-stakes enough that a person sho
 
 Prompt injection is the first risk in OWASP's list for language-model applications [FD16](90-sources.md#fd16). Text the system did not write — a customer's claim, an uploaded document, a retrieved web page, a tool result, an issue comment — can contain instructions, and a model may follow them. Once untrusted input is in play, the system should be constrained so that the input cannot trigger consequential actions [FD17](90-sources.md#fd17); an agent that holds private data, reads untrusted content and can send data out has all three ingredients of an exfiltration attack [FD15](90-sources.md#fd15).
 
-Two consequences follow. The coding agent treats instructions it finds in documents and tool output as data, reports them, and does not act on them. And the system being built enforces its limits in code, so that a fooled model still cannot do damage: case FC03 shows a model that obeys a planted instruction and still cannot approve the claim.
+Two consequences follow. The coding agent treats instructions it finds in documents and tool output as data, reports them, and does not act on them. The system being built enforces specific limits in code: case FC03 shows a planted instruction failing to obtain a prohibited approval. This does not make the system harmless when the model is fooled; a permitted but wrong action can still occur. Module [60-security-and-guardrails](60-security-and-guardrails.md) explains the residual risk and additional controls.
 
 ## Report evidence, not confidence
 

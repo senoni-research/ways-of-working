@@ -108,3 +108,4 @@ reference/test_structured.py
 reference/test_teardown.py
 reference/test_tool_loop.py
 reference/tool_loop.py
+# end of inventory: 110 files

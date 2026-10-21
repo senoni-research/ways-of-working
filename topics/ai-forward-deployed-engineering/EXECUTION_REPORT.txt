@@ -1,6 +1,7 @@
-AI Forward Deployed Engineering 0.3.0 (thirteen modules, with the review corrections) - execution report
+AI Forward Deployed Engineering 0.3.0 (thirteen modules, with the review and re-review corrections) - execution report
 
-Run: 2026-10-21 21:20 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, uncommitted.
+Run: 2026-10-21 22:10 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, on top of 80146b8, uncommitted.
+Every command below was run by the maintainer's coding agent on this machine. The reviewers ran only their own boundary tests.
 Interpreters: CPython 3.11.6 and 3.14.7, standard library only, run through uv without a project environment.
 
 Commands, from the pack root, on each interpreter:
@@ -11,7 +12,9 @@ Commands, from the pack root, on each interpreter:
   python3 tools/validate_pack.py .
     STATIC VALIDATION PASSED (281 canonical artifacts, links, loaders, spec trace, install paths, inventories and manifest).
   python3 tools/test_validate_pack.py .
-    ALL 38 CORRUPTION REGRESSIONS AND 10 INSTALL CHECKS PASSED; positive control passed.
+    ALL 38 CORRUPTION REGRESSIONS AND 12 INSTALL CHECKS PASSED; positive control passed.
+    The two newest install checks write an empty inventory and one cut in half; the checker at 80146b8 passed both,
+    reporting "complete (0 files)" and "complete (50 files)", and this one refuses both. Valid installs still pass.
   python3 -m unittest discover -s reference -p 'test_*.py'   (on a temporary copy of reference/ and cases/)
     Ran 120 tests. OK
   python3 tools/mutate_reference.py .
@@ -20,14 +23,14 @@ Commands, from the pack root, on each interpreter:
 The reviewer's 27 boundary tests, held outside the repository, on each interpreter against a temporary copy of reference/ and cases/:
 
     Ran 27 tests. OK
-  Run through a small adapter that gives the three erasure calls the match routes erase() now requires ({store: 'field'}); without it those three stop with a TypeError, by design.
+  Run through a small adapter that gives the three erasure calls the match routes erase() now requires ({store: 'field'}); without it those three stop with a TypeError, by design. reference/ is unchanged since 80146b8. The re-review's eight further tests were not available here and were not run by us.
 
-From inside each install tree (cursor-project, portable-project), on 3.11:
+From inside each install tree (cursor-project, portable-project), on each interpreter:
 
   python3 -m unittest discover -s .fde/reference -p 'test_*.py'
     Ran 120 tests. OK
 
-In a temporary project holding a copy of the Cursor tree's .fde/ and .cursor/, and in another holding the portable tree's .fde/ with AGENTS.fde.md as its AGENTS.md, on 3.11:
+In a temporary project holding a copy of the Cursor tree's .fde/ and .cursor/, and in another holding the portable tree's .fde/ with AGENTS.fde.md as its AGENTS.md, on each interpreter:
 
   python3 .fde/check_install.py
     INSTALL CHECK PASSED: .fde/ complete (110 files); entry route: Cursor rule.
