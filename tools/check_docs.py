@@ -80,7 +80,7 @@ REQUIRED_CONTENT = {
         'Cost & Value Engineering',
         'topics/cost-value-engineering',
         'topics/cost-improvement-delivery',
-        'not a fourth standalone pack',
+        'a companion, not a standalone pack',
         'topics/ai-forward-deployed-engineering',
         'not a production framework',
         'not measured team-productivity claims',
