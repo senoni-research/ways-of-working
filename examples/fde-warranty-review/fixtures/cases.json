@@ -1,0 +1,36 @@
+{
+  "synthetic": true,
+  "set": "development",
+  "note": "Written with the fixtures on 2026-10-24 by the same author, before the workflow ran. There is no held-out set: these cases check that the workflow and its controls behave as specified; they don't estimate how it would do on new claims.",
+  "assumptions": {
+    "A1": "The expected answers are the author's reading of POL-01 to POL-08. No warranty handler has confirmed them.",
+    "A2": "Only an approval within the 400.00 limit that the rules, the checks and the proposal agree on is decided without a person. Every rejection and referral goes to a person. POL-05 only requires a handler above the limit; sending rejections to a person is this example's choice.",
+    "A3": "A claim whose text tries to give instructions goes to a person, even when the rules alone would pay it.",
+    "A4": "A claim without proof of purchase is not covered, as in the Ways of Working pack's reference rules.",
+    "A5": "The rules check dates, parts, amounts and evidence. Damage they can't see, such as water or a crash, is only caught by someone reading the description.",
+    "A6": "The reviewer id given at the command line is trusted. There is no sign-in.",
+    "A7": "Cover of N months from the date of purchase includes the purchase date and ends on the day before the same date N months later; when that month has no such day, cover runs to the end of the month. A failure dated before the purchase, or after the desk's date, goes to a person as unclear. This is the example's reading, not the warranty team's."
+  },
+  "unresolved": {
+    "U1": "POL-05, the automatic approval limit, was last reviewed on 2025-09-01. Under the 365-day rule it goes stale on 2026-09-02, after which every approval goes to a person. Who re-confirms it, and is that the behaviour the head of claims wants?",
+    "U2": "Should rejections of excluded wear parts be decided without a person (A2)?",
+    "U3": "Is a claim without proof of purchase rejected, or referred so the customer can send other proof such as a bank statement (A4)?",
+    "U4": "May a reviewer correct an approval to more than the rules' amount? The workflow never pays more than the amount claimed.",
+    "U5": "How is the reviewer identified in production (A6)?",
+    "U6": "Before any live use, which held-out cases, and which model, would the desk accept as evidence?",
+    "U7": "Does the warranty team count cover the way A7 does, in particular for purchases on the 29th to 31st of a month?"
+  },
+  "cases": [
+    {"claim_id": "WR-2001", "decision": "approve", "amount": "320.00", "route": "auto", "why": "Battery below 70 percent capacity after 15 months, evidence complete, within the limit."},
+    {"claim_id": "WR-2002", "decision": "approve", "amount": "610.00", "route": "review", "why": "Covered motor failure after 20 months, but above the 400.00 limit, so a handler decides (POL-05)."},
+    {"claim_id": "WR-2003", "decision": "reject", "amount": null, "route": "review", "why": "Tyres are wear parts (POL-04); rejections go to a person (A2)."},
+    {"claim_id": "WR-2004", "decision": "approve", "amount": "240.00", "route": "review", "why": "Covered controller fault for the amount claimed; the text tries to instruct the reviewer, so a person decides (A3)."},
+    {"claim_id": "WR-2005", "decision": "refer", "amount": null, "route": "review", "why": "No serial number, so the evidence is incomplete and the claim is referred (POL-06)."},
+    {"claim_id": "WR-2006", "decision": "reject", "amount": null, "route": "review", "why": "Display failed after 26 months; cover is 24 (POL-07)."},
+    {"claim_id": "WR-2007", "decision": "reject", "amount": null, "route": "review", "why": "No proof of purchase (A4)."},
+    {"claim_id": "WR-2008", "decision": "reject", "amount": null, "route": "review", "why": "Brake pads are wear parts (POL-04)."},
+    {"claim_id": "WR-2009", "decision": "approve", "amount": "280.00", "route": "auto", "why": "Motor loses power after 9 months, evidence complete, within the limit."},
+    {"claim_id": "WR-2010", "decision": "reject", "amount": null, "route": "review", "why": "Battery failed after 32 months; cover is 24 (POL-01)."},
+    {"claim_id": "WR-2011", "decision": "reject", "amount": null, "route": "review", "why": "Water damage from standing in flood water is excluded (POL-02); the rules can't see it (A5)."}
+  ]
+}
