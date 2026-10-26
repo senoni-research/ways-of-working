@@ -1,6 +1,6 @@
 # AI Forward Deployed Engineering
 
-Version 0.3.0. All thirteen planned modules, with sixteen recipes, 36 synthetic cases, nine templates, five prompts and tested reference code.
+Version 0.3.1. All thirteen planned modules, with sixteen recipes, 36 synthetic cases, ten templates, five prompts and tested reference code.
 
 Read the [operating contract](00-operating-contract.md) first, then only the modules and recipes your task needs.
 

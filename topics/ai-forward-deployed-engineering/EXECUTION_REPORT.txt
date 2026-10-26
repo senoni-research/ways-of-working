@@ -1,3 +1,85 @@
+AI Forward Deployed Engineering 0.3.1 (documentation follow-up to 0.3.0) - execution report
+
+Run: 2026-10-24 23:17-23:28 BST, Darwin 25.6.0, branch fde-0.3.1-docs-follow-up, on top of 0c1f517, uncommitted.
+Every command below was run by the maintainer's coding agent on this machine. 0.3.1 has had no independent review.
+Interpreters: CPython 3.10.12, 3.11.6, 3.12.10, 3.13.7 and 3.14.7, standard library only, with no project environment
+and bytecode writing off (-B, PYTHONDONTWRITEBYTECODE=1).
+
+What changed: canonical pages, prefaces, metadata, and modules 45, 50 and 80 (template FT10), with the files built from
+them. reference/, cases/, tools/, the recipes, the loader, the sources, the Cursor rule and AGENTS.fde.md are unchanged
+since 0.3.0; in the install trees, .fde/README.md changes only its version line.
+
+Commands, from the pack root, on each of the five interpreters:
+
+  python3 tools/build_pack.py .   (after the build that wrote this change)
+    Built 281 generated artifacts; 0 changed.
+  python3 tools/build_pack.py . --check
+    BUILD CHECK PASSED
+  python3 tools/validate_pack.py .
+    STATIC VALIDATION PASSED (281 canonical artifacts, links, loaders, spec trace, install paths, inventories and manifest).
+  python3 tools/test_validate_pack.py .
+    ALL 38 CORRUPTION REGRESSIONS AND 12 INSTALL CHECKS PASSED; positive control passed.
+  python3 -m unittest discover -s reference -p 'test_*.py'
+    Ran 120 tests. OK
+  python3 tools/mutate_reference.py .
+    ALL 103 MUTANTS KILLED (97 assertion, 6 error); no import errors or timeouts; the unmutated tests pass.
+
+From inside each install tree (cursor-project, portable-project), on each interpreter:
+
+  python3 -m unittest discover -s .fde/reference -p 'test_*.py'
+    Ran 120 tests. OK
+
+In a temporary project holding a copy of the Cursor tree's .fde/ and .cursor/, and in another holding the portable
+tree's .fde/ with AGENTS.fde.md as its AGENTS.md, on each interpreter:
+
+  python3 .fde/check_install.py
+    INSTALL CHECK PASSED: .fde/ complete (111 files); entry route: Cursor rule.
+    INSTALL CHECK PASSED: .fde/ complete (111 files); entry route: AGENTS.md section.
+
+From the repository root, on each interpreter:
+
+  python3 tools/check_docs.py
+    ROOT DOCUMENTATION CHECK PASSED: entry points, attribution links and local targets resolve.
+
+On each interpreter, with the owner's private terms file held outside the repository, after this report was written:
+
+  python3 tools/scan_publication.py . --terms-file <private file>   (from the pack root)
+    IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns).
+  the same scanner from the repository root, over the whole working tree
+    IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns).
+  This list is narrower than the 337-pattern file used for 0.3.0, which was deleted after that run.
+
+Manifest counts: 13 modules of 13 planned, 16 recipes, 74 sources (7 link-checked only), 36 cases, 92 behaviours
+(60 unit-tested, 32 review), 10 templates, 5 prompts.
+
+Not rerun for 0.3.1: the reviewers' 35 tests, since reference/ and cases/ are unchanged since they last ran; the host
+checks in OpenCode and Cursor's command-line agent, which were run on 0.3.0 and are recorded below. Not run at all: the
+same list as for 0.3.0 below.
+Network: none during the pack's checks. The text of pull request #11 was read with the GitHub CLI to word the attribution
+note about its course-overlap check; that check was run on 16d1169 and was not rerun.
+
+Independent review of 0.3.1, 25 October 2026 (reviewer: ChatGPT), recorded here as the reviewer described it:
+  Read the maintained documents and the patch against 0c1f517; confirmed it touches 35 files and no reference code,
+  cases, recipes, sources, tools or entry rule; checked the copied files' new blob identities against the patch headers.
+  Asked for one correction (D1): the README's summary said a teardown is "proven by an inventory"; it now says "checked
+  against a scoped resource inventory and follow-up billing evidence", as module 70 and FR16 require.
+  Not done by the reviewer: applying the patch to a full checkout, or running any of this pack's suites. The reviewer's
+  own test runs were on separate, unpublished code, not on this pack. The five-interpreter results in this report are
+  the maintainer's, not independently rerun.
+
+After the review correction: 2026-10-25 19:48-20:00 GMT, same machine, branch and interpreters (CPython 3.10.12,
+3.11.6, 3.12.10, 3.13.7, 3.14.7), every command listed above for 0.3.1 was rerun on each interpreter, with the same
+results: the build (0 changed after the build that wrote the correction), --check, validate, 38 corruption regressions
+and 12 install checks, the 120 reference tests at the pack root and inside both trees, check_install on both routes,
+103 of 103 mutants killed (97 assertion, 6 error), and check_docs. The publication scan with the owner's 2-pattern list
+was rerun after this note was written; its result is the line below.
+
+  IDENTIFIER SCAN PASSED (0 matching paths; 2 privately supplied patterns), from the pack root and from the repository
+  root, on each interpreter. This is the same narrower list as above, not the 337-pattern list used for 0.3.0.
+
+
+The 0.3.0 report, unchanged:
+
 AI Forward Deployed Engineering 0.3.0 (thirteen modules, with the review and re-review corrections) - execution report
 
 Run: 2026-10-21 22:25 BST, Darwin 25.6.0, branch topics-ai-forward-deployed-engineering-skeleton, on top of b4b197b, uncommitted.

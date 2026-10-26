@@ -10,6 +10,16 @@ Rigorous, systematic evaluation is the most important part of an AI system, in H
 
 Senoni practice: before building, agree with the customer, in writing, the measures, the thresholds and the cases. Then measure a baseline that uses no model on the same cases, such as the rules a handler would apply, because the simplest solution may be enough [FD01](90-sources.md#fd01). The agent has to beat the baseline on what the customer cares about, or the comparison is the finding. In FC15 the rules baseline is more accurate and far cheaper; the agent's only gain is that handlers see fewer claims.
 
+## Keep the case sets apart
+
+Senoni practice: keep three sets, and say which one every figure comes from.
+
+1. **Development cases**, used while building. Their expected answers are open to everyone who works on the system. This pack's cases are of this kind: regressions with published answers, not blind tests.
+2. **The evaluation set**, agreed and labelled with the customer before the run (FT02), then frozen. A case that changes gets a new id, and the old result stays with the old set.
+3. **A held-out set**, labelled by the customer and never shown to whoever writes the prompts, rules or code. It is run only for the decisions the success criteria gate, such as going live.
+
+A change made because of a held-out result turns those cases into development cases, and the next decision needs new held-out ones. A figure from development cases shows the system does what it was built to do; it doesn't show how it will do on new items.
+
 ## Several measures, computed in code
 
 One number hides the trade-offs. Senoni practice: report, for the agent and the baseline side by side,

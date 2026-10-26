@@ -1,6 +1,6 @@
 # AI Forward Deployed Engineering — Cursor handbook
 
-Version 0.3.0 · 21 October 2026 · Thirteen modules, sixteen recipes, 36 synthetic cases, nine templates, five prompts and tested reference code
+Version 0.3.1 · 24 October 2026 · Thirteen modules, sixteen recipes, 36 synthetic cases, ten templates, five prompts and tested reference code
 
 This complete reference is not an auto-loading rule. For a project, copy the Cursor tree's `.fde/` directory and `.cursor/rules/40-fde-method.mdc`, as `FDE-INSTALL.md` in that tree describes. Keep the project's existing rules. The small rule routes relevant tasks to the modules; do not paste this book into every chat. Check in a fresh session that the rule is active and that the files are actually read. The register has no record of Cursor's rules documentation yet, so these instructions rest on the other Senoni packs' practice, not on a cited page.
 
@@ -495,6 +495,20 @@ Senoni practice, in `reference/durable.py`:
 
 FC14 starts the nightly batch twice, has the first run stop heartbeating, and checks every step of the handover.
 
+## Checklist for building a review step
+
+Senoni practice, for whoever implements the pause and the review. It gathers the sections above into one list:
+
+- [ ] The reviewer sees what the decision rests on: the item, the baseline's answer, the context the agent used with its sources and their age, the proposal, every check, and why the item came to a person.
+- [ ] The reviewer's own screen writes the decision to the system of record. The run resumes with the record's id, reads the decision from there, and checks that it belongs to this item.
+- [ ] Code checks the reviewer's authority for this decision, such as an approval above a limit. A decision they may not give is refused, and the item keeps waiting with the reason shown.
+- [ ] Code holds the limits that no reviewer may override, such as paying more than was claimed.
+- [ ] The reviewer can accept, reject or correct the proposal, and each choice records who decided, what they decided and a note.
+- [ ] The reviewer is identified by the customer's sign-in, never by a name in the request.
+- [ ] Whatever runs before the pause is safe to repeat, and the side effect after it uses a key derived from the work.
+- [ ] Tests restart the process while the item waits, resume it from a new process, and kill the process after the side effect; the effect happens once.
+- [ ] The evaluation reports the share of items that reach a person and what people changed.
+
 ## Checks
 
 | ID | Scenario | Required behaviour | Check |
@@ -524,6 +538,16 @@ How to know whether the agent is good enough, and how to find out why when it is
 Rigorous, systematic evaluation is the most important part of an AI system, in Hamel Husain's account; the first level is assertions, run like unit tests, and anything that makes it harder to look at the data has to go [FD07](#fd07). Anthropic's multi-agent team advises starting to evaluate immediately, with small samples [FD13](#fd13).
 
 Senoni practice: before building, agree with the customer, in writing, the measures, the thresholds and the cases. Then measure a baseline that uses no model on the same cases, such as the rules a handler would apply, because the simplest solution may be enough [FD01](#fd01). The agent has to beat the baseline on what the customer cares about, or the comparison is the finding. In FC15 the rules baseline is more accurate and far cheaper; the agent's only gain is that handlers see fewer claims.
+
+## Keep the case sets apart
+
+Senoni practice: keep three sets, and say which one every figure comes from.
+
+1. **Development cases**, used while building. Their expected answers are open to everyone who works on the system. This pack's cases are of this kind: regressions with published answers, not blind tests.
+2. **The evaluation set**, agreed and labelled with the customer before the run (FT02), then frozen. A case that changes gets a new id, and the old result stays with the old set.
+3. **A held-out set**, labelled by the customer and never shown to whoever writes the prompts, rules or code. It is run only for the decisions the success criteria gate, such as going live.
+
+A change made because of a held-out result turns those cases into development cases, and the next decision needs new held-out ones. A figure from development cases shows the system does what it was built to do; it doesn't show how it will do on new items.
 
 ## Several measures, computed in code
 
@@ -995,6 +1019,34 @@ The tollgate from pilot to production, item by item (module [10-engagement](#mod
 | Teardown plan | | |
 Criteria the customer revised in writing before the gate: <which, who, date, decision record>.
 Any unmet or missing item holds the gate.
+```
+
+## FT10 — Project brief
+
+The one page a coding agent plans from with FP01, written once the discovery note and the success criteria are agreed (module [10-engagement](#mod-10-engagement)). It points to the documents that hold the detail instead of copying them.
+
+```markdown
+# Brief: <system or slice>, version <n>
+Owner: <name, role>. Date: <date>.
+
+## Problem
+The work today and what should change, in two or three sentences. Discovery note: <FT01 file>.
+
+## This slice
+In scope: <what this slice builds, end to end>.
+Out of scope: <what it doesn't, and where each item will be handled>.
+
+## Success criteria
+<FT02 file, version>. Cases: <file, n, who labelled them, which set>. Baseline: <the rule that uses no model>.
+
+## Constraints
+Data: <FT07 file>. Where it may run, providers allowed, budget: <...>. Needs a person's say-so: <...>.
+
+## Decisions and open questions
+Decisions so far: <FT05 files>. Open questions: <each, who answers, by when>.
+
+## Done means
+The checks that prove the slice works, and the status file (<FT04 file>) that tracks them.
 ```
 
 ## FP01 — Plan from a brief

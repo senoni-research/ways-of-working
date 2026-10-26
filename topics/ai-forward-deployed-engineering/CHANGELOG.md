@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.1 — 24 October 2026
+
+Documentation only. The behaviour specifications, cases, sources, reference code and their checks are unchanged. Not yet reviewed with a real customer.
+
+- README: a statement that separates the method's principles, which don't depend on a cloud, from the service contracts its AWS examples state; and how to pair the pack with the Carey-inspired collection.
+- Template FT10, the project brief that prompt FP01 plans from, linking the discovery note, success criteria, data map, decision records and status file (module 80). Ten templates in all.
+- Module 50: keep development cases, the evaluation set and a held-out set apart, and say which set each figure comes from. The pack's cases are development cases with published answers.
+- Module 45: a checklist for whoever builds a review step.
+- Roadmap: local models, harnesses and other clouds recorded as open items; which service references to re-check, when and by whom, with no review date set and no monitor implied. The archived job postings are historical (also in the attribution).
+- Attribution: the course wording-overlap check recorded in pull request #11 covers commit `16d1169` only.
+- Validation: the host checks were run on 0.3.0 and not rerun.
+
+### Review correction, before publication
+
+An independent review of the documentation and patch asked for one change: the README's summary of the principles now says a teardown is checked against a scoped resource inventory and follow-up billing evidence, as module 70 and FR16 require, not by an inventory alone. The review is recorded on the validation page and in the execution report.
+
 ## 0.3.0 — 21 October 2026
 
 The last five planned modules. Not yet reviewed with a real customer. Registered in the repository's README, topics page, attribution index and documentation check after its review.
