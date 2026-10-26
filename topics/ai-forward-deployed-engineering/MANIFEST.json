@@ -8,43 +8,43 @@
     "prompts": 5,
     "recipes": 16,
     "sources": 74,
-    "templates": 9,
+    "templates": 10,
     "unit_tested_behaviors": 60
   },
-  "date": "2026-10-21",
+  "date": "2026-10-24",
   "files": {
     ".gitignore": {
       "bytes": 63,
       "sha256": "31c892fe3efa826672bbee23adade9dce3cd86068901dd923bfb83af665cfe3e"
     },
     "ATTRIBUTION.md": {
-      "bytes": 6295,
-      "sha256": "df1de82f98d322d5e205763ce9a89c4ec6dab83ea1d14ec77816b845d11a286a",
-      "words": 936
+      "bytes": 6819,
+      "sha256": "08a06320548c1b8b934636232a37619f09ac359aa880da554886382dcfbf32a3",
+      "words": 1015
     },
     "CHANGELOG.md": {
-      "bytes": 9575,
-      "sha256": "a75c6c7804fb85e5d58500896cb5bdc02d10cb99083dc71884b5688c7a90e05e",
-      "words": 1489
+      "bytes": 11206,
+      "sha256": "2921eba9d21041e0c54fb173eb35bc5c55c2952ec85eb87d9df3406532dee880",
+      "words": 1750
     },
     "LICENSE": {
       "bytes": 1072,
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "QUICKSTART.md": {
-      "bytes": 4505,
-      "sha256": "09e3d6a6d046f34a2d5d03881e9ec98cc4b482dfec19756b382dc29f8f950334",
-      "words": 724
+      "bytes": 4537,
+      "sha256": "1a0e7cf5bdcad48f15c48131be31e36086e85f1db4b844036a04137858aed846",
+      "words": 730
     },
     "README.md": {
-      "bytes": 7547,
-      "sha256": "00310216c53d4068df30a8d6add6cf0c7a01ba183fef33286bda98c74c3cd6ce",
-      "words": 1172
+      "bytes": 9382,
+      "sha256": "328ba756ee03bb7cedbff493ebd1abd713942355d311f9273b811c967ed6dbca",
+      "words": 1459
     },
     "ROADMAP.md": {
-      "bytes": 3829,
-      "sha256": "0add701417a8aef04410a8abe6414d4246d1200ed577b7128940686471d8e581",
-      "words": 611
+      "bytes": 6401,
+      "sha256": "d029d6c8c5c9dc8481cb36d7552d78add364fee0f434c07068c7864ccfd4c765",
+      "words": 1002
     },
     "SOURCE_REGISTER.json": {
       "bytes": 77631,
@@ -56,13 +56,13 @@
       "words": 8307
     },
     "VALIDATION.md": {
-      "bytes": 8794,
-      "sha256": "0eeb79320028e9645096da55d589799faae6bafed0001223ea7c37cf1badab54",
-      "words": 1454
+      "bytes": 9287,
+      "sha256": "44c13cc99b49e80ede0e3dcc8fbaf81c4936c9c7fe4d2d4eb6b84c1fd8daecd2",
+      "words": 1535
     },
     "VERSION": {
       "bytes": 6,
-      "sha256": "d915cc95d6ca8f47ae297713ed46d4e5c5d99ddd29fc3c61e263bdf305f2b5b0"
+      "sha256": "79e3f22ca37c7fdf4c29ae3648d6b008c3cb6547260a453409275470919dc674"
     },
     "canonical/cases/FC01-covered-battery.md": {
       "bytes": 1045,
@@ -267,8 +267,8 @@
       "words": 194
     },
     "canonical/metadata.json": {
-      "bytes": 4375,
-      "sha256": "b093b2330594ff0160a66971f4461ab2a9e5b6c91255af84034e29139ffd5d2b"
+      "bytes": 4386,
+      "sha256": "f98af6e913d77370cd97b8271959398dfd075bb32ff8940164892f76c45637eb"
     },
     "canonical/modules/00-operating-contract.md": {
       "bytes": 6316,
@@ -301,14 +301,14 @@
       "words": 1275
     },
     "canonical/modules/45-durable-state-and-review.md": {
-      "bytes": 6546,
-      "sha256": "a5ffc937528c5d1c374e40553599aa635ed56e6cc0ebf0f4bbf95b14ffeb604d",
-      "words": 1122
+      "bytes": 7965,
+      "sha256": "06cd03824d1ebf444f11d1d6039b914b2cc4dc52d950be95b47ae978fc4b6cd7",
+      "words": 1389
     },
     "canonical/modules/50-evaluation-and-observability.md": {
-      "bytes": 6085,
-      "sha256": "f46e45f009c9e94e8aeb0c3747faed8651bb8371d7daf094e85f683beedfed4a",
-      "words": 1032
+      "bytes": 7024,
+      "sha256": "740dd0fdc4186b275fba1dd2ac9c83c683cde99955c28f6890f7f7db0411c0a5",
+      "words": 1197
     },
     "canonical/modules/55-concurrency-and-multiple-agents.md": {
       "bytes": 5679,
@@ -331,48 +331,48 @@
       "words": 1010
     },
     "canonical/modules/80-templates-and-prompts.md": {
-      "bytes": 7336,
-      "sha256": "c643d9a8744bf9a080d3c1570cc4e99f24648d5d84b0c40c93e8478f41c8592a",
-      "words": 1254
+      "bytes": 8383,
+      "sha256": "8cf20f4554476e9899efa5fd0fec61a4b43de741c023fab4871c50b20527f672",
+      "words": 1427
     },
     "canonical/pages/ATTRIBUTION.md": {
-      "bytes": 6295,
-      "sha256": "df1de82f98d322d5e205763ce9a89c4ec6dab83ea1d14ec77816b845d11a286a",
-      "words": 936
+      "bytes": 6819,
+      "sha256": "08a06320548c1b8b934636232a37619f09ac359aa880da554886382dcfbf32a3",
+      "words": 1015
     },
     "canonical/pages/CHANGELOG.md": {
-      "bytes": 9575,
-      "sha256": "a75c6c7804fb85e5d58500896cb5bdc02d10cb99083dc71884b5688c7a90e05e",
-      "words": 1489
+      "bytes": 11206,
+      "sha256": "2921eba9d21041e0c54fb173eb35bc5c55c2952ec85eb87d9df3406532dee880",
+      "words": 1750
     },
     "canonical/pages/QUICKSTART.md": {
-      "bytes": 4505,
-      "sha256": "09e3d6a6d046f34a2d5d03881e9ec98cc4b482dfec19756b382dc29f8f950334",
-      "words": 724
+      "bytes": 4537,
+      "sha256": "1a0e7cf5bdcad48f15c48131be31e36086e85f1db4b844036a04137858aed846",
+      "words": 730
     },
     "canonical/pages/README.md": {
-      "bytes": 7547,
-      "sha256": "00310216c53d4068df30a8d6add6cf0c7a01ba183fef33286bda98c74c3cd6ce",
-      "words": 1172
+      "bytes": 9382,
+      "sha256": "328ba756ee03bb7cedbff493ebd1abd713942355d311f9273b811c967ed6dbca",
+      "words": 1459
     },
     "canonical/pages/ROADMAP.md": {
-      "bytes": 3829,
-      "sha256": "0add701417a8aef04410a8abe6414d4246d1200ed577b7128940686471d8e581",
-      "words": 611
+      "bytes": 6401,
+      "sha256": "d029d6c8c5c9dc8481cb36d7552d78add364fee0f434c07068c7864ccfd4c765",
+      "words": 1002
     },
     "canonical/pages/VALIDATION.md": {
-      "bytes": 8794,
-      "sha256": "0eeb79320028e9645096da55d589799faae6bafed0001223ea7c37cf1badab54",
-      "words": 1454
+      "bytes": 9287,
+      "sha256": "44c13cc99b49e80ede0e3dcc8fbaf81c4936c9c7fe4d2d4eb6b84c1fd8daecd2",
+      "words": 1535
     },
     "canonical/prefaces/cursor.md": {
-      "bytes": 949,
-      "sha256": "3de9ff21e402a87e1138fa430efa654ea37d922630e7dc754802ec7e5304c75f",
+      "bytes": 948,
+      "sha256": "f398754ba482ad71cd3d4a8c92b8e1223927b59db1b4839dda4576b4a471e943",
       "words": 146
     },
     "canonical/prefaces/portable.md": {
-      "bytes": 845,
-      "sha256": "2cba07095ea5a3c1f46e9a3e5f3a2fa9eebaaa807e6d9291322743e7267a4111",
+      "bytes": 844,
+      "sha256": "f2b1f5388dce97a2ccba39bc853217df8091d6f3cee7f9f255634fe34c97eb84",
       "words": 124
     },
     "canonical/recipes/FR01-frame-the-engagement.md": {
@@ -692,14 +692,14 @@
       "words": 1275
     },
     "cursor-project/.fde/45-durable-state-and-review.md": {
-      "bytes": 6849,
-      "sha256": "c24e829df3eeb70d24270b83c8ab2a40f8538e747a553c946f081b1fe5cfc072",
-      "words": 1122
+      "bytes": 8268,
+      "sha256": "13fe9dfb2d48797f64a07b14705131f0983aa4feddf18f4bdf953139eb21b594",
+      "words": 1389
     },
     "cursor-project/.fde/50-evaluation-and-observability.md": {
-      "bytes": 6395,
-      "sha256": "90b9204d3e5ab1fcef2c998cdd3840f0226a62020850fbba5ababd02258fe363",
-      "words": 1032
+      "bytes": 7334,
+      "sha256": "8a68f576947b882b5fc44842ec219e879b9386641fa185950f1e5ed34daaac19",
+      "words": 1197
     },
     "cursor-project/.fde/55-concurrency-and-multiple-agents.md": {
       "bytes": 5918,
@@ -722,9 +722,9 @@
       "words": 1010
     },
     "cursor-project/.fde/80-templates-and-prompts.md": {
-      "bytes": 7508,
-      "sha256": "d003817a682a7a89111ac8111dcc720602a6772d7bd3365600ed0d5175ac0f1d",
-      "words": 1254
+      "bytes": 8571,
+      "sha256": "ac6a57abf796a11f29ff2b57c1890cc53ef5788c7a06bb5cce74ecd1a952bbde",
+      "words": 1427
     },
     "cursor-project/.fde/90-sources.md": {
       "bytes": 66889,
@@ -740,8 +740,8 @@
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "cursor-project/.fde/README.md": {
-      "bytes": 2810,
-      "sha256": "0a8d50113c6184c27117f84358b077224009546d05bcdaba6284ba2b628d72aa",
+      "bytes": 2809,
+      "sha256": "ca0db972dffe34dd5e6622f674594c7834b4e1a320bbd06b07b790791d1325e6",
       "words": 273
     },
     "cursor-project/.fde/cases/FC01-covered-battery.md": {
@@ -1179,19 +1179,19 @@
       "words": 76
     },
     "cursor-project/fde-cursor.md": {
-      "bytes": 195549,
-      "sha256": "0920a9ee3742f4f31f7fe9a8153414e7e8021415b62e647a902aba3de257fc7e",
-      "words": 28868
+      "bytes": 198971,
+      "sha256": "87b38f66b74b5aacfd7be4a45d783f2cdcb5aed48b1814de9bc0b83999e5e9ea",
+      "words": 29473
     },
     "cursor.md": {
-      "bytes": 195549,
-      "sha256": "0920a9ee3742f4f31f7fe9a8153414e7e8021415b62e647a902aba3de257fc7e",
-      "words": 28868
+      "bytes": 198971,
+      "sha256": "87b38f66b74b5aacfd7be4a45d783f2cdcb5aed48b1814de9bc0b83999e5e9ea",
+      "words": 29473
     },
     "memory.md": {
-      "bytes": 195445,
-      "sha256": "0b5826625881a9ce95c2d0d18914a2e591aa64db7df8120ef97b4ee345d8a635",
-      "words": 28846
+      "bytes": 198867,
+      "sha256": "4d5b635bfe8c050e690cbbbc37e3b3be0f815b8b3bffaa455a29506e134c70d1",
+      "words": 29451
     },
     "portable-project/.fde/00-operating-contract.md": {
       "bytes": 6842,
@@ -1224,14 +1224,14 @@
       "words": 1275
     },
     "portable-project/.fde/45-durable-state-and-review.md": {
-      "bytes": 6849,
-      "sha256": "c24e829df3eeb70d24270b83c8ab2a40f8538e747a553c946f081b1fe5cfc072",
-      "words": 1122
+      "bytes": 8268,
+      "sha256": "13fe9dfb2d48797f64a07b14705131f0983aa4feddf18f4bdf953139eb21b594",
+      "words": 1389
     },
     "portable-project/.fde/50-evaluation-and-observability.md": {
-      "bytes": 6395,
-      "sha256": "90b9204d3e5ab1fcef2c998cdd3840f0226a62020850fbba5ababd02258fe363",
-      "words": 1032
+      "bytes": 7334,
+      "sha256": "8a68f576947b882b5fc44842ec219e879b9386641fa185950f1e5ed34daaac19",
+      "words": 1197
     },
     "portable-project/.fde/55-concurrency-and-multiple-agents.md": {
       "bytes": 5918,
@@ -1254,9 +1254,9 @@
       "words": 1010
     },
     "portable-project/.fde/80-templates-and-prompts.md": {
-      "bytes": 7508,
-      "sha256": "d003817a682a7a89111ac8111dcc720602a6772d7bd3365600ed0d5175ac0f1d",
-      "words": 1254
+      "bytes": 8571,
+      "sha256": "ac6a57abf796a11f29ff2b57c1890cc53ef5788c7a06bb5cce74ecd1a952bbde",
+      "words": 1427
     },
     "portable-project/.fde/90-sources.md": {
       "bytes": 66889,
@@ -1272,8 +1272,8 @@
       "sha256": "5d7d166dc11146806765beefa1c0a78d596a2a9f70c0f7696fdb4f4a048cf5e9"
     },
     "portable-project/.fde/README.md": {
-      "bytes": 2810,
-      "sha256": "0a8d50113c6184c27117f84358b077224009546d05bcdaba6284ba2b628d72aa",
+      "bytes": 2809,
+      "sha256": "ca0db972dffe34dd5e6622f674594c7834b4e1a320bbd06b07b790791d1325e6",
       "words": 273
     },
     "portable-project/.fde/cases/FC01-covered-battery.md": {
@@ -1716,9 +1716,9 @@
       "words": 101
     },
     "portable-project/fde-memory.md": {
-      "bytes": 195445,
-      "sha256": "0b5826625881a9ce95c2d0d18914a2e591aa64db7df8120ef97b4ee345d8a635",
-      "words": 28846
+      "bytes": 198867,
+      "sha256": "4d5b635bfe8c050e690cbbbc37e3b3be0f815b8b3bffaa455a29506e134c70d1",
+      "words": 29451
     },
     "portable-project/optional-adapters/.clinerules/40-fde.md": {
       "bytes": 1228,
@@ -1908,5 +1908,5 @@
       "sha256": "4bbdea754fda68da0822596037a5bf91ce1ae013617aba6c643e95fccd2f9da0"
     }
   },
-  "version": "0.3.0"
+  "version": "0.3.1"
 }

@@ -1,12 +1,12 @@
 # Topic packs
 
-Three topic-led packs live here. Each is a working method for practitioners and AI coding assistants, with small synthetic reference helpers and tests. Pick the one that matches your task; each pack's own README, quickstart and validation page are authoritative, and this page only points to them.
+Two standalone topic-led packs and one dependent companion live here. Each is a working method for practitioners and AI coding assistants, with small synthetic reference helpers and tests. Pick the one that matches your task; each pack's own README, quickstart and validation page are authoritative, and this page only points to them.
 
 | If your task is… | Use | Start with |
 |---|---|---|
 | Reviewing a part's scope or specification, a supplier quote, cost assumptions or a buyer's decision before handoff | **Cost & Value Engineering** 0.3.3 ([`cost-value-engineering/`](cost-value-engineering/README.md), namespace `.costvalue/`) | [QUICKSTART](cost-value-engineering/QUICKSTART.md) · [VALIDATION](cost-value-engineering/VALIDATION.md) |
 | After a recommendation: scoping the implementation work and its readiness, dating the change honestly, and checking what value was actually observed against a declared comparator | **Cost Improvement Delivery & Value Realisation**, companion review draft 0.1.0 ([`cost-improvement-delivery/`](cost-improvement-delivery/README.md), namespace `.valuedelivery/`). It requires Cost & Value Engineering 0.3.3 in the same project. | [QUICKSTART](cost-improvement-delivery/QUICKSTART.md) · [VALIDATION](cost-improvement-delivery/VALIDATION.md) |
-| Delivering an agentic AI system inside a customer's business with a coding assistant, from understanding the work to handover | **AI Forward Deployed Engineering** 0.3.0 ([`ai-forward-deployed-engineering/`](ai-forward-deployed-engineering/README.md), namespace `.fde/`). A working method with synthetic reference examples, not a production framework. | [QUICKSTART](ai-forward-deployed-engineering/QUICKSTART.md) · [VALIDATION](ai-forward-deployed-engineering/VALIDATION.md) |
+| Delivering an agentic AI system inside a customer's business with a coding assistant, from understanding the work to handover | **AI Forward Deployed Engineering** 0.3.1 ([`ai-forward-deployed-engineering/`](ai-forward-deployed-engineering/README.md), namespace `.fde/`). A working method with synthetic reference examples, not a production framework. | [QUICKSTART](ai-forward-deployed-engineering/QUICKSTART.md) · [VALIDATION](ai-forward-deployed-engineering/VALIDATION.md) |
 
 For forecasting, inventory or AI-memory work, see the person-inspired packs listed in the [repository README](../README.md).
 
@@ -54,6 +54,8 @@ Use the repository's GitHub issues, and say which kind of report it is:
 - **Documentation improvement:** unclear, inconsistent or outdated wording, or a broken link.
 - **Generic synthetic regression:** a helper, builder or validator that behaves differently from its written contract. Show it with a newly invented case, the command and its output. Do not post real supplier, customer, plant or employer data.
 - **Source-attribution correction:** a citation, inspected scope, credit or licence statement that is wrong or incomplete.
+
+Issues are public. Never include credentials, keys or tokens; prompts, conversations with an assistant, or model traces and logs; real supplier, customer, plant or employer data; or private file paths and account or project identifiers. Sanitise any output you post: replace each such value with a placeholder such as `<path>` or `<account>`, say what you replaced, and keep only the lines that show the problem. If the problem can't be shown without such material, describe it in general terms instead.
 
 Pack changes are made in each pack's `canonical/`, `reference/` or `tools/` folders and regenerated with its builder, as its README describes; generated files are not edited by hand. Contributions to this public repository are not a job application, and they do not give access to private source code, customer records or any commercial application.
 

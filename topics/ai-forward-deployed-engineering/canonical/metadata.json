@@ -1,9 +1,9 @@
 {
   "name": "AI Forward Deployed Engineering",
-  "version": "0.3.0",
-  "date": "2026-10-21",
+  "version": "0.3.1",
+  "date": "2026-10-24",
   "namespace": ".fde",
-  "status": "All thirteen planned modules, with sixteen recipes, 36 synthetic cases, nine templates, five prompts and tested reference code",
+  "status": "All thirteen planned modules, with sixteen recipes, 36 synthetic cases, ten templates, five prompts and tested reference code",
   "planned_module_ids": [
     "00-operating-contract",
     "10-engagement",
@@ -193,7 +193,8 @@
     "FT06",
     "FT07",
     "FT08",
-    "FT09"
+    "FT09",
+    "FT10"
   ],
   "prompt_ids": [
     "FP01",

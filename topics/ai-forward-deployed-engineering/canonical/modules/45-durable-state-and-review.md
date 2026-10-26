@@ -43,6 +43,20 @@ Senoni practice, in `reference/durable.py`:
 
 FC14 starts the nightly batch twice, has the first run stop heartbeating, and checks every step of the handover.
 
+## Checklist for building a review step
+
+Senoni practice, for whoever implements the pause and the review. It gathers the sections above into one list:
+
+- [ ] The reviewer sees what the decision rests on: the item, the baseline's answer, the context the agent used with its sources and their age, the proposal, every check, and why the item came to a person.
+- [ ] The reviewer's own screen writes the decision to the system of record. The run resumes with the record's id, reads the decision from there, and checks that it belongs to this item.
+- [ ] Code checks the reviewer's authority for this decision, such as an approval above a limit. A decision they may not give is refused, and the item keeps waiting with the reason shown.
+- [ ] Code holds the limits that no reviewer may override, such as paying more than was claimed.
+- [ ] The reviewer can accept, reject or correct the proposal, and each choice records who decided, what they decided and a note.
+- [ ] The reviewer is identified by the customer's sign-in, never by a name in the request.
+- [ ] Whatever runs before the pause is safe to repeat, and the side effect after it uses a key derived from the work.
+- [ ] Tests restart the process while the item waits, resume it from a new process, and kill the process after the side effect; the effect happens once.
+- [ ] The evaluation reports the share of items that reach a person and what people changed.
+
 ## Checks
 
 | ID | Scenario | Required behaviour | Check |

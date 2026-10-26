@@ -46,9 +46,9 @@ The [README](README.md) follows an engagement in eight stages. The first three n
 
    > List the actions the system could take. For each, say its consequence, whether it can be undone and whether a check can confirm it, and propose an autonomy level following `.fde/10-engagement.md`. Write it as a draft decision record (FT05) for the owner of each action to decide, and start the data map (FT07).
 
-   Then list the tollgate items for each phase, and plan the build with prompt FP01.
+   Then list the tollgate items for each phase, write the brief (FT10), and plan the build from it with prompt FP01.
 
-## What 0.3.0 gives you
+## What 0.3.1 gives you
 
 Thirteen modules: the operating contract, the engagement, working with a coding agent, agent design and tools, models, tokens and cost, context, retrieval and memory, durable state and review, evaluation and observability, concurrency and multiple agents, security and guardrails, deployment and operations, customer data, and templates and prompts. The operating contract applies to every task and says which other module to read. Sixteen recipes turn the modules into steps, from framing the engagement to tearing down a deployment and proving it's gone. The templates and prompts are starting points to fill in with the customer's facts. The cases and reference code are synthetic teaching examples, not a framework: they show the controls working on a fictional warranty desk, and you can run their tests in the project:
 

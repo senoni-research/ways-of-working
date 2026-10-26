@@ -146,6 +146,34 @@ Criteria the customer revised in writing before the gate: <which, who, date, dec
 Any unmet or missing item holds the gate.
 ```
 
+## FT10 — Project brief
+
+The one page a coding agent plans from with FP01, written once the discovery note and the success criteria are agreed (module [10-engagement](10-engagement.md)). It points to the documents that hold the detail instead of copying them.
+
+```markdown
+# Brief: <system or slice>, version <n>
+Owner: <name, role>. Date: <date>.
+
+## Problem
+The work today and what should change, in two or three sentences. Discovery note: <FT01 file>.
+
+## This slice
+In scope: <what this slice builds, end to end>.
+Out of scope: <what it doesn't, and where each item will be handled>.
+
+## Success criteria
+<FT02 file, version>. Cases: <file, n, who labelled them, which set>. Baseline: <the rule that uses no model>.
+
+## Constraints
+Data: <FT07 file>. Where it may run, providers allowed, budget: <...>. Needs a person's say-so: <...>.
+
+## Decisions and open questions
+Decisions so far: <FT05 files>. Open questions: <each, who answers, by when>.
+
+## Done means
+The checks that prove the slice works, and the status file (<FT04 file>) that tracks them.
+```
+
 ## FP01 — Plan from a brief
 
 ```text
