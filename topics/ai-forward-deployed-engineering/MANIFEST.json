@@ -37,9 +37,9 @@
       "words": 730
     },
     "README.md": {
-      "bytes": 9382,
-      "sha256": "328ba756ee03bb7cedbff493ebd1abd713942355d311f9273b811c967ed6dbca",
-      "words": 1459
+      "bytes": 10141,
+      "sha256": "28012e82c426f7681fb521fe4a237a5c4a9280aaa115d56fb5cc1383c813ef2e",
+      "words": 1573
     },
     "ROADMAP.md": {
       "bytes": 6401,
@@ -351,9 +351,9 @@
       "words": 730
     },
     "canonical/pages/README.md": {
-      "bytes": 9382,
-      "sha256": "328ba756ee03bb7cedbff493ebd1abd713942355d311f9273b811c967ed6dbca",
-      "words": 1459
+      "bytes": 10141,
+      "sha256": "28012e82c426f7681fb521fe4a237a5c4a9280aaa115d56fb5cc1383c813ef2e",
+      "words": 1573
     },
     "canonical/pages/ROADMAP.md": {
       "bytes": 6401,
