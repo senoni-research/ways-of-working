@@ -31,6 +31,10 @@ This release has all thirteen planned modules: the operating contract, the engag
 
 Read the [quickstart](QUICKSTART.md). Complete handbooks: [Cursor](cursor.md) and [portable memory](memory.md). Install trees: [Cursor project](cursor-project/FDE-INSTALL.md) and [portable project](portable-project/FDE-INSTALL.md). The two books carry the same method with host-specific prefaces; their file names alone do not activate anything.
 
+## Optional worked example
+
+[Warranty review](https://github.com/senoni-research/ways-of-working/tree/main/examples/fde-warranty-review), in this repository's `examples/` folder, takes one claim at a time through a rules baseline, a LangGraph graph, context scoped to the claim's customer, review by a person in the terminal and resume from saved state. It uses the terms, limit and policies of the warranty desk in the [cases](cases/README.md), with its own synthetic claims and scripted proposals in place of a model. It is not part of this pack: it needs LangGraph and its own Python environment, the install trees don't include it, and none of the checks below build, test or run it. Its evidence file says what was run, where, and what it doesn't show.
+
 ## Repository placement
 
 This pack lives at `topics/ai-forward-deployed-engineering/` in the Ways of Working repository, and its root is that folder. Commands below run from it.
