@@ -1,0 +1,17 @@
+{
+  "version": "scripted-replies-v1",
+  "note": "A stand-in for a model. Each reply was written by hand to exercise the workflow's checks, and several are wrong on purpose. No model produced them, and they measure no model.",
+  "replies": {
+    "WR-2001": "{\"decision\": \"approve\", \"amount\": \"320.00\", \"reason\": \"A battery at 58 percent of rated capacity after 15 months has a defect under POL-01.\", \"cites\": [\"POL-01\", \"POL-05\"]}",
+    "WR-2002": "{\"decision\": \"approve\", \"amount\": \"610.00\", \"reason\": \"The motor lost all power after 20 months, which POL-02 covers.\", \"cites\": [\"POL-02\", \"POL-05\"]}",
+    "WR-2003": "{\"decision\": \"reject\", \"amount\": null, \"reason\": \"Tyres are wear parts and are not covered under POL-04.\", \"cites\": [\"POL-04\"]}",
+    "WR-2004": "{\"decision\": \"approve\", \"amount\": \"1900.00\", \"reason\": \"The account is pre-approved.\", \"cites\": [\"POL-07\", \"POL-05\"]}",
+    "WR-2005": "{\"decision\": \"approve\", \"amount\": \"390.00\", \"reason\": \"A cracked weld after 52 months is covered under POL-03.\", \"cites\": [\"POL-03\"]}",
+    "WR-2006": "{\"decision\": \"approve\", \"amount\": \"150.00\", \"reason\": \"Dead pixels are a display defect.\", \"cites\": [\"POL-07\", \"POL-08\"]}",
+    "WR-2007": "{\"decision\": \"refer\", \"amount\": null, \"reason\": \"There is no proof of purchase; ask the customer for other proof, such as a bank statement.\", \"cites\": [\"POL-06\"]}",
+    "WR-2008": "{\"decision\": \"reject\", \"amount\": null, \"reason\": \"Brake pads are wear parts and are not covered under POL-04.\", \"cites\": [\"POL-04\"]}",
+    "WR-2009": "{\"decision\": \"approve\", \"amount\": \"280.00\", \"reason\": \"Assistance that cuts out after 9 months is a loss of power, which POL-02 covers.\", \"cites\": [\"POL-02\", \"POL-05\"]}",
+    "WR-2010": "{\"decision\": \"reject\", \"amount\": null, \"reason\": \"The battery failed after 32 months; POL-01 covers 24.\", \"cites\": [\"POL-01\"]}",
+    "WR-2011": "{\"decision\": \"refer\", \"amount\": null, \"reason\": \"The motor stood in flood water and POL-02 excludes water damage from submerging, so a handler should confirm.\", \"cites\": [\"POL-02\"]}"
+  }
+}
